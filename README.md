@@ -5,9 +5,9 @@ This README contains basic information about the project and its artifacts. If k
 
 - MEMBER1
 - MEMBER2
+- Haoyu Guo
 - Jeff Bauer
-- MEMBER4
-- MEMBER5
+- Ollyting Xin
 
 ## Mission Statement
 *Replace this with the overall objectives that your team has agreed upon. What is the goal of the project (from a learning and product perspective)? Who is your target audience? How will you define success?*
