@@ -5,7 +5,7 @@ This README contains basic information about the project and its artifacts. If k
 
 - MEMBER1
 - MEMBER2
-- MEMBER3
+- Haoyu Guo
 - MEMBER4
 - Ollyting Xin
 
