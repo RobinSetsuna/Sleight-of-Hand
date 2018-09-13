@@ -5,7 +5,7 @@ This README contains basic information about the project and its artifacts. If k
 
 - MEMBER1
 - MEMBER2
-- MEMBER3
+- Jeff Bauer
 - MEMBER4
 - MEMBER5
 
