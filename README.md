@@ -4,7 +4,7 @@ This README contains basic information about the project and its artifacts. If k
 ## Team
 
 - MEMBER1
-- MEMBER2
+- Zheyu Zhang
 - Haoyu Guo
 - Jeff Bauer
 - Ollyting Xin
