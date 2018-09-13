@@ -1,4 +1,4 @@
-# IGME-601 Fall 2018 Team *YOUR_TEAM_NAME* Overview
+# IGME-601 Fall 2018 Team Awesome Overview
 This README contains basic information about the project and its artifacts. If kept up to date, it will act as a primary dashboard for the project.
 
 ## Team
@@ -16,6 +16,7 @@ test
 
 ### Slack
 *Add info about how to join/use your team's Slack workspace. What is it? List the channels and how each should be used? etc.*
+2181-igme-601-team-a.slack.com 
 
 ### Meeting Times
 *Set at least 1 out-of-class meeting time and note times when the entire group is usually free for additional meetings as needed.*
