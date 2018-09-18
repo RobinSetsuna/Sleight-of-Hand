@@ -10,16 +10,36 @@ This README contains basic information about the project and its artifacts. If k
 - Ollyting Xin
 
 ## Mission Statement
-*Replace this with the overall objectives that your team has agreed upon. What is the goal of the project (from a learning and product perspective)? Who is your target audience? How will you define success?*
+
+Goals
+- Improve art and coding skills
+
+Target Audience
+- Casual/Mobile players
+- Strategy and Card game lovers
+
+Success
+- Create a project that can be taken to completion after this class
+- By the end of the semester, have a project that is portfolio-ready
+
 
 ## Communications
 
 ### Slack
-*Add info about how to join/use your team's Slack workspace. What is it? List the channels and how each should be used? etc.*
 2181-igme-601-team-a.slack.com 
 
+#general - Used for general discussion of the project and deliverables
+
+#virtual_standups - Used for tracking progress on deliverables, including work that has been completed and work that is still left to do.
+
+#when2meet - Used for setting times to meet beyond the standard weekly meeting
+
+#contact_info - Used for listing contact information for each member of the team
+
+#random - Used for any off-topic discussions
+
 ### Meeting Times
-*Set at least 1 out-of-class meeting time and note times when the entire group is usually free for additional meetings as needed.*
+We meet every Thursday after class.
 
 ### Trello
 This project will use Trello for sprint planning and to track user story status.
