@@ -40,7 +40,7 @@ This section describes the main features of the game.
 
 This section describes the application domain.
 
-![Domain Model](domain-model-placeholder.png)
+![Domain Model](domain-model.png)
 > Replace the placeholder image above with your team's own domain model. 
 
 > Provide a high-level overview of the domain. You can discuss the more important domain entities and their relationship to each other.
@@ -54,7 +54,7 @@ This section describes the application architecture.
 ### Summary
 The following model shows a high-level view of the webapp's architecture.
 
-![Architecture Overview](architecture-tiers-and-layers.png)
+![Architecture Overview](program-architecture.png)
 > Replace the placeholder image above with your team's own architecture model. 
 
 > Add a description of the architecture and key technical decisions
