@@ -22,7 +22,6 @@ Success
 - Create a project that can be taken to completion after this class
 - By the end of the semester, have a project that is portfolio-ready
 
-
 ## Communications
 
 ### Slack
@@ -57,4 +56,5 @@ This project will use Trello for sprint planning and to track user story status.
 
 ## Other Resources
 - [Markdown](https://help.github.com/categories/writing-on-github/) is a convenient method of documentation because it can have nice formatting while still being a plain text file (which allows multiple team members to edit sections and view/merge differences).
+- [Lucidchart](https://www.lucidchart.com/) is a web application for making graphs (e.g. UML).
 - *...*
