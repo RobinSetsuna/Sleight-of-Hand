@@ -18,8 +18,6 @@ This is a summary of the project.
 > Provide a very brief statement about the project and the most important user group and user goals.
 
 ### Glossary and Acronyms
-> Provide a table of terms and acronyms.
-
 | Term | Definition |
 |------|------------|
 | Turn | A time period when either player character or computer-controled units can take actions |
@@ -29,6 +27,10 @@ This is a summary of the project.
 | Move Phase (MP) | The time in each turn when player character is able to move |
 | Action Phase (AP) | The time in each turn when player character can use cards |
 | End Phase (EP) | The end of each turn when some cards can take effect |
+| Hand | All cards that player have |
+| Strategy Card | A card that enables the player to perform special actions that are not available in regular game play |
+| Enhancement Card | A card that can modify the attributes or status of units and other cards |
+| Combat Card | A card that directly deals damages to units and objects or gives player character abilities to do so |
 
 
 ## Requirements
