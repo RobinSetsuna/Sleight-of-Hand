@@ -93,7 +93,7 @@ The unity graphics engine is in charge of most graphic effects. It produces 3D a
 
 ### Unity User interface
 Unity offers a bunch of tools for designing user interface such as canvas, button, image, text, etc. By using those tools, the programmer can build a UI based on the unity user interface.
-
+<br>
 
 ## Detailed Design
 
