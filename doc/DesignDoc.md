@@ -56,9 +56,10 @@ This section describes the game architecture.
 The following model shows a high-level view of the game's architecture.
 
 ![Architecture Overview](program-architecture.png)
-> Replace the placeholder image above with your team's own architecture model. 
 
 > The overall game architecture consists of three major layers which are I/O layer, Unity API layer and game logic layer. In I/O layer, it contains four components that serve the function of receiving player’s input data and giving feedback to the player. In the Unity API layer, it contains four components which are implemented by the unity engine. We can use the API and other tools offered by unity to create our assets. In the game logic layer, there is usually a main loop in the game program and some other essential logic scripts that make the game run.
+
+The reason why we choose this architecture over other alternative is that Unity is a supportive game engine. It has a thriving community. There are tons of forums out there where Unity fans unite. The in-built Unity API and tools will do a great help for us to develop our own game. Therefore, we don’t need to pay attention to the low-level actuation of games. Besides, some members of our group have Unity developing experience before. Using unity and the architecture based on that will make us go more smoothly in developing our game.
 
 
 ### Sound
