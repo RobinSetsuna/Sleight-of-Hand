@@ -85,7 +85,7 @@ The following model shows a high-level view of the game's architecture.
 > Sound is the component that handles the control of BGM and soundFX. It will receive the processed sound data from unity sound engine. The programmer can write scripts to control the sound according to the gameplay and story so that player can hear the sound when we want them to.
 
 ### Input Device
-> Input Device can read data and convert them to a form that a computer can use. 
+> Input Device can read data from mobile platform peripherals like keybord or controller and then convert them to a form that a computer can use. 
 
 ### Unity Sound
 > The unity sound engine is the component that consists of algorithms for dealing with sound. The engine has in-built programs that can handle the sound effects embedded in the game. Besides, it also has the capability to do calculations using the CPU. Abstraction APIs, such as Open-AL, SDL Audio, X-Audio 2, Web Audio, etc. can be available within this engine.
