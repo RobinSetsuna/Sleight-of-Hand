@@ -22,7 +22,13 @@ This is a summary of the project.
 
 | Term | Definition |
 |------|------------|
-| term/acronym | definition |
+| Turn | A time period when either player character or computer-controled units can take actions |
+| Phase | A specfic time in each turn when cards can take effect and player character can perform different actions |
+| Standby Phase (SP) | The beginning of each turn when some cards can take effect |
+| Draw Phase (DP) | The time in each turn when player character draws a card |
+| Move Phase (MP) | The time in each turn when player character is able to move |
+| Action Phase (AP) | The time in each turn when player character can use cards |
+| End Phase (EP) | The end of each turn when some cards can take effect |
 
 
 ## Requirements
@@ -59,7 +65,7 @@ The tile defines a squared space in the map that can be taken up by player, obst
 
 ### Turn
 
-The turn defines the basic time unit of the game. Both the player and enemies have to move or do things turn by turn. Each turn consists of exactly 6 phases (colored in yellow) which are standby phase (SP), draw phase (DP), move phase 1 (MP1), action phase (AP), move phase 2 (MP2), and end phase (EP). The player can draw 1 card in DP, move in MP1 and MP2 and use cards in AP.
+The turn defines the basic time unit of the game. Both the player and enemies have to move or do things turn by turn. Each turn consists of exactly 6 phases (colored in yellow) which are standby phase, draw phase, move phase 1, action phase, move phase 2, and end phase. The player can draw 1 card in DP, move in MP1 and MP2 and use cards in AP.
 
 ### Card
 
