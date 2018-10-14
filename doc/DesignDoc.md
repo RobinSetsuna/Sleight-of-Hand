@@ -3,12 +3,12 @@
 
 # Team Information
 * Team name: TEAM-AWESOME
-* Team members
-- Yiyan Wang
-- Zheyu Zhang
-- Haoyu Guo
-- Jeff Bauer
-- Ollyting Xin
+* Team members:
+  * Haoyu Guo
+  * Jeff Bauer
+  * Ollyting Xin
+  * Yiyan Wang
+  * Zheyu Zhang
 
 ## Executive Summary
 
