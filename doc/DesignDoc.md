@@ -44,8 +44,11 @@ This section describes the main features of the game.
 > In this section you do not need to be exhaustive and list every story.  Focus on top-level features and maybe Epics and *critical* Stories.
 
 ### Non-functional Requirements
-> Key NFRs and technical constraints
-
+| NFRs |  Technical Constraints |
+|------|------------------------|
+| Maintainability | the ability to detect issues in codes and be able to solve those bugs after being released|
+| Localization | the skill of understanding and using languages |
+| Readability | good coding habit of each team member which adding proper comments to certain important parts of the codes |
 
 ## Domain
 ### Summary
