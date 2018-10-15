@@ -15,9 +15,9 @@
 This is a summary of the project.
 
 ### Purpose
-- statement about the project: To create a casual strategy, stealth card game which can be taken beyond class as well as to improve our teammates' code, art and teamwork skills during the process. 
-- user group: The most important user group as our target user are players who love strategy stealth games and cards game no matter they have much time to play or not.
-- user goals: can enjoy the fun of the casual strategy stealth card game even when don't have too much time for entertainment. Easy to play and get access to the game on iOS/Android.  
+- Statement about the project: To create a casual strategy, stealth card game which can be taken beyond class as well as to improve our teammates' code, art and teamwork skills during the process. 
+- User group: The most important user group as our target user are players who love strategy stealth games and cards game no matter they have much time to play or not.
+- User goals: can enjoy the fun of the casual strategy stealth card game even when don't have too much time for entertainment. Easy to play and get access to the game on iOS/Android.  
 
 ### Glossary and Acronyms
 | Term | Definition |
