@@ -3,7 +3,7 @@
 
 
 ## Team Information
-* Team name: TEAM-AWESOME
+* Team name: **TEAM-AWESOME**
 * Team members:
   * Haoyu Guo
   * Jeff Bauer
