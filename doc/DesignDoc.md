@@ -123,6 +123,6 @@ Unity offers a bunch of tools for designing user interface such as canvas, butto
 
 
 ## Issues and Risks
-1. The reliability of Enemy AI could be one of the main factors will impact the user experience. To make the game not too easy or too hard, we need to adjust enemy intelligence very carefully.
-2. The diversity of the cards is one of another issue. If we don't have enough compelling card, there is no power to attract customers.
-3. The length of each play session may limited the scale of map size and also effect the actual oppotunity of using cards in game.
+* The reliability of Enemy AI could be one of the main factors will impact the user experience. To make the game not too easy or too       hard, we need to adjust enemy intelligence very carefully.
+* The diversity of the cards is one of another issue. If we don't have enough compelling card, there is no power to attract customers.
+* The length of each play session may limited the scale of map size and also effect the actual oppotunity of using cards in game.
