@@ -1,7 +1,8 @@
 # PROJECT Design Documentation
 > The following template provides the headings for your Design Documentation.  As you edit each section make sure you remove these commentary 'blockquotes'; the lines that start with a > character.
 
-# Team Information
+
+## Team Information
 * Team name: TEAM-AWESOME
 * Team members:
   * Haoyu Guo
@@ -10,9 +11,8 @@
   * Yiyan Wang
   * Zheyu Zhang
 
-## Executive Summary
-This is a summary of the project.
 
+## Executive Summary
 ### Purpose
 - Statement about the project: To create a casual strategy, stealth card game which can be taken beyond class as well as to improve our teammates' code, art and teamwork skills during the process. 
 - User group: The most important user group as our target user are players who love strategy stealth games and cards game no matter they have much time to play or not.
@@ -63,6 +63,7 @@ This is a summary of the project.
 | Maintainability | the ability to detect issues in codes and be able to solve those bugs after being released|
 | Localization | the skill of understanding and using languages |
 | Readability | good coding habit of each team member which adding proper comments to certain important parts of the codes |
+
 
 ## Domain
 ### Summary
@@ -118,10 +119,8 @@ Unity offers a bunch of tools for designing user interface such as canvas, butto
 
 
 ## Detailed Design
-
 > You'll add to this section as needed as the project progresses
 
 
 ## Issues and Risks
-
 > Open issues, risks, and your plan to address them (or plan to research options)
