@@ -95,27 +95,34 @@ The following model shows a high-level view of the game's architecture.
 
 ![Architecture Overview](program-architecture.png)
 
-The overall game architecture consists of three major layers which are I/O layer, Unity API layer and game logic layer. In I/O layer, it contains four components that serve the function of receiving player’s input data and giving feedback to the player. In the Unity API layer, it contains four components which are implemented by the unity engine. We can use the API and other tools offered by unity to create our assets. In the game logic layer, there is usually a main loop in the game program and some other essential logic scripts that make the game run. The important technical choice is that since our game is a mobile platform game, we deciede use display as both our input and ouput component in the I/O layer. 
+The architecture consists of 3 major layers which are I/O, Unity API, and game logic. We choose this architecture over other alternatives because Unity is suitable for mobile game development and Unity is a supportive game engine which has a thriving community. Mobile games are not requiring the most proeminent techniques of graphic rendering which other common engines such as Unreal Engine 4 usually provide. In contrast to those engines, Unity has in-built graphic setting for mobile platforms. Also, there are tons of forums out there where Unity fans unite. There are resouces online in Unity asset store which are made by other developers that may help us during development. The in-built Unity API and tools will do a great help for us to develop our own game. Therefore, we don’t need to pay attention to the low-level actuation of the game. Besides, some members of our group have Unity developing experience before. Using Unity and the architecture based on that will make us go more smoothly in developing our game.
 
-The reason why we choose this architecture over other alternative is that Unity is a supportive game engine. It has a thriving community. There are tons of forums out there where Unity fans unite. The in-built Unity API and tools will do a great help for us to develop our own game. Therefore, we don’t need to pay attention to the low-level actuation of games. Besides, some members of our group have Unity developing experience before. Using unity and the architecture based on that will make us go more smoothly in developing our game.
+### I/O
+The I/O layer contains three components that serve the function of generating game output and receiving player’s inputs. For our game, outputs just consist of graphic displays and sounds while inputs can be collected from both the display (the screen) and special input devices such as a keyboard.
 
-### Display
-Display is the component that read data from unity graphic engine and unity user interface and then converts these data into graphics in the screen. Player will also put data to Unity graphic through the display.
+#### Display
+The display is a component that delivers visual output to players on the screen. The player-used device will read data from Unity graphic engine and then converts the data into visible pixels onto the screen. The display is also taking user inputs by delivering the click information to the Unity engine.
 
-### Sound
-Sound is the component that handles the control of BGM and soundFX. It will receive the processed sound data from unity sound engine. The programmer can write scripts to control the sound according to the gameplay and story so that player can hear the sound when we want them to.
+#### Sound
+Sound is a component that delivers audio output to players. The player-used device will receive the processed sound data from Unity sound engine and play it as sound clips. The programmer can write scripts to control the sound according to the gameplay and story so that player can hear the sound when we want them to.
 
-### Input Device
-Input Device can read data and convert them to a form that a computer can use. 
+#### Input Device
+A input device is used by players to generate user inputs in forms other than clicking on the screen. A possible device can be generally used is a keyboard.
 
-### Unity Sound
-The unity sound engine is the component that consists of algorithms for dealing with sound. The engine has in-built programs that can handle the sound effects embedded in the game. Besides, it also has the capability to do calculations using the CPU. Abstraction APIs, such as Open-AL, SDL Audio, X-Audio 2, Web Audio, etc. can be available within this engine.
+### Unity API
+The Unity API is a set of methods that Unity provides for us to handle the correct delivery of game contents.
 
-### Unity Graphics\Physics
-The unity graphics engine is in charge of most graphic effects. It produces 3D animated graphics, using different techniques, like rasterization and ray-tracing. Several graphics API are provided for programmers to take control of the graphics on their own. To put simply, it is a set of tools that programmers can use to easily build the scene and effects.
+#### Unity Sound
+The Unity sound engine is a set of methods that can be used to produce and modify sounds. Unity has in-built programs that can handle the sound effects embedded in the game and have the capability to perform calculations on sound with CPU. Abstraction APIs, such as Open-AL, SDL Audio, X-Audio 2, Web Audio, etc. are also be available within this engine.
 
-### Unity User interface
-Unity offers a bunch of tools for designing user interface such as canvas, button, image, text, etc. By using those tools, the programmer can build a UI based on the unity user interface.
+#### Unity Graphics\Physics
+On the one hand, the Unity graphics engine is in charge of visual output. Several APIs are provided for programmers to take control of the graphics on their own. To put simply, it is a set of tools that programmers can use to easily show scenes and effects to their uses. Oh the other hand, the Unity physics engine handles the movement of objects and does mathmatic calculations to simulate real physical movements. Along with the graphic engine, it produces 3D animated visual outputs for the game.
+
+#### Unity User interface
+Unity UI offers a bunch of tools for designing user interface such as canvas, button, image, text, etc. It also contains systems that allow our own program to make communications between user interfaces and game logic or game data.
+
+### Game Logic
+The game logic is the programming focus of the team. Technical, it is a main loop what will continue looping when the game is played to make program decisions according to different situations. All necessary logics to handle user inputs, manipulate memorized data, and deliver program outputs are formed in this loop.
 
 
 ## Detailed Design
