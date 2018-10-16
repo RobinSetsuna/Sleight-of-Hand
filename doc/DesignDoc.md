@@ -40,20 +40,20 @@ This section describes the main features of the game.
 
 * Main Menu: The first interactable screen that users will encounter.
 * Player Character: Players' avatar
- * Attribute: A numerical value recording character's ability
+  * Attribute: A numerical value recording character's ability
   * Speed: A value determining how many grids can the character move in a level
 * Levels: Areas that players have to explore
- * Obstacles: Objects that are able to block the way of other objects
-  * Wall
-  * Cage
-  * ...
- * Enemy: Hostile creatures that are generally controlled by artifical intelligence to stop players
-  * Guard: A humanlike creature that detects invaders and fight against them
- * The Interactible: Objects that players can interact with
-  * Save Point: A special tile in the level that allows players to save their progression
+  * Obstacles: Objects that are able to block the way of other objects
+    * Wall
+    * Cage
+    * ...
+  * Enemy: Hostile creatures that are generally controlled by artifical intelligence to stop players
+    * Guard: A humanlike creature that detects invaders and fight against them
+  * The Interactible: Objects that players can interact with
+    * Save Point: A special tile in the level that allows players to save their progression
 * User Interfaces: Spaces to demonstrate the status of the game and for players to interact
- * Character Cultivation: An user interface that allows players to nurture their character
- * Level Selection: An user interface that allows players to choose the level they want to play
+  * Character Cultivation: An user interface that allows players to nurture their character
+  * Level Selection: An user interface that allows players to choose the level they want to play
 
 ### Non-functional Requirements
 | NFRs |  Technical Constraints |
