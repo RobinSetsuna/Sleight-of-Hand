@@ -122,7 +122,7 @@ On the one hand, the Unity graphics engine is in charge of visual output. Severa
 Unity UI offers a bunch of tools for designing user interface such as canvas, button, image, text, etc. It also contains systems that allow our own program to make communications between user interfaces and game logic or game data.
 
 ### Game Logic
-The game logic is the programming focus of the team. Technical, it is a main loop what will continue looping when the game is played to make program decisions according to different situations. All necessary logics to handle user inputs, manipulate memorized data, and deliver program outputs are formed in this loop.
+The game logic is the programming focus of the team. Technically, it is a main loop what will continue looping when the game is played to make program decisions according to different situations. All necessary logics to handle user inputs, manipulate memorized data, and deliver program outputs are formed in this loop.
 
 
 ## Detailed Design
