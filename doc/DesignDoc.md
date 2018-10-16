@@ -40,8 +40,8 @@ This is a summary of the project.
 * **Player Character**: Players' avatar
   * **Attribute**: A numerical value recording character's ability
     * **Speed**: A value determining how many grids can the character move in a level
-* Levels: Areas that players have to explore
-  * Obstacles: Objects that are able to block the way of other objects
+* **Levels**: Areas that players have to explore
+  * **Obstacles**: Objects that are able to block the way of other objects
     * **Wall**
     * **Cage**
     * ...
