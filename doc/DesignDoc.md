@@ -11,7 +11,6 @@
   * Zheyu Zhang
 
 ## Executive Summary
-
 This is a summary of the project.
 
 ### Purpose
@@ -36,12 +35,25 @@ This is a summary of the project.
 
 
 ## Requirements
-
 ### Features
-
 This section describes the main features of the game.
 
-> In this section you do not need to be exhaustive and list every story.  Focus on top-level features and maybe Epics and *critical* Stories.
+* Main Menu: The first interactable screen that users will encounter.
+* Player Character: Players' avatar
+ * Attribute: A numerical value recording character's ability
+  * Speed: A value determining how many grids can the character move in a level
+* Levels: Areas that players have to explore
+ * Obstacles: Objects that are able to block the way of other objects
+  * Wall
+  * Cage
+  * ...
+ * Enemy: Hostile creatures that are generally controlled by artifical intelligence to stop players
+  * Guard: A humanlike creature that detects invaders and fight against them
+ * The Interactible: Objects that players can interact with
+  * Save Point: A special tile in the level that allows players to save their progression
+* User Interfaces: Spaces to demonstrate the status of the game and for players to interact
+ * Character Cultivation: An user interface that allows players to nurture their character
+ * Level Selection: An user interface that allows players to choose the level they want to play
 
 ### Non-functional Requirements
 | NFRs |  Technical Constraints |
@@ -59,23 +71,18 @@ This section describes the application domain.
 The domain contains 5 large entities (colored in red) which are player, map, tile, turn, and card. Besides those 5 entities, there are other smaller related entities which are grouped by their color.
 
 ### Player
-
 The player defines the character controlled by the person who is playing the game. It can be viewed as an avatar of the actual person. People who are playing the game have to control this character to explore the map to achieve certain goals to win. In the game, the player character will take up exactly one tile in the map and can move and use cards to strive for the win.
 
 ### Map
-
 The map defines a small region or scene which player must explore in the game. It is essential to the game because player’s objective is to overcome difficulties in the map in order to achieve some goals. There are 3 types of entities (colored in blue) including enemy, obstacle, and interactable object that may show in the map. Obstacles include walls and boxes which can block the way which the player may want to go. Enemies are hostile creatures acting like guardians that may attack and kill the player. Interactive objects include treasure cases and traps which player can interact with to utilize in order to achieve the goals.
 
 ### Tile
-
 The tile defines a squared space in the map that can be taken up by player, obstacles, objects, and enemy. Also, both the movement of the player and enemies and the range of card effect will take measured in tiles.
 
 ### Turn
-
 The turn defines the basic time unit of the game. Both the player and enemies have to move or do things turn by turn. Each turn consists of exactly 6 phases (colored in yellow) which are standby phase, draw phase, move phase 1, action phase, move phase 2, and end phase. The player can draw 1 card in DP, move in MP1 and MP2 and use cards in AP.
 
 ### Card
-
 The card is a item which the player can use to facilitate the exploration. It can be gained both at the beginning of entering any maps and during exploration by beating enemy or getting loots from treasures in the map. There are 3 types of card (colored in green) which are strategy card, enhancement card, and combat card. Strategy card can allow the player to play strategically against the environment. Enhancement card can enhance the player itself or other cards. Combat card will enable the player to attack enemies or obstacles. All those cards play important roles in the game because they help player overcome difficulties which cannot be dealt only by player itself.
 
 
