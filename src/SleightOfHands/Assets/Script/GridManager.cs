@@ -42,8 +42,8 @@ public class GridManager : MonoBehaviour {
     public void GenerateMap() {
 
         string holderName = "Generated Map";
-        if (transform.FindChild (holderName)) {
-            DestroyImmediate(transform.FindChild(holderName).gameObject);
+        if (transform.Find(holderName)) {
+            DestroyImmediate(transform.Find(holderName).gameObject);
         }
 
         Transform mapHolder = new GameObject (holderName).transform;
