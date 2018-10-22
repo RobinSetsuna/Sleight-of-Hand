@@ -27,7 +27,7 @@ public class Tile : MonoBehaviour
 			GetComponent<Renderer>().material.SetColor("_Color", defaultColor);
 	}
 	void OnMouseDrag() {
-		Debug.Log("holding");
+		//Debug.Log("holding");
 		GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
 	}
 

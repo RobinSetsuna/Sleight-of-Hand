@@ -25,7 +25,7 @@ public class GridManager : MonoBehaviour {
         if (Input.GetMouseButtonDown(0))
         {
             dragging = true;
-            Debug.Log("hold!");
+            //Debug.Log("hold!");
         }
     }
 
