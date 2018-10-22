@@ -1,5 +1,5 @@
 # Assets
 
-## Scenes
+### Scenes
 
-# Main.unity: The main scene used for final build
+- Main.unity: The main scene used for final build
