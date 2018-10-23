@@ -56,6 +56,7 @@
 * **User Interface**: A space on screen to demonstrate the status of the game and for players to interact
   * **Character Cultivation**: An user interface that allows players to nurture their character
   * **Level Selection**: An user interface that allows players to choose the level they want to play
+* **Camera**: To provide the player with efficient parts of the game environment
 
 ### Non-functional Requirements
 | NFRs |  Technical Constraints |
