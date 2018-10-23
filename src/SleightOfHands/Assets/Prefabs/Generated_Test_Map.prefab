@@ -5511,7 +5511,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4760749057992838}
   m_Layer: 0
-  m_Name: Generated Map 1
+  m_Name: Generated_Test_Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34853,6 +34853,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114004145234861616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -34867,6 +34873,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114004693865956042
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -34881,6 +34893,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114008490904305076
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -34895,6 +34913,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114009537434864710
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -34909,6 +34933,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114016218620079182
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -34923,6 +34953,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114018067801965382
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -34937,6 +34973,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114019633743640694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -34951,6 +34993,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114021508562089534
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -34965,6 +35013,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114024539624846474
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -34979,6 +35033,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114028417591761604
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -34993,6 +35053,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114029678326965578
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35007,6 +35073,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114033855395030770
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35021,6 +35093,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114035383883545304
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35035,6 +35113,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114047350107461954
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35049,6 +35133,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114049803024096286
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35063,6 +35153,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114049892974793780
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35077,6 +35173,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114050935420527418
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35091,6 +35193,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114054611495015716
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35105,6 +35213,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114060284708981974
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35119,6 +35233,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114063198567270978
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35133,6 +35253,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114064448868641130
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35147,6 +35273,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114065491239670212
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35161,6 +35293,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114066801123502754
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35175,6 +35313,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114066962822133346
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35189,6 +35333,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114072637502711560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35203,6 +35353,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114072638077389292
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35217,6 +35373,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114076700270099624
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35231,6 +35393,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114077306727384620
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35245,6 +35413,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114080636952303864
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35259,6 +35433,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114090243365126626
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35273,6 +35453,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114091002862230468
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35287,6 +35473,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114092964202566484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35301,6 +35493,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114092999468840754
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35315,6 +35513,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114094038913072362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35329,6 +35533,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114094181330912444
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35343,6 +35553,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114095361641892710
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35357,6 +35573,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114095387704119400
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35371,6 +35593,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114096713740579688
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35385,6 +35613,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114100829958666270
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35399,6 +35633,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114102935611703872
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35413,6 +35653,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114103546000714174
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35427,6 +35673,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114104392720792780
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35441,6 +35693,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114105304807421044
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35455,6 +35713,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114108990558266078
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35469,6 +35733,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114109009209954280
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35483,6 +35753,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114109452894387388
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35497,6 +35773,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114109666871872596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35511,6 +35793,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114110250434218968
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35525,6 +35813,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114110722112156574
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35539,6 +35833,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114114973106469492
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35553,6 +35853,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114118145516572054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35567,6 +35873,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114119113147195340
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35581,6 +35893,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114120554285425710
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35595,6 +35913,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114122106162170058
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35609,6 +35933,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114123309874530528
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35623,6 +35953,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114124914947235210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35637,6 +35973,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114124934496852152
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35651,6 +35993,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114132094959178070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35665,6 +36013,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114134414415712672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35679,6 +36033,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114136795007074062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35693,6 +36053,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114136917153037484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35707,6 +36073,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114137478565917350
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35721,6 +36093,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114148566283232554
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35735,6 +36113,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114154831652884054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35749,6 +36133,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114155108367336530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35763,6 +36153,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114160132075555878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35777,6 +36173,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114163038979405474
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35791,6 +36193,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114164735194681378
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35805,6 +36213,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114170322517545430
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35819,6 +36233,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114170623709156356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35833,6 +36253,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114171955837584032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35847,6 +36273,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114172862938339346
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35861,6 +36293,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114174037362706124
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35875,6 +36313,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114174480604975404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35889,6 +36333,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114177207094737600
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35903,6 +36353,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114181352676615890
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35917,6 +36373,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114187130207481316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35931,6 +36393,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114192770951352354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35945,6 +36413,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114195336528212610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35959,6 +36433,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114197516149435000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35973,6 +36453,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114198430615908442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -35987,6 +36473,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114202090739013312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36001,6 +36493,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114205073681703584
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36015,6 +36513,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114205218501835312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36029,6 +36533,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114210289243825710
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36043,6 +36553,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114212531101801128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36057,6 +36573,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114213356383156506
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36071,6 +36593,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114214068660502390
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36085,6 +36613,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114215570492180394
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36099,6 +36633,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114215720544297618
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36113,6 +36653,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114216390093210260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36127,6 +36673,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114217528231614204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36141,6 +36693,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114217695300450264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36155,6 +36713,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114218942989679462
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36169,6 +36733,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114219550125702984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36183,6 +36753,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114221019083845896
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36197,6 +36773,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114226911499450222
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36211,6 +36793,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114227408728905048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36225,6 +36813,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114234152079842262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36239,6 +36833,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114236092727445504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36253,6 +36853,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114236422751851020
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36267,6 +36873,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114238129966586170
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36281,6 +36893,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114239038977813862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36295,6 +36913,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114239425523142352
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36309,6 +36933,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114240699064156172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36323,6 +36953,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114244568677371318
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36337,6 +36973,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114252258876290676
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36351,6 +36993,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114252525535080554
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36365,6 +37013,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114252624794853008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36379,6 +37033,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114252650998558808
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36393,6 +37053,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114254703465294722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36407,6 +37073,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114257933012191782
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36421,6 +37093,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114258188060014134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36435,6 +37113,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114260796804800432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36449,6 +37133,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114261204848923314
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36463,6 +37153,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114262756495966928
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36477,6 +37173,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114262769172703110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36491,6 +37193,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114269020318071016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36505,6 +37213,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114269118215994184
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36519,6 +37233,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114269960211037626
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36533,6 +37253,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114272603430517920
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36547,6 +37273,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114273053777613082
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36561,6 +37293,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114275884418319408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36575,6 +37313,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114276114820846730
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36589,6 +37333,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114277287327276480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36603,6 +37353,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114277833056515442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36617,6 +37373,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114277864749890448
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36631,6 +37393,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114281362240564772
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36645,6 +37413,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114284491035780452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36659,6 +37433,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114287783568049978
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36673,6 +37453,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114289644387821060
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36687,6 +37473,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114290123349082016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36701,6 +37493,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114291889951040548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36715,6 +37513,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114292265719880560
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36729,6 +37533,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114294072779192512
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36743,6 +37553,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114297028702828386
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36757,6 +37573,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114297547664609570
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36771,6 +37593,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114298522196280234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36785,6 +37613,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114298603116065788
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36799,6 +37633,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114300272829708106
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36813,6 +37653,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114300521696390464
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36827,6 +37673,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114303283612799856
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36841,6 +37693,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114303530140819002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36855,6 +37713,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114304962108231574
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36869,6 +37733,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114305052367055456
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36883,6 +37753,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114305054318741660
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36897,6 +37773,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114308323803369784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36911,6 +37793,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114313474155242082
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36925,6 +37813,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114314175076266452
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36939,6 +37833,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114314297134600536
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36953,6 +37853,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114315497991397172
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36967,6 +37873,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114321207082272024
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36981,6 +37893,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114321296808379132
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -36995,6 +37913,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114323243445139020
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37009,6 +37933,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114325859757016818
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37023,6 +37953,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114327732664728432
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37037,6 +37973,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114333028493258054
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37051,6 +37993,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114339470946426790
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37065,6 +38013,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114340101417375886
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37079,6 +38033,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114347439313160012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37093,6 +38053,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114353499386935712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37107,6 +38073,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114354992025851950
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37121,6 +38093,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114356590227892716
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37135,6 +38113,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114359049836271438
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37149,6 +38133,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114363107830919906
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37163,6 +38153,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114367566996924574
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37177,6 +38173,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114375397485038060
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37191,6 +38193,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114376656282125366
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37205,6 +38213,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114378425143535934
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37219,6 +38233,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114379301474576110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37233,6 +38253,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114379796224284824
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37247,6 +38273,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114387359318228970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37261,6 +38293,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114389910519977414
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37275,6 +38313,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114390632105613216
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37289,6 +38333,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114391568941927698
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37303,6 +38353,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114394629296232510
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37317,6 +38373,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114395563406497316
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37331,6 +38393,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114398385039091956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37345,6 +38413,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114399071317061910
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37359,6 +38433,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114399945450757718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37373,6 +38453,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114401006721994474
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37387,6 +38473,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114401260030328036
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37401,6 +38493,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114401425309734282
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37415,6 +38513,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114403408502815112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37429,6 +38533,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114411038036610056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37443,6 +38553,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114412836062341710
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37457,6 +38573,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114413238762933394
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37471,6 +38593,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114417676480698102
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37485,6 +38613,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114417765643378984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37499,6 +38633,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114420341123478768
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37513,6 +38653,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114420870351992272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37527,6 +38673,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114421447318371088
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37541,6 +38693,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114423025412567362
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37555,6 +38713,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114430437347171400
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37569,6 +38733,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114431625165648516
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37583,6 +38753,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114432066378383272
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37597,6 +38773,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114432466786040936
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37611,6 +38793,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114436524383731448
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37625,6 +38813,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114439878241700208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37639,6 +38833,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114442058853432458
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37653,6 +38853,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114450253583777684
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37667,6 +38873,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114450832268988396
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37681,6 +38893,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114451121574075494
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37695,6 +38913,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114453098732008090
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37709,6 +38933,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114454489986466944
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37723,6 +38953,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114458136384122184
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37737,6 +38973,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114458463621589376
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37751,6 +38993,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114463273991438650
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37765,6 +39013,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114467026845419978
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37779,6 +39033,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114469085626360210
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37793,6 +39053,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114469693871602142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37807,6 +39073,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114477014289087938
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37821,6 +39093,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114479192596724586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37835,6 +39113,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114481661211678434
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37849,6 +39133,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114483439631800820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37863,6 +39153,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114485252562569040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37877,6 +39173,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114487923174205576
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37891,6 +39193,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114489532944887660
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37905,6 +39213,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114496413345611686
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37919,6 +39233,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114498466749688354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37933,6 +39253,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114503436426782108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37947,6 +39273,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114510966467115390
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37961,6 +39293,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114513596031815792
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37975,6 +39313,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114513813602199050
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -37989,6 +39333,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114513888380310878
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38003,6 +39353,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114518182008520510
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38017,6 +39373,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114518349723971350
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38031,6 +39393,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114518695912759358
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38045,6 +39413,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114519347995341674
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38059,6 +39433,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114519467380856338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38073,6 +39453,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114525930357028758
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38087,6 +39473,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114528386498384824
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38101,6 +39493,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114533937187745692
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38115,6 +39513,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114536151262226324
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38129,6 +39533,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114536601542980222
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38143,6 +39553,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114547431099224390
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38157,6 +39573,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114547660215000324
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38171,6 +39593,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114549269490663124
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38185,6 +39613,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114549784506422052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38199,6 +39633,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114550158637489638
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38213,6 +39653,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114551493737686510
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38227,6 +39673,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114554577223549132
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38241,6 +39693,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114556975173348720
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38255,6 +39713,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114558963010400666
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38269,6 +39733,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114561284379475804
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38283,6 +39753,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114563150641198648
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38297,6 +39773,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114566695308815936
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38311,6 +39793,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114567895283024040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38325,6 +39813,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114571443905117534
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38339,6 +39833,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114572824327537028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38353,6 +39853,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114576239139635274
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38367,6 +39873,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114577277886742936
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38381,6 +39893,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114577773261091130
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38395,6 +39913,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114579652065427820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38409,6 +39933,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114581078277626394
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38423,6 +39953,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114584046118090438
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38437,6 +39973,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114584555929010718
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38451,6 +39993,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114585065256936072
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38465,6 +40013,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114591006610358000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38479,6 +40033,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114594587531253884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38493,6 +40053,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114595086922515098
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38507,6 +40073,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114598854182343242
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38521,6 +40093,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114602153817702994
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38535,6 +40113,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114603973110992400
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38549,6 +40133,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114608314959086298
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38563,6 +40153,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114608918086902318
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38577,6 +40173,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114611668618517214
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38591,6 +40193,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114621113072402132
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38605,6 +40213,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114621360103373580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38619,6 +40233,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114622784291349096
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38633,6 +40253,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114623859422867140
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38647,6 +40273,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114628575045498288
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38661,6 +40293,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114633013291516498
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38675,6 +40313,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114642395702622398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38689,6 +40333,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114651020536551126
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38703,6 +40353,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114656847569140042
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38717,6 +40373,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114658057534993688
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38731,6 +40393,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114661866864551372
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38745,6 +40413,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114665202193216240
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38759,6 +40433,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114665207915412328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38773,6 +40453,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114667555327799040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38787,6 +40473,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114685543455809312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38801,6 +40493,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114686096550799530
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38815,6 +40513,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114689155978136498
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38829,6 +40533,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114689213751119018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38843,6 +40553,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114695200752234678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38857,6 +40573,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114696357776200848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38871,6 +40593,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114701505924497654
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38885,6 +40613,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114701536808373034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38899,6 +40633,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114704044979444918
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38913,6 +40653,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114706382529540018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38927,6 +40673,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114710141682068888
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38941,6 +40693,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114711602868430970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38955,6 +40713,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114712669827559848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38969,6 +40733,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114714809643181670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38983,6 +40753,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114715806852602456
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -38997,6 +40773,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114720381925388386
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39011,6 +40793,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114721364757522576
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39025,6 +40813,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114722673004374084
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39039,6 +40833,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114724731727418124
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39053,6 +40853,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114730377207760708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39067,6 +40873,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114733382880144070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39081,6 +40893,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114734324719422716
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39095,6 +40913,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114734717897826266
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39109,6 +40933,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114739884295008548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39123,6 +40953,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114744897236915566
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39137,6 +40973,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114746730980204080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39151,6 +40993,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114747361082965764
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39165,6 +41013,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114747878146729238
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39179,6 +41033,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114748583661821294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39193,6 +41053,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114749548306020048
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39207,6 +41073,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114749660700570466
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39221,6 +41093,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114753631097232414
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39235,6 +41113,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114755700989194854
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39249,6 +41133,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114760673095840398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39263,6 +41153,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114760882847291984
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39277,6 +41173,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114764816270676828
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39291,6 +41193,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114767428146669852
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39305,6 +41213,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114771034932407756
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39319,6 +41233,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114772262143302626
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39333,6 +41253,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114776514652410870
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39347,6 +41273,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114779294454278632
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39361,6 +41293,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114780723522468170
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39375,6 +41313,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114781663076272392
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39389,6 +41333,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114783130935700214
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39403,6 +41353,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114785163574276534
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39417,6 +41373,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114794351932371270
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39431,6 +41393,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114797083697518606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39445,6 +41413,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114798594191947230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39459,6 +41433,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114801168244553470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39473,6 +41453,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114805818434717036
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39487,6 +41473,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114808279216514552
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39501,6 +41493,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114809047613782112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39515,6 +41513,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114809299245993820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39529,6 +41533,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114814143870772302
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39543,6 +41553,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114815006581684092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39557,6 +41573,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114818380684712770
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39571,6 +41593,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114819068491346404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39585,6 +41613,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114821355258877466
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39599,6 +41633,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114821871590723690
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39613,6 +41653,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114827900537620488
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39627,6 +41673,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114829111251394606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39641,6 +41693,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114833166082683934
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39655,6 +41713,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114834617828407914
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39669,6 +41733,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114839517487326242
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39683,6 +41753,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114851440638979854
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39697,6 +41773,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114856080212878312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39711,6 +41793,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114856470971137992
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39725,6 +41813,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114858178592263136
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39739,6 +41833,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114860641074260766
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39753,6 +41853,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114861638740505712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39767,6 +41873,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114863806859762550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39781,6 +41893,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114864929725300890
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39795,6 +41913,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114872470480531068
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39809,6 +41933,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114874381092680870
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39823,6 +41953,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114874383025833654
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39837,6 +41973,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114877670902587484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39851,6 +41993,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114885785387702382
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39865,6 +42013,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114886758222887082
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39879,6 +42033,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114887352419027884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39893,6 +42053,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114891101847679970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39907,6 +42073,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114893129389278556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39921,6 +42093,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114896875897735910
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39935,6 +42113,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114897612970518406
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39949,6 +42133,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114898648861341640
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39963,6 +42153,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114899025281298398
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39977,6 +42173,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114899932795627160
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -39991,6 +42193,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114901761709477908
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40005,6 +42213,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114909386819731170
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40019,6 +42233,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114930011284886648
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40033,6 +42253,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114930773221889110
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40047,6 +42273,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114931325868982618
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40061,6 +42293,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114932715804979298
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40075,6 +42313,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114932926935104182
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40089,6 +42333,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114935642081728740
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40103,6 +42353,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114940658896543932
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40117,6 +42373,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114941309954391498
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40131,6 +42393,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114942180214260442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40145,6 +42413,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114949770605420466
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40159,6 +42433,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114951049808157772
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40173,6 +42453,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114959348230578270
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40187,6 +42473,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114959748338150884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40201,6 +42493,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114960659947263410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40215,6 +42513,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114971096499674614
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40229,6 +42533,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114972519534777882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40243,6 +42553,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114978397052959336
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40257,6 +42573,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114979546205243558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40271,6 +42593,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114981187400274800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40285,6 +42613,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114982676826012262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40299,6 +42633,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114985460188663862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40313,6 +42653,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114989836895882032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40327,6 +42673,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114991742393905254
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40341,6 +42693,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114992504141573218
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40355,6 +42713,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114993127661826702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40369,6 +42733,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114993233514239016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40383,6 +42753,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114995241513348486
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40397,6 +42773,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114998587638030644
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40411,6 +42793,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114999256703318820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40425,6 +42813,12 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
 --- !u!114 &114999435196191870
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40439,3 +42833,9 @@ MonoBehaviour:
   defaultColor: {r: 0.8705883, g: 0.8862745, b: 0.9098039, a: 0}
   mouseOverColor: {r: 0.41985583, g: 0.6670421, b: 0.8018868, a: 0}
   selectedColor: {r: 0.2007832, g: 0.5078709, b: 0.9056604, a: 0}
+  highlightColor: {r: 0, g: 0, b: 0, a: 0}
+  walkable: 0
+  worldPosition: {x: 0, y: 0, z: 0}
+  gridPosition: {x: 0, y: 0}
+  highlighted: 0
+  selected: 0
