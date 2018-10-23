@@ -11,11 +11,18 @@ using System.Collections.Generic;
 public class GridManager : MonoBehaviour
 {
 
+    private static GridManager instance;
+    public static GridManager Instance {
+        get {
+            if (instance == null) instance = GameObject.Find("GridManager").GetComponent<GridManager>();
+            return instance;
+        }
+    }
     
     public LayerMask unwalkableMask;
     public float nodeRadius;
     public Transform tilePrefab;
-    public Vector2 mapSize;
+    public Vector2Int mapSize;
     [Range(0,1)]
     public float outlinePercent;
     
@@ -32,7 +39,7 @@ public class GridManager : MonoBehaviour
     public Tile[] generatedPath;
     private int action_point; // temp use, replace later
     void Start() {
-        GenerateMap ();
+        //GenerateMap ();
         _instance = this;
         checktimes = 0;
         ok_to_drag = false;
@@ -76,7 +83,7 @@ public class GridManager : MonoBehaviour
     /// node_radius: the cube radius
     /// parameter: None
     /// </summary>
-    public void GenerateMap() {
+    public void GenerateMap(LevelManager.LevelData levelData) {
 
         string holderName = "Generated Map";
         // check for exist map, and destroy it
@@ -88,8 +95,12 @@ public class GridManager : MonoBehaviour
         Transform mapHolder = new GameObject (holderName).transform;
         mapHolder.parent = transform;
 
+        // Extract data from levelData
+        Debug.Log(levelData.tiles.Length);
+        mapSize = new Vector2Int(levelData.width, Mathf.CeilToInt(levelData.tiles.Length / levelData.width));
+
         // new grid with size [mapSize.x,maoSize.y]
-        grid = new Tile[Mathf.RoundToInt(mapSize.x),Mathf.RoundToInt(mapSize.y)];
+        grid = new Tile[mapSize.x,mapSize.y];
         for (int x = 0; x < mapSize.x; x ++) {
             for (int y = 0; y < mapSize.y; y ++) {
                 // parse position for tile
