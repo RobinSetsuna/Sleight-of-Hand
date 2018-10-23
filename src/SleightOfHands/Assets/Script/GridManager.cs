@@ -3,21 +3,22 @@ using UnityEngine;
 using System.Collections.Generic;
 
 
-public class GridManager : MonoBehaviour {
+public class GridManager : MonoBehaviour
+{
 
-    [SerializeField]private GameObject map;
-    private Tile[,] grid;
     
     public LayerMask unwalkableMask;
     public float nodeRadius;
     public Transform tilePrefab;
     public Vector2 mapSize;
-    public static GridManager _instance;
-
-
     [Range(0,1)]
     public float outlinePercent;
-
+    
+    public static GridManager _instance;
+    
+    [SerializeField] private float time_intervals;
+    private float last_mouse_down;
+    private Tile[,] grid;
     public bool dragging = false;
     private HashSet<Tile>  recheck_list;
     private int range;
@@ -26,17 +27,18 @@ public class GridManager : MonoBehaviour {
         _instance = this;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetMouseButtonDown(0))
         {
             dragging = true;
+            last_mouse_down = Time.time;
             //Debug.Log("hold!");
         }
-        if (Input.GetMouseButtonDown(0))
+
+        if (last_mouse_down - Time.time > time_intervals)
         {
-            dragging = true;
-            //Debug.Log("hold!");
+            dragging = false;
         }
     }
 

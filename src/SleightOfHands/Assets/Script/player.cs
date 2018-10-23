@@ -14,8 +14,9 @@ public class player : Unit {
 		if (Input.GetButtonDown("Jump"))
 		{
 			Tile tile_stand = GridManager._instance.TileFromWorldPoint(transform.position);
-			GridManager._instance.Highlight(tile_stand,5,3);
+			GridManager._instance.Highlight(tile_stand,5,1);
 		}
-	}
+	   }
+	
 	
 }
