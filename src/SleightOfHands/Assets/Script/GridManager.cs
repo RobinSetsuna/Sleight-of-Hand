@@ -26,8 +26,6 @@ public class GridManager : MonoBehaviour
     [Range(0,1)]
     public float outlinePercent;
     
-    public static GridManager _instance;
-    
     [SerializeField] private float time_intervals;
     private float last_mouse_down;
     private Tile[,] grid;
@@ -40,7 +38,6 @@ public class GridManager : MonoBehaviour
     private int action_point; // temp use, replace later
     void Start() {
         GenerateMap (null);
-        _instance = this;
         checktimes = 0;
         ok_to_drag = false;
         action_point = 5;
@@ -100,7 +97,17 @@ public class GridManager : MonoBehaviour
             Debug.Log(levelData.tiles.Length);
             mapSize = new Vector2Int(levelData.width, Mathf.CeilToInt(levelData.tiles.Length / levelData.width));
         }
-
+        
+        
+        
+        //  start,code for temp usage , delete after level data implemented
+        else
+        {
+            mapSize = new Vector2Int(20,20);
+        }
+        // end
+        
+        
         // new grid with size [mapSize.x,maoSize.y]
         grid = new Tile[mapSize.x,mapSize.y];
         for (int x = 0; x < mapSize.x; x ++) {

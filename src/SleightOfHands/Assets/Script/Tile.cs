@@ -43,13 +43,13 @@ public class Tile : MonoBehaviour
 	private void OnMouseEnter()
 	{
 		
-		if (walkable && !GridManager._instance.dragging && !selected)
+		if (walkable && !GridManager.Instance.dragging && !selected)
 		{
 			mouseOver = true;
 			GetComponent<Renderer>().material.SetColor("_Color", mouseOverColor);
 		}
 		
-		if (walkable && GridManager._instance.dragging && !selected && GridManager._instance.AccessibleCheck(x,y))
+		if (walkable && GridManager.Instance.dragging && !selected && GridManager.Instance.AccessibleCheck(x,y))
 		{
 			selected = true;
 			GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
@@ -58,13 +58,13 @@ public class Tile : MonoBehaviour
 
 	private void OnMouseOver()
 	{
-		if (walkable && !GridManager._instance.dragging && !selected)
+		if (walkable && !GridManager.Instance.dragging && !selected)
 		{
 			mouseOver = true;
 			GetComponent<Renderer>().material.SetColor("_Color", mouseOverColor);
 		}
 		
-		if (walkable && GridManager._instance.dragging && !selected && GridManager._instance.AccessibleCheck(x,y))
+		if (walkable && GridManager.Instance.dragging && !selected && GridManager.Instance.AccessibleCheck(x,y))
 		{
 			//print( x + " " + y);
 			selected = true;
