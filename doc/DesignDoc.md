@@ -126,7 +126,16 @@ The game logic is the programming focus of the team. Technically, it is a main l
 
 
 ## Detailed Design
-> You'll add to this section as needed as the project progresses
+### Map Configuration File
+* **Name**: The map's name
+* **Width**: How wide the map is
+* **Tiles**: List of tile ids for each position in the map
+* **Max Turns**: Number of turns until map attempts to end game quickly
+* **Spawns**: List of entities and their spawn positions
+  * **ID**: The id of the entity being spawned
+    * **1**: Player
+    * **2**: Enemy
+  * **Spawn Position**: Position that entity will spawn
 
 
 ## Issues and Risks
