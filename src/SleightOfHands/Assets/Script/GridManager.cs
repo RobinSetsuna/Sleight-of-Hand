@@ -39,7 +39,7 @@ public class GridManager : MonoBehaviour
     public Tile[] generatedPath;
     private int action_point; // temp use, replace later
     void Start() {
-        //GenerateMap ();
+        GenerateMap (null);
         _instance = this;
         checktimes = 0;
         ok_to_drag = false;
@@ -96,8 +96,10 @@ public class GridManager : MonoBehaviour
         mapHolder.parent = transform;
 
         // Extract data from levelData
-        Debug.Log(levelData.tiles.Length);
-        mapSize = new Vector2Int(levelData.width, Mathf.CeilToInt(levelData.tiles.Length / levelData.width));
+        if (levelData != null) {
+            Debug.Log(levelData.tiles.Length);
+            mapSize = new Vector2Int(levelData.width, Mathf.CeilToInt(levelData.tiles.Length / levelData.width));
+        }
 
         // new grid with size [mapSize.x,maoSize.y]
         grid = new Tile[mapSize.x,mapSize.y];
