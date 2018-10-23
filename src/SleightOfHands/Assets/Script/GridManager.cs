@@ -2,7 +2,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-
+///	<summary/>
+/// GridManager - Grid Manager class 
+/// tile highlight in range, store player designed path, generate path.
+/// store grid[,] to manage all the tile in the map.
+/// Usage: GridManager._instance.FUNCTION_NAME()
+/// </summary>
 public class GridManager : MonoBehaviour
 {
 
@@ -24,11 +29,14 @@ public class GridManager : MonoBehaviour
     private HashSet<Tile>  recheck_list;
     private int range;
     public int checktimes;
+    public Tile[] generatedPath;
+    private int action_point; // temp use, replace later
     void Start() {
         GenerateMap ();
         _instance = this;
         checktimes = 0;
         ok_to_drag = false;
+        action_point = 5;
     }
 
     void Update()
@@ -108,7 +116,7 @@ public class GridManager : MonoBehaviour
         foreach (Tile tile in grid)
         {
             //reset all tiles
-            tile.wipe();
+            tile.Wipe();
         }
     }
 
@@ -134,9 +142,10 @@ public class GridManager : MonoBehaviour
                 int temp_y = tile_y + y;
                 if (temp_x >= 0 && temp_x < grid.Length && temp_y >= 0 && temp_y < grid.Length)
                 {
-                    if (grid[temp_x, temp_y].selected)
+                    if (grid[temp_x, temp_y].selected && temp_x == generatedPath[checktimes-1].x && temp_y == generatedPath[checktimes-1].y )
                     {
                         //accessible
+                        generatedPath[checktimes] = grid[tile_x, tile_y];// add tile to path, selected
                         checktimes++; // check success time = selected tiles.
                         return true;
                     }
@@ -156,10 +165,13 @@ public class GridManager : MonoBehaviour
     /// </summary>
     public void Highlight(Tile center, int _range, int flag)
     {
+        generatedPath = flag == 3 ? new Tile[action_point+1] : null;
+        generatedPath[checktimes] = center;// add stand_tile to path, selected
+        checktimes++;
         bool ignoreDistance = (flag == 2);
         bool rechecking = (flag == 3||flag == 2);
         range = _range;
-        center.Highlight_tile();
+        center.HighlightTile();
         center.distance = 0;
         recheck_list = new HashSet<Tile>();
         for (int x = 0; x <= range; x++)
@@ -170,10 +182,10 @@ public class GridManager : MonoBehaviour
                 {
                     // tile is out of range or already highlight
                     //Debug.Log("x:" + x +" y: "+ y + "is out of range");
-                    set_highlight(center.x + x, center.y + y,rechecking,ignoreDistance);
-                    set_highlight(center.x - x, center.y + y,rechecking,ignoreDistance);
-                    set_highlight(center.x + x, center.y - y,rechecking,ignoreDistance);
-                    set_highlight(center.x - x, center.y - y,rechecking,ignoreDistance);
+                    setHighlight(center.x + x, center.y + y,rechecking,ignoreDistance);
+                    setHighlight(center.x - x, center.y + y,rechecking,ignoreDistance);
+                    setHighlight(center.x + x, center.y - y,rechecking,ignoreDistance);
+                    setHighlight(center.x - x, center.y - y,rechecking,ignoreDistance);
                 }        
             }
         }
@@ -181,11 +193,11 @@ public class GridManager : MonoBehaviour
         foreach (Tile tile in recheck_list)
         {
             //print("rechecking: "+ tile.x + " "+ tile.y);
-            set_highlight(tile.x, tile.y, false, false);
+            setHighlight(tile.x, tile.y, false, false);
         }
     }
 
-    private void set_highlight(int x, int y,bool recheck , bool ignore_distance)
+    private void setHighlight(int x, int y,bool recheck , bool ignore_distance)
     {
         //Debug.Log("x:" + x +" y: "+ y);
         if (x >= 0 && x < grid.Length && y >= 0 && y < grid.Length)
@@ -203,7 +215,7 @@ public class GridManager : MonoBehaviour
                 {
                     temp.distance = ret; 
                 }
-                temp.Highlight_tile();
+                temp.HighlightTile();
             }
             else if(ret == 0&&recheck&&temp.walkable)
             {
@@ -243,5 +255,11 @@ public class GridManager : MonoBehaviour
             }
         }
         return 0;
+    }
+    
+    public void setActionPoints(int _Action_point)
+    {
+        //set Action points
+        action_point = _Action_point;
     }
 }

@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 125048618}
   - component: {fileID: 125048617}
   - component: {fileID: 125048616}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: obstacle (1)
   m_TagString: Obstacles
   m_Icon: {fileID: 0}
@@ -272,7 +272,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 244652749}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Obstacles
   m_TagString: Obstacles
   m_Icon: {fileID: 0}
@@ -326,6 +326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe6c5f314a056cc4da0fb9fe5b56f2d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementSpeed: 3
+  heading: {x: 0, y: 0, z: 0}
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -588,7 +590,7 @@ GameObject:
   - component: {fileID: 860820006}
   - component: {fileID: 860820005}
   - component: {fileID: 860820004}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: obstacle (2)
   m_TagString: Obstacles
   m_Icon: {fileID: 0}
@@ -602,7 +604,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 860820002}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.3252, y: 1.1411765, z: -0.3268}
+  m_LocalPosition: {x: -0.3252, y: 1.1411765, z: -0.3261}
   m_LocalScale: {x: 0.05, y: 1.1764705, z: 0.05}
   m_Children: []
   m_Father: {fileID: 244652749}
@@ -877,7 +879,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1655796044413748, guid: d50ac4244bcdc6448a5209bdab280d8f, type: 2}
       propertyPath: m_Layer
-      value: 0
+      value: 9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d50ac4244bcdc6448a5209bdab280d8f, type: 2}
@@ -995,15 +997,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951776cb935e27b48bda53e140a34af7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 1182792454}
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 512
   nodeRadius: 0.5
   tilePrefab: {fileID: 4202221461299724, guid: df32d8651c840a9429479bfb9204413a, type: 2}
   mapSize: {x: 20, y: 20}
-  outlinePercent: 0.015
+  outlinePercent: 0.075
+  time_intervals: 0.05
   dragging: 0
+  ok_to_drag: 0
+  checktimes: 0
+  generatedPath: []
 --- !u!4 &1290799990
 Transform:
   m_ObjectHideFlags: 0
@@ -1117,7 +1122,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4139613893319620, guid: 768a6dd4fff647d439e92b44d198296c, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.0523612
+      value: 3.14
       objectReference: {fileID: 0}
     - target: {fileID: 4139613893319620, guid: 768a6dd4fff647d439e92b44d198296c, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1125,19 +1130,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4139613893319620, guid: 768a6dd4fff647d439e92b44d198296c, type: 2}
       propertyPath: m_LocalRotation.x
-      value: -0.0000006325451
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4139613893319620, guid: 768a6dd4fff647d439e92b44d198296c, type: 2}
       propertyPath: m_LocalRotation.y
-      value: -0.027743038
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4139613893319620, guid: 768a6dd4fff647d439e92b44d198296c, type: 2}
       propertyPath: m_LocalRotation.z
-      value: 0.0000025806664
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4139613893319620, guid: 768a6dd4fff647d439e92b44d198296c, type: 2}
       propertyPath: m_LocalRotation.w
-      value: 0.9996151
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4139613893319620, guid: 768a6dd4fff647d439e92b44d198296c, type: 2}
       propertyPath: m_RootOrder

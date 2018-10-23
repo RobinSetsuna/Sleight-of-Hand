@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-
+///	<summary/>
+/// Tile
+/// tile interaction, tile status change.
+/// </summary>
 public class Tile : MonoBehaviour
 {
 	[SerializeField]private Color defaultColor;
@@ -11,9 +14,9 @@ public class Tile : MonoBehaviour
 
 	[SerializeField]private Color selectedColor;
 
-	[SerializeField] private Color highlightColor;
+	[SerializeField]private Color highlightColor;
 
-	private bool mouseOver = false;
+	private bool mouseOver;
 	
 	public bool walkable;
 	//public Vector3 worldPosition;
@@ -36,7 +39,7 @@ public class Tile : MonoBehaviour
 
 	public bool highlighted = false;
 	public bool selected = false;
-	// Use this for initialization
+	
 	private void OnMouseEnter()
 	{
 		
@@ -63,13 +66,12 @@ public class Tile : MonoBehaviour
 		
 		if (walkable && GridManager._instance.dragging && !selected && GridManager._instance.AccessibleCheck(x,y))
 		{
-			print( x + " " + y);
+			//print( x + " " + y);
 			selected = true;
 			GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
 		}
 	}
 
-	// Update is called once per frame
 	void OnMouseExit() {
 		if (walkable&&!selected)
 		{
@@ -86,20 +88,23 @@ public class Tile : MonoBehaviour
 		}
 	}
 
-	public void set_selected()
+	public void setSelected()
 	{
+		// set tile to selected
 		selected = true;
 		GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
 	}
 	
-	public void wipe()
+	public void Wipe()
 	{
+		//wipe all held effect for tile
 		highlighted = false;
 		selected = false;
 		GetComponent<Renderer>().material.SetColor("_Color", defaultColor);
 	}
-	public void Highlight_tile()
+	public void HighlightTile()
 	{
+		// tile highlight
 		highlighted = true;
 		GetComponent<Renderer>().material.SetColor("_Color", highlightColor);
 	}
