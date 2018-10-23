@@ -126,8 +126,10 @@ The game logic is the programming focus of the team. Technically, it is a main l
 
 
 ## Detailed Design
-> You'll add to this section as needed as the project progresses
 
+### UI
+
+![UI Architecture](ui-architecture.png)
 
 ## Issues and Risks
 * The reliability of Enemy AI could be one of the main factors will impact the user experience. To make the game not too easy or too       hard, we need to adjust enemy intelligence very carefully.
