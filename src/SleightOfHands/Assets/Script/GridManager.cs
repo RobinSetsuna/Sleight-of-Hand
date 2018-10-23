@@ -19,25 +19,30 @@ public class GridManager : MonoBehaviour
     [SerializeField] private float time_intervals;
     private float last_mouse_down;
     private Tile[,] grid;
-    public bool dragging = false;
+    public bool dragging;
+    public bool ok_to_drag;
     private HashSet<Tile>  recheck_list;
     private int range;
+    public int checktimes;
     void Start() {
         GenerateMap ();
         _instance = this;
+        checktimes = 0;
+        ok_to_drag = false;
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0)&&ok_to_drag)
         {
             dragging = true;
-            last_mouse_down = Time.time;
+            last_mouse_down = Time.unscaledTime;
             //Debug.Log("hold!");
         }
-
-        if (last_mouse_down - Time.time > time_intervals)
+       // print("time: "+ (Time.unscaledTime -last_mouse_down));
+        if (Time.unscaledTime -last_mouse_down > time_intervals)
         {
+            //Debug.Log("NOT hold!");
             dragging = false;
         }
     }
@@ -66,30 +71,81 @@ public class GridManager : MonoBehaviour
     public void GenerateMap() {
 
         string holderName = "Generated Map";
+        // check for exist map, and destroy it
         if (transform.Find(holderName)) {
             DestroyImmediate(transform.Find(holderName).gameObject);
         }
-
+        
+        // set Script holder as parent
         Transform mapHolder = new GameObject (holderName).transform;
         mapHolder.parent = transform;
-        
+
+        // new grid with size [mapSize.x,maoSize.y]
         grid = new Tile[Mathf.RoundToInt(mapSize.x),Mathf.RoundToInt(mapSize.y)];
         for (int x = 0; x < mapSize.x; x ++) {
             for (int y = 0; y < mapSize.y; y ++) {
+                // parse position for tile
                 Vector3 tilePosition = new Vector3(-mapSize.x/2 +nodeRadius + x + transform.position.x, 2, -mapSize.y/2 + nodeRadius + y + transform.position.z);
+                //walkable collision check
                 bool walkable = !(Physics.CheckSphere(tilePosition,nodeRadius,unwalkableMask));
                 Transform newTile = Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right*90)) as Transform;
+                // initiate outline 
                 newTile.localScale = Vector3.one * (1-outlinePercent);
                 newTile.parent = mapHolder;
+                // set tile value 
                 var temp = newTile.GetComponent<Tile>();
                 temp.walkable = walkable;
-                //temp.worldPosition = tilePosition;
+                // insertion
                 temp.gridPosition = new Vector2(x,y);
                 grid[x,y] = temp;
             }
         }
     }
-    
+
+    public void wipeTiles()
+    {
+        checktimes = 0;
+        foreach (Tile tile in grid)
+        {
+            //reset all tiles
+            tile.wipe();
+        }
+    }
+
+    public bool AccessibleCheck(int tile_x, int tile_y)
+    {
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                if (x == 0 && y == 0)
+                {
+                    // center skip
+                    continue;
+                }
+
+                if (x != 0 && y != 0)
+                {
+                    // disable diagonal check.  remove this 'if' statement when we want diagonal check
+                    continue;
+                }
+
+                int temp_x = tile_x + x;
+                int temp_y = tile_y + y;
+                if (temp_x >= 0 && temp_x < grid.Length && temp_y >= 0 && temp_y < grid.Length)
+                {
+                    if (grid[temp_x, temp_y].selected)
+                    {
+                        //accessible
+                        checktimes++; // check success time = selected tiles.
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     /// <Hightlight>
     /// give center tile, highlight range, and highlight type to highlight specific group of tiles.
     /// parameter: (Tile(tile),Range(int),flag(int))

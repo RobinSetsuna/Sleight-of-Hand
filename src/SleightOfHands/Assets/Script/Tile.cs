@@ -19,7 +19,6 @@ public class Tile : MonoBehaviour
 	//public Vector3 worldPosition;
 	public Vector2 gridPosition;
 	public int distance = 9999;
-	
 	public int x
 	{
 		get
@@ -40,16 +39,39 @@ public class Tile : MonoBehaviour
 	// Use this for initialization
 	private void OnMouseEnter()
 	{
-		if (walkable)
+		
+		if (walkable && !GridManager._instance.dragging && !selected)
 		{
 			mouseOver = true;
 			GetComponent<Renderer>().material.SetColor("_Color", mouseOverColor);
 		}
+		
+		if (walkable && GridManager._instance.dragging && !selected && GridManager._instance.AccessibleCheck(x,y))
+		{
+			selected = true;
+			GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
+		}
 	}
-	
+
+	private void OnMouseOver()
+	{
+		if (walkable && !GridManager._instance.dragging && !selected)
+		{
+			mouseOver = true;
+			GetComponent<Renderer>().material.SetColor("_Color", mouseOverColor);
+		}
+		
+		if (walkable && GridManager._instance.dragging && !selected && GridManager._instance.AccessibleCheck(x,y))
+		{
+			print( x + " " + y);
+			selected = true;
+			GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
+		}
+	}
+
 	// Update is called once per frame
 	void OnMouseExit() {
-		if (walkable)
+		if (walkable&&!selected)
 		{
 			mouseOver = false;
 			if (highlighted)
@@ -63,11 +85,19 @@ public class Tile : MonoBehaviour
 			}
 		}
 	}
-	void OnMouseDrag() {
-		//Debug.Log("holding");
+
+	public void set_selected()
+	{
+		selected = true;
 		GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
 	}
-
+	
+	public void wipe()
+	{
+		highlighted = false;
+		selected = false;
+		GetComponent<Renderer>().material.SetColor("_Color", defaultColor);
+	}
 	public void Highlight_tile()
 	{
 		highlighted = true;
