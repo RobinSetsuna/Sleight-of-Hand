@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-
+///	<summary/>
+/// Tile
+/// tile interaction, tile status change.
+/// </summary>
 public class Tile : MonoBehaviour
 {
 	[SerializeField]private Color defaultColor;
@@ -11,15 +14,14 @@ public class Tile : MonoBehaviour
 
 	[SerializeField]private Color selectedColor;
 
-	[SerializeField] private Color highlightColor;
+	[SerializeField]private Color highlightColor;
 
-	private bool mouseOver = false;
+	private bool mouseOver;
 	
 	public bool walkable;
 	//public Vector3 worldPosition;
 	public Vector2 gridPosition;
 	public int distance = 9999;
-	
 	public int x
 	{
 		get
@@ -37,19 +39,41 @@ public class Tile : MonoBehaviour
 
 	public bool highlighted = false;
 	public bool selected = false;
-	// Use this for initialization
+	
 	private void OnMouseEnter()
 	{
-		if (walkable)
+		
+		if (walkable && !GridManager.Instance.dragging && !selected)
 		{
 			mouseOver = true;
 			GetComponent<Renderer>().material.SetColor("_Color", mouseOverColor);
 		}
+		
+		if (walkable && GridManager.Instance.dragging && !selected && GridManager.Instance.AccessibleCheck(x,y))
+		{
+			selected = true;
+			GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
+		}
 	}
-	
-	// Update is called once per frame
+
+	private void OnMouseOver()
+	{
+		if (walkable && !GridManager.Instance.dragging && !selected)
+		{
+			mouseOver = true;
+			GetComponent<Renderer>().material.SetColor("_Color", mouseOverColor);
+		}
+		
+		if (walkable && GridManager.Instance.dragging && !selected && GridManager.Instance.AccessibleCheck(x,y))
+		{
+			//print( x + " " + y);
+			selected = true;
+			GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
+		}
+	}
+
 	void OnMouseExit() {
-		if (walkable)
+		if (walkable&&!selected)
 		{
 			mouseOver = false;
 			if (highlighted)
@@ -63,13 +87,24 @@ public class Tile : MonoBehaviour
 			}
 		}
 	}
-	void OnMouseDrag() {
-		//Debug.Log("holding");
+
+	public void setSelected()
+	{
+		// set tile to selected
+		selected = true;
 		GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
 	}
-
-	public void Highlight_tile()
+	
+	public void Wipe()
 	{
+		//wipe all held effect for tile
+		highlighted = false;
+		selected = false;
+		GetComponent<Renderer>().material.SetColor("_Color", defaultColor);
+	}
+	public void HighlightTile()
+	{
+		// tile highlight
 		highlighted = true;
 		GetComponent<Renderer>().material.SetColor("_Color", highlightColor);
 	}

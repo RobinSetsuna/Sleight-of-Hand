@@ -8,6 +8,7 @@
       <e p="Assets" t="Include">
         <e p="Script" t="Include">
           <e p="GridManager.cs" t="Include" />
+          <e p="LevelManager.cs" t="Include" />
           <e p="player.cs" t="Include" />
           <e p="Tile.cs" t="Include" />
           <e p="Unit.cs" t="Include" />

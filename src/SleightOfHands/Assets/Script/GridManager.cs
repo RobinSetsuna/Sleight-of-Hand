@@ -2,41 +2,60 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+///	<summary/>
+/// GridManager - Grid Manager class 
+/// tile highlight in range, store player designed path, generate path.
+/// store grid[,] to manage all the tile in the map.
+/// Usage: GridManager._instance.FUNCTION_NAME()
+/// </summary>
+public class GridManager : MonoBehaviour
+{
 
-public class GridManager : MonoBehaviour {
-
-    [SerializeField]private GameObject map;
-    private Tile[,] grid;
+    private static GridManager instance;
+    public static GridManager Instance {
+        get {
+            if (instance == null) instance = GameObject.Find("GridManager").GetComponent<GridManager>();
+            return instance;
+        }
+    }
     
     public LayerMask unwalkableMask;
     public float nodeRadius;
     public Transform tilePrefab;
-    public Vector2 mapSize;
-    public static GridManager _instance;
-
-
+    public Vector2Int mapSize;
     [Range(0,1)]
     public float outlinePercent;
-
-    public bool dragging = false;
+    
+    [SerializeField] private float time_intervals;
+    private float last_mouse_down;
+    private Tile[,] grid;
+    public bool dragging;
+    public bool ok_to_drag;
     private HashSet<Tile>  recheck_list;
     private int range;
+    public int checktimes;
+    public Tile[] generatedPath;
+    private int action_point; // temp use, replace later
     void Start() {
-        GenerateMap ();
-        _instance = this;
+        GenerateMap (null);
+        checktimes = 0;
+        ok_to_drag = false;
+        action_point = 5;
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0)&&ok_to_drag)
         {
             dragging = true;
+            last_mouse_down = Time.unscaledTime;
             //Debug.Log("hold!");
         }
-        if (Input.GetMouseButtonDown(0))
+       // print("time: "+ (Time.unscaledTime -last_mouse_down));
+        if (Time.unscaledTime -last_mouse_down > time_intervals)
         {
-            dragging = true;
-            //Debug.Log("hold!");
+            //Debug.Log("NOT hold!");
+            dragging = false;
         }
     }
 
@@ -61,33 +80,101 @@ public class GridManager : MonoBehaviour {
     /// node_radius: the cube radius
     /// parameter: None
     /// </summary>
-    public void GenerateMap() {
+    public void GenerateMap(LevelManager.LevelData levelData) {
 
         string holderName = "Generated Map";
+        // check for exist map, and destroy it
         if (transform.Find(holderName)) {
             DestroyImmediate(transform.Find(holderName).gameObject);
         }
-
+        
+        // set Script holder as parent
         Transform mapHolder = new GameObject (holderName).transform;
         mapHolder.parent = transform;
+
+        // Extract data from levelData
+        if (levelData != null) {
+            Debug.Log(levelData.tiles.Length);
+            mapSize = new Vector2Int(levelData.width, Mathf.CeilToInt(levelData.tiles.Length / levelData.width));
+        }
         
-        grid = new Tile[Mathf.RoundToInt(mapSize.x),Mathf.RoundToInt(mapSize.y)];
+        
+        
+        //  start,code for temp usage , delete after level data implemented
+        else
+        {
+            mapSize = new Vector2Int(20,20);
+        }
+        // end
+        
+        
+        // new grid with size [mapSize.x,maoSize.y]
+        grid = new Tile[mapSize.x,mapSize.y];
         for (int x = 0; x < mapSize.x; x ++) {
             for (int y = 0; y < mapSize.y; y ++) {
+                // parse position for tile
                 Vector3 tilePosition = new Vector3(-mapSize.x/2 +nodeRadius + x + transform.position.x, 2, -mapSize.y/2 + nodeRadius + y + transform.position.z);
+                //walkable collision check
                 bool walkable = !(Physics.CheckSphere(tilePosition,nodeRadius,unwalkableMask));
                 Transform newTile = Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right*90)) as Transform;
+                // initiate outline 
                 newTile.localScale = Vector3.one * (1-outlinePercent);
                 newTile.parent = mapHolder;
+                // set tile value 
                 var temp = newTile.GetComponent<Tile>();
                 temp.walkable = walkable;
-                //temp.worldPosition = tilePosition;
+                // insertion
                 temp.gridPosition = new Vector2(x,y);
                 grid[x,y] = temp;
             }
         }
     }
-    
+
+    public void wipeTiles()
+    {
+        checktimes = 0;
+        foreach (Tile tile in grid)
+        {
+            //reset all tiles
+            tile.Wipe();
+        }
+    }
+
+    public bool AccessibleCheck(int tile_x, int tile_y)
+    {
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                if (x == 0 && y == 0)
+                {
+                    // center skip
+                    continue;
+                }
+
+                if (x != 0 && y != 0)
+                {
+                    // disable diagonal check.  remove this 'if' statement when we want diagonal check
+                    continue;
+                }
+
+                int temp_x = tile_x + x;
+                int temp_y = tile_y + y;
+                if (temp_x >= 0 && temp_x < grid.Length && temp_y >= 0 && temp_y < grid.Length)
+                {
+                    if (grid[temp_x, temp_y].selected && temp_x == generatedPath[checktimes-1].x && temp_y == generatedPath[checktimes-1].y )
+                    {
+                        //accessible
+                        generatedPath[checktimes] = grid[tile_x, tile_y];// add tile to path, selected
+                        checktimes++; // check success time = selected tiles.
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     /// <Hightlight>
     /// give center tile, highlight range, and highlight type to highlight specific group of tiles.
     /// parameter: (Tile(tile),Range(int),flag(int))
@@ -98,10 +185,13 @@ public class GridManager : MonoBehaviour {
     /// </summary>
     public void Highlight(Tile center, int _range, int flag)
     {
+        generatedPath = flag == 3 ? new Tile[action_point+1] : null;
+        generatedPath[checktimes] = center;// add stand_tile to path, selected
+        checktimes++;
         bool ignoreDistance = (flag == 2);
         bool rechecking = (flag == 3||flag == 2);
         range = _range;
-        center.Highlight_tile();
+        center.HighlightTile();
         center.distance = 0;
         recheck_list = new HashSet<Tile>();
         for (int x = 0; x <= range; x++)
@@ -112,10 +202,10 @@ public class GridManager : MonoBehaviour {
                 {
                     // tile is out of range or already highlight
                     //Debug.Log("x:" + x +" y: "+ y + "is out of range");
-                    set_highlight(center.x + x, center.y + y,rechecking,ignoreDistance);
-                    set_highlight(center.x - x, center.y + y,rechecking,ignoreDistance);
-                    set_highlight(center.x + x, center.y - y,rechecking,ignoreDistance);
-                    set_highlight(center.x - x, center.y - y,rechecking,ignoreDistance);
+                    setHighlight(center.x + x, center.y + y,rechecking,ignoreDistance);
+                    setHighlight(center.x - x, center.y + y,rechecking,ignoreDistance);
+                    setHighlight(center.x + x, center.y - y,rechecking,ignoreDistance);
+                    setHighlight(center.x - x, center.y - y,rechecking,ignoreDistance);
                 }        
             }
         }
@@ -123,11 +213,11 @@ public class GridManager : MonoBehaviour {
         foreach (Tile tile in recheck_list)
         {
             //print("rechecking: "+ tile.x + " "+ tile.y);
-            set_highlight(tile.x, tile.y, false, false);
+            setHighlight(tile.x, tile.y, false, false);
         }
     }
 
-    private void set_highlight(int x, int y,bool recheck , bool ignore_distance)
+    private void setHighlight(int x, int y,bool recheck , bool ignore_distance)
     {
         //Debug.Log("x:" + x +" y: "+ y);
         if (x >= 0 && x < grid.Length && y >= 0 && y < grid.Length)
@@ -145,7 +235,7 @@ public class GridManager : MonoBehaviour {
                 {
                     temp.distance = ret; 
                 }
-                temp.Highlight_tile();
+                temp.HighlightTile();
             }
             else if(ret == 0&&recheck&&temp.walkable)
             {
@@ -185,5 +275,11 @@ public class GridManager : MonoBehaviour {
             }
         }
         return 0;
+    }
+    
+    public void setActionPoints(int _Action_point)
+    {
+        //set Action points
+        action_point = _Action_point;
     }
 }
