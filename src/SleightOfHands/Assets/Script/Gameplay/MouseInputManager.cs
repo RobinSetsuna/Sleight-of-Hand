@@ -14,15 +14,15 @@ public class MouseInputManager
 
     private static int mouseDragThreshold = 200;
 
-    public class EventOnDataChange : UnityEvent<GameObject> {}
+    public class EventOnDataChange : UnityEvent<MouseInteractable> {}
     public EventOnDataChange OnCurrentMouseTargetChange = new EventOnDataChange();
-    public EventOnDataChange OnNewClickedObject = new EventOnDataChange();
+    public EventOnDataChange OnObjectClicked = new EventOnDataChange();
 
     public long MouseDownTime { get; private set; }
     public bool IsMouseDragging { get; private set; }
 
-    private GameObject currentMouseTarget;
-    public GameObject CurrentMouseTarget
+    private MouseInteractable currentMouseTarget;
+    public MouseInteractable CurrentMouseTarget
     {
         get
         {
@@ -39,8 +39,8 @@ public class MouseInputManager
         }
     }
 
-    private GameObject lastClickedObject;
-    public GameObject LastClickedObject
+    private MouseInteractable lastClickedObject;
+    public MouseInteractable LastClickedObject
     {
         get
         {
@@ -49,36 +49,36 @@ public class MouseInputManager
 
         private set
         {
-            if (value != lastClickedObject)
-            {
-                lastClickedObject = value;
-                OnNewClickedObject.Invoke(value);
-            }
+            //if (value != lastClickedObject)
+            lastClickedObject = value;
         }
     }
 
     private MouseInputManager() {}
 
-    internal void NotifyMouseDown(GameObject go)
+    internal void NotifyMouseDown(MouseInteractable obj)
     {
         MouseDownTime = TimeUtility.localTimeInMilisecond;
     }
 
-    internal void NotifyMouseDrag(GameObject go)
+    internal void NotifyMouseDrag(MouseInteractable obj)
     {
         if (!IsMouseDragging)
             IsMouseDragging = TimeUtility.localTimeInMilisecond - MouseDownTime > mouseDragThreshold;
     }
 
-    internal void NotifyMouseOver(GameObject go)
+    internal void NotifyMouseOver(MouseInteractable obj)
     {
-        CurrentMouseTarget = go;
+        CurrentMouseTarget = obj;
     }
 
-    internal void NotifyMouseUp(GameObject go)
+    internal void NotifyMouseUp(MouseInteractable obj)
     {
         if (!IsMouseDragging)
-            LastClickedObject = go;
+        {
+            LastClickedObject = obj;
+            OnObjectClicked.Invoke(obj);
+        }
         else
             IsMouseDragging = false;
     }

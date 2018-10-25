@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameState initialState = (GameState)1;
 
+    private Path<Vector2Int> path;
+
     private GameState currentGameState;
     public GameState CurrentGameState
     {
@@ -58,14 +60,14 @@ public class GameManager : MonoBehaviour
             switch (currentGameState)
             {
                 case GameState.Exploration:
-                    MouseInputManager.Singleton.OnNewClickedObject.AddListener(HandleMouseClick);
-                    CurrentGameState = GameState.Idle;
+                    MouseInputManager.Singleton.OnObjectClicked.AddListener(HandleMouseClick);
+                    ResetToIdle();
                     break;
                 case GameState.MovementConfirmation:
                     // TODO: Show ListMenu
                     break;
                 case GameState.Move:
-                    // TODO: Make player character move
+                    ActionManager.Singleton.Execute(ResetToIdle);
                     break;
             }
 
@@ -88,7 +90,12 @@ public class GameManager : MonoBehaviour
         CurrentGameState = initialState;
     }
 
-    private void HandleMouseClick(GameObject clickedObject)
+    private void ResetToIdle()
+    {
+        CurrentGameState = GameState.Idle;
+    }
+
+    private void HandleMouseClick(MouseInteractable clickedObject)
     {
         switch (currentGameState)
         {
@@ -99,8 +106,18 @@ public class GameManager : MonoBehaviour
             case GameState.MovementPlanning:
                 if (clickedObject.GetComponent<player>())
                     CurrentGameState = GameState.Idle;
-                //else if (clickedObject.GetComponent<Tile>())
-                    //TODO: Add destination
+                else if (clickedObject.GetComponent<Tile>())
+                {
+                    player _player = GridManager.Instance.Player;
+                    Path<Tile> path = Navigation.FindPath(GridManager.Instance, GridManager.Instance.TileFromWorldPoint(_player.transform.position), clickedObject.GetComponent<Tile>());
+
+                    Debug.Log(path);
+
+                    for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
+                        ActionManager.Singleton.Add(new Movement(_player, tile));
+
+                    CurrentGameState = GameState.Move;
+                }
                 break;
         }
     }
