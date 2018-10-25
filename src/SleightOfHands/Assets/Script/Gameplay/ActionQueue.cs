@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionQueue : MonoBehaviour
+public class ActionQueue
 {
     private LinkedList<Action> actions;
     private LinkedListNode<Action> current;

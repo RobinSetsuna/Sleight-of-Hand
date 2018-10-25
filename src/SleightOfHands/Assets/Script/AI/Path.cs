@@ -39,24 +39,30 @@ public class Path<T> : IEquatable<Path<T>> where T : IEquatable<T>
         current = null;
     }
 
-    public Path(T start, T destination) : this()
+    public Path(T start) : this()
     {
-
         wayPoints.AddFirst(start);
-        wayPoints.AddLast(destination);
     }
 
     public Path(T start,  List<T> wayPoints) : this()
     {
-        this.wayPoints.AddLast(start);
+        this.wayPoints.AddFirst(start);
 
         for (int i = 0; i < wayPoints.Count; i++)
             this.wayPoints.AddLast(wayPoints[i]);
     }
 
+    public Path(T start, LinkedList<T> wayPoints) : this()
+    {
+        this.wayPoints.AddFirst(start);
+
+        foreach (T wayPoint in wayPoints)
+            this.wayPoints.AddLast(wayPoint);
+    }
+
     public bool IsFinished()
     {
-        return current == wayPoints.Last;
+        return current == null;
     }
 
     public T Reset()

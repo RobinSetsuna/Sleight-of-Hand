@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
 
 public enum GameState : int
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameState initialState = (GameState)1;
 
-    private Path<Vector2Int> path;
+    private LinkedList<Tile> wayPoints;
 
     private GameState currentGameState;
     public GameState CurrentGameState
@@ -61,7 +62,15 @@ public class GameManager : MonoBehaviour
             {
                 case GameState.Exploration:
                     MouseInputManager.Singleton.OnObjectClicked.AddListener(HandleMouseClick);
+                    MouseInputManager.Singleton.OnEndDragging.AddListener(HandleEndDragging);
+                    MouseInputManager.Singleton.OnCurrentMouseTargetChange.AddListener(HandleMouseTargetChange);
                     ResetToIdle();
+                    break;
+                case GameState.Idle:
+                    wayPoints = null;
+                    break;
+                case GameState.MovementPlanning:
+                    wayPoints = new LinkedList<Tile>();
                     break;
                 case GameState.MovementConfirmation:
                     // TODO: Show ListMenu
@@ -95,28 +104,63 @@ public class GameManager : MonoBehaviour
         CurrentGameState = GameState.Idle;
     }
 
-    private void HandleMouseClick(MouseInteractable clickedObject)
+    private void InitiatePlayerMovement(Path<Tile> path)
+    {
+        for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
+            ActionManager.Singleton.Add(new Movement(GridManager.Instance.Player, tile));
+
+        CurrentGameState = GameState.Move;
+    }
+
+    private void HandleMouseClick(MouseInteractable obj)
     {
         switch (currentGameState)
         {
             case GameState.Idle:
-                if (clickedObject.GetComponent<player>())
+                if (obj.GetComponent<player>())
                     CurrentGameState = GameState.MovementPlanning;
                 break;
             case GameState.MovementPlanning:
-                if (clickedObject.GetComponent<player>())
+                if (obj.GetComponent<player>())
                     CurrentGameState = GameState.Idle;
-                else if (clickedObject.GetComponent<Tile>())
-                {
-                    player _player = GridManager.Instance.Player;
-                    Path<Tile> path = Navigation.FindPath(GridManager.Instance, GridManager.Instance.TileFromWorldPoint(_player.transform.position), clickedObject.GetComponent<Tile>());
-
-                    for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
-                        ActionManager.Singleton.Add(new Movement(_player, tile));
-
-                    CurrentGameState = GameState.Move;
-                }
+                else if (obj.GetComponent<Tile>())
+                    InitiatePlayerMovement(Navigation.FindPath(GridManager.Instance, GridManager.Instance.TileFromWorldPoint(GridManager.Instance.Player.transform.position), obj.GetComponent<Tile>()));
                 break;
         }
+    }
+
+    private void HandleEndDragging(MouseInteractable obj)
+    {
+        switch (currentGameState)
+        {
+            case GameState.MovementPlanning:
+                if (obj.GetComponent<player>() && wayPoints.Count > 0)
+                    InitiatePlayerMovement(new Path<Tile>(GridManager.Instance.TileFromWorldPoint(GridManager.Instance.Player.transform.position), wayPoints));
+                break;
+        }
+    }
+
+    private void HandleMouseTargetChange(MouseInteractable obj)
+    {
+        if (MouseInputManager.Singleton.IsMouseDragging)
+            switch (currentGameState)
+            {
+                case GameState.MovementPlanning:
+                    if (obj.GetComponent<Tile>())
+                    {
+                        Tile tile = obj.GetComponent<Tile>();
+                        
+                        if (wayPoints.Count > 0)
+                        {
+                            if (wayPoints.Count > 1 && tile == wayPoints.Last.Previous.Value)
+                                wayPoints.RemoveLast();
+                            else if (GridManager.Instance.IsAdjacent(tile, wayPoints.Last.Value))
+                                wayPoints.AddLast(tile);
+                        }
+                        else if (GridManager.Instance.IsAdjacent(tile, GridManager.Instance.TileFromWorldPoint(GridManager.Instance.Player.transform.position)))
+                            wayPoints.AddLast(tile);
+                    }
+                    break;
+            }
     }
 }

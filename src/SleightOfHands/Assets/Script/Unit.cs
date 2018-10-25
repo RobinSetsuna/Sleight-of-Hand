@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 ///	<summary/>
 /// Unit
 /// abstract class for all walkable unit in map
@@ -17,42 +18,39 @@ public abstract class Unit : MonoBehaviour
 
     private float speed;
     private Vector3 destination;
-    private System.Action moveCallback;
 
-    private void FixedUpdate()
+    private IEnumerator Step(System.Action callback)
     {
-        if (speed > 0)
+        while (speed > 0)
         {
             Vector3 position = transform.position;
 
             // End move
             if (MathUtility.ManhattanDistance(destination.x, destination.z, position.x, position.z) < 0.05)
-            {
                 speed = 0;
-
-                if (moveCallback != null)
-                {
-                    System.Action callbackToBeExecuted = moveCallback;
-                    moveCallback = null;
-
-                    callbackToBeExecuted.Invoke();
-                }
-            }
 
             Vector3 orientation = destination - position;
             orientation.y = 0;
 
             transform.forward = orientation.normalized;
             transform.Translate(0, 0, Mathf.Min(speed * Time.deltaTime, orientation.magnitude));
+
+            yield return null;
         }
+
+        if (callback != null)
+            callback.Invoke();
+
+        yield return null;
     }
 
     public void MoveTo(Vector3 destination, System.Action callback)
     {
         this.destination = destination;
-        moveCallback = callback;
 
         speed = maxSpeed;
+
+        StartCoroutine(Step(callback));
     }
 
     public void MoveTo(Tile tile, System.Action callback)

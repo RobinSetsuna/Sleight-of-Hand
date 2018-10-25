@@ -12,9 +12,9 @@ public class MouseInteractable : MonoBehaviour
         MouseInputManager.Singleton.NotifyMouseDrag(this);
     }
 
-    private void OnMouseOver()
+    private void OnMouseEnter()
     {
-        MouseInputManager.Singleton.NotifyMouseOver(this);
+        MouseInputManager.Singleton.NotifyMouseEnter(this);
     }
 
     private void OnMouseUp()

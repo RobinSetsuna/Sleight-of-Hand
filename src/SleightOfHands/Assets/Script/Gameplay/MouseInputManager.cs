@@ -17,6 +17,7 @@ public class MouseInputManager
     public class EventOnDataChange : UnityEvent<MouseInteractable> {}
     public EventOnDataChange OnCurrentMouseTargetChange = new EventOnDataChange();
     public EventOnDataChange OnObjectClicked = new EventOnDataChange();
+    public EventOnDataChange OnEndDragging = new EventOnDataChange();
 
     public long MouseDownTime { get; private set; }
     public bool IsMouseDragging { get; private set; }
@@ -67,7 +68,7 @@ public class MouseInputManager
             IsMouseDragging = TimeUtility.localTimeInMilisecond - MouseDownTime > mouseDragThreshold;
     }
 
-    internal void NotifyMouseOver(MouseInteractable obj)
+    internal void NotifyMouseEnter(MouseInteractable obj)
     {
         CurrentMouseTarget = obj;
     }
@@ -80,6 +81,9 @@ public class MouseInputManager
             OnObjectClicked.Invoke(obj);
         }
         else
+        {
             IsMouseDragging = false;
+            OnEndDragging.Invoke(obj);
+        }
     }
 }

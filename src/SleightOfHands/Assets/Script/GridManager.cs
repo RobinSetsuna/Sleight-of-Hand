@@ -102,6 +102,11 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     //    return grid[x, y];
     //}
 
+    public bool IsAdjacent(Tile A, Tile B)
+    {
+        return MathUtility.ManhattanDistance(A.x, A.y, B.x, B.y) == 1;
+    }
+
     public Tile TileFromWorldPoint(Vector3 worldPosition)
     {
         return grid[Mathf.FloorToInt(worldPosition.x / (2 * nodeRadius)), Mathf.FloorToInt(worldPosition.z / (2 * nodeRadius))];
@@ -321,6 +326,11 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             }
         }
         return 0;
+    }
+
+    public void HighlightRange(Tile center, int range, int mask)
+    {
+
     }
     
     public void setActionPoints(int _Action_point)

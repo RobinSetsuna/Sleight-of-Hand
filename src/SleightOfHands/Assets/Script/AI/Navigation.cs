@@ -30,7 +30,7 @@ public struct Navigation
             return null;
 
         if (start.Equals(destination))
-            return new Path<T>(start, destination);
+            return new Path<T>(start);
 
         int length = navGrid.Length;
         int width = navGrid.Width;

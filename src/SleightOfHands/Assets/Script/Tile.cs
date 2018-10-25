@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
+
 ///	<summary/>
 /// Tile
 /// tile interaction, tile status change.
@@ -16,12 +15,33 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 
 	[SerializeField]private Color highlightColor;
 
-	private bool mouseOver;
-	
-	public bool walkable;
+    public bool walkable;
+
 	//public Vector3 worldPosition;
 	public Vector2Int gridPosition;
 	public int distance = 9999;
+
+    /// <summary>
+    ///                       p
+    ///                       l
+    ///                       a
+    ///                       y
+    ///                       e
+    ///                       r
+    ///                       |
+    /// 0000 0000 0000 0000 0000 0000 0000 0000
+    ///                      | |
+    ///                      E o
+    ///                      n b
+    ///                      e s
+    ///                      m t
+    ///                      y a
+    ///                      c
+    ///                      l
+    ///                      e
+    /// </summary>
+    public int Mask { get; private set; }
+
 	public int x
 	{
 		get
@@ -31,7 +51,8 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 		}
 	}
 
-	public int y	{
+	public int y
+    {
 		get
 		{
             // return  Mathf.RoundToInt(gridPosition.y);
@@ -41,54 +62,59 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 
 	public bool highlighted = false;
 	public bool selected = false;
-	
-	//private void OnMouseEnter()
-	//{
-		
-	//	if (walkable && !GridManager.Instance.dragging && !selected)
-	//	{
-	//		mouseOver = true;
-	//		GetComponent<Renderer>().material.SetColor("_Color", mouseOverColor);
-	//	}
-		
-	//	if (walkable && GridManager.Instance.dragging && !selected && GridManager.Instance.AccessibleCheck(x,y))
-	//	{
-	//		selected = true;
-	//		GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
-	//	}
-	//}
 
-	//private void OnMouseOver()
-	//{
-	//	if (walkable && !GridManager.Instance.dragging && !selected)
-	//	{
-	//		mouseOver = true;
-	//		GetComponent<Renderer>().material.SetColor("_Color", mouseOverColor);
-	//	}
-		
-	//	if (walkable && GridManager.Instance.dragging && !selected && GridManager.Instance.AccessibleCheck(x,y))
-	//	{
-	//		//print( x + " " + y);
-	//		selected = true;
-	//		GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
-	//	}
-	//}
+    //private void OnMouseEnter()
+    //{
 
-	//void OnMouseExit() {
-	//	if (walkable&&!selected)
-	//	{
-	//		mouseOver = false;
-	//		if (highlighted)
-	//		{
-	//			// back to highlight status
-	//			GetComponent<Renderer>().material.SetColor("_Color", highlightColor);
-	//		}
-	//		else
-	//		{
-	//			GetComponent<Renderer>().material.SetColor("_Color", defaultColor);
-	//		}
-	//	}
-	//}
+    //	if (walkable && !GridManager.Instance.dragging && !selected)
+    //	{
+    //		mouseOver = true;
+    //		GetComponent<Renderer>().material.SetColor("_Color", mouseOverColor);
+    //	}
+
+    //	if (walkable && GridManager.Instance.dragging && !selected && GridManager.Instance.AccessibleCheck(x,y))
+    //	{
+    //		selected = true;
+    //		GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
+    //	}
+    //}
+
+    //private void OnMouseOver()
+    //{
+    //	if (walkable && !GridManager.Instance.dragging && !selected)
+    //	{
+    //		mouseOver = true;
+    //		GetComponent<Renderer>().material.SetColor("_Color", mouseOverColor);
+    //	}
+
+    //	if (walkable && GridManager.Instance.dragging && !selected && GridManager.Instance.AccessibleCheck(x,y))
+    //	{
+    //		//print( x + " " + y);
+    //		selected = true;
+    //		GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
+    //	}
+    //}
+
+    //void OnMouseExit() {
+    //	if (walkable&&!selected)
+    //	{
+    //		mouseOver = false;
+    //		if (highlighted)
+    //		{
+    //			// back to highlight status
+    //			GetComponent<Renderer>().material.SetColor("_Color", highlightColor);
+    //		}
+    //		else
+    //		{
+    //			GetComponent<Renderer>().material.SetColor("_Color", defaultColor);
+    //		}
+    //	}
+    //}
+
+    public bool IsWalkable()
+    {
+        return (Mask & 0xf000) == 0;
+    }
 
 	public void setSelected()
 	{
