@@ -21,8 +21,6 @@ public class ActionQueue : MonoBehaviour
 
     public void PushFront(Action action)
     {
-        Debug.Log("[ActionQueue] PushFront: " + action.ToString());
-
         current = actions.AddBefore(current, action);
     }
 
@@ -40,11 +38,8 @@ public class ActionQueue : MonoBehaviour
         if (current == actions.Last)
             PushFront(action);
         else
-        {
-            Debug.Log("[ActionQueue] PushBack: " + action.ToString());
 
             actions.AddBefore(actions.Last, action);
-        }
     }
 
     public Action PushBack(System.Action<System.Action> callback)
@@ -73,14 +68,7 @@ public class ActionQueue : MonoBehaviour
         string s = "";
 
         for (LinkedListNode<Action> node = actions.First; node != actions.Last; node = node.Next)
-        {
-            if (node == current)
-                s += " -> **" + node.Value.ToString() + "**";
-            else
-                s += " -> " + node.Value.ToString();
-        }
-
-        s = s.Substring(4);
+                s += (node == current ? "->" : "  ") + node.Value.ToString() + "\n";
 
         return s;
     }

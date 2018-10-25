@@ -111,8 +111,6 @@ public class GameManager : MonoBehaviour
                     player _player = GridManager.Instance.Player;
                     Path<Tile> path = Navigation.FindPath(GridManager.Instance, GridManager.Instance.TileFromWorldPoint(_player.transform.position), clickedObject.GetComponent<Tile>());
 
-                    Debug.Log(path);
-
                     for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
                         ActionManager.Singleton.Add(new Movement(_player, tile));
 

@@ -49,8 +49,6 @@ public abstract class Unit : MonoBehaviour
 
     public void MoveTo(Vector3 destination, System.Action callback)
     {
-        Debug.LogFormat("[Unit.cs] MoveTo({0}, {1})", destination, callback);
-
         this.destination = destination;
         moveCallback = callback;
 
