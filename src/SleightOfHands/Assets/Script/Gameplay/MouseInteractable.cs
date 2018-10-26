@@ -4,21 +4,21 @@ public class MouseInteractable : MonoBehaviour
 {
     private void OnMouseDown()
     {
-        MouseInputManager.Singleton.NotifyMouseDown(gameObject);
+        MouseInputManager.Singleton.NotifyMouseDown(this);
     }
 
     private void OnMouseDrag()
     {
-        MouseInputManager.Singleton.NotifyMouseDrag(gameObject);
+        MouseInputManager.Singleton.NotifyMouseDrag(this);
     }
 
-    private void OnMouseOver()
+    private void OnMouseEnter()
     {
-        MouseInputManager.Singleton.NotifyMouseOver(gameObject);
+        MouseInputManager.Singleton.NotifyMouseEnter(this);
     }
 
     private void OnMouseUp()
     {
-        MouseInputManager.Singleton.NotifyMouseUp(gameObject);
+        MouseInputManager.Singleton.NotifyMouseUp(this);
     }
 }
