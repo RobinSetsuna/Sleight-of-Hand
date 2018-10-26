@@ -203,7 +203,7 @@ public class GameManager : MonoBehaviour
                         {
                             if (tile == path.Last.Previous.Value)
                                 RemoveWayPoint();
-                            else if (GridManager.Instance.IsAdjacent(tile, path.Last.Value) && path.Count < GridManager.Instance.Player.ActionPoint)
+                            else if (path.Count < GridManager.Instance.Player.ActionPoint && GridManager.Instance.IsAdjacent(tile, path.Last.Value) && !path.Contains(tile))
                                 AddWayPoint(tile);
                         }
                         else if (GridManager.Instance.IsAdjacent(tile, GridManager.Instance.TileFromWorldPoint(GridManager.Instance.Player.transform.position)))

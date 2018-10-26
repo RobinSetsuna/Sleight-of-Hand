@@ -96,6 +96,11 @@ public class Path<T> : IEquatable<Path<T>>, IEnumerable<T> where T : IEquatable<
             wayPoints.RemoveLast();
     }
 
+    public bool Contains(T wayPoint)
+    {
+        return wayPoints.Contains(wayPoint);
+    }
+
     public void Clear()
     {
         LinkedListNode<T> start = wayPoints.First;

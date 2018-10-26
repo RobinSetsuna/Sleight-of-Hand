@@ -9,22 +9,26 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 {
     public enum HighlightColor : int
     {
-        Blue = 1,
-        Green = 2,
-        Cyan = 3,
-        Red = 4,
-        Magenta = 5,
-        Yello = 6,
-        None = 7,
+        None = 0,
+        Black = 1,
+        Blue = 3,
+        Green = 5,
+        Cyan = 7,
+        Red = 9,
+        Magenta = 11,
+        Yello = 13,
+        White = 15,
     }
 
-    [SerializeField]private Color defaultColor;
+    //[SerializeField]private Color defaultColor;
 
-	[SerializeField]private Color mouseOverColor;
+    //[SerializeField]private Color mouseOverColor;
 
-	[SerializeField]private Color selectedColor;
+    //[SerializeField]private Color selectedColor;
 
-	[SerializeField]private Color highlightColor;
+    //[SerializeField]private Color highlightColor;
+
+    [SerializeField][Range(0, 1)] private float alpha = 0.5f;
 
     public bool walkable
     {
@@ -35,7 +39,7 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 
         set
         {
-            Mask = BitOperationUtility.WriteBit(Mask, 31, value);
+            BitOperationUtility.WriteBit(ref mark, 31, value);
         }
     }
 
@@ -47,24 +51,31 @@ public class Tile : MouseInteractable, IEquatable<Tile>
     /// w
     /// a
     /// l                     p
-    /// k                     l              g
-    /// a                     a              r
-    /// b                     y              e
-    /// l                     e              e
-    /// e                     r              n
-    /// |                     |              |
-    /// 0000 0000 0000 0000 0000 0000 0000 0000
-    ///                      | |            | |
-    ///                      e o            r b
-    ///                      n b            e l
-    ///                      e s            d u
-    ///                      m t              e
-    ///                      y a
+    /// k                     l
+    /// a                     a              b
+    /// b                     y            r l
+    /// l                     e            e u
+    /// e                     r            d e
+    /// |                     |            | |
+    /// 0100 0000 0000 0000 0000 0000 0000 0000
+    ///  |                   | |            | |
+    ///  t                   e o            g a
+    ///  i                   n b            r l
+    ///  l                  e s            e p
+    ///  e                   m t            e h
+    ///                      y a            n a
     ///                        c
     ///                        l
     ///                        e
     /// </summary>
-    public int Mask { get; private set; }
+    private int mark = 0x40000000;
+    public int Mark
+    {
+        get
+        {
+            return mark;
+        }
+    }
 
 	public int x
 	{
@@ -136,27 +147,34 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 
     public bool IsWalkable()
     {
-        return Mask < 0;
+        return mark < 0;
     }
 
     public bool IsHighlighted()
     {
-        return (Mask & 0xf) != (int)HighlightColor.None;
+        // return (Mark & 0xf) != 0;
+        return IsHighlighted(HighlightColor.White);
     }
 
-    public void setSelected()
-	{
-		// set tile to selected
-		selected = true;
-		GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
-	}
-	
-	public void Wipe()
+    public bool IsHighlighted(HighlightColor color)
+    {
+        int c = (int)color;
+        return (mark & c) == c;
+    }
+
+    //   public void setSelected()
+    //{
+    //	// set tile to selected
+    //	selected = true;
+    //	GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
+    //}
+
+    public void Wipe()
 	{
 		//wipe all held effect for tile
 		selected = false;
 
-		GetComponent<Renderer>().material.SetColor("_Color", defaultColor);
+		//GetComponent<Renderer>().material.SetColor("_Color", defaultColor);
 	}
 
     public void Dehighlight()
@@ -168,9 +186,9 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 	{
         int mask = (int)color;
 
-        if (((Mask ^ mask) & 0xf) != 0)
+        if (((mark ^ mask) & 0xf) != 0)
         {
-            Mask = BitOperationUtility.WriteBits(Mask, mask, 0, 3);
+            BitOperationUtility.WriteBits(ref mark, mask, 0, 3);
             RefreshHighlight();
         }
 	}
@@ -187,6 +205,6 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 
     private void RefreshHighlight()
     {
-        GetComponent<Renderer>().material.SetColor("_Color", new Color(BitOperationUtility.ReadBit(Mask, 2), BitOperationUtility.ReadBit(Mask, 1), BitOperationUtility.ReadBit(Mask, 0)));
+        GetComponent<Renderer>().material.SetColor("_Color", new Color(BitOperationUtility.ReadBit(mark, 3), BitOperationUtility.ReadBit(mark, 2), BitOperationUtility.ReadBit(mark, 1), BitOperationUtility.ReadBit(mark, 0) * alpha));
     }
 }
