@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
-public class Path<T> : IEquatable<Path<T>> where T : IEquatable<T>
+public class Path<T> : IEquatable<Path<T>>, IEnumerable<T> where T : IEquatable<T>
 {
     private LinkedList<T> wayPoints;
     private LinkedListNode<T> current;
@@ -33,6 +34,30 @@ public class Path<T> : IEquatable<Path<T>> where T : IEquatable<T>
         }
     }
 
+    public LinkedListNode<T> First
+    {
+        get
+        {
+            return wayPoints.First;
+        }
+    }
+
+    public LinkedListNode<T> Last
+    {
+        get
+        {
+            return wayPoints.Last;
+        }
+    }
+
+    public int Count
+    {
+        get
+        {
+            return wayPoints.Count - 1;
+        }
+    }
+
     private Path()
     {
         wayPoints = new LinkedList<T>();
@@ -58,6 +83,25 @@ public class Path<T> : IEquatable<Path<T>> where T : IEquatable<T>
 
         foreach (T wayPoint in wayPoints)
             this.wayPoints.AddLast(wayPoint);
+    }
+
+    public void AddLast(T wayPoint)
+    {
+        wayPoints.AddLast(wayPoint);
+    }
+
+    public void RemoveLast()
+    {
+        if (Count > 0)
+            wayPoints.RemoveLast();
+    }
+
+    public void Clear()
+    {
+        LinkedListNode<T> start = wayPoints.First;
+        wayPoints.Clear();
+
+        wayPoints.AddFirst(start);
     }
 
     public bool IsFinished()
@@ -123,5 +167,15 @@ public class Path<T> : IEquatable<Path<T>> where T : IEquatable<T>
             return false;
 
         return a.Value.Equals(b.Value) && IsSame(a.Next, b.Next);
+    }
+
+    IEnumerator<T> IEnumerable<T>.GetEnumerator()
+    {
+        return wayPoints.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return wayPoints.GetEnumerator();
     }
 }

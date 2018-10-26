@@ -3,7 +3,7 @@ using UnityEngine;
 
 public struct MathUtility
 {
-    public static readonly float SQRT2 = Mathf.Sqrt(2);
+    public static readonly float sqrt2 = Mathf.Sqrt(2);
 
     public static int ManhattanDistance(int xA, int yA, int xB, int yB)
     {

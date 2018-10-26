@@ -62,15 +62,17 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         }
     }
 
-    void Start()
+    private void Start()
     {
         GenerateMap (null);
         checktimes = 0;
         ok_to_drag = false;
         action_point = 5;
+
+        GameManager.Singleton.OnPathChange.AddListener(HandlePathChange);
     }
 
-    void Update()
+    private void Update()
     {
         if (Input.GetMouseButton(0)&&ok_to_drag)
         {
@@ -183,48 +185,62 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
     public void wipeTiles()
     {
-        checktimes = 0;
-        foreach (Tile tile in grid)
+        if (checktimes > 0)
         {
-            //reset all tiles
-            tile.Wipe();
-        }
-    }
-
-    public bool AccessibleCheck(int tile_x, int tile_y)
-    {
-        for (int x = -1; x <= 1; x++)
-        {
-            for (int y = -1; y <= 1; y++)
+            checktimes = 0;
+            foreach (Tile tile in grid)
             {
-                if (x == 0 && y == 0)
-                {
-                    // center skip
-                    continue;
-                }
-
-                if (x != 0 && y != 0)
-                {
-                    // disable diagonal check.  remove this 'if' statement when we want diagonal check
-                    continue;
-                }
-
-                int temp_x = tile_x + x;
-                int temp_y = tile_y + y;
-                if (temp_x >= 0 && temp_x < grid.Length && temp_y >= 0 && temp_y < grid.Length)
-                {
-                    if (grid[temp_x, temp_y].selected && temp_x == generatedPath[checktimes-1].x && temp_y == generatedPath[checktimes-1].y )
-                    {
-                        //accessible
-                        generatedPath[checktimes] = grid[tile_x, tile_y];// add tile to path, selected
-                        checktimes++; // check success time = selected tiles.
-                        return true;
-                    }
-                }
+                //reset all tiles
+                tile.Wipe();
             }
         }
-        return false;
     }
+
+    public void DehighlightAll()
+    {
+        if (checktimes > 0)
+        {
+            foreach (Tile tile in grid)
+                tile.Dehighlight();
+
+            checktimes = 0;
+        }
+    }
+
+    //public bool AccessibleCheck(int tile_x, int tile_y)
+    //{
+    //    for (int x = -1; x <= 1; x++)
+    //    {
+    //        for (int y = -1; y <= 1; y++)
+    //        {
+    //            if (x == 0 && y == 0)
+    //            {
+    //                // center skip
+    //                continue;
+    //            }
+
+    //            if (x != 0 && y != 0)
+    //            {
+    //                // disable diagonal check.  remove this 'if' statement when we want diagonal check
+    //                continue;
+    //            }
+
+    //            int temp_x = tile_x + x;
+    //            int temp_y = tile_y + y;
+    //            if (temp_x >= 0 && temp_x < grid.Length && temp_y >= 0 && temp_y < grid.Length)
+    //            {
+    //                if (grid[temp_x, temp_y].selected && temp_x == generatedPath[checktimes-1].x && temp_y == generatedPath[checktimes-1].y )
+    //                {
+    //                    //accessible
+    //                    generatedPath[checktimes] = grid[tile_x, tile_y];// add tile to path, selected
+    //                    checktimes++; // check success time = selected tiles.
+    //                    return true;
+    //                }
+    //            }
+    //        }
+    //    }
+    //    return false;
+    //}
 
     /// <Hightlight>
     /// give center tile, highlight range, and highlight type to highlight specific group of tiles.
@@ -234,110 +250,194 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// flag: 2 ignore distance, just avoid unwalkable tile , example usage: effect can across the wall
     /// flag: 3 consider distance, not ignore the tiles behind wall. example usage:movement use
     /// </summary>
-    public void Highlight(Tile center, int _range, int flag)
+    //public void Highlight(Tile center, int range, int flag)
+    //{
+    //    generatedPath = flag == 3 ? new Tile[action_point+1] : null;
+    //    generatedPath[checktimes] = center;// add stand_tile to path, selected
+    //    checktimes++;
+    //    bool ignoreDistance = (flag == 2);
+    //    bool rechecking = (flag == 3||flag == 2);
+    //    this.range = range;
+    //    center.HighlightTile();
+    //    center.distance = 0;
+    //    recheck_list = new HashSet<Tile>();
+    //    for (int x = 0; x <= this.range; x++)
+    //    {
+    //        for (int y = 0; y <= this.range; y++)
+    //        {
+    //            if (x + y <= this.range && x + y != 0)
+    //            {
+    //                // tile is out of range or already highlight
+    //                //Debug.Log("x:" + x +" y: "+ y + "is out of range");
+    //                setHighlight(center.x + x, center.y + y, rechecking, ignoreDistance);
+    //                setHighlight(center.x - x, center.y + y, rechecking, ignoreDistance);
+    //                setHighlight(center.x + x, center.y - y, rechecking, ignoreDistance);
+    //                setHighlight(center.x - x, center.y - y, rechecking, ignoreDistance);
+    //            }        
+    //        }
+    //    }
+
+    //    foreach (Tile tile in recheck_list)
+    //    {
+    //        //print("rechecking: "+ tile.x + " "+ tile.y);
+    //        setHighlight(tile.x, tile.y, false, false);
+    //    }
+    //}
+
+    private void HandlePathChange(Path<Tile> path)
     {
-        generatedPath = flag == 3 ? new Tile[action_point+1] : null;
-        generatedPath[checktimes] = center;// add stand_tile to path, selected
+        DehighlightAll();
+
+        if (path != null)
+        {
+            if (path.Count == 0)
+                Highlight(TileFromWorldPoint(_player.transform.position), _player.ActionPoint, Tile.HighlightColor.Blue);
+            else
+                Highlight(path.Destination, _player.ActionPoint - path.Count, Tile.HighlightColor.Blue);
+
+            foreach (Tile wayPoint in path)
+                Highlight(wayPoint, 0, Tile.HighlightColor.Green);
+            
+        }
+    }
+
+    public void Highlight(Tile center, int range, Tile.HighlightColor color)
+    {
+        Highlight(center, 0, range, int.MinValue, color);
+    }
+
+    public void Highlight(Tile center, int range, int mask, Tile.HighlightColor color)
+    {
+        Highlight(center, 0, range, mask, color);
+    }
+
+    public void Highlight(Tile center, int nearest, int farest, int mask, Tile.HighlightColor color)
+    {
+        bool[,] isVisited = new bool[Length, Width];
+
+        Highlight(center, nearest, farest, mask, color, ref isVisited);
+    }
+
+    private void Highlight(Tile center, int nearest, int farest, int mask, Tile.HighlightColor color, ref bool[,] isVisited)
+    {
+        center.Highlight(color);
         checktimes++;
-        bool ignoreDistance = (flag == 2);
-        bool rechecking = (flag == 3||flag == 2);
-        range = _range;
-        center.HighlightTile();
-        center.distance = 0;
-        recheck_list = new HashSet<Tile>();
-        for (int x = 0; x <= range; x++)
+
+        int x = center.x;
+        int y = center.y;
+
+        if (farest > nearest)
         {
-            for (int y = 0; y <= range; y++)
+            int newNearest = Math.Max(0, nearest - 1);
+            int newFarest = farest - 1;
+
+            if (x + 1 < Length && !isVisited[x + 1, y])
             {
-                if (x + y <= range && x + y != 0)
-                {
-                    // tile is out of range or already highlight
-                    //Debug.Log("x:" + x +" y: "+ y + "is out of range");
-                    setHighlight(center.x + x, center.y + y,rechecking,ignoreDistance);
-                    setHighlight(center.x - x, center.y + y,rechecking,ignoreDistance);
-                    setHighlight(center.x + x, center.y - y,rechecking,ignoreDistance);
-                    setHighlight(center.x - x, center.y - y,rechecking,ignoreDistance);
-                }        
-            }
-        }
+                Tile tile = grid[x + 1, y];
 
-        foreach (Tile tile in recheck_list)
-        {
-            //print("rechecking: "+ tile.x + " "+ tile.y);
-            setHighlight(tile.x, tile.y, false, false);
-        }
-    }
-
-    private void setHighlight(int x, int y,bool recheck , bool ignore_distance)
-    {
-        //Debug.Log("x:" + x +" y: "+ y);
-        if (x >= 0 && x < grid.Length && y >= 0 && y < grid.Length)
-        {
-            var temp = grid[x,y];
-
-            int ret = NeighborCheck(temp);
-            if ( ret > 0 && temp.walkable)
-            {
-                if (ignore_distance)
-                {
-                    temp.distance = Mathf.Abs(temp.x - x)+Mathf.Abs(temp.y - y); 
-                }
+                if ((tile.Mask & mask) != 0)
+                    Highlight(tile, newNearest, newFarest, mask, color, ref isVisited);
                 else
-                {
-                    temp.distance = ret; 
-                }
-                temp.HighlightTile();
+                    isVisited[x + 1, y] = true;
             }
-            else if(ret == 0&&recheck&&temp.walkable)
+
+            if (x - 1 >= 0 && !isVisited[x - 1, y])
             {
-                    recheck_list.Add(temp);
-                // Debug.Log("neighbor check failed");
+                Tile tile = grid[x - 1, y];
+
+                if ((tile.Mask & mask) != 0)
+                    Highlight(tile, newNearest, newFarest, mask, color, ref isVisited);
+                else
+                    isVisited[x - 1, y] = true;
+            }
+
+            if (y + 1 < Width && !isVisited[x, y + 1])
+            {
+                Tile tile = grid[x, y + 1];
+
+                if ((tile.Mask & mask) != 0)
+                    Highlight(tile, newNearest, newFarest, mask, color, ref isVisited);
+                else
+                    isVisited[x, y + 1] = true;
+            }
+
+            if (y - 1 >= 0 && !isVisited[x, y - 1])
+            {
+                Tile tile = grid[x, y - 1];
+
+                if ((tile.Mask & mask) != 0)
+                    Highlight(tile, newNearest, newFarest, mask, color, ref isVisited);
+                else
+                    isVisited[x, y - 1] = true;
             }
         }
     }
 
-    private int NeighborCheck(Tile tile)
-    {
-        // check any near 4 tiles is highlighted or not
-        // return the distance to center
-        for (int x = -1; x <= 1; x++)
-        {
-            for (int y = -1; y <= 1; y++)
-            {
-                if (x == 0 && y == 0)
-                {
-                    // center skip
-                    continue;
-                }
-                if (x != 0 && y != 0)
-                {
-                    // disable diagonal check.  remove this 'if' statement when we want diagonal check
-                    continue;
-                }
-                int temp_x = tile.x + x;
-                int temp_y = tile.y + y;
-                if( temp_x >= 0 && temp_x < grid.Length && temp_y >= 0 && temp_y < grid.Length)
-                {
-                    if (grid[temp_x, temp_y].highlighted && grid[temp_x, temp_y].distance + 1 <= range)
-                    {
-                        return grid[temp_x, temp_y].distance + 1;
-                    }
-                }
-            }
-        }
-        return 0;
-    }
+    //private void setHighlight(int x, int y,bool recheck , bool ignore_distance)
+    //{
+    //    //Debug.Log("x:" + x +" y: "+ y);
+    //    if (x >= 0 && x < grid.Length && y >= 0 && y < grid.Length)
+    //    {
+    //        var temp = grid[x,y];
 
-    public void HighlightRange(Tile center, int range, int mask)
-    {
+    //        int ret = NeighborCheck(temp);
+    //        if ( ret > 0 && temp.walkable)
+    //        {
+    //            if (ignore_distance)
+    //            {
+    //                temp.distance = Mathf.Abs(temp.x - x)+Mathf.Abs(temp.y - y); 
+    //            }
+    //            else
+    //            {
+    //                temp.distance = ret; 
+    //            }
+    //            temp.HighlightTile();
+    //        }
+    //        else if(ret == 0&&recheck&&temp.walkable)
+    //        {
+    //                recheck_list.Add(temp);
+    //            // Debug.Log("neighbor check failed");
+    //        }
+    //    }
+    //}
 
-    }
+    //private int NeighborCheck(Tile tile)
+    //{
+    //    // check any near 4 tiles is highlighted or not
+    //    // return the distance to center
+    //    for (int x = -1; x <= 1; x++)
+    //    {
+    //        for (int y = -1; y <= 1; y++)
+    //        {
+    //            if (x == 0 && y == 0)
+    //            {
+    //                // center skip
+    //                continue;
+    //            }
+    //            if (x != 0 && y != 0)
+    //            {
+    //                // disable diagonal check.  remove this 'if' statement when we want diagonal check
+    //                continue;
+    //            }
+    //            int temp_x = tile.x + x;
+    //            int temp_y = tile.y + y;
+    //            if( temp_x >= 0 && temp_x < grid.Length && temp_y >= 0 && temp_y < grid.Length)
+    //            {
+    //                if (grid[temp_x, temp_y].highlighted && grid[temp_x, temp_y].distance + 1 <= range)
+    //                {
+    //                    return grid[temp_x, temp_y].distance + 1;
+    //                }
+    //            }
+    //        }
+    //    }
+    //    return 0;
+    //}
     
-    public void setActionPoints(int _Action_point)
-    {
-        //set Action points
-        action_point = _Action_point;
-    }
+    //public void setActionPoints(int _Action_point)
+    //{
+    //    //set Action points
+    //    action_point = _Action_point;
+    //}
 
     public Vector2Int GetIndices(Tile position)
     {

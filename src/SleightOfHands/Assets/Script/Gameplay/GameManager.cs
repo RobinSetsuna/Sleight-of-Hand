@@ -25,12 +25,18 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Singleton { get; private set; }
 
+    //public class EventOnGameState : UnityEvent<GameState> {}
+    //public EventOnGameState OnCurrentGameStateReset = new EventOnGameState();
+
     public class EventOnGameStateChange : UnityEvent<GameState, GameState> {}
-    EventOnGameStateChange OnCurrentGameStateChange = new EventOnGameStateChange();
+    public EventOnGameStateChange OnCurrentGameStateChange = new EventOnGameStateChange();
+
+    public class EventOnWayPointsChange : UnityEvent<Path<Tile>> {}
+    public EventOnWayPointsChange OnPathChange = new EventOnWayPointsChange();
 
     [SerializeField] private GameState initialState = (GameState)1;
 
-    private LinkedList<Tile> wayPoints;
+    private Path<Tile> path;
 
     private GameState currentGameState;
     public GameState CurrentGameState
@@ -46,41 +52,59 @@ public class GameManager : MonoBehaviour
             Debug.LogFormat("[GameManager] Make a transition to {0}.", value);
 #endif
 
-            if (currentGameState == value)
-                return;
-
-            // Before leaving the previous state
-            //switch (currentGameState)
-            //{
-            //}
-
-            GameState previousState = CurrentGameState;
-            currentGameState = value;
-
-            // After entering the new state
-            switch (currentGameState)
+            // Reset current state
+            if (value == currentGameState)
             {
-                case GameState.Exploration:
-                    MouseInputManager.Singleton.OnObjectClicked.AddListener(HandleMouseClick);
-                    MouseInputManager.Singleton.OnEndDragging.AddListener(HandleEndDragging);
-                    MouseInputManager.Singleton.OnCurrentMouseTargetChange.AddListener(HandleMouseTargetChange);
-                    ResetToIdle();
-                    break;
-                case GameState.Idle:
-                    wayPoints = null;
-                    break;
-                case GameState.MovementPlanning:
-                    wayPoints = new LinkedList<Tile>();
-                    break;
-                case GameState.MovementConfirmation:
-                    // TODO: Show ListMenu
-                    break;
-                case GameState.Move:
-                    ActionManager.Singleton.Execute(ResetToIdle);
-                    break;
+                switch (currentGameState)
+                {
+                    case GameState.MovementPlanning:
+                        path.Clear();
+                        OnPathChange.Invoke(path);
+                        break;
+                }
             }
+            else
+            {
+                // Before leaving the previous state
+                //switch (currentGameState)
+                //{
+                //}
 
-            OnCurrentGameStateChange.Invoke(previousState, value);
+                GameState previousState = CurrentGameState;
+                currentGameState = value;
+
+                // After entering the new state
+                switch (currentGameState)
+                {
+                    case GameState.Exploration:
+                        MouseInputManager.Singleton.OnObjectClicked.AddListener(HandleMouseClick);
+                        MouseInputManager.Singleton.OnEndDragging.AddListener(HandleEndDragging);
+                        MouseInputManager.Singleton.OnCurrentMouseTargetChange.AddListener(HandleMouseTargetChange);
+                        ResetToIdle();
+                        break;
+                    case GameState.Idle:
+                        if (previousState != GameState.Move)
+                        {
+                            path = null;
+                            OnPathChange.Invoke(path);
+                        }
+                        break;
+                    case GameState.MovementPlanning:
+                        path = new Path<Tile>(GridManager.Instance.TileFromWorldPoint(GridManager.Instance.Player.transform.position));
+                        OnPathChange.Invoke(path);
+                        break;
+                    case GameState.MovementConfirmation:
+                        // TODO: Show ListMenu
+                        break;
+                    case GameState.Move:
+                        path = null;
+                        OnPathChange.Invoke(path);
+                        ActionManager.Singleton.Execute(ResetToIdle);
+                        break;
+                }
+
+                OnCurrentGameStateChange.Invoke(previousState, value);
+            }
         }
     }
 
@@ -93,10 +117,24 @@ public class GameManager : MonoBehaviour
             Singleton = this;
             DontDestroyOnLoad(gameObject);
         }
-        else
+        else if (this != Singleton)
             Destroy(gameObject);
 
         CurrentGameState = initialState;
+    }
+
+    private void AddWayPoint(Tile tile)
+    {
+        path.AddLast(tile);
+
+        OnPathChange.Invoke(path);
+    }
+
+    private void RemoveWayPoint()
+    {
+        path.RemoveLast();
+
+        OnPathChange.Invoke(path);
     }
 
     private void ResetToIdle()
@@ -104,7 +142,7 @@ public class GameManager : MonoBehaviour
         CurrentGameState = GameState.Idle;
     }
 
-    private void InitiatePlayerMovement(Path<Tile> path)
+    private void InitiatePlayerMovement()
     {
         for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
             ActionManager.Singleton.Add(new Movement(GridManager.Instance.Player, tile));
@@ -124,7 +162,10 @@ public class GameManager : MonoBehaviour
                 if (obj.GetComponent<player>())
                     CurrentGameState = GameState.Idle;
                 else if (obj.GetComponent<Tile>())
-                    InitiatePlayerMovement(Navigation.FindPath(GridManager.Instance, GridManager.Instance.TileFromWorldPoint(GridManager.Instance.Player.transform.position), obj.GetComponent<Tile>()));
+                {
+                    path = Navigation.FindPath(GridManager.Instance, GridManager.Instance.TileFromWorldPoint(GridManager.Instance.Player.transform.position), obj.GetComponent<Tile>());
+                    InitiatePlayerMovement();
+                }
                 break;
         }
     }
@@ -134,8 +175,8 @@ public class GameManager : MonoBehaviour
         switch (currentGameState)
         {
             case GameState.MovementPlanning:
-                if (obj.GetComponent<player>() && wayPoints.Count > 0)
-                    InitiatePlayerMovement(new Path<Tile>(GridManager.Instance.TileFromWorldPoint(GridManager.Instance.Player.transform.position), wayPoints));
+                if (obj.GetComponent<player>() && path.Count > 0)
+                    InitiatePlayerMovement();
                 break;
         }
     }
@@ -146,19 +187,24 @@ public class GameManager : MonoBehaviour
             switch (currentGameState)
             {
                 case GameState.MovementPlanning:
-                    if (obj.GetComponent<Tile>())
+                    if (obj.GetComponent<player>())
+                    {
+                        if (path.Count == 1)
+                            RemoveWayPoint();
+                    }
+                    else if (obj.GetComponent<Tile>())
                     {
                         Tile tile = obj.GetComponent<Tile>();
                         
-                        if (wayPoints.Count > 0)
+                        if (path.Count > 0)
                         {
-                            if (wayPoints.Count > 1 && tile == wayPoints.Last.Previous.Value)
-                                wayPoints.RemoveLast();
-                            else if (GridManager.Instance.IsAdjacent(tile, wayPoints.Last.Value))
-                                wayPoints.AddLast(tile);
+                            if (tile == path.Last.Previous.Value)
+                                RemoveWayPoint();
+                            else if (GridManager.Instance.IsAdjacent(tile, path.Last.Value))
+                                AddWayPoint(tile);
                         }
                         else if (GridManager.Instance.IsAdjacent(tile, GridManager.Instance.TileFromWorldPoint(GridManager.Instance.Player.transform.position)))
-                            wayPoints.AddLast(tile);
+                            AddWayPoint(tile);
                     }
                     break;
             }

@@ -7,7 +7,18 @@ using UnityEngine;
 /// </summary>
 public class Tile : MouseInteractable, IEquatable<Tile>
 {
-	[SerializeField]private Color defaultColor;
+    public enum HighlightColor : int
+    {
+        Blue = 1,
+        Green = 2,
+        Cyan = 3,
+        Red = 4,
+        Magenta = 5,
+        Yello = 6,
+        None = 7,
+    }
+
+    [SerializeField]private Color defaultColor;
 
 	[SerializeField]private Color mouseOverColor;
 
@@ -15,30 +26,43 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 
 	[SerializeField]private Color highlightColor;
 
-    public bool walkable;
+    public bool walkable
+    {
+        get
+        {
+            return IsWalkable();
+        }
+
+        set
+        {
+            Mask = BitOperationUtility.WriteBit(Mask, 31, value);
+        }
+    }
 
 	//public Vector3 worldPosition;
 	public Vector2Int gridPosition;
 	public int distance = 9999;
 
     /// <summary>
-    ///                       p
-    ///                       l
-    ///                       a
-    ///                       y
-    ///                       e
-    ///                       r
-    ///                       |
+    /// w
+    /// a
+    /// l                     p
+    /// k                     l              g
+    /// a                     a              r
+    /// b                     y              e
+    /// l                     e              e
+    /// e                     r              n
+    /// |                     |              |
     /// 0000 0000 0000 0000 0000 0000 0000 0000
-    ///                      | |
-    ///                      E o
-    ///                      n b
-    ///                      e s
-    ///                      m t
+    ///                      | |            | |
+    ///                      e o            r b
+    ///                      n b            e l
+    ///                      e s            d u
+    ///                      m t              e
     ///                      y a
-    ///                      c
-    ///                      l
-    ///                      e
+    ///                        c
+    ///                        l
+    ///                        e
     /// </summary>
     public int Mask { get; private set; }
 
@@ -60,7 +84,6 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 		}
 	}
 
-	public bool highlighted = false;
 	public bool selected = false;
 
     //private void OnMouseEnter()
@@ -113,10 +136,15 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 
     public bool IsWalkable()
     {
-        return (Mask & 0xf000) == 0;
+        return Mask < 0;
     }
 
-	public void setSelected()
+    public bool IsHighlighted()
+    {
+        return (Mask & 0xf) != (int)HighlightColor.None;
+    }
+
+    public void setSelected()
 	{
 		// set tile to selected
 		selected = true;
@@ -126,15 +154,25 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 	public void Wipe()
 	{
 		//wipe all held effect for tile
-		highlighted = false;
 		selected = false;
+
 		GetComponent<Renderer>().material.SetColor("_Color", defaultColor);
 	}
-	public void HighlightTile()
+
+    public void Dehighlight()
+    {
+        Highlight(HighlightColor.None);
+    }
+
+	public void Highlight(HighlightColor color)
 	{
-		// tile highlight
-		highlighted = true;
-		GetComponent<Renderer>().material.SetColor("_Color", highlightColor);
+        int mask = (int)color;
+
+        if (((Mask ^ mask) & 0xf) != 0)
+        {
+            Mask = BitOperationUtility.WriteBits(Mask, mask, 0, 3);
+            RefreshHighlight();
+        }
 	}
 
     public bool Equals(Tile other)
@@ -145,5 +183,10 @@ public class Tile : MouseInteractable, IEquatable<Tile>
     override public string ToString()
     {
         return gridPosition.ToString();
+    }
+
+    private void RefreshHighlight()
+    {
+        GetComponent<Renderer>().material.SetColor("_Color", new Color(BitOperationUtility.ReadBit(Mask, 2), BitOperationUtility.ReadBit(Mask, 1), BitOperationUtility.ReadBit(Mask, 0)));
     }
 }

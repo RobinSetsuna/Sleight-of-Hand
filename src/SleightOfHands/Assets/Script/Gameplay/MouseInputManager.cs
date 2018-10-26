@@ -19,6 +19,7 @@ public class MouseInputManager
     public EventOnDataChange OnObjectClicked = new EventOnDataChange();
     public EventOnDataChange OnEndDragging = new EventOnDataChange();
 
+    public bool IsMouseDown { get; private set; }
     public long MouseDownTime { get; private set; }
     public bool IsMouseDragging { get; private set; }
 
@@ -59,6 +60,7 @@ public class MouseInputManager
 
     internal void NotifyMouseDown(MouseInteractable obj)
     {
+        IsMouseDown = true;
         MouseDownTime = TimeUtility.localTimeInMilisecond;
     }
 
@@ -70,11 +72,16 @@ public class MouseInputManager
 
     internal void NotifyMouseEnter(MouseInteractable obj)
     {
+        if (IsMouseDown)
+            IsMouseDragging = true;
+
         CurrentMouseTarget = obj;
     }
 
     internal void NotifyMouseUp(MouseInteractable obj)
     {
+        IsMouseDown = false;
+
         if (!IsMouseDragging)
         {
             LastClickedObject = obj;

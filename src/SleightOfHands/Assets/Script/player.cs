@@ -1,21 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-///	<summary/>
+﻿///	<summary/>
 /// Player - derived class of Unit
 /// Active movement range, dragging path action, set heading
 ///
 /// </summary>
 public class player : Unit
 {
-	private int action_point;
 	private int path_index;
 	private bool action;
+
+    public int ActionPoint { get; private set; }
 
     // Use this for initialization
     void Start()
     {
-        action_point = 5;
+        ActionPoint = 5;
         action = false;
     }
 
@@ -68,28 +66,28 @@ public class player : Unit
     //}
     //}
 
-    public void movementEnable()
-	{
-		// enable movement mode, ok for highlight, selected tiles in map.
-		GridManager.Instance.wipeTiles();
-		Tile tile_stand = GridManager.Instance.TileFromWorldPoint(transform.position);
-		GridManager.Instance.Highlight(tile_stand,action_point,3);
-		tile_stand.setSelected();
-		GridManager.Instance.ok_to_drag = true;
-	}
+ //   public void movementEnable()
+	//{
+	//	// enable movement mode, ok for highlight, selected tiles in map.
+	//	GridManager.Instance.wipeTiles();
+	//	Tile tile_stand = GridManager.Instance.TileFromWorldPoint(transform.position);
+	//	GridManager.Instance.Highlight(tile_stand,ActionPoint,3);
+	//	tile_stand.setSelected();
+	//	GridManager.Instance.ok_to_drag = true;
+	//}
 
-	public void movementDisable()
-	{
-		// disable movement mode, wipe highlight, selected tiles in map.
-		GridManager.Instance.wipeTiles();
-		GridManager.Instance.ok_to_drag = false;
-	}
+	//public void movementDisable()
+	//{
+	//	// disable movement mode, wipe highlight, selected tiles in map.
+	//	GridManager.Instance.wipeTiles();
+	//	GridManager.Instance.ok_to_drag = false;
+	//}
 
-	public void setActionPoints(int _Action_point)
-	{
-		//set Action points
-		action_point = _Action_point;
-	}
+	//public void setActionPoints(int _Action_point)
+	//{
+	//	//set Action points
+	//	ActionPoint = _Action_point;
+	//}
 
     //public void Move()
     //{
