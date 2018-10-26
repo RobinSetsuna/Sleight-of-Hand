@@ -130,7 +130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &125048616
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -278,7 +278,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &244652749
 Transform:
   m_ObjectHideFlags: 0
@@ -595,7 +595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &860820003
 Transform:
   m_ObjectHideFlags: 0
@@ -880,6 +880,10 @@ Prefab:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 1655796044413748, guid: d50ac4244bcdc6448a5209bdab280d8f, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d50ac4244bcdc6448a5209bdab280d8f, type: 2}
   m_IsPrefabAsset: 0
@@ -1000,7 +1004,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   nodeRadius: 0.5
-  tilePrefab: {fileID: 4202221461299724, guid: df32d8651c840a9429479bfb9204413a, type: 2}
+  tilePrefab:
+  - {fileID: 4202221461299724, guid: df32d8651c840a9429479bfb9204413a, type: 2}
   mapSize: {x: 0, y: 0}
   outlinePercent: 0.075
   time_intervals: 0.05
@@ -1008,6 +1013,8 @@ MonoBehaviour:
   ok_to_drag: 0
   checktimes: 0
   generatedPath: []
+  wallPrefabs:
+  - {fileID: 1153893828607108, guid: 8da33a8762d7d0e42912306a2edf1d4f, type: 2}
 --- !u!4 &1290799990
 Transform:
   m_ObjectHideFlags: 0
@@ -1050,6 +1057,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelFolderPath: Levels
   levelFilename: test_level
+  debug:
+    name: 
+    width: 0
+    tiles: 
+    spawns: []
 --- !u!4 &1492632704
 Transform:
   m_ObjectHideFlags: 0
@@ -1163,7 +1175,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4139613893319620, guid: 768a6dd4fff647d439e92b44d198296c, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.14
+      value: 4.54
       objectReference: {fileID: 0}
     - target: {fileID: 4139613893319620, guid: 768a6dd4fff647d439e92b44d198296c, type: 2}
       propertyPath: m_LocalPosition.z

@@ -8,6 +8,7 @@ ModelImporter:
     400000: tile_base_top_1_re
     400002: //RootNode
     2100000: tile_base_top_1_reMat
+    2100002: palette
     2300000: tile_base_top_1_re
     3300000: tile_base_top_1_re
     4300000: tile_base_top_1_re
