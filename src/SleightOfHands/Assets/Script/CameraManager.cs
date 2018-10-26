@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
  
-public class CameraDrag : MonoBehaviour
+public class CameraManager : MonoBehaviour
 {
 	public float dragSpeed = 1;
 	private Vector3 dragOrigin;
