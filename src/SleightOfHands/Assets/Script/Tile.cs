@@ -39,20 +39,24 @@ public class Tile : MonoBehaviour
 
 	public bool highlighted = false;
 	public bool selected = false;
-	
+	private Renderer Component
+	{
+		get { return  gameObject.GetComponentInChildren<Renderer>(); }
+	}
+
 	private void OnMouseEnter()
 	{
 		
 		if (walkable && !GridManager.Instance.dragging && !selected)
 		{
 			mouseOver = true;
-			GetComponent<Renderer>().material.SetColor("_Color", mouseOverColor);
+			Component.material.SetColor("_Color", mouseOverColor);
 		}
 		
 		if (walkable && GridManager.Instance.dragging && !selected && GridManager.Instance.AccessibleCheck(x,y))
 		{
 			selected = true;
-			GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
+			Component.material.SetColor("_Color", selectedColor);
 		}
 	}
 
@@ -61,14 +65,14 @@ public class Tile : MonoBehaviour
 		if (walkable && !GridManager.Instance.dragging && !selected)
 		{
 			mouseOver = true;
-			GetComponent<Renderer>().material.SetColor("_Color", mouseOverColor);
+			Component.material.SetColor("_Color", mouseOverColor);
 		}
 		
 		if (walkable && GridManager.Instance.dragging && !selected && GridManager.Instance.AccessibleCheck(x,y))
 		{
 			//print( x + " " + y);
 			selected = true;
-			GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
+			Component.material.SetColor("_Color", selectedColor);
 		}
 	}
 
@@ -79,11 +83,11 @@ public class Tile : MonoBehaviour
 			if (highlighted)
 			{
 				// back to highlight status
-				GetComponent<Renderer>().material.SetColor("_Color", highlightColor);
+				Component.material.SetColor("_Color", highlightColor);
 			}
 			else
 			{
-				GetComponent<Renderer>().material.SetColor("_Color", defaultColor);
+				Component.material.SetColor("_Color", defaultColor);
 			}
 		}
 	}
@@ -92,7 +96,7 @@ public class Tile : MonoBehaviour
 	{
 		// set tile to selected
 		selected = true;
-		GetComponent<Renderer>().material.SetColor("_Color", selectedColor);
+		Component.material.SetColor("_Color", selectedColor);
 	}
 	
 	public void Wipe()
@@ -100,13 +104,13 @@ public class Tile : MonoBehaviour
 		//wipe all held effect for tile
 		highlighted = false;
 		selected = false;
-		GetComponent<Renderer>().material.SetColor("_Color", defaultColor);
+		Component.material.SetColor("_Color", defaultColor);
 	}
 	public void HighlightTile()
 	{
 		// tile highlight
 		highlighted = true;
-		GetComponent<Renderer>().material.SetColor("_Color", highlightColor);
+		Component.material.SetColor("_Color", highlightColor);
 	}
 
 }
