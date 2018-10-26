@@ -1,6 +1,7 @@
-﻿using System;
+﻿//using System;
 using UnityEngine;
 using System.Collections.Generic;
+//using Random = System.Random;
 
 ///	<summary/>
 /// GridManager - Grid Manager class 
@@ -21,7 +22,7 @@ public class GridManager : MonoBehaviour
     
     public LayerMask unwalkableMask;
     public float nodeRadius;
-    public Transform tilePrefab;
+    public Transform[] tilePrefab;
     public Vector2Int mapSize;
     [Range(0,1)]
     public float outlinePercent;
@@ -116,9 +117,11 @@ public class GridManager : MonoBehaviour
                 Vector3 tilePosition = new Vector3(-mapSize.x/2 +nodeRadius + x + transform.position.x, 2, -mapSize.y/2 + nodeRadius + y + transform.position.z);
                 //walkable collision check
                 bool walkable = !(Physics.CheckSphere(tilePosition,nodeRadius,unwalkableMask));
-                Transform newTile = Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right*90)) as Transform;
+                int index = Random.Range(0, tilePrefab.Length);
+                int rotation_index = Random.Range(0, 4);
+                Transform newTile = Instantiate(tilePrefab[index], tilePosition, Quaternion.Euler(Vector3.down * 90 * rotation_index)) as Transform;
                 // initiate outline 
-                newTile.localScale = Vector3.one * (1-outlinePercent);
+                newTile.localScale = newTile.localScale * (1-outlinePercent);
                 newTile.parent = mapHolder;
                 // set tile value 
                 var temp = newTile.GetComponent<Tile>();
