@@ -8,6 +8,9 @@ public class LevelManager : MonoBehaviour {
     public string levelFolderPath;
     public string levelFilename;
 
+    [SerializeField]
+    private LevelData debug;
+
     void Start() {
         LoadLevel(levelFilename);
     }
@@ -20,6 +23,7 @@ public class LevelManager : MonoBehaviour {
         string json = File.ReadAllText(jsonPath);
 
         LevelData levelData = LevelData.CreateFromJSON(json);
+        debug = levelData;
 
         GridManager.Instance.GenerateMap(levelData);
 
@@ -43,8 +47,8 @@ public class LevelManager : MonoBehaviour {
     [System.Serializable]
     public class SpawnData {
         public int id;
-        public int x;
-        public int y;
+        public Vector2Int position;
+        public string[] settings;
     }
 
 }

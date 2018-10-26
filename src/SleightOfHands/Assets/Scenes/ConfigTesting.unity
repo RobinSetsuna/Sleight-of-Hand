@@ -130,7 +130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &125048616
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -595,7 +595,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &860820003
 Transform:
   m_ObjectHideFlags: 0
@@ -1008,6 +1008,8 @@ MonoBehaviour:
   ok_to_drag: 0
   checktimes: 0
   generatedPath: []
+  wallPrefabs:
+  - {fileID: 1628876963224606, guid: 8da33a8762d7d0e42912306a2edf1d4f, type: 2}
 --- !u!4 &1290799990
 Transform:
   m_ObjectHideFlags: 0
@@ -1050,6 +1052,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelFolderPath: Levels
   levelFilename: test_level
+  debug:
+    name: 
+    width: 0
+    tiles: 
+    spawns: []
 --- !u!4 &1492632704
 Transform:
   m_ObjectHideFlags: 0

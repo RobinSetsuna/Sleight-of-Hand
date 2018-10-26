@@ -35,9 +35,14 @@ public class GridManager : MonoBehaviour
     private int range;
     public int checktimes;
     public Tile[] generatedPath;
+
+    [Header("Prefabs")]
+    public GameObject[] wallPrefabs;
+
     private int action_point; // temp use, replace later
+
     void Start() {
-        GenerateMap (null);
+        //GenerateMap (null);
         checktimes = 0;
         ok_to_drag = false;
         action_point = 5;
@@ -94,12 +99,8 @@ public class GridManager : MonoBehaviour
 
         // Extract data from levelData
         if (levelData != null) {
-            Debug.Log(levelData.tiles.Length);
             mapSize = new Vector2Int(levelData.width, Mathf.CeilToInt(levelData.tiles.Length / levelData.width));
         }
-        
-        
-        
         //  start,code for temp usage , delete after level data implemented
         else
         {
@@ -112,20 +113,34 @@ public class GridManager : MonoBehaviour
         grid = new Tile[mapSize.x,mapSize.y];
         for (int x = 0; x < mapSize.x; x ++) {
             for (int y = 0; y < mapSize.y; y ++) {
+
+                int tileType = levelData.tiles[x + y * levelData.width];
+
                 // parse position for tile
                 Vector3 tilePosition = new Vector3(-mapSize.x/2 +nodeRadius + x + transform.position.x, 2, -mapSize.y/2 + nodeRadius + y + transform.position.z);
+
                 //walkable collision check
-                bool walkable = !(Physics.CheckSphere(tilePosition,nodeRadius,unwalkableMask));
+                bool walkable = (tileType == 0);
                 Transform newTile = Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right*90)) as Transform;
+
                 // initiate outline 
                 newTile.localScale = Vector3.one * (1-outlinePercent);
                 newTile.parent = mapHolder;
+
                 // set tile value 
                 var temp = newTile.GetComponent<Tile>();
                 temp.walkable = walkable;
+
                 // insertion
                 temp.gridPosition = new Vector2(x,y);
                 grid[x,y] = temp;
+
+                // add stuff onto tile
+                if (tileType == 1) {
+                    Debug.Log("HEY");
+                    GameObject wall = Instantiate(wallPrefabs[0], tilePosition, Quaternion.identity);
+                }
+
             }
         }
     }
