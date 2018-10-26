@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 
 public enum GameState : int
 {
@@ -28,11 +26,8 @@ public class GameManager : MonoBehaviour
     //public class EventOnGameState : UnityEvent<GameState> {}
     //public EventOnGameState OnCurrentGameStateReset = new EventOnGameState();
 
-    public class EventOnGameStateChange : UnityEvent<GameState, GameState> {}
-    public EventOnGameStateChange OnCurrentGameStateChange = new EventOnGameStateChange();
-
-    public class EventOnWayPointsChange : UnityEvent<Path<Tile>> {}
-    public EventOnWayPointsChange OnPathChange = new EventOnWayPointsChange();
+    public EventOnDataChange2<GameState> OnCurrentGameStateChange = new EventOnDataChange2<GameState>();
+    public EventOnDataChange1<Path<Tile>> OnPathChange = new EventOnDataChange1<Path<Tile>>();
 
     [SerializeField] private GameState initialState = (GameState)1;
 

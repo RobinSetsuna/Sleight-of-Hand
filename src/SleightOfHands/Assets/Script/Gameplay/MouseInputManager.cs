@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.Events;
-
-public class MouseInputManager
+﻿public class MouseInputManager
 {
     private static readonly MouseInputManager singleton = new MouseInputManager();
     public static MouseInputManager Singleton
@@ -14,10 +11,9 @@ public class MouseInputManager
 
     private static int mouseDragThreshold = 200;
 
-    public class EventOnDataChange : UnityEvent<MouseInteractable> {}
-    public EventOnDataChange OnCurrentMouseTargetChange = new EventOnDataChange();
-    public EventOnDataChange OnObjectClicked = new EventOnDataChange();
-    public EventOnDataChange OnEndDragging = new EventOnDataChange();
+    public EventOnDataChange1<MouseInteractable> OnCurrentMouseTargetChange = new EventOnDataChange1<MouseInteractable>();
+    public EventOnDataChange1<MouseInteractable> OnObjectClicked = new EventOnDataChange1<MouseInteractable>();
+    public EventOnDataChange1<MouseInteractable> OnEndDragging = new EventOnDataChange1<MouseInteractable>();
 
     public bool IsMouseDown { get; private set; }
     public long MouseDownTime { get; private set; }
