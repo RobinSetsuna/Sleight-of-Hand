@@ -175,7 +175,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                 Tile tile = newTile.GetComponent<Tile>();
                 tile.walkable = !Physics.Raycast(tilePosition, Vector3.up, 3 * nodeRadius, LayerMask.GetMask("Obstacle"));
                 tile.gridPosition = new Vector2Int(x, y);
-                Debug.LogFormat("{0}: {1:X8}", tile, tile.Mark);
+
                 // insertion
                 grid[x,y] = tile;
             }
@@ -290,36 +290,44 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         if (path != null)
         {
             if (path.Count == 0)
-                Highlight(TileFromWorldPoint(_player.transform.position), _player.ActionPoint, Tile.HighlightColor.Blue);
+                Highlight(TileFromWorldPoint(_player.transform.position), _player.ActionPoint, Tile.HighlightColor.Blue, true);
             else
-                Highlight(path.Destination, _player.ActionPoint - path.Count, Tile.HighlightColor.Blue);
+                Highlight(path.Destination, _player.ActionPoint - path.Count, Tile.HighlightColor.Blue, true);
 
             foreach (Tile wayPoint in path)
-                Highlight(wayPoint, 0, Tile.HighlightColor.Green);
+                Highlight(wayPoint, Tile.HighlightColor.Green);
         }
     }
 
-    public void Highlight(Tile center, int range, Tile.HighlightColor color)
+    public void Highlight(Tile center, Tile.HighlightColor color)
+    {
+        Highlight(center, 0, 0, int.MinValue, color);
+    }
+
+    public void Highlight(Tile center, int range, Tile.HighlightColor color, bool skipUnmasked = false)
     {
         Highlight(center, 0, range, int.MinValue, color);
     }
 
-    public void Highlight(Tile center, int range, int mask, Tile.HighlightColor color)
+    public void Highlight(Tile center, int range, int mask, Tile.HighlightColor color, bool skipUnmasked = false)
     {
         Highlight(center, 0, range, mask, color);
     }
 
-    public void Highlight(Tile center, int lower, int upper, int mask, Tile.HighlightColor color)
+    public void Highlight(Tile center, int lower, int upper, int mask, Tile.HighlightColor color, bool skipUnmasked = false)
     {
         bool[,] isVisited = new bool[Length, Width];
 
-        Highlight(center, lower, upper, mask, color, ref isVisited);
+        Highlight(center, lower, upper, mask, color, skipUnmasked, ref isVisited);
     }
 
-    private void Highlight(Tile center, int lower, int upper, int mask, Tile.HighlightColor color, ref bool[,] isVisited)
+    private void Highlight(Tile center, int lower, int upper, int mask, Tile.HighlightColor color, bool skipUnmasked, ref bool[,] isVisited)
     {
-        center.Highlight(color);
-        checktimes++;
+        if (skipUnmasked || (center.Mark & mask) != 0)
+        {
+            center.Highlight(color);
+            checktimes++;
+        }
 
         int x = center.x;
         int y = center.y;
@@ -333,8 +341,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             {
                 Tile tile = grid[x + 1, y];
 
-                if ((tile.Mark & mask) != 0)
-                    Highlight(tile, lower, upper, mask, color, ref isVisited);
+                if (!skipUnmasked || (tile.Mark & mask) != 0)
+                    Highlight(tile, lower, upper, mask, color, skipUnmasked, ref isVisited);
                 else
                     isVisited[x + 1, y] = true;
             }
@@ -343,8 +351,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             {
                 Tile tile = grid[x - 1, y];
 
-                if ((tile.Mark & mask) != 0)
-                    Highlight(tile, lower, upper, mask, color, ref isVisited);
+                if (!skipUnmasked || (tile.Mark & mask) != 0)
+                    Highlight(tile, lower, upper, mask, color, skipUnmasked, ref isVisited);
                 else
                     isVisited[x - 1, y] = true;
             }
@@ -353,8 +361,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             {
                 Tile tile = grid[x, y + 1];
 
-                if ((tile.Mark & mask) != 0)
-                    Highlight(tile, lower, upper, mask, color, ref isVisited);
+                if (!skipUnmasked || (tile.Mark & mask) != 0)
+                    Highlight(tile, lower, upper, mask, color, skipUnmasked, ref isVisited);
                 else
                     isVisited[x, y + 1] = true;
             }
@@ -363,8 +371,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             {
                 Tile tile = grid[x, y - 1];
 
-                if ((tile.Mark & mask) != 0)
-                    Highlight(tile, lower, upper, mask, color, ref isVisited);
+                if (!skipUnmasked || (tile.Mark & mask) != 0)
+                    Highlight(tile, lower, upper, mask, color, skipUnmasked, ref isVisited);
                 else
                     isVisited[x, y - 1] = true;
             }
