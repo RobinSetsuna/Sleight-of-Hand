@@ -82,15 +82,13 @@ public struct Navigation
                 {
                     tiles[xi, yi].previous = currentIndices;
 
-                    List<T> wayPoints = new List<T>();
+                    LinkedList<T> wayPoints = new LinkedList<T>();
 
                     while (neighborIndices != startIndices)
                     {
-                        wayPoints.Add(navGrid.GetPosition(neighborIndices));
+                        wayPoints.AddFirst(navGrid.GetTile(neighborIndices));
                         neighborIndices = tiles[neighborIndices.x, neighborIndices.y].previous;
                     }
-
-                    wayPoints.Reverse();
                     
                     return new Path<T>(start, wayPoints);
                 }

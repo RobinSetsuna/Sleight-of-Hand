@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using UnityEngine;
+
 ///	<summary/>
 /// Unit
 /// abstract class for all walkable unit in map
 /// when heading, move to heading, facing heading direction.
 /// </summary>
-public abstract class Unit : MonoBehaviour
+public abstract class Unit : InLevelObject
 {
-	[SerializeField] private float maxSpeed;
+    [SerializeField] private float maxSpeed;
     public float MaxSpeed
     {
         get
@@ -16,10 +17,42 @@ public abstract class Unit : MonoBehaviour
         }
     }
 
+    [SerializeField] private int initialActionPoint;
+    public int InitialActionPoint
+    {
+        get
+        {
+            return initialActionPoint;
+        }
+    }
+
+    public int ActionPoint { get; protected set; }
+
     private float speed;
+    private Vector3 start;
     private Vector3 destination;
 
-    private IEnumerator Step(System.Action callback)
+    public void MoveTo(Vector3 destination, System.Action callback)
+    {
+        start = transform.position;
+        this.destination = destination;
+
+        speed = maxSpeed;
+
+        StartCoroutine(Move(callback));
+    }
+
+    public void MoveTo(Tile tile, System.Action callback)
+    {
+        MoveTo(GridManager.Instance.GetWorldPosition(tile.x, tile.y), callback);
+    }
+
+    private void Start()
+    {
+        ActionPoint = initialActionPoint;
+    }
+
+    private IEnumerator Move(System.Action callback)
     {
         while (speed > 0)
         {
@@ -38,24 +71,12 @@ public abstract class Unit : MonoBehaviour
             yield return null;
         }
 
+        ActionPoint--;
+
         if (callback != null)
             callback.Invoke();
 
         yield return null;
-    }
-
-    public void MoveTo(Vector3 destination, System.Action callback)
-    {
-        this.destination = destination;
-
-        speed = maxSpeed;
-
-        StartCoroutine(Step(callback));
-    }
-
-    public void MoveTo(Tile tile, System.Action callback)
-    {
-        MoveTo(GridManager.Instance.GetWorldPosition(tile.x, tile.y), callback);
     }
 
     //protected Transform heading;

@@ -444,7 +444,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         return position.gridPosition;
     }
 
-    public Tile GetPosition(Vector2Int indices)
+    public Tile GetTile(Vector2Int indices)
     {
         return grid[indices.x, indices.y];
     }

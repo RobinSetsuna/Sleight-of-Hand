@@ -7,7 +7,7 @@ public interface INavGrid<T>
     int Width { get; }
 
     Vector2Int GetIndices(T position);
-    T GetPosition(Vector2Int indices);
+    T GetTile(Vector2Int indices);
 
     bool IsAccessible(int x, int y);
     List<Vector2Int> GetAdjacentIndices(int x, int y);

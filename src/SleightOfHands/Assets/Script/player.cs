@@ -5,18 +5,6 @@
 /// </summary>
 public class player : Unit
 {
-	private int path_index;
-	private bool action;
-
-    public int ActionPoint { get; private set; }
-
-    // Use this for initialization
-    void Start()
-    {
-        ActionPoint = 5;
-        action = false;
-    }
-
     // Update is called once per frame
     //void Update()
     //{
@@ -66,7 +54,7 @@ public class player : Unit
     //}
     //}
 
- //   public void movementEnable()
+    //public void movementEnable()
 	//{
 	//	// enable movement mode, ok for highlight, selected tiles in map.
 	//	GridManager.Instance.wipeTiles();

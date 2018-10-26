@@ -155,7 +155,7 @@ public class GameManager : MonoBehaviour
         switch (currentGameState)
         {
             case GameState.Idle:
-                if (obj.GetComponent<player>())
+                if (obj.GetComponent<player>() && GridManager.Instance.Player.ActionPoint > 0)
                     CurrentGameState = GameState.MovementPlanning;
                 break;
             case GameState.MovementPlanning:
@@ -163,8 +163,16 @@ public class GameManager : MonoBehaviour
                     CurrentGameState = GameState.Idle;
                 else if (obj.GetComponent<Tile>())
                 {
-                    path = Navigation.FindPath(GridManager.Instance, GridManager.Instance.TileFromWorldPoint(GridManager.Instance.Player.transform.position), obj.GetComponent<Tile>());
-                    InitiatePlayerMovement();
+                    Tile tile = obj.GetComponent<Tile>();
+
+                    player _player = GridManager.Instance.Player;
+                    Tile playerTile = GridManager.Instance.TileFromWorldPoint(_player.transform.position);
+
+                    if (MathUtility.ManhattanDistance(tile.x, tile.y, playerTile.x, playerTile.y) <= _player.ActionPoint)
+                    {
+                        path = Navigation.FindPath(GridManager.Instance, playerTile, tile);
+                        InitiatePlayerMovement();
+                    }
                 }
                 break;
         }
@@ -200,7 +208,7 @@ public class GameManager : MonoBehaviour
                         {
                             if (tile == path.Last.Previous.Value)
                                 RemoveWayPoint();
-                            else if (GridManager.Instance.IsAdjacent(tile, path.Last.Value))
+                            else if (GridManager.Instance.IsAdjacent(tile, path.Last.Value) && path.Count < GridManager.Instance.Player.ActionPoint)
                                 AddWayPoint(tile);
                         }
                         else if (GridManager.Instance.IsAdjacent(tile, GridManager.Instance.TileFromWorldPoint(GridManager.Instance.Player.transform.position)))

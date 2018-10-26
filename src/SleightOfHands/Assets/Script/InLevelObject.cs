@@ -10,14 +10,14 @@
 ///                       |
 /// 0000 0000 0000 0000 0000 0000 0000 0000
 ///                      | |
-///                      E o
+///                      e o
 ///                      n b
 ///                      e s
 ///                      m t
 ///                      y a
-///                      c
-///                      l
-///                      e
+///                        c
+///                        l
+///                        e
 /// </summary>
 public enum InLevelObjectMask : int
 {
@@ -26,8 +26,8 @@ public enum InLevelObjectMask : int
     Enemy = 0x400,
 }
 
-public class InLevelObject : MonoBehaviour
+public abstract class InLevelObject : MonoBehaviour
 {
-    private Tile[] tilesOccupied;
-    public Tile Anchor { get; private set; }
+    //private Tile[] tilesOccupied;
+    //public Tile Anchor { get; private set; }
 }

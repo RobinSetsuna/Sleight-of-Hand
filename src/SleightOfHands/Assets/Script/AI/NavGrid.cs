@@ -32,7 +32,7 @@ public class NavGrid : MonoBehaviour, INavGrid<Vector3>
         return new Vector2Int(Mathf.FloorToInt((position.x - xMin) / tileSize), Mathf.FloorToInt((position.z - yMin) / tileSize));
     }
 
-    public Vector3 GetPosition(Vector2Int indices)
+    public Vector3 GetTile(Vector2Int indices)
     {
         return new Vector3(tileSize * (indices.x + 0.5f), heights[indices.x, indices.y], tileSize * (indices.y + 0.5f));
     }
