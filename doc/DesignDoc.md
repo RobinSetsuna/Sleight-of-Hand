@@ -56,7 +56,6 @@
 * **User Interface**: A space on screen to demonstrate the status of the game and for players to interact
   * **Character Cultivation**: An user interface that allows players to nurture their character
   * **Level Selection**: An user interface that allows players to choose the level they want to play
-* **Camera**: To provide the player with efficient parts of the game environment
 
 ### Non-functional Requirements
 | NFRs |  Technical Constraints |
@@ -138,9 +137,6 @@ The game logic is the programming focus of the team. Technically, it is a main l
     * **2**: Enemy
   * **Spawn Position**: Position that entity will spawn
 
-### UI
-
-![UI Architecture](ui-architecture.png)
 
 ## Issues and Risks
 * The reliability of Enemy AI could be one of the main factors will impact the user experience. To make the game not too easy or too       hard, we need to adjust enemy intelligence very carefully.
