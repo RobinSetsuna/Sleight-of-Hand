@@ -87,8 +87,16 @@ public class CardManager : MonoBehaviour {
                 //1. add action point
                 //2. move this card to usedCards
                 break;
-            case "Milk Glue":
+            case "Chest Key":
+
                 break;
+
+            case "Torch":
+                break;
+
+            case "Glue Trap":
+                break;
+
         }
 
     }
