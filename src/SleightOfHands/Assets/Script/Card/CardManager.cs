@@ -92,10 +92,18 @@ public class CardManager : MonoBehaviour {
                 //5. minus the action point
 
                 break;
+
             case "Haste":
                 //1. add action point
+                string effect = deck.FindCard(hand[index].cardName).effect;
+                string result = System.Text.RegularExpressions.Regex.Replace(effect, @"[^0-9]+", "");
+                int point = int.Parse(result);
+                GameObject.FindGameObjectWithTag("Player").GetComponent<player>().AddActionPoint(point);
                 //2. move this card to usedCards
+                usedCards.Add(hand[index]);
+                hand.Remove(hand[index]);
                 break;
+
             case "Chest Key":
                 GameObject[] chests = GameObject.FindGameObjectsWithTag("Player");
                 //1. find out which chest the player is close to
@@ -106,7 +114,7 @@ public class CardManager : MonoBehaviour {
                     if (GridManager.Instance.IsAdjacent(chestTile, playerTile))
                     {
                         //2. open the chest
-                        chests[i].GetComponent("Chest");
+                        chests[i].GetComponent<Chest>().isOpen = true;
                     }
                 }
                 break;
