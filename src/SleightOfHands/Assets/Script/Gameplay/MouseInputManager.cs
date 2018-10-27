@@ -20,6 +20,7 @@
     public bool IsMouseDragging { get; private set; }
 
     private MouseInteractable currentMouseTarget;
+    private MouseInteractable lastDraggingTarget;
     public MouseInteractable CurrentMouseTarget
     {
         get
@@ -68,9 +69,11 @@
 
     internal void NotifyMouseEnter(MouseInteractable obj)
     {
-        if (IsMouseDown)
+        if (IsMouseDown && TimeUtility.localTimeInMilisecond - MouseDownTime < mouseDragThreshold)
+        {
             IsMouseDragging = true;
-
+            lastDraggingTarget = obj;
+        }
         CurrentMouseTarget = obj;
     }
 
@@ -86,7 +89,15 @@
         else
         {
             IsMouseDragging = false;
-            OnEndDragging.Invoke(obj);
+            if (lastDraggingTarget != null)
+            {
+                OnEndDragging.Invoke(lastDraggingTarget);
+            }
+            else
+            {
+                OnEndDragging.Invoke(obj);
+            }
+            lastDraggingTarget = null;
         }
     }
 }

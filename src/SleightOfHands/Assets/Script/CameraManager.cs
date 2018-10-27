@@ -74,7 +74,8 @@ public class CameraManager : MonoBehaviour
 		// reset the position back to default
 		fallowing = false;
 		destination = defaultPosition;
-		StartCoroutine(Moveto(1,true,callback));
+		StartCoroutine(Moveto(1,callback));
+		StartCoroutine(Rotateback(callback));
 	}
 
 	public bool isBoundedForFallow()
@@ -104,7 +105,7 @@ public class CameraManager : MonoBehaviour
 		unboundCameraFallow();
 		this.destination = destination;
 		StartCoroutine(Focus(callback));
-		StartCoroutine(Moveto(CameraDistance,false,callback));
+		StartCoroutine(Moveto(CameraDistance,callback));
 	}
 		
 	public void Shaking(float Duration,float Magnitude ,System.Action callback)
@@ -185,7 +186,28 @@ public class CameraManager : MonoBehaviour
 		yield return null;
 	}
 	
-	private IEnumerator Moveto(float Distance,bool reset,System.Action callback)
+	private IEnumerator Rotateback(System.Action callback)
+	{
+		Vector3 dirFromAtoB = (-destination - transform.position).normalized;
+		var dotProd = Vector3.Dot(dirFromAtoB, transform.forward);
+		while (dotProd > 0.9)
+		{
+			print(dotProd);
+			// smooth rotation
+			var desiredRotQ = defaultRotation;
+			transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotQ, Time.deltaTime * rotate_speed/20);
+			dirFromAtoB = (-destination - transform.position).normalized;
+			dotProd = Vector3.Dot(dirFromAtoB, transform.forward);
+			yield return null;
+		}
+
+		if (callback != null)
+			callback.Invoke();
+		
+		yield return null;
+	}
+	
+	private IEnumerator Moveto(float Distance,System.Action callback)
 	{
 		while(MathUtility.ManhattanDistance(destination.x, destination.z, transform.position.x, transform.position.z) > Distance){
 			    // smooth movement
@@ -202,13 +224,6 @@ public class CameraManager : MonoBehaviour
 						transform.position.y, Mathf.Clamp(transform.position.z, minCameraPos.z, maxCanmeraPos.z) + y
 					);
 				}
-
-			if (reset)
-			{
-				// if reset, rotate the camera to default.
-				var desiredRotQ = defaultRotation;
-				transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotQ, Time.deltaTime * rotate_speed/20);
-			}
 			yield return null;
 		}
 
