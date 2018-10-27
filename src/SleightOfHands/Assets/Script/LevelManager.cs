@@ -5,14 +5,22 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour {
 
+    private static LevelManager instance;
+    public static LevelManager Instance {
+        get {
+            if (instance == null) instance = GameObject.Find("Level Manager").GetComponent<LevelManager>();
+            return instance;
+        }
+    }
+
     public string levelFolderPath;
     public string levelFilename;
 
     [SerializeField]
     private LevelData debug;
 
-    void Start() {
-        LoadLevel(levelFilename);
+    private void Start() {
+        LoadLevel("test_level");
     }
 
 	public void LoadLevel(string levelFilename) {

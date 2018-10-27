@@ -295,8 +295,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4bd755e3810240439520ac84aeb27a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!114 &126805936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,10 +306,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe6c5f314a056cc4da0fb9fe5b56f2d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   maxSpeed: 2
-  initialActionPoint: 10
+  initialActionPoint: 5
 --- !u!54 &126805937
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -323,7 +323,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 122
   m_CollisionDetection: 0
 --- !u!1 &170076733
 GameObject:
@@ -405,7 +405,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &244652749
 Transform:
   m_ObjectHideFlags: 0
@@ -447,8 +447,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c7e24078f04dfc4bb6c00e72f552d52, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   initialState: 1
 --- !u!4 &440463893
 Transform:
@@ -510,8 +510,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 5
+  orthographic: 1
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1163,14 +1163,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951776cb935e27b48bda53e140a34af7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _player: {fileID: 126805936}
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 512
   nodeRadius: 0.5
   tilePrefab: {fileID: 4202221461299724, guid: df32d8651c840a9429479bfb9204413a, type: 2}
+  wallPrefab: {fileID: 1153893828607108, guid: 8da33a8762d7d0e42912306a2edf1d4f, type: 2}
   mapSize: {x: 20, y: 20}
   outlinePercent: 0.075
   time_intervals: 0.05
@@ -1178,6 +1179,7 @@ MonoBehaviour:
   ok_to_drag: 0
   checktimes: 0
   generatedPath: []
+  environmentHolder: {fileID: 1422179120}
 --- !u!4 &1290799990
 Transform:
   m_ObjectHideFlags: 0
@@ -1308,6 +1310,53 @@ Transform:
   m_Father: {fileID: 2111091024}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!1 &1851337923
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1851337925}
+  - component: {fileID: 1851337924}
+  m_Layer: 0
+  m_Name: Level Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1851337924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1851337923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fe3e32c259e99e439b37ccd62a65d77, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  levelFolderPath: Levels
+  levelFilename: test_level
+  debug:
+    name:
+    width: 0
+    tiles:
+    spawns: []
+--- !u!4 &1851337925
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1851337923}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2111091023
 GameObject:
   m_ObjectHideFlags: 0
@@ -1387,8 +1436,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cac1622e5ae9de74489476913be3f093, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   smoothTimeY: 3.5
   smoothTimeX: 3.5
   bounds: 1
@@ -1426,8 +1475,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b752c0905d5c0d469351717013ed04d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   dragSpeed: 1
   curZoomPos: 20
   zoomTo: 20

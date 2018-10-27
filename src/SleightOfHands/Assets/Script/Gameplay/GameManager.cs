@@ -178,7 +178,7 @@ public class GameManager : MonoBehaviour
         switch (currentGameState)
         {
             case GameState.MovementPlanning:
-                if (path.Count > 0)  // no need check for the last interaction obj 
+                if (path.Count > 0)  // no need check for the last interaction obj
                     InitiatePlayerMovement();
                 break;
         }
@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
                     else if (obj.GetComponent<Tile>())
                     {
                         Tile tile = obj.GetComponent<Tile>();
-                        
+
                         if (path.Count > 0)
                         {
                             if (tile == path.Last.Previous.Value)
