@@ -1,22 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
 
 public class CameraManager : MonoBehaviour
 {
-	private Vector3 dragOrigin;
+	private HashSet<UnitType> typeWhiteList = new HashSet<UnitType>(
+	new UnitType[]{
+		UnitType.Default,
+		UnitType.Player,
+		UnitType.UI,
+		UnitType.Enemy,
+		UnitType.Item
+	}); // hold all the mouse Interactable UnitType will not cause camera dragging. 
 	private Vector3 destination;
-	
-	
 	[SerializeField]private float smoothTimeY;
 	[SerializeField]private float smoothTimeX;
 
-	[SerializeField]private bool bounds; // check if the camera hit the boundary
-	[SerializeField]private Vector3 minCameraPos;
-	[SerializeField]private Vector3 maxCanmeraPos;
+	public bool bounds; // check if the camera hit the boundary
+	public Vector3 minCameraPos;
+	public Vector3 maxCanmeraPos;
 	[SerializeField]private float rotate_speed;
 	[SerializeField]private float CameraDistance; // the distance between camera and target, include fallow, focus
+
 	
-	private bool fallowing;
+	public bool fallowing;
 	private Vector3 velocity;
 	private bool shaking;
 	private float shake_magnitude;
@@ -34,32 +42,12 @@ public class CameraManager : MonoBehaviour
 		}
 	}
 
-	private void Start()
+	public bool isContainedInWhiteList(MouseInteractable obj)
 	{
-		// demo test, delete when actual use
-		setDefaultPos();
+		return typeWhiteList.Contains(obj.Type);
 	}
 
-	void Update()
-	{
-		// demo test, delete when actual use
-		if (Input.GetKey(KeyCode.A))
-		{
-			if (!fallowing)
-			{
-				boundCameraFallow(GameObject.Find("Player").transform);
-			}
 
-		}
-		if (Input.GetKey(KeyCode.D))
-		{
-			Shaking(0.3f,0.1f,null);
-		}
-		if (Input.GetKey(KeyCode.F))
-		{
-			ResetPos(null);
-		}
-	}
 
 	public void setDefaultPos()
 	{
@@ -74,8 +62,9 @@ public class CameraManager : MonoBehaviour
 		// reset the position back to default
 		fallowing = false;
 		destination = defaultPosition;
+		transform.rotation = defaultRotation;
 		StartCoroutine(Moveto(1,callback));
-		StartCoroutine(Rotateback(callback));
+		//StartCoroutine(Rotateback(callback));
 	}
 
 	public bool isBoundedForFallow()
@@ -195,7 +184,7 @@ public class CameraManager : MonoBehaviour
 			print(dotProd);
 			// smooth rotation
 			var desiredRotQ = defaultRotation;
-			transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotQ, Time.deltaTime * rotate_speed/20);
+			transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotQ, Time.deltaTime * rotate_speed);
 			dirFromAtoB = (-destination - transform.position).normalized;
 			dotProd = Vector3.Dot(dirFromAtoB, transform.forward);
 			yield return null;

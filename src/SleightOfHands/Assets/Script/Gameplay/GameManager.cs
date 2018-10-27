@@ -178,7 +178,7 @@ public class GameManager : MonoBehaviour
         switch (currentGameState)
         {
             case GameState.MovementPlanning:
-                if (obj.GetComponent<player>() && path.Count > 0)
+                if (path.Count > 0)  // no need check for the last interaction obj 
                     InitiatePlayerMovement();
                 break;
         }

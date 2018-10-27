@@ -226,7 +226,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 126805930}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.28, y: 1.2, z: 9.58}
+  m_LocalPosition: {x: 10.78, y: 1.2, z: 11.65}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 818662165}
@@ -475,7 +475,7 @@ GameObject:
   - component: {fileID: 534669903}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1355,6 +1355,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2128856420}
   - component: {fileID: 2128856421}
+  - component: {fileID: 2128856422}
+  - component: {fileID: 2128856423}
   m_Layer: 0
   m_Name: CameraManager
   m_TagString: MainCamera
@@ -1368,14 +1370,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2128856419}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.07, y: 7.69, z: -13.28}
+  m_LocalRotation: {x: 0.32421467, y: 0, z: 0, w: 0.9459836}
+  m_LocalPosition: {x: 10.61, y: 13.072, z: -6.172}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 534669905}
   m_Father: {fileID: 818662165}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 37.836002, y: 0, z: 0}
 --- !u!114 &2128856421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1389,8 +1391,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothTimeY: 3.5
   smoothTimeX: 3.5
-  bounds: 0
-  minCameraPos: {x: 0, y: 0, z: 0}
-  maxCanmeraPos: {x: 0, y: 0, z: 0}
+  bounds: 1
+  minCameraPos: {x: 5.832298, y: 11.44, z: -6.134935}
+  maxCanmeraPos: {x: 14.192, y: 11.44, z: 5.996278}
   rotate_speed: 1.25
   CameraDistance: 12
+  fallowing: 0
+--- !u!50 &2128856422
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2128856419}
+  m_BodyType: 0
+  m_Simulated: 0
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.0001
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!114 &2128856423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2128856419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b752c0905d5c0d469351717013ed04d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragSpeed: 1
+  curZoomPos: 20
+  zoomTo: 20
+  zoomFrom: 20
