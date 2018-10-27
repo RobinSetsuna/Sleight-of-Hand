@@ -143,7 +143,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             for (int y = 0; y < mapSize.y; y ++)
             {
 
-
+                int tileType = levelData.tiles[x + y * levelData.width];
                 // parse position for tile
                 // Vector3 tilePosition = new Vector3(-mapSize.x/2 +nodeRadius + x + transform.position.x, 2, -mapSize.y/2 + nodeRadius + y + transform.position.z);
                 Vector3 tilePosition = GetWorldPosition(x, y);
@@ -157,12 +157,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                 Tile tile = newTile.GetComponent<Tile>();
                 tile.walkable = (tileType == 0 || tileType == 2);
                 tile.gridPosition = new Vector2Int(x, y);
-
-                // set tile value
-                Tile tile = newTile.GetComponent<Tile>();
-                tile.walkable = !Physics.Raycast(tilePosition, Vector3.up, 3 * nodeRadius, LayerMask.GetMask("Obstacle"));
-                tile.gridPosition = new Vector2Int(x, y);
-                Debug.LogFormat("{0}: {1:X8}", tile, tile.Mark);
+                
                 // insertion
                 grid[x,y] = tile;
 
