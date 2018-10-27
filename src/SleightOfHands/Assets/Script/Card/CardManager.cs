@@ -120,7 +120,7 @@ public class Card
     public string intro;
     public string type;
     public string effect;
-    //public int cost;
+    public int cost;
     public int ID;
 }
 
