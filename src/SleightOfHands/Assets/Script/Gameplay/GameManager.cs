@@ -4,10 +4,13 @@ public enum GameState : int
 {
     Default = 0,
     Exploration,
+    StartPhase,
+    ActionPhase,
     Idle,
     MovementPlanning,
     MovementConfirmation,
     Move,
+    EndPhase,
 }
 
 public class GameManager : MonoBehaviour
@@ -72,6 +75,8 @@ public class GameManager : MonoBehaviour
                 switch (currentGameState)
                 {
                     case GameState.Exploration:
+                        break;
+                    case GameState.ActionPhase:
                         MouseInputManager.Singleton.OnObjectClicked.AddListener(HandleMouseClick);
                         MouseInputManager.Singleton.OnEndDragging.AddListener(HandleEndDragging);
                         MouseInputManager.Singleton.OnCurrentMouseTargetChange.AddListener(HandleMouseTargetChange);
@@ -105,7 +110,12 @@ public class GameManager : MonoBehaviour
 
     private GameManager() {}
 
-    private void OnEnable()
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
+    private void Start()
     {
         if (!Singleton)
         {
