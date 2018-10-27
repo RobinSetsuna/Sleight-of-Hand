@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
                     player _player = GridManager.Instance.Player;
                     Tile playerTile = GridManager.Instance.TileFromWorldPoint(_player.transform.position);
 
-                    if (MathUtility.ManhattanDistance(tile.x, tile.y, playerTile.x, playerTile.y) <= _player.ActionPoint)
+                    if (tile.IsHighlighted(Tile.HighlightColor.Blue))
                     {
                         path = Navigation.FindPath(GridManager.Instance, playerTile, tile);
                         InitiatePlayerMovement();

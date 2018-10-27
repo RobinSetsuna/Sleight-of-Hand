@@ -175,7 +175,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                 Tile tile = newTile.GetComponent<Tile>();
                 tile.walkable = !Physics.Raycast(tilePosition, Vector3.up, 3 * nodeRadius, LayerMask.GetMask("Obstacle"));
                 tile.gridPosition = new Vector2Int(x, y);
-                Debug.LogFormat("{0}: {1:X8}", tile, tile.Mark);
+
                 // insertion
                 grid[x,y] = tile;
             }
@@ -290,83 +290,97 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         if (path != null)
         {
             if (path.Count == 0)
-                Highlight(TileFromWorldPoint(_player.transform.position), _player.ActionPoint, Tile.HighlightColor.Blue);
+                Highlight(TileFromWorldPoint(_player.transform.position), _player.ActionPoint, Tile.HighlightColor.Blue, true);
             else
-                Highlight(path.Destination, _player.ActionPoint - path.Count, Tile.HighlightColor.Blue);
+                Highlight(path.Destination, _player.ActionPoint - path.Count, Tile.HighlightColor.Blue, true);
 
             foreach (Tile wayPoint in path)
-                Highlight(wayPoint, 0, Tile.HighlightColor.Green);
+                Highlight(wayPoint, Tile.HighlightColor.Green);
         }
     }
 
-    public void Highlight(Tile center, int range, Tile.HighlightColor color)
+    public void Highlight(Tile center, Tile.HighlightColor color)
     {
-        Highlight(center, 0, range, int.MinValue, color);
+        Highlight(center, 0, 0, int.MinValue, color);
     }
 
-    public void Highlight(Tile center, int range, int mask, Tile.HighlightColor color)
+    public void Highlight(Tile center, int range, Tile.HighlightColor color, bool skipUnmasked = false)
     {
-        Highlight(center, 0, range, mask, color);
+        Highlight(center, 0, range, int.MinValue, color, skipUnmasked);
     }
 
-    public void Highlight(Tile center, int lower, int upper, int mask, Tile.HighlightColor color)
+    public void Highlight(Tile center, int range, int mask, Tile.HighlightColor color, bool skipUnmasked = false)
+    {
+        Highlight(center, 0, range, mask, color, skipUnmasked);
+    }
+
+    public void Highlight(Tile center, int lower, int upper, int mask, Tile.HighlightColor color, bool skipUnmasked = false)
     {
         bool[,] isVisited = new bool[Length, Width];
 
-        Highlight(center, lower, upper, mask, color, ref isVisited);
-    }
+        Queue<KeyValuePair<Tile, int>> q = new Queue<KeyValuePair<Tile, int>>();
 
-    private void Highlight(Tile center, int lower, int upper, int mask, Tile.HighlightColor color, ref bool[,] isVisited)
-    {
-        center.Highlight(color);
-        checktimes++;
+        q.Enqueue(new KeyValuePair<Tile, int>(center, 0));
 
-        int x = center.x;
-        int y = center.y;
-
-        if (upper > lower)
+        while (q.Count > 0)
         {
-            lower = Math.Max(0, lower - 1);
-            upper--;
+            KeyValuePair<Tile, int> pair = q.Dequeue();
 
-            if (x + 1 < Length && !isVisited[x + 1, y])
+            Tile tile = pair.Key;
+            int distance = pair.Value;
+
+            if (distance >= lower && distance <= upper && (skipUnmasked || (center.Mark & mask) != 0))
             {
-                Tile tile = grid[x + 1, y];
-
-                if ((tile.Mark & mask) != 0)
-                    Highlight(tile, lower, upper, mask, color, ref isVisited);
-                else
-                    isVisited[x + 1, y] = true;
+                tile.Highlight(color);
+                checktimes++;
             }
 
-            if (x - 1 >= 0 && !isVisited[x - 1, y])
+            int x = tile.x;
+            int y = tile.y;
+
+            isVisited[x, y] = true;
+
+            if (++distance <= upper)
             {
-                Tile tile = grid[x - 1, y];
+                if (x + 1 < Length && !isVisited[x + 1, y])
+                {
+                    tile = grid[x + 1, y];
 
-                if ((tile.Mark & mask) != 0)
-                    Highlight(tile, lower, upper, mask, color, ref isVisited);
-                else
-                    isVisited[x - 1, y] = true;
-            }
+                    if (!skipUnmasked || (tile.Mark & mask) != 0)
+                        q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
+                    else
+                        isVisited[x, y] = true;
+                }
 
-            if (y + 1 < Width && !isVisited[x, y + 1])
-            {
-                Tile tile = grid[x, y + 1];
+                if (x - 1 >= 0 && !isVisited[x - 1, y])
+                {
+                    tile = grid[x - 1, y];
 
-                if ((tile.Mark & mask) != 0)
-                    Highlight(tile, lower, upper, mask, color, ref isVisited);
-                else
-                    isVisited[x, y + 1] = true;
-            }
+                    if (!skipUnmasked || (tile.Mark & mask) != 0)
+                        q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
+                    else
+                        isVisited[x, y] = true;
+                }
 
-            if (y - 1 >= 0 && !isVisited[x, y - 1])
-            {
-                Tile tile = grid[x, y - 1];
+                if (y + 1 < Width && !isVisited[x, y + 1])
+                {
+                    tile = grid[x, y + 1];
 
-                if ((tile.Mark & mask) != 0)
-                    Highlight(tile, lower, upper, mask, color, ref isVisited);
-                else
-                    isVisited[x, y - 1] = true;
+                    if (!skipUnmasked || (tile.Mark & mask) != 0)
+                        q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
+                    else
+                        isVisited[x, y] = true;
+                }
+
+                if (y - 1 >= 0 && !isVisited[x, y - 1])
+                {
+                    tile = grid[x, y - 1];
+
+                    if (!skipUnmasked || (tile.Mark & mask) != 0)
+                        q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
+                    else
+                        isVisited[x, y] = true;
+                }
             }
         }
     }
