@@ -38,10 +38,9 @@ public class CardManager : MonoBehaviour {
 		
 	}
 
+    // randomly take one card from the deck to the player.
     List<Card> RandomGetCard()
     {
-        // randomly take one card from the deck to the player.
-
         //generate a random num from the number of the cards
 
         //ensure random number is different
@@ -62,6 +61,7 @@ public class CardManager : MonoBehaviour {
         return hand;
     }
 
+    // take one specific card from the deck to the player.
     void GetCard(string _cardName)
     {
         Card card = deck.FindCard(_cardName);
@@ -74,21 +74,41 @@ public class CardManager : MonoBehaviour {
     
     void UseCard(int index)
     {
+        Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+        Vector3 PlayerPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        Tile playerTile = GridManager.Instance.TileFromWorldPoint(PlayerPos);
+
         switch (hand[index].cardName)
         {
             case "Smoke Grenade":
-                //1. hightlight all the possible tile
+                //1. hightlight all the possible tile              
+                GridManager.Instance.Highlight(playerTile, 3, Tile.HighlightColor.Green);
                 //2. get player input tile position
+
                 //3. create a smoke on the tile(make sure when the smoke will disappear)
+
                 //4. change the visibility of enemy
+
                 //5. minus the action point
+
                 break;
             case "Haste":
                 //1. add action point
                 //2. move this card to usedCards
                 break;
             case "Chest Key":
-
+                GameObject[] chests = GameObject.FindGameObjectsWithTag("Player");
+                //1. find out which chest the player is close to
+                for(int i=0;i<chests.Length;i++)
+                {
+                    Vector3 chestPos = new Vector3(chests[i].transform.position.x, chests[i].transform.position.y, chests[i].transform.position.z);
+                    Tile chestTile = GridManager.Instance.TileFromWorldPoint(chestPos);
+                    if (GridManager.Instance.IsAdjacent(chestTile, playerTile))
+                    {
+                        //2. open the chest
+                        chests[i].GetComponent("Chest");
+                    }
+                }
                 break;
 
             case "Torch":
