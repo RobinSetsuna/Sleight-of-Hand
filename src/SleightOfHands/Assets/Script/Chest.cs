@@ -7,7 +7,7 @@ public class Chest : MonoBehaviour {
     public bool isOpen = false;
     public string cardName = "Haste";
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(isOpen == true)
         {
