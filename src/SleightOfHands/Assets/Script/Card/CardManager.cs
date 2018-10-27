@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-
 using System.IO;
 using UnityEngine;
 
@@ -39,7 +38,7 @@ public class CardManager : MonoBehaviour {
 	}
 
     // randomly take one card from the deck to the player.
-    List<Card> RandomGetCard()
+    public List<Card> RandomGetCard()
     {
         //generate a random num from the number of the cards
 
@@ -62,7 +61,7 @@ public class CardManager : MonoBehaviour {
     }
 
     // take one specific card from the deck to the player.
-    void GetCard(string _cardName)
+    public List<Card> GetCard(string _cardName)
     {
         Card card = deck.FindCard(_cardName);
         if (card != null)
@@ -70,9 +69,11 @@ public class CardManager : MonoBehaviour {
             deck.Remove(card);
             hand.Add(card);
         }
+
+        return hand;
     }
     
-    void UseCard(int index)
+    public void UseCard(int index)
     {
         Transform player = GameObject.FindGameObjectWithTag("Player").transform;
         Vector3 PlayerPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);

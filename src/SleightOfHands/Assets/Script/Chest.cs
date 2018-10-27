@@ -5,6 +5,16 @@ using UnityEngine;
 public class Chest : MonoBehaviour {
 
     public bool isOpen = false;
-    string cardName = "Haste";
+    public string cardName = "Haste";
 
+    private void Update()
+    {
+        if(isOpen == true)
+        {
+            //1.get card
+            CardManager.Instance.GetCard(cardName);
+
+            //2.play the animation
+        }
+    }
 }
