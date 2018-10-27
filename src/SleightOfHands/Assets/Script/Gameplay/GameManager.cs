@@ -159,13 +159,11 @@ public class GameManager : MonoBehaviour
                 else if (obj.GetComponent<Tile>())
                 {
                     Tile tile = obj.GetComponent<Tile>();
-
                     player _player = GridManager.Instance.Player;
-                    Tile playerTile = GridManager.Instance.TileFromWorldPoint(_player.transform.position);
 
                     if (tile.IsHighlighted(Tile.HighlightColor.Blue))
                     {
-                        path = Navigation.FindPath(GridManager.Instance, playerTile, tile);
+                        path = Navigation.FindPath(GridManager.Instance, GridManager.Instance.TileFromWorldPoint(_player.transform.position), tile);
                         InitiatePlayerMovement();
                     }
                 }
