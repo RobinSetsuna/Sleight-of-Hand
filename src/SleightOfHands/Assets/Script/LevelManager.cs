@@ -5,11 +5,22 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour {
 
+    private static LevelManager instance;
+    public static LevelManager Instance {
+        get {
+            if (instance == null) instance = GameObject.Find("Level Manager").GetComponent<LevelManager>();
+            return instance;
+        }
+    }
+
     public string levelFolderPath;
     public string levelFilename;
 
-    void Start() {
-        LoadLevel(levelFilename);
+    [SerializeField]
+    private LevelData debug;
+
+    private void Start() {
+        LoadLevel("test_level");
     }
 
 	public void LoadLevel(string levelFilename) {
@@ -20,6 +31,7 @@ public class LevelManager : MonoBehaviour {
         string json = File.ReadAllText(jsonPath);
 
         LevelData levelData = LevelData.CreateFromJSON(json);
+        debug = levelData;
 
         GridManager.Instance.GenerateMap(levelData);
 
@@ -43,8 +55,8 @@ public class LevelManager : MonoBehaviour {
     [System.Serializable]
     public class SpawnData {
         public int id;
-        public int x;
-        public int y;
+        public Vector2Int position;
+        public string[] settings;
     }
 
 }
