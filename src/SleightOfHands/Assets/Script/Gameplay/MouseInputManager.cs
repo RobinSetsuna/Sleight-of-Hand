@@ -11,9 +11,9 @@
 
     private static int mouseDragThreshold = 200;
 
-    public EventOnDataChange1<MouseInteractable> OnCurrentMouseTargetChange = new EventOnDataChange1<MouseInteractable>();
-    public EventOnDataChange1<MouseInteractable> OnObjectClicked = new EventOnDataChange1<MouseInteractable>();
-    public EventOnDataChange1<MouseInteractable> OnEndDragging = new EventOnDataChange1<MouseInteractable>();
+    public EventOnDataUpdate<MouseInteractable> OnCurrentMouseTargetChange = new EventOnDataUpdate<MouseInteractable>();
+    public EventOnDataUpdate<MouseInteractable> OnObjectClicked = new EventOnDataUpdate<MouseInteractable>();
+    public EventOnDataUpdate<MouseInteractable> OnEndDragging = new EventOnDataUpdate<MouseInteractable>();
 
     public bool IsMouseDown { get; private set; }
     public long MouseDownTime { get; private set; }

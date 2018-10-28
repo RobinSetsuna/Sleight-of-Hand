@@ -20,15 +20,6 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         }
     }
 
-    [SerializeField] private player _player;
-    public player Player
-    {
-        get
-        {
-            return _player;
-        }
-    }
-
     public LayerMask unwalkableMask;
     public float nodeRadius;
     public Transform tilePrefab;
@@ -46,6 +37,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     public int checktimes;
     public Tile[] generatedPath;
     private int action_point; // temp use, replace later
+
+    private Transform root;
 
     [Header("References")]
     public Transform environmentHolder;
@@ -71,8 +64,6 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         checktimes = 0;
         ok_to_drag = false;
         action_point = 5;
-
-        GameManager.Singleton.OnPathChange.AddListener(HandlePathChange);
     }
 
     private void Update()
@@ -117,59 +108,63 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// node_radius: the cube radius
     /// parameter: None
     /// </summary>
-    public void GenerateMap(LevelManager.LevelData levelData) {
+    public void GenerateMap(LevelManager.LevelData levelData, out List<Unit> units)
+    {
+        if (!root)
+            root = transform.Find("GridRoot");
 
-        string holderName = "Generated Map";
-        // check for exist map, and destroy it
-        if (transform.Find(holderName)) {
-            DestroyImmediate(transform.Find(holderName).gameObject);
+        if (!root)
+        {
+            root = new GameObject("GridRoot").transform;
+            root.parent = transform;
         }
-        
-        // set Script holder as parent
-        Transform mapHolder = new GameObject (holderName).transform;
-        mapHolder.parent = transform;
 
         // Extract data from levelData
-        if (levelData != null) {
+        if (levelData != null)
             mapSize = new Vector2Int(levelData.width, Mathf.CeilToInt(levelData.tiles.Length / levelData.width));
-        }
         
         // new grid with size [mapSize.x,maoSize.y]
         grid = new Tile[mapSize.x, mapSize.y];
 
+        int numExistedTiles = root.childCount;
+
+        units = new List<Unit>();
+
         for (int x = 0; x < mapSize.x; x ++)
-        {
             for (int y = 0; y < mapSize.y; y ++)
             {
-
-                int tileType = levelData.tiles[x + y * levelData.width];
+                int i = x + y * Length;
+                int tileType = levelData.tiles[i];
 
                 // parse position for tile
                 // Vector3 tilePosition = new Vector3(-mapSize.x/2 +nodeRadius + x + transform.position.x, 2, -mapSize.y/2 + nodeRadius + y + transform.position.z);
                 Vector3 tilePosition = GetWorldPosition(x, y);
                 
-                Transform newTile = Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right * 90), mapHolder);
+                Transform tileTransform = i < numExistedTiles ? root.GetChild(i) : Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right * 90), root);
 
                 // initiate outline
-                newTile.localScale = Vector3.one * (1 - outlinePercent);
+                tileTransform.localScale = Vector3.one * (1 - outlinePercent);
 
                 // set tile value
-                Tile tile = newTile.GetComponent<Tile>();
-                tile.walkable = (tileType == 0 || tileType == 2);
+                Tile tile = tileTransform.GetComponent<Tile>();
+                tile.walkable = tileType == 0;
                 tile.gridPosition = new Vector2Int(x, y);
 
                 // insertion
                 grid[x,y] = tile;
 
-                if (tileType == 1) {
-                    GameObject wall = Instantiate(wallPrefab, tilePosition, Quaternion.identity);
-                    wall.transform.SetParent(environmentHolder);
-                } else if (tileType == 2) {
-                    Player.transform.position = GetWorldPosition(x, y);
+                switch (tileType)
+                {
+                    case 1:
+                        Instantiate(wallPrefab, tilePosition, Quaternion.identity, environmentHolder);
+                        break;
                 }
-
             }
-        }
+    }
+
+    public void Initialize()
+    {
+        LevelManager.Instance.playerController.OnPathUpdate.AddListener(HandlePathChange);
     }
 
     public void wipeTiles()
@@ -202,6 +197,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
         if (path != null)
         {
+            player _player = LevelManager.Instance.Player;
+
             if (path.Count == 0)
                 Highlight(TileFromWorldPoint(_player.transform.position), _player.ActionPoint, Tile.HighlightColor.Blue, true);
             else
