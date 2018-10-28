@@ -511,8 +511,8 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 48.9
-  orthographic: 0
-  orthographic size: 10
+  orthographic: 1
+  orthographic size: 12.014356
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -534,13 +534,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_LocalRotation: {x: 0.100080796, y: -0, z: -0, w: 0.9949794}
-  m_LocalPosition: {x: 0.52, y: 4, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -4.47, y: 4.01, z: 4.7}
+  m_LocalScale: {x: 1.0000001, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2128856420}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 11.488001, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &578686440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1132,7 +1132,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1182792454}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 10, y: 0, z: 10}
   m_LocalScale: {x: 20, y: 0.9, z: 20}
   m_Children: []
@@ -1172,7 +1172,7 @@ MonoBehaviour:
     m_Bits: 512
   nodeRadius: 0.5
   tilePrefab: {fileID: 4202221461299724, guid: df32d8651c840a9429479bfb9204413a, type: 2}
-  wallPrefab: {fileID: 0}
+  wallPrefab: {fileID: 1153893828607108, guid: 8da33a8762d7d0e42912306a2edf1d4f, type: 2}
   mapSize: {x: 20, y: 20}
   outlinePercent: 0.075
   time_intervals: 0.05
@@ -1180,7 +1180,7 @@ MonoBehaviour:
   ok_to_drag: 0
   checktimes: 0
   generatedPath: []
-  environmentHolder: {fileID: 0}
+  environmentHolder: {fileID: 1422179120}
 --- !u!4 &1290799990
 Transform:
   m_ObjectHideFlags: 0
@@ -1419,14 +1419,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2128856419}
-  m_LocalRotation: {x: 0.32421467, y: 0, z: 0, w: 0.9459836}
-  m_LocalPosition: {x: 10.61, y: 12.98, z: -6.172}
+  m_LocalRotation: {x: 0.350219, y: 0.36344978, z: -0.15584408, w: 0.8490957}
+  m_LocalPosition: {x: -4.31, y: 19.04, z: -10.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 534669905}
   m_Father: {fileID: 818662165}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 37.836002, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45.074, y: 46.007004, z: -0.818}
 --- !u!114 &2128856421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1440,9 +1440,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothTimeY: 4
   smoothTimeX: 4
-  bounds: 1
-  minCameraPos: {x: 8.058087, y: 12.98, z: -9.47534}
-  maxCanmeraPos: {x: 13.66002, y: 12.98, z: 4.751887}
+  bounds: 0
+  minCameraPos: {x: -11.66781, y: 19.04, z: -12.5332}
+  maxCanmeraPos: {x: 4.866974, y: 19.04, z: -1.610182}
   rotate_speed: 1.25
   CameraDistance: 12
   fallowing: 0

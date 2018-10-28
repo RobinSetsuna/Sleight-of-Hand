@@ -76,9 +76,9 @@ public class CameraManager : MonoBehaviour
 	public void boundCameraFallow(Transform unit)
 	{
 		// bound Camera fallow to Transform, Camera will fallow the target until it release
-		FocusAt(unit.transform.position, null);
+		//FocusAt(unit.transform.position, null);
 		fallowing = true;
-		StartCoroutine(CameraFallow(unit,false,null));
+		StartCoroutine(CameraFallow(unit,true,null));
 	}
 	
 	public void unboundCameraFallow()
@@ -106,21 +106,12 @@ public class CameraManager : MonoBehaviour
 	
 	private IEnumerator CameraFallow(Transform unit,bool chasing,System.Action callback)
 	{
+		Vector3 temp = unit.position;
 		while (fallowing)
 		{
-			// two type of chasing:
-			// if chasing is false, camera won't change the position, just keep looking at target
-			// if chasing is true, camera will change position too.
-			if (chasing)
-			{
-				destination = unit.transform.position;
-			}
-			if (MathUtility.ManhattanDistance(destination.x, destination.z, transform.position.x,
-				    transform.position.z) > CameraDistance)
-			{
 				// smooth camera movement
-				float posy = Mathf.SmoothDamp(transform.position.z, unit.position.z, ref velocity.z, smoothTimeY);
-				float posx = Mathf.SmoothDamp(transform.position.x, unit.position.x, ref velocity.x, smoothTimeX);
+				float posy = transform.position.z+(unit.position.z - temp.z);
+				float posx = transform.position.x+(unit.position.x - temp.x);
 				transform.position = new Vector3(posx, transform.position.y, posy);
 				if (bounds)
 				{
@@ -130,16 +121,7 @@ public class CameraManager : MonoBehaviour
 						transform.position.y, Mathf.Clamp(transform.position.z, minCameraPos.z, maxCanmeraPos.z)
 					);
 				}
-			}
-			Vector3 dirFromAtoB = (unit.position - transform.position).normalized;
-			var dotProd = Vector3.Dot(dirFromAtoB, transform.forward); // check if the camera already rotate to right angle
-			if (dotProd > 0.3)
-			{
-				// no need for sharp pointing in fallow,0.3 is good enough
-				//smooth camera rotation
-				var rotation = Quaternion.LookRotation(unit.position - transform.position);
-				transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotate_speed);
-			}
+		    temp = unit.position;
 			yield return null;
 		}
 		
@@ -148,6 +130,32 @@ public class CameraManager : MonoBehaviour
 		// trigger callback event if have one
 		yield return null;
 	}
+			
+//		while (fallowing)
+//		{
+//			// two type of chasing:
+//			// if chasing is false, camera won't change the position, just keep looking at target
+//			// if chasing is true, camera will change position too.
+//			if (chasing)
+//			{
+//				destination = unit.transform.position;
+//			}
+//			if (MathUtility.ManhattanDistance(destination.x, destination.z, transform.position.x,
+//				    transform.position.z) > CameraDistance)
+//			{
+
+//			}
+//			Vector3 dirFromAtoB = (unit.position - transform.position).normalized;
+//			var dotProd = Vector3.Dot(dirFromAtoB, transform.forward); // check if the camera already rotate to right angle
+//			if (dotProd > 0.1)
+//			{
+//				// no need for sharp pointing in fallow,0.3 is good enough
+//				//smooth camera rotation
+//				var rotation = Quaternion.LookRotation(unit.position - transform.position);
+//				print(rotation);
+//				transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotate_speed);
+//			}
+
 
 	private IEnumerator Shake(float Duration,float Magnitude,System.Action callback)
 	{

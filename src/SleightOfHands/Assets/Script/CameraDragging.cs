@@ -20,7 +20,7 @@ public class CameraDragging : MonoBehaviour {
 	{
 		#region ZOOM
 		// Attaches the float y to scrollwheel up or down
-		curZoomPos = Camera.main.fieldOfView;
+		curZoomPos = Camera.main.orthographicSize;
 		// If the wheel goes up it, decrement 5 from "zoomTo"
 		if (Input.GetAxis("Mouse ScrollWheel") < 0f && curZoomPos > zoomFrom)
 		{
@@ -31,7 +31,7 @@ public class CameraDragging : MonoBehaviour {
 			//Debug.Log (" ZoomedOut");
 		}
 		// Makes the actual change to Field Of View
-		Camera.main.fieldOfView = curZoomPos;
+		Camera.main.orthographicSize  = curZoomPos;
 		#endregion
 
 		#region  DEMO_CODE
@@ -75,7 +75,8 @@ public class CameraDragging : MonoBehaviour {
 					Mathf.Clamp(transform.position.x, CameraManager.Instance.minCameraPos.x, CameraManager.Instance.maxCanmeraPos.x),
 					transform.position.y, Mathf.Clamp(transform.position.z, CameraManager.Instance.minCameraPos.z, CameraManager.Instance.maxCanmeraPos.z)
 				);
-			}	
+			}
+
 		}
 		#endregion		
 		
