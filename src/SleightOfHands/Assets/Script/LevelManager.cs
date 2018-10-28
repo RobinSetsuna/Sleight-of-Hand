@@ -26,7 +26,8 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public EventOnDataChange<Phase> OnCurrentPhaseChange = new EventOnDataChange<Phase>();
+    public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForPlayer = new EventOnDataUpdate<Phase>();
+    public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForEnvironment = new EventOnDataUpdate<Phase>();
 
     public List<Unit> units;
     public player Player { get; private set; }
@@ -70,12 +71,12 @@ public class LevelManager : MonoBehaviour
 #if UNITY_EDITOR
             LogUtility.PrintLogFormat("LevelManager", "Made a transition to {0}.", value);
 #endif
-
-            // Before leaving the previous state
+            Round currentRound = CurrentRound;
+            // Before leaving the previous phase
             switch (currentPhase)
             {
                 case Phase.Action:
-                    switch (CurrentRound)
+                    switch (currentRound)
                     {
                         case Round.Player:
                             playerController.Disable();
@@ -84,14 +85,13 @@ public class LevelManager : MonoBehaviour
                     break;
             }
 
-            Phase previousPhase = currentPhase;
             currentPhase = value;
 
-            // After entering the new state
+            // After entering a new phase
             switch (currentPhase)
             {
                 case Phase.Action:
-                    switch (CurrentRound)
+                    switch (currentRound)
                     {
                         case Round.Player:
                             playerController.Enable();
@@ -100,16 +100,24 @@ public class LevelManager : MonoBehaviour
                     break;
             }
 
-            OnCurrentPhaseChange.Invoke(previousPhase, currentPhase);
-
-            // In phase
+            switch (currentRound)
+            {
+                case Round.Player:
+                    OnCurrentPhaseChangeForPlayer.Invoke(currentPhase);
+                    break;
+                case Round.Environment:
+                    OnCurrentPhaseChangeForEnvironment.Invoke(currentPhase);
+                    break;
+            }
+            
+            // In new phase
             switch (currentPhase)
             {
                 case Phase.Start:
                     CurrentPhase = Phase.Action;
                     break;
                 case Phase.Action:
-                    if (CurrentRound == Round.Environment)
+                    if (currentRound == Round.Environment)
                         CurrentPhase = Phase.End;
                     break;
                 case Phase.End:
@@ -163,7 +171,6 @@ public class LevelManager : MonoBehaviour
     private void SpawnPlayer()
     {
         Player = Instantiate(ResourceUtility.GetPrefab<player>("PlayerDummy"), GridManager.Instance.GetWorldPosition(currentLevel.playerBirthplaceX, currentLevel.playerBirthplaceY) + new Vector3(0, 1, 0), Quaternion.identity, GridManager.Instance.environmentHolder);
-        units.Add(Player);
     }
 
     [System.Serializable]
