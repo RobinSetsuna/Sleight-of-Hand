@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -32,6 +32,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     public LayerMask unwalkableMask;
     public float nodeRadius;
     public Transform tilePrefab;
+    public GameObject wallPrefab;
     public Vector2Int mapSize;
     [Range(0,1)] public float outlinePercent;
     
@@ -45,6 +46,9 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     public int checktimes;
     public Tile[] generatedPath;
     private int action_point; // temp use, replace later
+
+    [Header("References")]
+    public Transform environmentHolder;
 
     public int Length
     {
@@ -64,7 +68,6 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
     private void Start()
     {
-        GenerateMap (null);
         checktimes = 0;
         ok_to_drag = false;
         action_point = 5;
@@ -87,22 +90,6 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             dragging = false;
         }
     }
-
-    //public Tile TileFromWorldPoint(Vector3 worldPosition)
-    //{
-    //    Tile navigate_tile = grid[0, 0];
-
-    //    // take the position of grid[0,0] to check the distance of grid shuffled 
-    //    float percentX = (worldPosition.x - navigate_tile.transform.position.x) / (mapSize.x * nodeRadius * 2);
-    //    float percentY = (worldPosition.z - navigate_tile.transform.position.z) / (mapSize.y  * nodeRadius * 2);
-
-    //    percentX = Mathf.Clamp01(percentX);
-    //    percentY = Mathf.Clamp01(percentY);
-    //    int x = Mathf.RoundToInt((mapSize.x - 1) * percentX);
-    //    int y = Mathf.RoundToInt((mapSize.y - 1) * percentY);
-    //    //Debug.Log("x: "+ x + " y：" + y);
-    //    return grid[x, y];
-    //}
 
     public bool IsAdjacent(Tile A, Tile B)
     {
@@ -144,16 +131,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
         // Extract data from levelData
         if (levelData != null) {
-            Debug.Log(levelData.tiles.Length);
             mapSize = new Vector2Int(levelData.width, Mathf.CeilToInt(levelData.tiles.Length / levelData.width));
         }
-        //  start,code for temp usage , delete after level data implemented
-        else
-        {
-            mapSize = new Vector2Int(20,20);
-        }
-        // end
-        
         
         // new grid with size [mapSize.x,maoSize.y]
         grid = new Tile[mapSize.x, mapSize.y];
@@ -162,6 +141,9 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         {
             for (int y = 0; y < mapSize.y; y ++)
             {
+
+                int tileType = levelData.tiles[x + y * levelData.width];
+
                 // parse position for tile
                 // Vector3 tilePosition = new Vector3(-mapSize.x/2 +nodeRadius + x + transform.position.x, 2, -mapSize.y/2 + nodeRadius + y + transform.position.z);
                 Vector3 tilePosition = GetWorldPosition(x, y);
@@ -173,11 +155,19 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
                 // set tile value
                 Tile tile = newTile.GetComponent<Tile>();
-                tile.walkable = !Physics.Raycast(tilePosition, Vector3.up, 3 * nodeRadius, LayerMask.GetMask("Obstacle"));
+                tile.walkable = (tileType == 0 || tileType == 2);
                 tile.gridPosition = new Vector2Int(x, y);
 
                 // insertion
                 grid[x,y] = tile;
+
+                if (tileType == 1) {
+                    GameObject wall = Instantiate(wallPrefab, tilePosition, Quaternion.identity);
+                    wall.transform.SetParent(environmentHolder);
+                } else if (tileType == 2) {
+                    Player.transform.position = GetWorldPosition(x, y);
+                }
+
             }
         }
     }
@@ -205,83 +195,6 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             checktimes = 0;
         }
     }
-
-    //public bool AccessibleCheck(int tile_x, int tile_y)
-    //{
-    //    for (int x = -1; x <= 1; x++)
-    //    {
-    //        for (int y = -1; y <= 1; y++)
-    //        {
-    //            if (x == 0 && y == 0)
-    //            {
-    //                // center skip
-    //                continue;
-    //            }
-
-    //            if (x != 0 && y != 0)
-    //            {
-    //                // disable diagonal check.  remove this 'if' statement when we want diagonal check
-    //                continue;
-    //            }
-
-    //            int temp_x = tile_x + x;
-    //            int temp_y = tile_y + y;
-    //            if (temp_x >= 0 && temp_x < grid.Length && temp_y >= 0 && temp_y < grid.Length)
-    //            {
-    //                if (grid[temp_x, temp_y].selected && temp_x == generatedPath[checktimes-1].x && temp_y == generatedPath[checktimes-1].y )
-    //                {
-    //                    //accessible
-    //                    generatedPath[checktimes] = grid[tile_x, tile_y];// add tile to path, selected
-    //                    checktimes++; // check success time = selected tiles.
-    //                    return true;
-    //                }
-    //            }
-    //        }
-    //    }
-    //    return false;
-    //}
-
-    /// <Hightlight>
-    /// give center tile, highlight range, and highlight type to highlight specific group of tiles.
-    /// parameter: (Tile(tile),Range(int),flag(int))
-    /// 
-    /// flag: 1 obstructed by the wall. ignore all tiles behind the wall. example usage: effect can not across the wall
-    /// flag: 2 ignore distance, just avoid unwalkable tile , example usage: effect can across the wall
-    /// flag: 3 consider distance, not ignore the tiles behind wall. example usage:movement use
-    /// </summary>
-    //public void Highlight(Tile center, int range, int flag)
-    //{
-    //    generatedPath = flag == 3 ? new Tile[action_point+1] : null;
-    //    generatedPath[checktimes] = center;// add stand_tile to path, selected
-    //    checktimes++;
-    //    bool ignoreDistance = (flag == 2);
-    //    bool rechecking = (flag == 3||flag == 2);
-    //    this.range = range;
-    //    center.HighlightTile();
-    //    center.distance = 0;
-    //    recheck_list = new HashSet<Tile>();
-    //    for (int x = 0; x <= this.range; x++)
-    //    {
-    //        for (int y = 0; y <= this.range; y++)
-    //        {
-    //            if (x + y <= this.range && x + y != 0)
-    //            {
-    //                // tile is out of range or already highlight
-    //                //Debug.Log("x:" + x +" y: "+ y + "is out of range");
-    //                setHighlight(center.x + x, center.y + y, rechecking, ignoreDistance);
-    //                setHighlight(center.x - x, center.y + y, rechecking, ignoreDistance);
-    //                setHighlight(center.x + x, center.y - y, rechecking, ignoreDistance);
-    //                setHighlight(center.x - x, center.y - y, rechecking, ignoreDistance);
-    //            }        
-    //        }
-    //    }
-
-    //    foreach (Tile tile in recheck_list)
-    //    {
-    //        //print("rechecking: "+ tile.x + " "+ tile.y);
-    //        setHighlight(tile.x, tile.y, false, false);
-    //    }
-    //}
 
     private void HandlePathChange(Path<Tile> path)
     {
@@ -385,72 +298,6 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         }
     }
 
-    //private void setHighlight(int x, int y,bool recheck , bool ignore_distance)
-    //{
-    //    //Debug.Log("x:" + x +" y: "+ y);
-    //    if (x >= 0 && x < grid.Length && y >= 0 && y < grid.Length)
-    //    {
-    //        var temp = grid[x,y];
-
-    //        int ret = NeighborCheck(temp);
-    //        if ( ret > 0 && temp.walkable)
-    //        {
-    //            if (ignore_distance)
-    //            {
-    //                temp.distance = Mathf.Abs(temp.x - x)+Mathf.Abs(temp.y - y); 
-    //            }
-    //            else
-    //            {
-    //                temp.distance = ret; 
-    //            }
-    //            temp.HighlightTile();
-    //        }
-    //        else if(ret == 0&&recheck&&temp.walkable)
-    //        {
-    //                recheck_list.Add(temp);
-    //            // Debug.Log("neighbor check failed");
-    //        }
-    //    }
-    //}
-
-    //private int NeighborCheck(Tile tile)
-    //{
-    //    // check any near 4 tiles is highlighted or not
-    //    // return the distance to center
-    //    for (int x = -1; x <= 1; x++)
-    //    {
-    //        for (int y = -1; y <= 1; y++)
-    //        {
-    //            if (x == 0 && y == 0)
-    //            {
-    //                // center skip
-    //                continue;
-    //            }
-    //            if (x != 0 && y != 0)
-    //            {
-    //                // disable diagonal check.  remove this 'if' statement when we want diagonal check
-    //                continue;
-    //            }
-    //            int temp_x = tile.x + x;
-    //            int temp_y = tile.y + y;
-    //            if( temp_x >= 0 && temp_x < grid.Length && temp_y >= 0 && temp_y < grid.Length)
-    //            {
-    //                if (grid[temp_x, temp_y].highlighted && grid[temp_x, temp_y].distance + 1 <= range)
-    //                {
-    //                    return grid[temp_x, temp_y].distance + 1;
-    //                }
-    //            }
-    //        }
-    //    }
-    //    return 0;
-    //}
-    
-    //public void setActionPoints(int _Action_point)
-    //{
-    //    //set Action points
-    //    action_point = _Action_point;
-    //}
-
     public Vector2Int GetIndices(Tile position)
     {
         return position.gridPosition;
@@ -484,5 +331,5 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
         return list;
     }
-
 }
+
