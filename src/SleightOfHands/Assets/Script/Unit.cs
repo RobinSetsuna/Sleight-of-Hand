@@ -32,6 +32,11 @@ public abstract class Unit : InLevelObject
     private Vector3 start;
     private Vector3 destination;
 
+    public void AddActionPoint(int point)
+    {
+        ActionPoint += point;
+    }
+
     public void MoveTo(Vector3 destination, System.Action callback)
     {
         start = transform.position;

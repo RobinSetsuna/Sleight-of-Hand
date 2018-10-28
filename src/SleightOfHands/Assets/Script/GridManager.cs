@@ -332,3 +332,4 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         return list;
     }
 }
+
