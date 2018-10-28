@@ -57,8 +57,8 @@ public class MouseInputManager
 
     internal void NotifyMouseDown(MouseInteractable obj)
     {
-        Debug.Assert(obj != null);
-        Debug.Log(obj.Type);
+//        Debug.Assert(obj != null);
+//        Debug.Log(obj.Type);
         IsMouseDown = true;
         MouseDownTime = TimeUtility.localTimeInMilisecond;
         CurrentMouseClicked = obj;

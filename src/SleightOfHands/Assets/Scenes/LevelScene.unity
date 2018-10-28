@@ -295,8 +295,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4bd755e3810240439520ac84aeb27a6, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 0
 --- !u!114 &126805936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,8 +307,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe6c5f314a056cc4da0fb9fe5b56f2d2, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   maxSpeed: 2
   initialActionPoint: 5
 --- !u!54 &126805937
@@ -447,8 +448,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c7e24078f04dfc4bb6c00e72f552d52, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   initialState: 1
 --- !u!4 &440463893
 Transform:
@@ -509,8 +510,8 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
-  orthographic: 1
+  field of view: 48.9
+  orthographic: 0
   orthographic size: 10
   m_Depth: -1
   m_CullingMask:
@@ -534,7 +535,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 534669902}
   m_LocalRotation: {x: 0.100080796, y: -0, z: -0, w: 0.9949794}
-  m_LocalPosition: {x: 0.52, y: 2.94, z: 0.6}
+  m_LocalPosition: {x: 0.52, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2128856420}
@@ -1163,15 +1164,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951776cb935e27b48bda53e140a34af7, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   _player: {fileID: 126805936}
   unwalkableMask:
     serializedVersion: 2
     m_Bits: 512
   nodeRadius: 0.5
   tilePrefab: {fileID: 4202221461299724, guid: df32d8651c840a9429479bfb9204413a, type: 2}
-  wallPrefab: {fileID: 1153893828607108, guid: 8da33a8762d7d0e42912306a2edf1d4f, type: 2}
+  wallPrefab: {fileID: 0}
   mapSize: {x: 20, y: 20}
   outlinePercent: 0.075
   time_intervals: 0.05
@@ -1179,7 +1180,7 @@ MonoBehaviour:
   ok_to_drag: 0
   checktimes: 0
   generatedPath: []
-  environmentHolder: {fileID: 1422179120}
+  environmentHolder: {fileID: 0}
 --- !u!4 &1290799990
 Transform:
   m_ObjectHideFlags: 0
@@ -1335,14 +1336,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fe3e32c259e99e439b37ccd62a65d77, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   levelFolderPath: Levels
   levelFilename: test_level
   debug:
-    name:
+    name: 
     width: 0
-    tiles:
+    tiles: 
     spawns: []
 --- !u!4 &1851337925
 Transform:
@@ -1404,7 +1405,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2128856420}
   - component: {fileID: 2128856421}
-  - component: {fileID: 2128856422}
   - component: {fileID: 2128856423}
   m_Layer: 0
   m_Name: CameraManager
@@ -1420,7 +1420,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2128856419}
   m_LocalRotation: {x: 0.32421467, y: 0, z: 0, w: 0.9459836}
-  m_LocalPosition: {x: 10.61, y: 13.072, z: -6.172}
+  m_LocalPosition: {x: 10.61, y: 12.98, z: -6.172}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 534669905}
@@ -1436,36 +1436,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cac1622e5ae9de74489476913be3f093, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
-  smoothTimeY: 3.5
-  smoothTimeX: 3.5
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smoothTimeY: 4
+  smoothTimeX: 4
   bounds: 1
-  minCameraPos: {x: 5.832298, y: 11.44, z: -6.134935}
-  maxCanmeraPos: {x: 14.192, y: 11.44, z: 5.996278}
+  minCameraPos: {x: 8.058087, y: 12.98, z: -9.47534}
+  maxCanmeraPos: {x: 13.66002, y: 12.98, z: 4.751887}
   rotate_speed: 1.25
   CameraDistance: 12
   fallowing: 0
---- !u!50 &2128856422
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2128856419}
-  m_BodyType: 0
-  m_Simulated: 0
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 0.0001
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!114 &2128856423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1475,9 +1455,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b752c0905d5c0d469351717013ed04d, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   dragSpeed: 1
-  curZoomPos: 20
-  zoomTo: 20
-  zoomFrom: 20
+  curZoomPos: 60
+  zoomTo: 50
+  zoomFrom: 35
