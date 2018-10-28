@@ -508,11 +508,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: -300
+  far clip plane: 300
   field of view: 48.9
   orthographic: 1
-  orthographic size: 12.014356
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -534,13 +534,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.47, y: 4.01, z: 4.7}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.0000001, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2128856420}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!1 &578686440
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,6 +845,7 @@ GameObject:
   - component: {fileID: 890214223}
   - component: {fileID: 890214222}
   - component: {fileID: 890214221}
+  - component: {fileID: 890214225}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -921,6 +922,18 @@ Transform:
   m_Father: {fileID: 2111091024}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &890214225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 890214220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4bd755e3810240439520ac84aeb27a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 0
 --- !u!1 &1156928164
 GameObject:
   m_ObjectHideFlags: 0
@@ -1419,14 +1432,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2128856419}
-  m_LocalRotation: {x: 0.350219, y: 0.36344978, z: -0.15584408, w: 0.8490957}
-  m_LocalPosition: {x: -4.31, y: 19.04, z: -10.28}
+  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 10, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 534669905}
   m_Father: {fileID: 818662165}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 45.074, y: 46.007004, z: -0.818}
+  m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
 --- !u!114 &2128856421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1457,7 +1470,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b752c0905d5c0d469351717013ed04d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragSpeed: 1
-  curZoomPos: 60
+  dragSpeed: 5
+  curZoomPos: 10
   zoomTo: 50
-  zoomFrom: 35
+  zoomFrom: 5
+  zoomSpeed: 15

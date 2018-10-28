@@ -131,7 +131,6 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
         // Extract data from levelData
         if (levelData != null) {
-            Debug.Log(levelData.tiles.Length);
             mapSize = new Vector2Int(levelData.width, Mathf.CeilToInt(levelData.tiles.Length / levelData.width));
         }
 

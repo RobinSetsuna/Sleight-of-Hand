@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 public class MouseInputManager
 {
@@ -9,21 +10,27 @@ public class MouseInputManager
         get { return singleton; }
     }
 
-    private static int mouseDragThreshold = 200;
+    public static readonly int mouseFocusThreshold = 200;
+    public static readonly float mouseDragThreshold = 10;
 
-    public EventOnDataChange1<MouseInteractable> OnCurrentMouseTargetChange =
-        new EventOnDataChange1<MouseInteractable>();
+    public class EventOnMouseDrag : UnityEvent<MouseInteractable, Vector3, Vector3> {}
 
+    //public EventOnDataChange1<MouseInteractable> OnMouseDown = new EventOnDataChange1<MouseInteractable>();
+    public EventOnDataChange1<MouseInteractable> OnMouseDrag = new EventOnDataChange1<MouseInteractable>();
+    //public EventOnDataChange1<MouseInteractable> OnMouseUp = new EventOnDataChange1<MouseInteractable>();
+
+    public EventOnDataChange1<MouseInteractable> OnCurrentMouseTargetChange = new EventOnDataChange1<MouseInteractable>();
+    public EventOnDataChange1<MouseInteractable> OnObjectFocus = new EventOnDataChange1<MouseInteractable>();
     public EventOnDataChange1<MouseInteractable> OnObjectClicked = new EventOnDataChange1<MouseInteractable>();
     public EventOnDataChange1<MouseInteractable> OnEndDragging = new EventOnDataChange1<MouseInteractable>();
 
     public bool IsMouseDown { get; private set; }
     public long MouseDownTime { get; private set; }
+    public Vector3 MouseDownPosition { get; private set; }
+
     public bool IsMouseDragging { get; private set; }
-    public MouseInteractable CurrentMouseClicked;
 
     private MouseInteractable currentMouseTarget;
-
     public MouseInteractable CurrentMouseTarget
     {
         get { return currentMouseTarget; }
@@ -38,44 +45,36 @@ public class MouseInputManager
         }
     }
 
-    private MouseInteractable lastClickedObject;
-
-    public MouseInteractable LastClickedObject
-    {
-        get { return lastClickedObject; }
-
-        private set
-        {
-            //if (value != lastClickedObject)
-            lastClickedObject = value;
-        }
-    }
-
-    private MouseInputManager()
-    {
-    }
+    private MouseInputManager() {}
 
     internal void NotifyMouseDown(MouseInteractable obj)
     {
-//        Debug.Assert(obj != null);
-//        Debug.Log(obj.Type);
         IsMouseDown = true;
         MouseDownTime = TimeUtility.localTimeInMilisecond;
-        CurrentMouseClicked = obj;
+        MouseDownPosition = Input.mousePosition;
+
+        //OnMouseDown.Invoke(obj);
     }
 
-//    internal void NotifyMouseDrag(MouseInteractable obj)
-//    {
-//        if (!IsMouseDragging)
-//            IsMouseDragging = TimeUtility.localTimeInMilisecond - MouseDownTime > mouseDragThreshold;
-//    }
+    internal void NotifyMouseDrag(MouseInteractable obj)
+    {
+
+        if (!IsMouseDragging)
+        {
+            if (Vector3.Distance(Input.mousePosition, MouseDownPosition) > mouseDragThreshold)
+            {
+                IsMouseDragging = true;
+                OnMouseDrag.Invoke(obj);
+            }
+        }
+        else
+            OnMouseDrag.Invoke(obj);
+    }
 
     internal void NotifyMouseEnter(MouseInteractable obj)
     {
-        if (IsMouseDown && TimeUtility.localTimeInMilisecond - MouseDownTime < mouseDragThreshold)
-        {
+        if (!IsMouseDragging && IsMouseDown)
             IsMouseDragging = true;
-        }
         
         CurrentMouseTarget = obj;
     }
@@ -83,10 +82,13 @@ public class MouseInputManager
     internal void NotifyMouseUp(MouseInteractable obj)
     {
         IsMouseDown = false;
+
         if (!IsMouseDragging)
         {
-            LastClickedObject = obj;
-            OnObjectClicked.Invoke(obj);
+            if (TimeUtility.localTimeInMilisecond - MouseDownTime > mouseFocusThreshold)
+                OnObjectFocus.Invoke(obj);
+            else
+                OnObjectClicked.Invoke(obj);
         }
         else
         {
@@ -94,6 +96,6 @@ public class MouseInputManager
             OnEndDragging.Invoke(obj);
         }
 
-        CurrentMouseClicked = null;
+        //OnMouseUp.Invoke(obj);
     }
 }

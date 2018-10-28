@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Experimental.UIElements;
 
 public enum UnitType : int
 {
@@ -18,10 +17,10 @@ public class MouseInteractable : MonoBehaviour
         MouseInputManager.Singleton.NotifyMouseDown(this);
     }
 
-//    private void OnMouseDrag()
-//    {
-//        MouseInputManager.Singleton.NotifyMouseDrag(this);
-//    }
+    private void OnMouseDrag()
+    {
+        MouseInputManager.Singleton.NotifyMouseDrag(this);
+    }
 
     private void OnMouseEnter()
     {

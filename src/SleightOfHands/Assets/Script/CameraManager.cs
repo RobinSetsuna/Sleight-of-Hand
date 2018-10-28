@@ -87,7 +87,7 @@ public class CameraManager : MonoBehaviour
 		fallowing = false;
 	}
 
-	public void FocusAt(Vector3 destination,System.Action callback)
+	public void FocusAt(Vector3 destination, System.Action callback)
 	{
 		// Make a one time focus 
 		// may add a camera action queue for camera action
