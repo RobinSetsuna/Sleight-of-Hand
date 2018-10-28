@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
                     player _player = GridManager.Instance.Player;
                     Tile playerTile = GridManager.Instance.TileFromWorldPoint(_player.transform.position);
 
-                    if (tile.IsHighlighted(Tile.HighlightColor.Blue))
+                    if (MathUtility.ManhattanDistance(tile.x, tile.y, playerTile.x, playerTile.y) <= _player.ActionPoint)
                     {
                         path = Navigation.FindPath(GridManager.Instance, playerTile, tile);
                         InitiatePlayerMovement();
@@ -178,7 +178,7 @@ public class GameManager : MonoBehaviour
         switch (currentGameState)
         {
             case GameState.MovementPlanning:
-                if (obj.GetComponent<player>() && path.Count > 0)
+                if (path.Count > 0)  // no need check for the last interaction obj
                     InitiatePlayerMovement();
                 break;
         }
@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
                     else if (obj.GetComponent<Tile>())
                     {
                         Tile tile = obj.GetComponent<Tile>();
-                        
+
                         if (path.Count > 0)
                         {
                             if (tile == path.Last.Previous.Value)

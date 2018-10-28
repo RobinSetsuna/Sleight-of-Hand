@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 
 ///	<summary/>
-/// GridManager - Grid Manager class 
+/// GridManager - Grid Manager class
 /// tile highlight in range, store player designed path, generate path.
 /// store grid[,] to manage all the tile in the map.
 /// Usage: GridManager._instance.FUNCTION_NAME()
@@ -35,7 +35,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     public GameObject wallPrefab;
     public Vector2Int mapSize;
     [Range(0,1)] public float outlinePercent;
-    
+
     [SerializeField] private float time_intervals;
     private float last_mouse_down;
     private Tile[,] grid;
@@ -124,7 +124,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         if (transform.Find(holderName)) {
             DestroyImmediate(transform.Find(holderName).gameObject);
         }
-        
+
         // set Script holder as parent
         Transform mapHolder = new GameObject (holderName).transform;
         mapHolder.parent = transform;
@@ -133,7 +133,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         if (levelData != null) {
             mapSize = new Vector2Int(levelData.width, Mathf.CeilToInt(levelData.tiles.Length / levelData.width));
         }
-        
+
         // new grid with size [mapSize.x,maoSize.y]
         grid = new Tile[mapSize.x, mapSize.y];
 
@@ -143,11 +143,10 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             {
 
                 int tileType = levelData.tiles[x + y * levelData.width];
-
                 // parse position for tile
                 // Vector3 tilePosition = new Vector3(-mapSize.x/2 +nodeRadius + x + transform.position.x, 2, -mapSize.y/2 + nodeRadius + y + transform.position.z);
                 Vector3 tilePosition = GetWorldPosition(x, y);
-                
+
                 Transform newTile = Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right * 90), mapHolder);
 
                 // initiate outline
@@ -157,7 +156,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                 Tile tile = newTile.GetComponent<Tile>();
                 tile.walkable = (tileType == 0 || tileType == 2);
                 tile.gridPosition = new Vector2Int(x, y);
-
+                
                 // insertion
                 grid[x,y] = tile;
 
@@ -332,4 +331,3 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         return list;
     }
 }
-
