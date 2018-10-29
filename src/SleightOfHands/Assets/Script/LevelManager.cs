@@ -71,7 +71,6 @@ public class LevelManager : MonoBehaviour
 #if UNITY_EDITOR
             LogUtility.PrintLogFormat("LevelManager", "Made a transition to {0}.", value);
 #endif
-            Round currentRound = CurrentRound;
             // Before leaving the previous phase
             //switch (currentPhase)
             //{
@@ -80,11 +79,16 @@ public class LevelManager : MonoBehaviour
             currentPhase = value;
 
             // After entering a new phase
-            //switch (currentPhase)
-            //{
-            //}
+            switch (currentPhase)
+            {
+                case Phase.Start:
+                    round++;
+                    if (CurrentRound == Round.Player)
+                        onCurrentTurnChange.Invoke(CurrentTurn);
+                    break;
+            }
 
-            switch (currentRound)
+            switch (CurrentRound)
             {
                 case Round.Player:
                     OnCurrentPhaseChangeForPlayer.Invoke(currentPhase);
@@ -101,11 +105,10 @@ public class LevelManager : MonoBehaviour
                     CurrentPhase = Phase.Action;
                     break;
                 case Phase.Action:
-                    if (currentRound == Round.Environment)
+                    if (CurrentRound == Round.Environment)
                         CurrentPhase = Phase.End;
                     break;
                 case Phase.End:
-                    round++;
                     CurrentPhase = Phase.Start;
                     break;
             }
@@ -131,7 +134,7 @@ public class LevelManager : MonoBehaviour
         SpawnPlayer();
         GridManager.Instance.Initialize();
 
-        round = 0;
+        round = -1;
         CurrentPhase = Phase.Start;
 
         UIManager.Singleton.Open("HUD", UIManager.UIMode.PERMANENT);
