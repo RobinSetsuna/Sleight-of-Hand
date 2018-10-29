@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4200581634523148}
+  - component: {fileID: 65757520715796040}
   m_Layer: 15
   m_Name: Temp Wall
   m_TagString: Untagged
@@ -127,7 +128,7 @@ BoxCollider:
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65757520715796040
 BoxCollider:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1153893828607108}
