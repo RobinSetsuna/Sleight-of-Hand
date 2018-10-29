@@ -73,32 +73,16 @@ public class LevelManager : MonoBehaviour
 #endif
             Round currentRound = CurrentRound;
             // Before leaving the previous phase
-            switch (currentPhase)
-            {
-                case Phase.Action:
-                    switch (currentRound)
-                    {
-                        case Round.Player:
-                            playerController.Disable();
-                            break;
-                    }
-                    break;
-            }
+            //switch (currentPhase)
+            //{
+            //}
 
             currentPhase = value;
 
             // After entering a new phase
-            switch (currentPhase)
-            {
-                case Phase.Action:
-                    switch (currentRound)
-                    {
-                        case Round.Player:
-                            playerController.Enable();
-                            break;
-                    }
-                    break;
-            }
+            //switch (currentPhase)
+            //{
+            //}
 
             switch (currentRound)
             {
@@ -149,6 +133,8 @@ public class LevelManager : MonoBehaviour
 
         round = 0;
         CurrentPhase = Phase.Start;
+
+        UIManager.Singleton.Open("HUD", UIManager.UIMode.PERMANENT);
     }
 
     internal void EndPlayerActionPhase()

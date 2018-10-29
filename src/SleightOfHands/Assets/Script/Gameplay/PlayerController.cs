@@ -1,5 +1,6 @@
 ﻿public enum PlayerState : int
 {
+    Uncontrollable,
     Idle,
     MovementPlanning,
     MovementConfirmation,
@@ -15,6 +16,17 @@ public class PlayerController : MouseInteractable
 
     private bool isEnabled = false;
     private Path<Tile> path;
+    private Path<Tile> Path
+    {
+        set
+        {
+            if (value != path)
+            {
+                path = value;
+                onPathUpdate.Invoke(path);
+            }
+        }
+    }
 
     private PlayerState currentPlayerState;
     public PlayerState CurrentPlayerState
@@ -44,9 +56,12 @@ public class PlayerController : MouseInteractable
             else
             {
                 // Before leaving the previous state
-                //switch (currentGameState)
-                //{
-                //}
+                switch (currentPlayerState)
+                {
+                    case PlayerState.Uncontrollable:
+                        Enable();
+                        break;
+                }
 
                 PlayerState previousPlayerState = CurrentPlayerState;
                 currentPlayerState = value;
@@ -54,23 +69,22 @@ public class PlayerController : MouseInteractable
                 // After entering the new state
                 switch (currentPlayerState)
                 {
+                    case PlayerState.Uncontrollable:
+                        Path = null;
+                        Disable();
+                        break;
                     case PlayerState.Idle:
                         if (previousPlayerState != PlayerState.Move)
-                        {
-                            path = null;
-                            onPathUpdate.Invoke(path);
-                        }
+                            Path = null;
                         break;
                     case PlayerState.MovementPlanning:
-                        path = new Path<Tile>(GridManager.Instance.TileFromWorldPoint(Player.transform.position));
-                        onPathUpdate.Invoke(path);
+                        Path = new Path<Tile>(GridManager.Instance.TileFromWorldPoint(Player.transform.position));
                         break;
                     case PlayerState.MovementConfirmation:
                         // TODO: Show ListMenu
                         break;
                     case PlayerState.Move:
-                        path = null;
-                        onPathUpdate.Invoke(path);
+                        Path = null;
                         ActionManager.Singleton.Execute(ResetToIdle);
                         break;
                 }
@@ -82,19 +96,23 @@ public class PlayerController : MouseInteractable
 
     private PlayerController() {}
 
-    private void Start()
+    private void Awake()
     {
         Player = GetComponent<player>();
 
-        ResetToIdle();
+        CurrentPlayerState = 0;
+
+        LevelManager.Instance.OnCurrentPhaseChangeForPlayer.AddListener(HandleCurrentPhaseChange);
     }
 
     private void OnDestroy()
     {
         Disable();
+
+        LevelManager.Instance.OnCurrentPhaseChangeForPlayer.RemoveListener(HandleCurrentPhaseChange);
     }
 
-    internal void Enable()
+    private void Enable()
     {
         if (!isEnabled)
         {
@@ -106,7 +124,7 @@ public class PlayerController : MouseInteractable
         }
     }
 
-    internal void Disable()
+    private void Disable()
     {
         if (isEnabled)
         {
@@ -163,7 +181,7 @@ public class PlayerController : MouseInteractable
 
                     if (MathUtility.ManhattanDistance(tile.x, tile.y, playerTile.x, playerTile.y) <= Player.ActionPoint)
                     {
-                        path = Navigation.FindPath(GridManager.Instance, playerTile, tile);
+                        Path = Navigation.FindPath(GridManager.Instance, playerTile, tile);
                         InitiatePlayerMovement();
                     }
                 }
@@ -209,5 +227,18 @@ public class PlayerController : MouseInteractable
                     }
                     break;
             }
+    }
+
+    private void HandleCurrentPhaseChange(Phase currentPhase)
+    {
+        switch (currentPhase)
+        {
+            case Phase.Action:
+                CurrentPlayerState = PlayerState.Idle;
+                break;
+            case Phase.End:
+                CurrentPlayerState = PlayerState.Uncontrollable;
+                break;
+        }
     }
 }

@@ -21,18 +21,6 @@ public class UIManager : MonoBehaviour
         PERMANENT,
     }
 
-    private Transform uiRoot;
-    public Transform UIRoot
-    {
-        get
-        {
-            if (!uiRoot)
-                uiRoot = Instantiate(ResourceUtility.GetPrefab("UIRoot")).transform;
-
-            return uiRoot;
-        }
-    }
-
     private Stack<string> uiStack;
     private Dictionary<string, UserInterface> uiOpened;
 
@@ -57,7 +45,7 @@ public class UIManager : MonoBehaviour
         if (IsInViewport(name))
             return uiOpened[name];
 
-        UserInterface ui = Instantiate(ResourceUtility.GetUIPrefab(name), UIRoot, false);
+        UserInterface ui = Instantiate(ResourceUtility.GetUIPrefab(name), transform, false);
 
         uiOpened.Add(name, ui);
 
@@ -114,26 +102,24 @@ public class UIManager : MonoBehaviour
 
         uiStack = new Stack<string>();
         uiOpened = new Dictionary<string, UserInterface>();
-
-        DontDestroyOnLoad(gameObject);
     }
 
-    void FixedUpdate()
-    {
-        if (Input.GetAxis("Cancel") == 0)
-            isCancelButtonDown = false;
-        else if (!isCancelButtonDown)
-        {
-            isCancelButtonDown = true;
+    //void FixedUpdate()
+    //{
+    //    if (Input.GetAxis("Cancel") == 0)
+    //        isCancelButtonDown = false;
+    //    else if (!isCancelButtonDown)
+    //    {
+    //        isCancelButtonDown = true;
 
-            if (HasUIOpened())
-            {
-                Close(uiStack.Peek());
-            }
-            else
-            {
-                Open("IngameMenu");
-            }
-        }
-    }
+    //        if (HasUIOpened())
+    //        {
+    //            Close(uiStack.Peek());
+    //        }
+    //        else
+    //        {
+    //            Open("IngameMenu");
+    //        }
+    //    }
+    //}
 }
