@@ -15,14 +15,14 @@ public class MouseInputManager
 
     public class EventOnMouseDrag : UnityEvent<MouseInteractable, Vector3, Vector3> {}
 
-    //public EventOnDataChange1<MouseInteractable> OnMouseDown = new EventOnDataChange1<MouseInteractable>();
-    public EventOnDataChange1<MouseInteractable> OnMouseDrag = new EventOnDataChange1<MouseInteractable>();
-    //public EventOnDataChange1<MouseInteractable> OnMouseUp = new EventOnDataChange1<MouseInteractable>();
+    //public EventOnDataUpdate<MouseInteractable> OnMouseDown = new EventOnDataUpdate<MouseInteractable>();
+    public EventOnDataUpdate<MouseInteractable> OnMouseDrag = new EventOnDataUpdate<MouseInteractable>();
+    //public EventOnDataUpdate<MouseInteractable> OnMouseUp = new EventOnDataUpdate<MouseInteractable>();
 
-    public EventOnDataChange1<MouseInteractable> OnCurrentMouseTargetChange = new EventOnDataChange1<MouseInteractable>();
-    public EventOnDataChange1<MouseInteractable> OnObjectFocus = new EventOnDataChange1<MouseInteractable>();
-    public EventOnDataChange1<MouseInteractable> OnObjectClicked = new EventOnDataChange1<MouseInteractable>();
-    public EventOnDataChange1<MouseInteractable> OnEndDragging = new EventOnDataChange1<MouseInteractable>();
+    public EventOnDataUpdate<MouseInteractable> onMouseEnter = new EventOnDataUpdate<MouseInteractable>();
+    public EventOnDataUpdate<MouseInteractable> onMouseFocus = new EventOnDataUpdate<MouseInteractable>();
+    public EventOnDataUpdate<MouseInteractable> onMouseClick = new EventOnDataUpdate<MouseInteractable>();
+    public EventOnDataUpdate<MouseInteractable> onDragEnd = new EventOnDataUpdate<MouseInteractable>();
 
     public bool IsMouseDown { get; private set; }
     public long MouseDownTime { get; private set; }
@@ -30,20 +30,7 @@ public class MouseInputManager
 
     public bool IsMouseDragging { get; private set; }
 
-    private MouseInteractable currentMouseTarget;
-    public MouseInteractable CurrentMouseTarget
-    {
-        get { return currentMouseTarget; }
-
-        private set
-        {
-            if (value != CurrentMouseTarget)
-            {
-                currentMouseTarget = value;
-                OnCurrentMouseTargetChange.Invoke(value);
-            }
-        }
-    }
+    public MouseInteractable CurrentMouseTarget { get; private set; }
 
     private MouseInputManager() {}
 
@@ -77,6 +64,8 @@ public class MouseInputManager
             IsMouseDragging = true;
         
         CurrentMouseTarget = obj;
+
+        onMouseEnter.Invoke(obj);
     }
 
     internal void NotifyMouseUp(MouseInteractable obj)
@@ -86,14 +75,14 @@ public class MouseInputManager
         if (!IsMouseDragging)
         {
             if (TimeUtility.localTimeInMilisecond - MouseDownTime > mouseFocusThreshold)
-                OnObjectFocus.Invoke(obj);
+                onMouseFocus.Invoke(obj);
             else
-                OnObjectClicked.Invoke(obj);
+                onMouseClick.Invoke(obj);
         }
         else
         {
             IsMouseDragging = false;
-            OnEndDragging.Invoke(obj);
+            onDragEnd.Invoke(obj);
         }
 
         //OnMouseUp.Invoke(obj);

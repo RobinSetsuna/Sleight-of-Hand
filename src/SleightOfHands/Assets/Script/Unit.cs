@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public abstract class Unit : InLevelObject
 {
+    [SerializeField] private Round actionRound;
+
     [SerializeField] private float maxSpeed;
     public float MaxSpeed
     {
@@ -52,7 +54,30 @@ public abstract class Unit : InLevelObject
         MoveTo(GridManager.Instance.GetWorldPosition(tile.x, tile.y), callback);
     }
 
-    private void Start()
+    private void Awake()
+    {
+        switch (actionRound)
+        {
+            case Round.Player:
+                LevelManager.Instance.OnCurrentPhaseChangeForPlayer.AddListener(HandleCurrentPhaseChange);
+                break;
+            case Round.Environment:
+                LevelManager.Instance.OnCurrentPhaseChangeForEnvironment.AddListener(HandleCurrentPhaseChange);
+                break;
+        }
+    }
+
+    private void HandleCurrentPhaseChange(Phase currentPhase)
+    {
+        switch (currentPhase)
+        {
+            case Phase.Start:
+                ResetActionPoint();
+                break;
+        }
+    }
+
+    private void ResetActionPoint()
     {
         ActionPoint = initialActionPoint;
     }
