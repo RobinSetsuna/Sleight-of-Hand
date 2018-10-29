@@ -23,7 +23,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     public LayerMask unwalkableMask;
     public float nodeRadius;
     public Transform tilePrefab;
-    public GameObject wallPrefab;
+    public GameObject[] wallPrefabs;
+    public GameObject[] environmentTilePrefabs;
     public Vector2Int mapSize;
     [Range(0,1)] public float outlinePercent;
 
@@ -114,7 +115,6 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         if (!root)
             root = transform.Find("GridRoot");
 
-
         if (!root)
         {
             root = new GameObject("GridRoot").transform;
@@ -157,8 +157,19 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                 switch (tileType)
                 {
                     case 1:
-                        Instantiate(wallPrefab, tilePosition, Quaternion.identity, environmentHolder);
+                        Quaternion wallRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
+                        Instantiate(wallPrefabs[0], tilePosition, wallRotation, environmentHolder);
+                        goto case 0;
+
+                    case 0:
+                        Vector3 envTilePosition = tilePosition;
+                        envTilePosition.y = -0.55f;
+                        Quaternion envTileRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
+                        int envTileIndex = UnityEngine.Random.Range(0, environmentTilePrefabs.Length);
+                        GameObject envTilePrefab = environmentTilePrefabs[envTileIndex];
+                        Instantiate(envTilePrefab, envTilePosition, envTileRotation, environmentHolder);
                         break;
+
                 }
             }
     }

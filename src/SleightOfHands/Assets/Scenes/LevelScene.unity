@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -304,6 +304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 440463893}
   - component: {fileID: 440463892}
+  - component: {fileID: 440463894}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -336,6 +337,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &440463894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 440463891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52fd70edd3e77db419591aa48c0898a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  mainCamera: {fileID: 534669902}
+  obsAlpha: 0.4
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,8 +383,8 @@ Camera:
   m_GameObject: {fileID: 534669902}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.13725491, g: 0.54901963, b: 0.7176471, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -955,7 +970,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1182792455
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1055,7 +1070,21 @@ MonoBehaviour:
     m_Bits: 512
   nodeRadius: 0.5
   tilePrefab: {fileID: 4202221461299724, guid: df32d8651c840a9429479bfb9204413a, type: 2}
-  wallPrefab: {fileID: 1153893828607108, guid: 8da33a8762d7d0e42912306a2edf1d4f, type: 2}
+  wallPrefabs:
+  - {fileID: 1703594379124912, guid: fc75abf5d31c88c45a9ff67964bcb828, type: 2}
+  environmentTilePrefabs:
+  - {fileID: 100002, guid: 8dfedd46392fac84f99bb0d47b1a4155, type: 3}
+  - {fileID: 100002, guid: 998206b37c655c74b9da08e0a26eafaf, type: 3}
+  - {fileID: 100002, guid: 4bcff743673bb534dba591a551f8cc9e, type: 3}
+  - {fileID: 100002, guid: 7d6d6f4fc23d3284ab10efe1244fa30d, type: 3}
+  - {fileID: 100002, guid: b7e4d8b0b359bb34086c57d5380ebd93, type: 3}
+  - {fileID: 100002, guid: bd185bc6caad73f4eab1533fa79c538a, type: 3}
+  - {fileID: 100002, guid: 004f0f47822cafa41b5c723525dbb1c9, type: 3}
+  - {fileID: 100002, guid: 8dfedd46392fac84f99bb0d47b1a4155, type: 3}
+  - {fileID: 100002, guid: 8dfedd46392fac84f99bb0d47b1a4155, type: 3}
+  - {fileID: 100002, guid: 8dfedd46392fac84f99bb0d47b1a4155, type: 3}
+  - {fileID: 100002, guid: 8dfedd46392fac84f99bb0d47b1a4155, type: 3}
+  - {fileID: 100002, guid: 8dfedd46392fac84f99bb0d47b1a4155, type: 3}
   mapSize: {x: 20, y: 20}
   outlinePercent: 0.075
   time_intervals: 0.05
@@ -1227,8 +1256,6 @@ MonoBehaviour:
   currentLevel:
     name: 
     width: 0
-    playerBirthplaceX: 0
-    playerBirthplaceY: 0
     tiles: 
     spawns: []
 --- !u!4 &1851337925
@@ -1258,7 +1285,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2111091024
 Transform:
   m_ObjectHideFlags: 0

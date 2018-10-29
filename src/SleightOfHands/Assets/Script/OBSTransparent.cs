@@ -22,6 +22,10 @@ public class OBSTransparent : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        if (player == null) {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+
         Debug.DrawLine(player.transform.position, mainCamera.transform.position, Color.red);
 
         RaycastHit[] hit;

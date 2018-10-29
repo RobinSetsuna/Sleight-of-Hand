@@ -66,7 +66,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1611565707573008}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4453416252331230}
@@ -137,12 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7bef4cc71cfcde40985784ee75abaac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultColor: {r: 1, g: 1, b: 1, a: 0}
-  mouseOverColor: {r: 0.1945087, g: 0.34448448, b: 0.4433962, a: 0}
-  selectedColor: {r: 0.24056605, g: 0.47098097, b: 0.9622642, a: 0}
-  highlightColor: {r: 0.2687344, g: 0.9339623, b: 0.75989807, a: 0}
-  walkable: 0
+  Type: 0
+  alpha: 0.5
   gridPosition: {x: 0, y: 0}
   distance: 9999
-  highlighted: 0
   selected: 0
