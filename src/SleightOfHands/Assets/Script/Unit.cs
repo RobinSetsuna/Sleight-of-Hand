@@ -8,6 +8,8 @@ using UnityEngine;
 /// </summary>
 public abstract class Unit : InLevelObject
 {
+    [SerializeField] private Round actionRound;
+
     [SerializeField] private float maxSpeed;
     public float MaxSpeed
     {
@@ -32,6 +34,11 @@ public abstract class Unit : InLevelObject
     private Vector3 start;
     private Vector3 destination;
 
+    public void AddActionPoint(int point)
+    {
+        ActionPoint += point;
+    }
+
     public void MoveTo(Vector3 destination, System.Action callback)
     {
         start = transform.position;
@@ -47,7 +54,30 @@ public abstract class Unit : InLevelObject
         MoveTo(GridManager.Instance.GetWorldPosition(tile.x, tile.y), callback);
     }
 
-    private void Start()
+    private void Awake()
+    {
+        switch (actionRound)
+        {
+            case Round.Player:
+                LevelManager.Instance.OnCurrentPhaseChangeForPlayer.AddListener(HandleCurrentPhaseChange);
+                break;
+            case Round.Environment:
+                LevelManager.Instance.OnCurrentPhaseChangeForEnvironment.AddListener(HandleCurrentPhaseChange);
+                break;
+        }
+    }
+
+    private void HandleCurrentPhaseChange(Phase currentPhase)
+    {
+        switch (currentPhase)
+        {
+            case Phase.Start:
+                ResetActionPoint();
+                break;
+        }
+    }
+
+    private void ResetActionPoint()
     {
         ActionPoint = initialActionPoint;
     }
@@ -84,7 +114,7 @@ public abstract class Unit : InLevelObject
     //// Update is called once per frame
     //protected void FixedUpdate(){
     //	if ( heading!= null && heading.position != Vector3.zero)
-    //	{			
+    //	{
     //		// heading detected
     //		Vector3 desiredPosition = new Vector3(heading.position.x, transform.position.y, heading.position.z);
     //		Facing(desiredPosition);
