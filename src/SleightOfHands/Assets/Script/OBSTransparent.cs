@@ -24,6 +24,10 @@ public class OBSTransparent : MonoBehaviour {
 	void Update () {
         player = GameObject.FindGameObjectWithTag("Player");
 
+        if (player == null) {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+
         Debug.DrawLine(player.transform.position, mainCamera.transform.position, Color.red);
 
         RaycastHit[] hit;
