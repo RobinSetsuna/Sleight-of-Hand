@@ -37,7 +37,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4553156210423256}
   - component: {fileID: 114787267225971776}
-  - component: {fileID: 65203919267274538}
   m_Layer: 0
   m_Name: tile_base_top_1
   m_TagString: Untagged
@@ -114,18 +113,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1278952118341278}
   m_Mesh: {fileID: 4300000, guid: 998206b37c655c74b9da08e0a26eafaf, type: 3}
---- !u!65 &65203919267274538
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1299703111463500}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 39.924477, y: 40.048622, z: 40.83002}
-  m_Center: {x: -0.094867945, y: 20.015404, z: 0.07443428}
 --- !u!114 &114787267225971776
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -137,12 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7bef4cc71cfcde40985784ee75abaac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultColor: {r: 1, g: 1, b: 1, a: 0}
-  mouseOverColor: {r: 0.1945087, g: 0.34448448, b: 0.4433962, a: 0}
-  selectedColor: {r: 0.24056605, g: 0.47098097, b: 0.9622642, a: 0}
-  highlightColor: {r: 0.2687344, g: 0.9339623, b: 0.75989807, a: 0}
-  walkable: 0
+  Type: 0
+  alpha: 0.5
   gridPosition: {x: 0, y: 0}
   distance: 9999
-  highlighted: 0
   selected: 0
