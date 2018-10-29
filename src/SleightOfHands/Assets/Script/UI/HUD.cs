@@ -6,7 +6,7 @@ public class HUD : UserInterface
     [SerializeField] private Text turn;
     [SerializeField] private Button endTurnButton;
 
-    private void Start()
+    public override void OnOpen(params object[] args)
     {
         if (LevelManager.Instance.CurrentRound == Round.Player)
             HandleCurrentPhaseChangeForPlayer(LevelManager.Instance.CurrentPhase);
@@ -27,7 +27,7 @@ public class HUD : UserInterface
         LevelManager.Instance.EndPlayerActionPhase();
     }
 
-    private void OnDestroy()
+    public override void OnClose()
     {
         LevelManager.Instance.OnCurrentPhaseChangeForPlayer.RemoveListener(HandleCurrentPhaseChangeForPlayer);
         LevelManager.Instance.onCurrentTurnChange.RemoveListener(UpdateTurnText);

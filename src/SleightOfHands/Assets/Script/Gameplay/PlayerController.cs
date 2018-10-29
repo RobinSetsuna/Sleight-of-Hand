@@ -1,4 +1,7 @@
-﻿public enum PlayerState : int
+﻿using UnityEngine;
+using UnityEngine.Events;
+
+public enum PlayerState : int
 {
     Uncontrollable,
     Idle,
@@ -81,7 +84,7 @@ public class PlayerController : MouseInteractable
                         Path = new Path<Tile>(GridManager.Instance.TileFromWorldPoint(Player.transform.position));
                         break;
                     case PlayerState.MovementConfirmation:
-                        // TODO: Show ListMenu
+                        UIManager.Singleton.Open("ListMenu", UIManager.UIMode.DEFAULT, Input.mousePosition, "MOVE", (UnityAction)InitiatePlayerMovement, "CANCEL", (UnityAction)ResetToIdle);
                         break;
                     case PlayerState.Move:
                         Path = null;
@@ -182,7 +185,7 @@ public class PlayerController : MouseInteractable
                     if (MathUtility.ManhattanDistance(tile.x, tile.y, playerTile.x, playerTile.y) <= Player.ActionPoint)
                     {
                         Path = Navigation.FindPath(GridManager.Instance, playerTile, tile);
-                        InitiatePlayerMovement();
+                        CurrentPlayerState = PlayerState.MovementConfirmation;
                     }
                 }
                 break;
@@ -195,7 +198,7 @@ public class PlayerController : MouseInteractable
         {
             case PlayerState.MovementPlanning:
                 if (obj == this && path.Count > 0)
-                    InitiatePlayerMovement();
+                    CurrentPlayerState = PlayerState.MovementConfirmation;
                 break;
         }
     }

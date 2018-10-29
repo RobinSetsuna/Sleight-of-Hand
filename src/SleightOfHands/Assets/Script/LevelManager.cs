@@ -18,9 +18,19 @@ public enum Round : int
 public class LevelManager : MonoBehaviour
 {
     private static LevelManager instance;
-    public static LevelManager Instance {
-        get {
-            if (instance == null) instance = GameObject.Find("Level Manager").GetComponent<LevelManager>();
+    public static LevelManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                GameObject go = GameObject.Find("Level Manager");
+
+                if (go)
+                    instance = go.GetComponent<LevelManager>();
+            }
+                
+
             return instance;
         }
     }
