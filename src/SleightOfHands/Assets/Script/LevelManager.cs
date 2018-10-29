@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -26,6 +25,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public EventOnDataUpdate<int> onCurrentTurnChange = new EventOnDataUpdate<int>();
     public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForPlayer = new EventOnDataUpdate<Phase>();
     public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForEnvironment = new EventOnDataUpdate<Phase>();
 
@@ -141,10 +141,6 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    //private void Start() {
-    //    LoadLevel("test_level");
-    //}
-
     public void StartLevel(string level)
     {
         LoadLevel(level);
@@ -155,7 +151,14 @@ public class LevelManager : MonoBehaviour
         CurrentPhase = Phase.Start;
     }
 
-	private void LoadLevel(string levelFilename)
+    internal void EndPlayerActionPhase()
+    {
+        if (CurrentPhase == Phase.Action && CurrentRound == Round.Player)
+            CurrentPhase = Phase.End;
+    }
+
+
+    private void LoadLevel(string levelFilename)
     {
         string jsonPath = Path.Combine(Application.streamingAssetsPath, levelFolderPath);
         jsonPath = Path.Combine(jsonPath, levelFilename + ".json");
