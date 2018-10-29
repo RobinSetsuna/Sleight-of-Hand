@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class ActionManager
+﻿public class ActionManager
 {
     private static readonly ActionManager singleton = new ActionManager();
     public static ActionManager Singleton
@@ -31,8 +29,6 @@ public class ActionManager
 
     internal void Execute()
     {
-        Debug.Log(actionQueue);
-
         if (!actionQueue.IsEmpty())
             actionQueue.Pop().Execute(Execute);
         else if (executionCallback != null)

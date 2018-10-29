@@ -13,4 +13,11 @@ public struct LogUtility
         Debug.Log(MakeLogString(type, content));
 #endif
     }
+
+    public static void PrintLogFormat(string type, string format, params object[] args)
+    {
+#if UNITY_EDITOR
+        Debug.Log(MakeLogString(type, string.Format(format, args)));
+#endif
+    }
 }

@@ -85,7 +85,7 @@ public class CameraDragging : MonoBehaviour {
 
     private void HandleMouseDrag(MouseInteractable obj)
     {
-        if (GameManager.Singleton.CurrentGameState == GameState.Idle)
+        if (LevelManager.Instance.playerController.CurrentPlayerState == PlayerState.Idle)
         {
             Vector3 d = Input.mousePosition - MouseInputManager.Singleton.MouseDownPosition;
 

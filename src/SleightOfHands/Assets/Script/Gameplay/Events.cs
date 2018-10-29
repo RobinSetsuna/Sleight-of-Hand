@@ -1,7 +1,7 @@
 ﻿using UnityEngine.Events;
 
-public class EventOnDataChange1<T> : UnityEvent<T> {} // EventHandler(T modifiedData)
-public class EventOnDataChange2<T> : UnityEvent<T, T> {} // EventHandler(T dataBeforeChange, T dataAfterChange)
+public class EventOnDataUpdate<T> : UnityEvent<T> {} // EventHandler(T modifiedData)
+public class EventOnDataChange<T> : UnityEvent<T, T> {} // EventHandler(T dataBeforeChange, T dataAfterChange)
 
 public enum ChangeType : int
 {
