@@ -152,6 +152,9 @@ public class PlayerController : MouseInteractable
             case PlayerState.Idle:
                 if (obj == this && Player.ActionPoint > 0)
                     CurrentPlayerState = PlayerState.MovementPlanning;
+                else if (obj.GetComponent<Enemy>()) {
+                    obj.GetComponent<Enemy>().hightlightDetection();
+                }
                 break;
             case PlayerState.MovementPlanning:
                 if (obj == this)
