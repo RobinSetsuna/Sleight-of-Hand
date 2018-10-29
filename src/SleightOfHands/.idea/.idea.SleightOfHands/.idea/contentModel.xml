@@ -7,14 +7,45 @@
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Script" t="Include">
-          <e p="CameraDrag.cs" t="Include" />
+          <e p="AI" t="Include">
+            <e p="INavGrid.cs" t="Include" />
+            <e p="NavGrid.cs" t="Include" />
+            <e p="Navigation.cs" t="Include" />
+            <e p="Path.cs" t="Include" />
+          </e>
+          <e p="CameraDragging.cs" t="Include" />
+          <e p="CameraManager.cs" t="Include" />
+          <e p="Data Structures" t="Include">
+            <e p="DataStructures.asmdef" t="Include" />
+            <e p="EmptyHeapException.cs" t="Include" />
+            <e p="FibonacciHeap.cs" t="Include" />
+            <e p="FibonacciHeapNode.cs" t="Include" />
+          </e>
+          <e p="Gameplay" t="Include">
+            <e p="Action.cs" t="Include" />
+            <e p="ActionManager.cs" t="Include" />
+            <e p="ActionQueue.cs" t="Include" />
+            <e p="Events.cs" t="Include" />
+            <e p="GameManager.cs" t="Include" />
+            <e p="MouseInputManager.cs" t="Include" />
+            <e p="MouseInteractable.cs" t="Include" />
+            <e p="PlayerController.cs" t="Include" />
+          </e>
           <e p="GridManager.cs" t="Include" />
+          <e p="InLevelObject.cs" t="Include" />
           <e p="LevelManager.cs" t="Include" />
           <e p="player.cs" t="Include" />
+          <e p="PlayerCameraControl.cs" t="Include" />
           <e p="Tile.cs" t="Include" />
           <e p="Unit.cs" t="Include" />
+          <e p="Utility" t="Include">
+            <e p="BitOperationUtility.cs" t="Include" />
+            <e p="MathUtility.cs" t="Include" />
+            <e p="TimeUtility.cs" t="Include" />
+          </e>
         </e>
       </e>
+      <e p="DataStructures.csproj" t="IncludeRecursive" />
       <e p="Library" t="ExcludeRecursive" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />

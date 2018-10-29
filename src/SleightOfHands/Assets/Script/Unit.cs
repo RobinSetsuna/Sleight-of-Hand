@@ -32,6 +32,11 @@ public abstract class Unit : InLevelObject
     private Vector3 start;
     private Vector3 destination;
 
+    public void AddActionPoint(int point)
+    {
+        ActionPoint += point;
+    }
+
     public void MoveTo(Vector3 destination, System.Action callback)
     {
         start = transform.position;
@@ -84,7 +89,7 @@ public abstract class Unit : InLevelObject
     //// Update is called once per frame
     //protected void FixedUpdate(){
     //	if ( heading!= null && heading.position != Vector3.zero)
-    //	{			
+    //	{
     //		// heading detected
     //		Vector3 desiredPosition = new Vector3(heading.position.x, transform.position.y, heading.position.z);
     //		Facing(desiredPosition);
