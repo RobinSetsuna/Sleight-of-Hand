@@ -36,7 +36,7 @@ public class UIManager : MonoBehaviour
         return uiStack.Count != 0;
     }
 
-    public UserInterface Open(string name, UIMode mode = UIMode.DEFAULT)
+    public UserInterface Open(string name, UIMode mode = UIMode.DEFAULT, params object[] args)
     {
 #if UNITY_EDITOR
         LogUtility.PrintLog("UI", IsInViewport(name) ? name + " is already in viewport" : "Open " + name);
@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
 
         uiOpened.Add(name, ui);
 
-        ui.OnOpen();
+        ui.OnOpen(args);
 
         if (mode != UIMode.PERMANENT)
             uiStack.Push(name);
