@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 ///	<summary/>
@@ -11,6 +12,8 @@ public abstract class Unit : InLevelObject
     [SerializeField] private Round actionRound;
 
     [SerializeField] private float maxSpeed;
+    public EventOnDataUpdate<Vector2Int> OnPositionUpdateForUnit = new EventOnDataUpdate<Vector2Int>();
+    public Vector2Int Gridposition;
     public float MaxSpeed
     {
         get
@@ -33,7 +36,14 @@ public abstract class Unit : InLevelObject
     private float speed;
     private Vector3 start;
     private Vector3 destination;
-
+    
+    public void setInitialPos(Vector2Int pos)
+    {
+        Vector3 world_pos = GridManager.Instance.GetWorldPosition(pos);
+        transform.position = world_pos;
+        Gridposition = pos;
+    }
+    
     public void AddActionPoint(int point)
     {
         ActionPoint += point;
@@ -100,13 +110,19 @@ public abstract class Unit : InLevelObject
 
             yield return null;
         }
-
-        ActionPoint--;
+        Movement_finished();
 
         if (callback != null)
             callback.Invoke();
 
         yield return null;
+    }
+
+    private void Movement_finished()
+    {
+        Gridposition = GridManager.Instance.TileFromWorldPoint(transform.position).gridPosition;
+        ActionPoint--;
+        OnPositionUpdateForUnit.Invoke(Gridposition);
     }
 
     //protected Transform heading;
