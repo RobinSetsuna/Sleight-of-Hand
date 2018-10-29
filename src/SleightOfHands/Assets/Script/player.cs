@@ -1,11 +1,27 @@
-﻿///	<summary/>
+﻿using UnityEngine;
+
+///	<summary/>
 /// Player - derived class of Unit
 /// Active movement range, dragging path action, set heading
 ///
 /// </summary>
 public class player : Unit
 {
-    // Update is called once per frame
+	private bool signed = false;
+	private void Start()
+	{
+		
+	}
+
+	private void LateUpdate()
+	{
+		if (!signed)
+		{
+			//setInitialPos(GridManager.Instance.TileFromWorldPoint(transform.position).gridPosition);
+			signed = true;
+		}
+	}
+	// Update is called once per frame
     //void Update()
     //{
     //if (Input.GetButtonDown("Jump"))
