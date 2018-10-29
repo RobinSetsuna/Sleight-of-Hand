@@ -40,7 +40,7 @@ public class CameraDragging : MonoBehaviour {
         {
             if (!CameraManager.Instance.fallowing)
             {
-                CameraManager.Instance.boundCameraFallow(GameObject.Find("Player").transform);
+                CameraManager.Instance.boundCameraFallow(GameObject.FindGameObjectWithTag("Player").transform);
             }
 
         }

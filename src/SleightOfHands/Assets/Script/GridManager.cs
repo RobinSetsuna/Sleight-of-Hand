@@ -86,6 +86,11 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     {
         return MathUtility.ManhattanDistance(A.x, A.y, B.x, B.y) == 1;
     }
+    
+    public Tile getTile(int x,int y)
+    {
+        return grid[x,y];
+    }
 
     public Tile TileFromWorldPoint(Vector3 worldPosition)
     {
