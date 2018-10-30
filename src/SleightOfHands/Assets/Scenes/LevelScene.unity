@@ -452,18 +452,18 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 328409265}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.0037105, y: 2.0037105, z: 2.0037105}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Father: {fileID: 1168265291}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 1264.3414, y: 540}
+  m_SizeDelta: {x: 1262, y: 539}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &440463891
 GameObject:
   m_ObjectHideFlags: 0
@@ -1249,7 +1249,8 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
-  m_Children: []
+  m_Children:
+  - {fileID: 328409269}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1786,11 +1787,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   units: []
+  levelFolderPath: Levels
+  levelFilename: test_level
   Smoke: {fileID: 1064867410918898, guid: 1fc7c344b0b60e74988d860bfca7b3fd, type: 2}
   Haste: {fileID: 1644353494951302, guid: d29289f8d9242c34491bfc04263eefc5, type: 2}
   Glue: {fileID: 1026703806782274, guid: d29b3a5e9a8b69f44a709086d1d3e8bb, type: 2}
-  levelFolderPath: Levels
-  levelFilename: test_level
   currentLevel:
     name: 
     width: 0

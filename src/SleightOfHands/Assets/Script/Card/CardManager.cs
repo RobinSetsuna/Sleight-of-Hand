@@ -32,15 +32,19 @@ public class CardManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {       
-        hand = new List<Card>();
-        usedCards = new List<Card>();
+        //hand = new List<Card>();
+        //usedCards = new List<Card>();
         //Instantiate(card1);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown("1"))
+        {
+            print("key 1 enter");
+            Haste(hand[0]);
+        }
     }
 
     // randomly take one card from the deck to the player.
@@ -103,7 +107,6 @@ public class CardManager : MonoBehaviour
 
     public void InitCardDeck()
     {
-        deck = new CardDeck();
         string jsonPath = Path.Combine(Application.streamingAssetsPath, deckFolderPath);
         jsonPath = Path.Combine(jsonPath, deckFilename + ".json");
 
@@ -177,7 +180,7 @@ public class CardManager : MonoBehaviour
     void Haste(Card card)
     {
         //1. add action point
-        string effect = deck.FindCard(card.cardName).effect;
+        string effect = card.effect;
         string result = System.Text.RegularExpressions.Regex.Replace(effect, @"[^0-9]+", "");
         int point = int.Parse(result);
         GameObject.FindGameObjectWithTag("Player").GetComponent<player>().AddActionPoint(point);

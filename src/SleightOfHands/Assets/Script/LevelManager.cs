@@ -159,8 +159,8 @@ public class LevelManager : MonoBehaviour
         CardManager.Instance.InitCardDeck();
         IntiCanvas();
         InstantiateCard(CardManager.Instance.RandomGetCard());
-        InstantiateCard(CardManager.Instance.RandomGetCard());
-        InstantiateCard(CardManager.Instance.RandomGetCard());
+        //InstantiateCard(CardManager.Instance.RandomGetCard());
+        //InstantiateCard(CardManager.Instance.RandomGetCard());
   
         round = -1;
         CurrentPhase = Phase.Start;
