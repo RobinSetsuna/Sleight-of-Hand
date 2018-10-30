@@ -34,7 +34,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     public bool ok_to_drag;
     private HashSet<Tile>  recheck_list;
     private int range;
-    public int checktimes;
+    public int numHighlightedTiles;
     public Tile[] generatedPath;
     private int action_point; // temp use, replace later
 
@@ -61,7 +61,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
     private void Start()
     {
-        checktimes = 0;
+        numHighlightedTiles = 0;
         ok_to_drag = false;
         action_point = 5;
     }
@@ -171,13 +171,14 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     public void Initialize()
     {
         LevelManager.Instance.playerController.onPathUpdate.AddListener(HandlePathChange);
+        LevelManager.Instance.playerController.onCurrentPlayerStateChange.AddListener(HandleCurrentPlayerStateChange);
     }
 
     public void wipeTiles()
     {
-        if (checktimes > 0)
+        if (numHighlightedTiles > 0)
         {
-            checktimes = 0;
+            numHighlightedTiles = 0;
             foreach (Tile tile in grid)
             {
                 //reset all tiles
@@ -188,12 +189,27 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
     public void DehighlightAll()
     {
-        if (checktimes > 0)
+        if (numHighlightedTiles > 0)
         {
             foreach (Tile tile in grid)
                 tile.Dehighlight();
 
-            checktimes = 0;
+            numHighlightedTiles = 0;
+        }
+    }
+
+    private void HandleCurrentPlayerStateChange(PlayerState previousState, PlayerState currentState)
+    {
+        switch (currentState)
+        {
+            case PlayerState.MovementConfirmation:
+                foreach (Tile tile in grid)
+                    if (tile.IsHighlighted(Tile.HighlightColor.Blue))
+                    {
+                        tile.Dehighlight();
+                        numHighlightedTiles++;
+                    }
+                break;
         }
     }
 
@@ -248,7 +264,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             if (distance >= lower && distance <= upper && (skipUnmasked || (center.Mark & mask) != 0))
             {
                 tile.Highlight(color);
-                checktimes++;
+                numHighlightedTiles++;
             }
 
             int x = tile.x;
