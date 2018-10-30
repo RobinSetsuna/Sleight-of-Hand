@@ -22,15 +22,21 @@ public class HUD : UserInterface
         LevelManager.Instance.onCurrentTurnChange.AddListener(UpdateTurnText);
     }
 
-    private void EndCurrentTurn()
-    {
-        LevelManager.Instance.EndPlayerActionPhase();
-    }
-
     public override void OnClose()
     {
         LevelManager.Instance.OnCurrentPhaseChangeForPlayer.RemoveListener(HandleCurrentPhaseChangeForPlayer);
         LevelManager.Instance.onCurrentTurnChange.RemoveListener(UpdateTurnText);
+    }
+
+
+    public void OpenMenu()
+    {
+        UIManager.Singleton.Open("IngameMenu");
+    }
+
+    private void EndCurrentTurn()
+    {
+        LevelManager.Instance.EndPlayerActionPhase();
     }
 
     private void UpdateTurnText(int n)

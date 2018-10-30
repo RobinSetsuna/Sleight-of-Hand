@@ -157,7 +157,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 400, y: 200, z: 1}
+  m_Size: {x: 1920, y: 1080, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114057157955247742
 MonoBehaviour:
@@ -451,7 +451,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1855282819283312}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26d6f8e395413d341915b1e4a45c562e, type: 3}
+  m_Script: {fileID: 11500000, guid: bf0523303ad31b64290ce4c003b50eb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!222 &222192359992918582
@@ -531,10 +531,10 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 200}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224280834091995412
 RectTransform:

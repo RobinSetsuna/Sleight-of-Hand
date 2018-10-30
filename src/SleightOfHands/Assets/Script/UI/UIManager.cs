@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
         return uiOpened.ContainsKey(name);
     }
 
-    public bool HasUIOpened()
+    public bool IsViewportClear()
     {
         return uiStack.Count != 0;
     }
