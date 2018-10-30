@@ -20,13 +20,24 @@ public enum Round : int
 public class LevelManager : MonoBehaviour
 {
     private static LevelManager instance;
-    public static LevelManager Instance {
-        get {
-            if (instance == null) instance = GameObject.Find("Level Manager").GetComponent<LevelManager>();
+    public static LevelManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                GameObject go = GameObject.Find("Level Manager");
+
+                if (go)
+                    instance = go.GetComponent<LevelManager>();
+            }
+                
+
             return instance;
         }
     }
 
+    public EventOnDataUpdate<int> onCurrentTurnChange = new EventOnDataUpdate<int>();
     public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForPlayer = new EventOnDataUpdate<Phase>();
     public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForEnvironment = new EventOnDataUpdate<Phase>();
 
@@ -73,36 +84,24 @@ public class LevelManager : MonoBehaviour
 #if UNITY_EDITOR
             LogUtility.PrintLogFormat("LevelManager", "Made a transition to {0}.", value);
 #endif
-            Round currentRound = CurrentRound;
             // Before leaving the previous phase
-            switch (currentPhase)
-            {
-                case Phase.Action:
-                    switch (currentRound)
-                    {
-                        case Round.Player:
-                            playerController.Disable();
-                            break;
-                    }
-                    break;
-            }
+            //switch (currentPhase)
+            //{
+            //}
 
             currentPhase = value;
 
             // After entering a new phase
             switch (currentPhase)
             {
-                case Phase.Action:
-                    switch (currentRound)
-                    {
-                        case Round.Player:
-                            playerController.Enable();
-                            break;
-                    }
+                case Phase.Start:
+                    round++;
+                    if (CurrentRound == Round.Player)
+                        onCurrentTurnChange.Invoke(CurrentTurn);
                     break;
             }
 
-            switch (currentRound)
+            switch (CurrentRound)
             {
                 case Round.Player:
                     OnCurrentPhaseChangeForPlayer.Invoke(currentPhase);
@@ -119,11 +118,10 @@ public class LevelManager : MonoBehaviour
                     CurrentPhase = Phase.Action;
                     break;
                 case Phase.Action:
-                    if (currentRound == Round.Environment)
+                    if (CurrentRound == Round.Environment)
                         CurrentPhase = Phase.End;
                     break;
                 case Phase.End:
-                    round++;
                     CurrentPhase = Phase.Start;
                     break;
             }
@@ -152,14 +150,10 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    //private void Start() {
-    //    LoadLevel("test_level");
-    //}
-
     public void StartLevel(string level)
     {
         LoadLevel(level);
-        SpawnPlayer();
+        SpawnEntities();
         GridManager.Instance.Initialize();
 
         CardManager.Instance.InitCardDeck();
@@ -167,9 +161,11 @@ public class LevelManager : MonoBehaviour
         InstantiateCard(CardManager.Instance.RandomGetCard());
         InstantiateCard(CardManager.Instance.RandomGetCard());
         InstantiateCard(CardManager.Instance.RandomGetCard());
-
-        round = 0;
+  
+        round = -1;
         CurrentPhase = Phase.Start;
+
+        UIManager.Singleton.Open("HUD", UIManager.UIMode.PERMANENT);
     }
 
     public void InstantiateCard(Card card)
@@ -226,6 +222,12 @@ public class LevelManager : MonoBehaviour
 
 
     }
+    internal void EndPlayerActionPhase()
+    {
+        if (CurrentPhase == Phase.Action && CurrentRound == Round.Player)
+            CurrentPhase = Phase.End;
+    }
+
 
     private void LoadLevel(string levelFilename)
     {
@@ -240,18 +242,47 @@ public class LevelManager : MonoBehaviour
         GridManager.Instance.GenerateMap(levelData, out units);
     }
 
-    private void SpawnPlayer()
+    private void SpawnEntities()
     {
-        SpawnData playerSpawnData = null;
         foreach (SpawnData spawnData in currentLevel.spawns) {
-            if (spawnData.SpawnType == SpawnData.Type.Player) {
-                playerSpawnData = spawnData;
-            }
-        }
-        if (playerSpawnData == null) return;
 
-        Vector3 spawnPosition = GridManager.Instance.GetWorldPosition(playerSpawnData.position.x, playerSpawnData.position.y) + new Vector3(0, 1, 0);
-        Player = Instantiate(ResourceUtility.GetPrefab<player>("PlayerDummy"), spawnPosition, Quaternion.identity, GridManager.Instance.environmentHolder);
+            Vector3 spawnPosition = GridManager.Instance.GetWorldPosition(spawnData.position.x, spawnData.position.y) + new Vector3(0, 1, 0);
+
+            Quaternion spawnRotation = Quaternion.identity;
+            string heading = spawnData.GetSetting("heading");
+            if (heading != null) {
+                float yRot = 0;
+                switch (heading) {
+                    case "north":
+                        yRot = 0;
+                        break;
+                    case "east":
+                        yRot = 90;
+                        break;
+                    case "west":
+                        yRot = 270;
+                        break;
+                    case "south":
+                        yRot = 180;
+                        break;
+                }
+                spawnRotation = Quaternion.Euler(0, yRot, 0);
+            }
+
+            switch (spawnData.SpawnType) {
+
+                case SpawnData.Type.Player:
+                    Player = Instantiate(ResourceUtility.GetPrefab<player>("PlayerDummy"), spawnPosition, spawnRotation, GridManager.Instance.environmentHolder);
+                    break;
+
+                case SpawnData.Type.Guard:
+                    Instantiate(ResourceUtility.GetPrefab<Enemy>("GuardDummy"), spawnPosition, spawnRotation, GridManager.Instance.environmentHolder);
+                    break;
+
+            }
+
+        }
+
     }
 
     [System.Serializable]
@@ -279,7 +310,7 @@ public class LevelManager : MonoBehaviour
         }
         public Type SpawnType {
             get {
-                return (Type)Enum.Parse(typeof(Type), typeString, true);
+                return GetEnumFromString<Type>(typeString);
             }
         }
 
@@ -288,12 +319,18 @@ public class LevelManager : MonoBehaviour
         public string[] settings;
 
         public string GetSetting(string settingString) {
+            if (settings == null) return null;
+            settingString = settingString.ToLower();
             for (int i = 0; i < settings.Length; i += 2) {
                 if (settingString.Equals(settings[i])) {
                     return settings[i + 1];
                 }
             }
             return null;
+        }
+
+        public E GetEnumFromString<E>(string enumString) where E : struct {
+            return (E)Enum.Parse(typeof(E), enumString, true);
         }
 
     }

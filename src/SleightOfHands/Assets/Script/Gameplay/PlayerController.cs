@@ -1,5 +1,9 @@
-﻿public enum PlayerState : int
+﻿using UnityEngine;
+using UnityEngine.Events;
+
+public enum PlayerState : int
 {
+    Uncontrollable,
     Idle,
     MovementPlanning,
     MovementConfirmation,
@@ -17,6 +21,17 @@ public class PlayerController : MouseInteractable
 
     private bool isEnabled = false;
     private Path<Tile> path;
+    private Path<Tile> Path
+    {
+        set
+        {
+            if (value != path)
+            {
+                path = value;
+                onPathUpdate.Invoke(path);
+            }
+        }
+    }
 
     private PlayerState currentPlayerState;
     public PlayerState CurrentPlayerState
@@ -46,9 +61,12 @@ public class PlayerController : MouseInteractable
             else
             {
                 // Before leaving the previous state
-                //switch (currentGameState)
-                //{
-                //}
+                switch (currentPlayerState)
+                {
+                    case PlayerState.Uncontrollable:
+                        Enable();
+                        break;
+                }
 
                 PlayerState previousPlayerState = CurrentPlayerState;
                 currentPlayerState = value;
@@ -56,23 +74,22 @@ public class PlayerController : MouseInteractable
                 // After entering the new state
                 switch (currentPlayerState)
                 {
+                    case PlayerState.Uncontrollable:
+                        Path = null;
+                        Disable();
+                        break;
                     case PlayerState.Idle:
                         if (previousPlayerState != PlayerState.Move)
-                        {
-                            path = null;
-                            onPathUpdate.Invoke(path);
-                        }
+                            Path = null;
                         break;
                     case PlayerState.MovementPlanning:
-                        path = new Path<Tile>(GridManager.Instance.TileFromWorldPoint(Player.transform.position));
-                        onPathUpdate.Invoke(path);
+                        Path = new Path<Tile>(GridManager.Instance.TileFromWorldPoint(Player.transform.position));
                         break;
                     case PlayerState.MovementConfirmation:
-                        // TODO: Show ListMenu
+                        UIManager.Singleton.Open("ListMenu", UIManager.UIMode.DEFAULT, UIManager.Singleton.GetCanvasPosition(Input.mousePosition), "MOVE", (UnityAction)InitiateMovement, "CANCEL", (UnityAction)ResetMovement);
                         break;
                     case PlayerState.Move:
-                        path = null;
-                        onPathUpdate.Invoke(path);
+                        Path = null;
                         ActionManager.Singleton.Execute(ResetToIdle);
                         break;
                 }
@@ -84,11 +101,13 @@ public class PlayerController : MouseInteractable
 
     private PlayerController() {}
 
-    private void Start()
+    private void Awake()
     {
         Player = GetComponent<player>();
 
-        ResetToIdle();
+        CurrentPlayerState = 0;
+
+        LevelManager.Instance.OnCurrentPhaseChangeForPlayer.AddListener(HandleCurrentPhaseChange);
     }
 
 
@@ -96,9 +115,11 @@ public class PlayerController : MouseInteractable
     private void OnDestroy()
     {
         Disable();
+
+        LevelManager.Instance.OnCurrentPhaseChangeForPlayer.RemoveListener(HandleCurrentPhaseChange);
     }
 
-    internal void Enable()
+    private void Enable()
     {
         if (!isEnabled)
         {
@@ -110,7 +131,7 @@ public class PlayerController : MouseInteractable
         }
     }
 
-    internal void Disable()
+    private void Disable()
     {
         if (isEnabled)
         {
@@ -141,7 +162,12 @@ public class PlayerController : MouseInteractable
         CurrentPlayerState = PlayerState.Idle;
     }
 
-    private void InitiatePlayerMovement()
+    private void ResetMovement()
+    {
+        CurrentPlayerState = PlayerState.MovementPlanning;
+    }
+
+    private void InitiateMovement()
     {
         for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
             ActionManager.Singleton.Add(new Movement(GetComponent<player>(), tile));
@@ -154,7 +180,7 @@ public class PlayerController : MouseInteractable
         switch (currentPlayerState)
         {
             case PlayerState.Idle:
-                if (obj == this && Player.ActionPoint > 0)
+                if (obj == this)
                     CurrentPlayerState = PlayerState.MovementPlanning;
                 else if (obj.GetComponent<Enemy>()) {
                     obj.GetComponent<Enemy>().hightlightDetection();
@@ -166,12 +192,18 @@ public class PlayerController : MouseInteractable
                 else if (obj.GetComponent<Tile>())
                 {
                     Tile tile = obj.GetComponent<Tile>();
-                    Tile playerTile = GridManager.Instance.TileFromWorldPoint(Player.transform.position);
 
-                    if (MathUtility.ManhattanDistance(tile.x, tile.y, playerTile.x, playerTile.y) <= Player.ActionPoint)
+                    if (tile == path.Start)
+                        CurrentPlayerState = PlayerState.Idle;
+                    else
                     {
-                        path = Navigation.FindPath(GridManager.Instance, playerTile, tile);
-                        InitiatePlayerMovement();
+                        Tile playerTile = GridManager.Instance.TileFromWorldPoint(Player.transform.position);
+
+                        if (tile.IsHighlighted(Tile.HighlightColor.Blue))
+                        {
+                            Path = Navigation.FindPath(GridManager.Instance, playerTile, tile);
+                            CurrentPlayerState = PlayerState.MovementConfirmation;
+                        }
                     }
                 }
                 break;
@@ -188,7 +220,7 @@ public class PlayerController : MouseInteractable
         {
             case PlayerState.MovementPlanning:
                 if (obj == this && path.Count > 0)
-                    InitiatePlayerMovement();
+                    CurrentPlayerState = PlayerState.MovementConfirmation;
                 break;
         }
     }
@@ -212,7 +244,7 @@ public class PlayerController : MouseInteractable
                         {
                             if (tile == path.Last.Previous.Value)
                                 RemoveWayPoint();
-                            else if (GridManager.Instance.IsAdjacent(tile, path.Last.Value) && path.Count < Player.ActionPoint)
+                            else if (GridManager.Instance.IsAdjacent(tile, path.Last.Value) && path.Count < Player.ActionPoint && !path.Contains(tile))
                                 AddWayPoint(tile);
                         }
                         else if (GridManager.Instance.IsAdjacent(tile, GridManager.Instance.TileFromWorldPoint(Player.transform.position)))
@@ -220,5 +252,18 @@ public class PlayerController : MouseInteractable
                     }
                     break;
             }
+    }
+
+    private void HandleCurrentPhaseChange(Phase currentPhase)
+    {
+        switch (currentPhase)
+        {
+            case Phase.Action:
+                CurrentPlayerState = PlayerState.Idle;
+                break;
+            case Phase.End:
+                CurrentPlayerState = PlayerState.Uncontrollable;
+                break;
+        }
     }
 }
