@@ -179,6 +179,7 @@ public class LevelManager : MonoBehaviour
             case "Smoke":
                 InstantiateOnCanvas(Smoke);
                 Smoke.GetComponent<CardInstance>().InitialCard(card);
+                
                 break;
             case "Haste":
                 InstantiateOnCanvas(Haste);
