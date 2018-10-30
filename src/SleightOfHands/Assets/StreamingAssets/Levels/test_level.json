@@ -26,8 +26,32 @@
 	"spawns": [
 		{
 			"typeString": "Player",
-			"position": {"x": 13, "y": 0},
-			"settings": ["test", 3, "something", 12]
+			"position": {"x": 13, "y": 0}
+		},
+		{
+			"typeString": "Guard",
+			"position": {"x": 15, "y": 4},
+			"settings": ["heading", "west"]
+		},
+		{
+			"typeString": "Guard",
+			"position": {"x": 15, "y": 8},
+			"settings": ["heading", "west"]
+		},
+		{
+			"typeString": "Guard",
+			"position": {"x": 10, "y": 7},
+			"settings": ["heading", "south"]
+		},
+		{
+			"typeString": "Guard",
+			"position": {"x": 5, "y": 1},
+			"settings": ["heading", "north"]
+		},
+		{
+			"typeString": "Guard",
+			"position": {"x": 4, "y": 1},
+			"settings": ["heading", "north"]
 		}
 	]
 }
