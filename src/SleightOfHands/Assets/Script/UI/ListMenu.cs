@@ -1,13 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
+// using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class ListMenu : UserInterface
 {
+    [SerializeField] private UIBoxColliderScaler boxCollider;
     [SerializeField] private UIList list;
-    private Dictionary<Button, UnityAction> callbacks = new Dictionary<Button, UnityAction>();
+    // private Dictionary<Button, UnityAction> callbacks = new Dictionary<Button, UnityAction>();
     
     public override void OnOpen(params object[] args)
     {
@@ -16,13 +17,14 @@ public class ListMenu : UserInterface
         if (numArgs == 1 || numArgs % 2 == 0)
             throw new ArgumentException("Invalid number of arguments");
 
-        transform.localPosition = (Vector3)args[0];
-        Debug.Log(transform.localPosition);
+        GetComponent<RectTransform>().localPosition = (Vector3)args[0];
 
         RectTransform listTransform = list.GetComponent<RectTransform>();
 
         Button newListItem = listTransform.GetChild(0).GetComponent<Button>();
         int numExistedListItems = listTransform.childCount;
+
+        // callbacks.Clear();
 
         int index = 0;
         for (int i = 1; i < args.Length; i += 2)
@@ -48,12 +50,13 @@ public class ListMenu : UserInterface
             listItem.onClick.AddListener(callback);
             listItem.onClick.AddListener(Close);
 
-            callbacks.Add(listItem, callback);
+            // callbacks.Add(listItem, callback);
         }
 
         for (int i = index; i < numExistedListItems; i++)
             listTransform.GetChild(i).gameObject.SetActive(false);
 
         list.Refresh();
+        boxCollider.Refresh();
     }
 }

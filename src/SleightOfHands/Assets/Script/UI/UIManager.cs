@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -91,6 +92,12 @@ public class UIManager : MonoBehaviour
             Close(name);
         else
             Open(name);
+    }
+
+    public Vector3 GetCanvasPosition(Vector3 position)
+    {
+        Vector2 referenceResolution = GetComponent<CanvasScaler>().referenceResolution;
+        return new Vector3((position.x / Screen.width - 0.5f) * referenceResolution.x, (position.y / Screen.height - 0.5f) * referenceResolution.y, 0);
     }
 
     void Awake()

@@ -25,11 +25,12 @@ public class UIList : UIWidget
             if (y > column)
                 break;
 
-            item.localPosition = new Vector3((itemSize.x + margin.x) * (x - 1) + margin.x, (itemSize.y + margin.y) * (y - 1) - margin.y, 0);
+            item.localPosition = new Vector3((itemSize.x + margin.x) * x + margin.x, -(itemSize.y + margin.y) * y - margin.y, 0);
 
             i++;
         }
 
-        GetComponent<RectTransform>().sizeDelta = new Vector2(margin.x + Math.Min(column, i) * itemSize.x, margin.y + (i / row) * itemSize.y);
+        i--;
+        GetComponent<RectTransform>().sizeDelta = new Vector2(margin.x + Math.Min(column, i) * (itemSize.x + margin.x), margin.y + (i / row + 1) * (itemSize.y + margin.x));
     }
 }
