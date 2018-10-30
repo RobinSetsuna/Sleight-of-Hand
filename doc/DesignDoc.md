@@ -142,6 +142,7 @@ The game logic is the programming focus of the team. Technically, it is a main l
 ### UI
 
 ![UI Architecture](ui-architecture.png)
+
 The overall architecture of the UI system features a model-view-controller framework. Event-driven programming is used to realize the communication between components.
 
 #### Grid
