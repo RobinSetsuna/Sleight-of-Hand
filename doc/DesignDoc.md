@@ -27,10 +27,8 @@
 | Tile | A unit squared space in maps |
 | Turn | A time period when either player character or computer-controled units can take actions |
 | Phase | A specfic time in each turn when cards can take effect and player character can perform different actions |
-| Standby Phase (SP) | The beginning of each turn when some cards can take effect |
-| Draw Phase (DP) | The time in each turn when player character draws a card |
-| Move Phase (MP) | The time in each turn when player character is able to move |
-| Action Phase (AP) | The time in each turn when player character can use cards |
+| Start Phase (SP) | The beginning of each turn when some cards can take effect |
+| Action Phase (AP) | The time in each turn when player character can move and use cards |
 | End Phase (EP) | The end of each turn when some cards can take effect |
 | Hand | All cards that player have |
 | Strategy Card | A card that enables the player to perform special actions that are not available in regular game play |
@@ -43,10 +41,12 @@
 * **Main Menu**: The first interactable screen that users will encounter
 * **Player Character**: The player's avatar
   * **Attribute**: A numerical value representing character's ability
-    * **Speed**: A value determining how many grids can the character move in a map
+    * **Action Point**: A value determining how many grids can the character move in a map
 * **Level**: A map
   * **Obstacle**: An object that is able to block the way of other objects
     * **Wall**
+    * **Tree**
+    * **Shrub**
     * **Cage**
     * ...
   * **Enemy**: A Hostile creature that is generally controlled by artifical intelligence to stop players
@@ -61,9 +61,10 @@
 ### Non-functional Requirements
 | NFRs |  Technical Constraints |
 |------|------------------------|
-| Maintainability | the ability to detect issues in codes and be able to solve those bugs after being released|
-| Localization | the skill of understanding and using languages |
-| Readability | good coding habit of each team member which adding proper comments to certain important parts of the codes |
+| Maintainability | The ability to detect issues in codes and be able to solve those bugs after being released|
+| Localization | The skill of understanding and using languages |
+| Readability | Good coding habit of each team member which adding proper comments to certain important parts of the codes |
+| Controllability | Smooth experience under limited input varieties (tapping / focusing / dragging) |
 
 
 ## Domain
