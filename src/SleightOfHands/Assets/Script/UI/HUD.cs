@@ -29,9 +29,9 @@ public class HUD : UserInterface
     }
 
 
-    public void OpenMenu()
+    public void ToggleMenu()
     {
-        UIManager.Singleton.Open("IngameMenu");
+        UIManager.Singleton.Toggle("IngameMenu");
     }
 
     private void EndCurrentTurn()
