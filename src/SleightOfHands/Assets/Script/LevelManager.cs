@@ -272,7 +272,7 @@ public class LevelManager : MonoBehaviour
             switch (spawnData.SpawnType) {
 
                 case SpawnData.Type.Player:
-                    Player = Instantiate(ResourceUtility.GetPrefab<player>("PlayerDummy"), spawnPosition, spawnRotation, GridManager.Instance.environmentHolder);
+                    Player = Instantiate(ResourceUtility.GetPrefab<player>("player_temp"), spawnPosition, spawnRotation, GridManager.Instance.environmentHolder);
                     break;
 
                 case SpawnData.Type.Guard:

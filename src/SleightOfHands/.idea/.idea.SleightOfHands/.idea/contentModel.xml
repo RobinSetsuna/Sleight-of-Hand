@@ -45,6 +45,20 @@
           <e p="PlayerCameraControl.cs" t="Include" />
           <e p="ProjectileManager.cs" t="Include" />
           <e p="Tile.cs" t="Include" />
+          <e p="UI" t="Include">
+            <e p="HUD.cs" t="Include" />
+            <e p="IngameMenu.cs" t="Include" />
+            <e p="ListMenu.cs" t="Include" />
+            <e p="UIEffect.cs" t="Include" />
+            <e p="UIManager.cs" t="Include" />
+            <e p="UIWidget.cs" t="Include" />
+            <e p="UserInterface.cs" t="Include" />
+            <e p="Widgets" t="Include">
+              <e p="UIBoxColliderScaler.cs" t="Include" />
+              <e p="UIFadeInOut.cs" t="Include" />
+              <e p="UIList.cs" t="Include" />
+            </e>
+          </e>
           <e p="Unit.cs" t="Include" />
           <e p="Utility" t="Include">
             <e p="BitOperationUtility.cs" t="Include" />
@@ -52,6 +66,11 @@
             <e p="MathUtility.cs" t="Include" />
             <e p="ResourceUtility.cs" t="Include" />
             <e p="TimeUtility.cs" t="Include" />
+          </e>
+        </e>
+        <e p="StreamingAssets" t="Include">
+          <e p="Deck" t="Include">
+            <e p="backup.txt" t="Include" />
           </e>
         </e>
       </e>
