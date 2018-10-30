@@ -36,7 +36,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     public bool ok_to_drag;
     private HashSet<Tile>  recheck_list;
     private int range;
-    public int checktimes;
+    public int numHighlightedTiles;
     public Tile[] generatedPath;
     private int action_point; // temp use, replace later
 
@@ -63,7 +63,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
     private void Start()
     {
-        checktimes = 0;
+        numHighlightedTiles = 0;
         ok_to_drag = false;
         action_point = 5;
     }
@@ -175,8 +175,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                     Instantiate(envTilePrefab, envTilePosition, envTileRotation, environmentHolder);
                     if (tileType != 0&& tileType>0)
                     {
-                        Quaternion wallRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
-                        Instantiate(wallPrefabs[tileType-1], tilePosition, wallRotation, environmentHolder);
+                        Quaternion wallRotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 3) * 90f, 0);
+                        Instantiate(wallPrefabs[tileType - 1], tilePosition, wallRotation, environmentHolder);
                     }
                 }
                 #region ORIGINAL_SWITCH_STATE
@@ -196,7 +196,6 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                    //                        GameObject envTilePrefab = environmentTilePrefabs[envTileIndex];
                    //                        Instantiate(envTilePrefab, envTilePosition, envTileRotation, environmentHolder);
                    //                        break;
-                   //                    
                    //                }
                 #endregion
             }
@@ -205,13 +204,14 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     public void Initialize()
     {
         LevelManager.Instance.playerController.onPathUpdate.AddListener(HandlePathChange);
+        LevelManager.Instance.playerController.onCurrentPlayerStateChange.AddListener(HandleCurrentPlayerStateChange);
     }
 
     public void wipeTiles()
     {
-        if (checktimes > 0)
+        if (numHighlightedTiles > 0)
         {
-            checktimes = 0;
+            numHighlightedTiles = 0;
             foreach (Tile tile in grid)
             {
                 //reset all tiles
@@ -222,12 +222,28 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
     public void DehighlightAll()
     {
-        if (checktimes > 0)
+        if (numHighlightedTiles > 0)
         {
             foreach (Tile tile in grid)
-                tile.Dehighlight();
+                if (tile)
+                    tile.Dehighlight();
 
-            checktimes = 0;
+            numHighlightedTiles = 0;
+        }
+    }
+
+    private void HandleCurrentPlayerStateChange(PlayerState previousState, PlayerState currentState)
+    {
+        switch (currentState)
+        {
+            case PlayerState.MovementConfirmation:
+                foreach (Tile tile in grid)
+                    if (tile && tile.IsHighlighted(Tile.HighlightColor.Blue))
+                    {
+                        tile.Dehighlight();
+                        numHighlightedTiles++;
+                    }
+                break;
         }
     }
 
@@ -282,7 +298,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             if (distance >= lower && distance <= upper && (skipUnmasked || (center.Mark & mask) != 0))
             {
                 tile.Highlight(color);
-                checktimes++;
+                numHighlightedTiles++;
             }
 
             int x = tile.x;
@@ -291,47 +307,63 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             isVisited[x, y] = true;
 
             if (++distance <= upper)
-            {
-                if (x + 1 < Length && !isVisited[x + 1, y])
+            //{
+                foreach (Vector2Int coordinate in GetAdjacentIndices(x, y))
                 {
-                    tile = grid[x + 1, y];
+                    int xi = coordinate.x;
+                    int yi = coordinate.y;
 
-                    if (!skipUnmasked || (tile.Mark & mask) != 0)
-                        q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
-                    else
-                        isVisited[x, y] = true;
+                    if (!isVisited[xi, yi])
+                    {
+                        tile = grid[xi, yi];
+
+                        if (!skipUnmasked || (tile.Mark & mask) != 0)
+                            q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
+                        else
+                            isVisited[xi, yi] = true;
+                    }
                 }
 
-                if (x - 1 >= 0 && !isVisited[x - 1, y])
-                {
-                    tile = grid[x - 1, y];
+                //if (x + 1 < Length && !isVisited[x + 1, y])
+                //{
+                //    tile = grid[x + 1, y];
 
-                    if (!skipUnmasked || (tile.Mark & mask) != 0)
-                        q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
-                    else
-                        isVisited[x, y] = true;
-                }
+                //    if (!skipUnmasked || (tile.Mark & mask) != 0)
+                //        q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
+                //    else
+                //        isVisited[x, y] = true;
+                //}
 
-                if (y + 1 < Width && !isVisited[x, y + 1])
-                {
-                    tile = grid[x, y + 1];
+                //if (x - 1 >= 0 && !isVisited[x - 1, y])
+                //{
+                //    tile = grid[x - 1, y];
 
-                    if (!skipUnmasked || (tile.Mark & mask) != 0)
-                        q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
-                    else
-                        isVisited[x, y] = true;
-                }
+                //    if (!skipUnmasked || (tile.Mark & mask) != 0)
+                //        q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
+                //    else
+                //        isVisited[x, y] = true;
+                //}
 
-                if (y - 1 >= 0 && !isVisited[x, y - 1])
-                {
-                    tile = grid[x, y - 1];
+                //if (y + 1 < Width && !isVisited[x, y + 1])
+                //{
+                //    tile = grid[x, y + 1];
 
-                    if (!skipUnmasked || (tile.Mark & mask) != 0)
-                        q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
-                    else
-                        isVisited[x, y] = true;
-                }
-            }
+                //    if (!skipUnmasked || (tile.Mark & mask) != 0)
+                //        q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
+                //    else
+                //        isVisited[x, y] = true;
+                //}
+
+                //if (y - 1 >= 0 && !isVisited[x, y - 1])
+                //{
+                //    tile = grid[x, y - 1];
+
+                //    if (!skipUnmasked || (tile.Mark & mask) != 0)
+                //        q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
+                //    else
+                //        isVisited[x, y] = true;
+                //}
+            //}
         }
     }
 
@@ -354,16 +386,16 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     {
         List<Vector2Int> list = new List<Vector2Int>();
 
-        if (x + 1 < Length && grid[x + 1, y].walkable)
+        if (x + 1 < Length && grid[x + 1, y] && grid[x + 1, y].walkable)
             list.Add(new Vector2Int(x + 1, y));
 
-        if (x - 1 >= 0 && grid[x - 1, y].walkable)
+        if (x - 1 >= 0 && grid[x - 1, y] && grid[x - 1, y].walkable)
             list.Add(new Vector2Int(x - 1, y));
 
-        if (y + 1 < Width && grid[x, y + 1].walkable)
+        if (y + 1 < Width && grid[x, y + 1] && grid[x, y + 1].walkable)
             list.Add(new Vector2Int(x, y + 1));
 
-        if (y - 1 >= 0 && grid[x, y - 1].walkable)
+        if (y - 1 >= 0 && grid[x, y - 1] && grid[x, y - 1].walkable)
             list.Add(new Vector2Int(x, y - 1));
 
         return list;

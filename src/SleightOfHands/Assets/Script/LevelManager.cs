@@ -20,13 +20,24 @@ public enum Round : int
 public class LevelManager : MonoBehaviour
 {
     private static LevelManager instance;
-    public static LevelManager Instance {
-        get {
-            if (instance == null) instance = GameObject.Find("Level Manager").GetComponent<LevelManager>();
+    public static LevelManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                GameObject go = GameObject.Find("Level Manager");
+
+                if (go)
+                    instance = go.GetComponent<LevelManager>();
+            }
+                
+
             return instance;
         }
     }
 
+    public EventOnDataUpdate<int> onCurrentTurnChange = new EventOnDataUpdate<int>();
     public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForPlayer = new EventOnDataUpdate<Phase>();
     public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForEnvironment = new EventOnDataUpdate<Phase>();
 
@@ -72,36 +83,24 @@ public class LevelManager : MonoBehaviour
 #if UNITY_EDITOR
             LogUtility.PrintLogFormat("LevelManager", "Made a transition to {0}.", value);
 #endif
-            Round currentRound = CurrentRound;
             // Before leaving the previous phase
-            switch (currentPhase)
-            {
-                case Phase.Action:
-                    switch (currentRound)
-                    {
-                        case Round.Player:
-                            playerController.Disable();
-                            break;
-                    }
-                    break;
-            }
+            //switch (currentPhase)
+            //{
+            //}
 
             currentPhase = value;
 
             // After entering a new phase
             switch (currentPhase)
             {
-                case Phase.Action:
-                    switch (currentRound)
-                    {
-                        case Round.Player:
-                            playerController.Enable();
-                            break;
-                    }
+                case Phase.Start:
+                    round++;
+                    if (CurrentRound == Round.Player)
+                        onCurrentTurnChange.Invoke(CurrentTurn);
                     break;
             }
 
-            switch (currentRound)
+            switch (CurrentRound)
             {
                 case Round.Player:
                     OnCurrentPhaseChangeForPlayer.Invoke(currentPhase);
@@ -118,11 +117,10 @@ public class LevelManager : MonoBehaviour
                     CurrentPhase = Phase.Action;
                     break;
                 case Phase.Action:
-                    if (currentRound == Round.Environment)
+                    if (CurrentRound == Round.Environment)
                         CurrentPhase = Phase.End;
                     break;
                 case Phase.End:
-                    round++;
                     CurrentPhase = Phase.Start;
                     break;
             }
@@ -142,21 +140,26 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    //private void Start() {
-    //    LoadLevel("test_level");
-    //}
-
     public void StartLevel(string level)
     {
         LoadLevel(level);
         SpawnEntities();
         GridManager.Instance.Initialize();
 
-        round = 0;
+        round = -1;
         CurrentPhase = Phase.Start;
+
+        UIManager.Singleton.Open("HUD", UIManager.UIMode.PERMANENT);
     }
 
-	private void LoadLevel(string levelFilename)
+    internal void EndPlayerActionPhase()
+    {
+        if (CurrentPhase == Phase.Action && CurrentRound == Round.Player)
+            CurrentPhase = Phase.End;
+    }
+
+
+    private void LoadLevel(string levelFilename)
     {
         string jsonPath = Path.Combine(Application.streamingAssetsPath, levelFolderPath);
         jsonPath = Path.Combine(jsonPath, levelFilename + ".json");

@@ -45,8 +45,6 @@ public struct BitOperationUtility
         if (right > left)
             throw new ArgumentException(string.Format("[BitOperationUtility] Invalid interval to write ({0} ~ {1})", right, left));
 
-        int n = left - right + 1;
-
         int mask = GetOnesFromLeft(31 - left) + GetOnesFromRight(right);
 
         A = (A & mask) | (B & ~mask);
