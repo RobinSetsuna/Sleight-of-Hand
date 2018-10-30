@@ -80,5 +80,5 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         CurrentGameState = initialState;
-    }
+   }
 }

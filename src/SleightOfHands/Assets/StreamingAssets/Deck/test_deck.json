@@ -1,28 +1,12 @@
 {
 	"cards": [
 		{
-			"cardName": "Smoke Grenade",
-			"intro": "This is a smoke grenade",
-			"type": "magic",
-			"effect" : "deal a smoke at the taget tile",
-			"cost" : 1,			
-			"ID" : 1
-		},
-		{
 			"cardName": "Haste",
 			"intro": "Add 4 move points",
 			"type": "enhance",
 			"effect" : "add 3 points",
 			"cost" : 1,
 			"ID" : 2
-		},
-		{
-			"cardName": "Milk Glue",
-			"intro": "place a glue on a tile",
-			"type": "magic",
-			"effect" : "xxx",
-			"cost" : 1,
-			"ID" : 3
-		}
+		}		
 	]
 }
