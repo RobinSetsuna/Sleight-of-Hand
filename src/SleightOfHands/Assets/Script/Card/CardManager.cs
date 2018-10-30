@@ -18,6 +18,8 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    public EventOnDataChange3<Card> onHandChange = new EventOnDataChange3<Card>();
+
     public CardDeck deck;
     public List<Card> usedCards;
     public List<Card> hand;
@@ -61,13 +63,20 @@ public class CardManager : MonoBehaviour
         rdNumLast = rdNum;
 
         Card card = deck.GetCardAt(rdNum);
+
         //add deleted card into hand
-        hand.Add(card);
+        AddCard(card);
 
         //delete the selected card from deck
         deck.Remove(card);
 
         return card;
+    }
+
+    private void AddCard(Card card)
+    {
+        hand.Add(card);
+        onHandChange.Invoke(ChangeType.Incremental, card);
     }
 
     // take one specific card from the deck to the player.
@@ -136,6 +145,8 @@ public class CardManager : MonoBehaviour
     {
         usedCards.Add(card);
         hand.Remove(card);
+
+        onHandChange.Invoke(ChangeType.Decremental, card);
     }
 
 

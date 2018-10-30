@@ -156,12 +156,16 @@ public class LevelManager : MonoBehaviour
         SpawnEntities();
         GridManager.Instance.Initialize();
 
-        //CardManager.Instance.InitCardDeck();
+        CardManager.Instance.InitCardDeck();
         //IntiCanvas();
         //InstantiateCard(CardManager.Instance.RandomGetCard());
         //InstantiateCard(CardManager.Instance.RandomGetCard());
         //InstantiateCard(CardManager.Instance.RandomGetCard());
-  
+
+        CardManager.Instance.RandomGetCard();
+        //CardManager.Instance.RandomGetCard();
+        //CardManager.Instance.RandomGetCard();
+
         round = -1;
         CurrentPhase = Phase.Start;
 
@@ -175,7 +179,6 @@ public class LevelManager : MonoBehaviour
             case "Smoke":
                 InstantiateOnCanvas(Smoke);
                 Smoke.GetComponent<CardInstance>().InitialCard(card);
-                
                 break;
             case "Haste":
                 InstantiateOnCanvas(Haste);

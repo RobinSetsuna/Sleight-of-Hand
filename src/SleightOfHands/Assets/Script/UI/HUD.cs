@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class HUD : UserInterface
@@ -6,6 +7,9 @@ public class HUD : UserInterface
     [SerializeField] private Text turn;
     [SerializeField] private Text banner;
     [SerializeField] private Button endTurnButton;
+    [SerializeField] private UIList cardList;
+
+    private Dictionary<Card, GameObject> hand = new Dictionary<Card, GameObject>();
 
     public override void OnOpen(params object[] args)
     {
@@ -15,9 +19,12 @@ public class HUD : UserInterface
             endTurnButton.interactable = false;
 
         endTurnButton.onClick.AddListener(EndCurrentTurn);
-
         UpdateTurnText(LevelManager.Instance.CurrentTurn);
+        
+        foreach (Card card in CardManager.Instance.hand)
+            HandleHandChange(ChangeType.Incremental, card);
 
+        CardManager.Instance.onHandChange.AddListener(HandleHandChange);
         LevelManager.Instance.playerController.onCurrentPlayerStateChange.AddListener(HandleCurrentPlayerStateChange);
         LevelManager.Instance.OnCurrentPhaseChangeForPlayer.AddListener(HandleCurrentPhaseChangeForPlayer);
         LevelManager.Instance.onCurrentTurnChange.AddListener(UpdateTurnText);
@@ -25,6 +32,7 @@ public class HUD : UserInterface
 
     public override void OnClose()
     {
+        LevelManager.Instance.playerController.onCurrentPlayerStateChange.RemoveListener(HandleCurrentPlayerStateChange);
         LevelManager.Instance.OnCurrentPhaseChangeForPlayer.RemoveListener(HandleCurrentPhaseChangeForPlayer);
         LevelManager.Instance.onCurrentTurnChange.RemoveListener(UpdateTurnText);
     }
@@ -50,6 +58,50 @@ public class HUD : UserInterface
     {
         banner.text = content;
         banner.gameObject.SetActive(true);
+    }
+
+    private void HandleHandChange(ChangeType change, Card card)
+    {
+        switch (change)
+        {
+            case ChangeType.Incremental:
+                Transform listTransform = cardList.transform;
+
+                //int index = hand.Count;
+                //int numExistedListItems = listTransform.childCount;
+
+                GameObject listItem;
+
+                //if (index < numExistedListItems)
+                //    listItem = listTransform.GetChild(index).gameObject;
+                //else
+                    switch (card.cardName)
+                    {
+                        case "Smoke":
+                            listItem = Instantiate(ResourceUtility.GetPrefab("Card_Smoke"), listTransform);
+                            break;
+                        case "Haste":
+                            listItem = Instantiate(ResourceUtility.GetPrefab("Card_Haste"), listTransform);
+                            break;
+                        default:
+                            listItem = Instantiate(ResourceUtility.GetPrefab("Card_Glue_Trap"), listTransform);
+                            break;
+                    }
+
+                listItem.SetActive(true);
+                listItem.GetComponent<CardInstance>().InitialCard(card);
+
+                hand.Add(card, listItem);
+
+                cardList.Refresh();
+
+                break;
+            case ChangeType.Decremental:
+                Destroy(hand[card]);
+                hand.Remove(card);
+                cardList.Refresh();
+                break;
+        }
     }
 
     private void HandleCurrentPlayerStateChange(PlayerState previousState, PlayerState currentState)

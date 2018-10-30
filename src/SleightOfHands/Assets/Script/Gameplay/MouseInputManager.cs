@@ -77,7 +77,10 @@ public class MouseInputManager
             if (TimeUtility.localTimeInMilisecond - MouseDownTime > mouseFocusThreshold)
                 onMouseFocus.Invoke(obj);
             else
+            {
                 onMouseClick.Invoke(obj);
+                Debug.Log(obj);
+            }
         }
         else
         {
