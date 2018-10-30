@@ -17,10 +17,16 @@ public class OBSTransparent : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         ObstacleRenderer = new List<Renderer>();
+        
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player == null) {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
 
         Debug.DrawLine(player.transform.position, mainCamera.transform.position, Color.red);
 

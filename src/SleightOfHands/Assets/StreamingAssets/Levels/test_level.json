@@ -1,8 +1,6 @@
 {
 	"name": "Test Level",
 	"width": 20,
-	"playerBirthplaceX": 4,
-	"playerBirthplaceY": 4,
 	"tiles": [
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -27,8 +25,8 @@
 	],
 	"spawns": [
 		{
-			"id": 1,
-			"position": {"x": 2, "y": 3},
+			"typeString": "Player",
+			"position": {"x": 4, "y": 4},
 			"settings": ["test", 3, "something", 12]
 		}
 	]

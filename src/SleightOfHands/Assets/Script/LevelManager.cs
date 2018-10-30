@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -172,7 +174,16 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnPlayer()
     {
-        Player = Instantiate(ResourceUtility.GetPrefab<player>("PlayerDummy"), GridManager.Instance.GetWorldPosition(currentLevel.playerBirthplaceX, currentLevel.playerBirthplaceY) + new Vector3(0, 1, 0), Quaternion.identity, GridManager.Instance.environmentHolder);
+        SpawnData playerSpawnData = null;
+        foreach (SpawnData spawnData in currentLevel.spawns) {
+            if (spawnData.SpawnType == SpawnData.Type.Player) {
+                playerSpawnData = spawnData;
+            }
+        }
+        if (playerSpawnData == null) return;
+
+        Vector3 spawnPosition = GridManager.Instance.GetWorldPosition(playerSpawnData.position.x, playerSpawnData.position.y) + new Vector3(0, 1, 0);
+        Player = Instantiate(ResourceUtility.GetPrefab<player>("PlayerDummy"), spawnPosition, Quaternion.identity, GridManager.Instance.environmentHolder);
     }
 
     [System.Serializable]
@@ -180,8 +191,6 @@ public class LevelManager : MonoBehaviour
 
         public string name;
         public int width;
-        public int playerBirthplaceX;
-        public int playerBirthplaceY;
         public int[] tiles;
         public SpawnData[] spawns;
 
@@ -194,8 +203,30 @@ public class LevelManager : MonoBehaviour
 
     [System.Serializable]
     public class SpawnData {
-        public int id;
+
+        public enum Type {
+            None,
+            Player,
+            Guard
+        }
+        public Type SpawnType {
+            get {
+                return (Type)Enum.Parse(typeof(Type), typeString, true);
+            }
+        }
+
+        public string typeString;
         public Vector2Int position;
         public string[] settings;
+
+        public string GetSetting(string settingString) {
+            for (int i = 0; i < settings.Length; i += 2) {
+                if (settingString.Equals(settings[i])) {
+                    return settings[i + 1];
+                }
+            }
+            return null;
+        }
+
     }
 }

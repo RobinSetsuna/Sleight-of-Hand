@@ -13,6 +13,8 @@ public class Enemy : Unit
 	private int counter = 0;
 
 	private bool signed = false;
+    private bool detection_highlighted = false;
+    private HashSet<Tile> rangeList;
 	// Use this for initialization
 	 private void Awake () {
 		
@@ -24,7 +26,7 @@ public class Enemy : Unit
 		if (!signed)
 		{
 			player = GameObject.FindGameObjectWithTag("Player");
-			player.GetComponent<player>().OnPositionUpdateForUnit.AddListener(HandleMouseDrag);
+			player.GetComponent<player>().OnPositionUpdateForUnit.AddListener(HandleDetection);
 			signed = true;
 		}
 		#endregion
@@ -35,22 +37,35 @@ public class Enemy : Unit
 	{
 		setInitialPos(GridManager.Instance.TileFromWorldPoint(transform.position).gridPosition);
 		player = GameObject.FindGameObjectWithTag("Player");
-		player.GetComponent<player>().OnPositionUpdateForUnit.AddListener(HandleMouseDrag);
+		player.GetComponent<player>().OnPositionUpdateForUnit.AddListener(HandleDetection);
 	}
+    public void hightlightDetection() {
+        // show the range to be detected
+        if (detection_highlighted)
+        {
+            foreach (Tile tile in rangeList)
+            {
+                tile.Dehighlight();
+            }
+            detection_highlighted = false;
+        }
+        else {
+            Tile current_tile = GridManager.Instance.TileFromWorldPoint(transform.position);
+            rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range);
+            GridManager.Instance.DehighlightAll();
+            foreach (Tile tile in rangeList)
+            {
+                tile.Highlight(Tile.HighlightColor.Red);
+            }
+            detection_highlighted = true;
+        }
+    }
 
-	private void HandleMouseDrag(Vector2Int pos)
+
+	private void HandleDetection(Vector2Int pos)
 	{
 		Tile current_tile = GridManager.Instance.TileFromWorldPoint(transform.position);
-		var rangeList =ProjectileManager.Instance.getProjectileRange(current_tile,detection_range);
-
-		#region DEMO CODE
-		GridManager.Instance.DehighlightAll();
-		foreach (Tile tile in rangeList)
-		{
-			tile.Highlight(Tile.HighlightColor.Red);
-		}
-		#endregion
-
+		rangeList =ProjectileManager.Instance.getProjectileRange(current_tile,detection_range);
 		if(rangeList.Contains(GridManager.Instance.getTile(pos.x,pos.y))){
 			//detected
 			// add some operation here
