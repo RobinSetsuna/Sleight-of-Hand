@@ -55,14 +55,6 @@ public abstract class Unit : InLevelObject
     private Vector3 start;
     private Vector3 destination;
     
-    public void setInitialPos(Vector2Int pos)
-    {
-        Vector3 world_pos = GridManager.Instance.GetWorldPosition(pos);
-        transform.position = world_pos;
-
-        gridPosition = pos;
-    }
-    
     public void AddActionPoint(int point)
     {
         ActionPoint += point;
@@ -83,7 +75,7 @@ public abstract class Unit : InLevelObject
         MoveTo(GridManager.Instance.GetWorldPosition(tile.x, tile.y), callback);
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         switch (actionRound)
         {

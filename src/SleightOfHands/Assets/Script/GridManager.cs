@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
 
 ///	<summary/>
 /// GridManager - Grid Manager class
@@ -18,6 +19,10 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             return instance;
         }
     }
+
+    public class EventOnUnitMove : UnityEvent<Unit, Vector2Int, Vector2Int> {}
+
+    public EventOnUnitMove onUnitMove = new EventOnUnitMove();
 
     public LayerMask unwalkableMask;
     public float nodeRadius;
@@ -404,11 +409,11 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
     internal void NotifyUnitPositionChange(Unit unit, Vector2Int previousGridPosition, Vector2Int currentGridPosition)
     {
-        Debug.LogFormat("{0}: {1} -> {2}", unit, previousGridPosition, currentGridPosition);
-
         if (previousGridPosition.x >= 0)
             units[previousGridPosition.x, previousGridPosition.y] = null;
 
         units[currentGridPosition.x, currentGridPosition.y] = unit;
+
+        onUnitMove.Invoke(unit, previousGridPosition, currentGridPosition);
     }
 }

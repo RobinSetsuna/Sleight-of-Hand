@@ -7,31 +7,17 @@ public class Enemy : Unit
 	[SerializeField]private int detection_range;
 	private GameObject player;
 
-
 	private int counter = 0;
 
-	private bool signed = false;
     private bool detection_highlighted = false;
     private HashSet<Tile> rangeList;
 
-	private void LateUpdate()
+    protected override void Awake()
     {
-		#region DEMO CODE
-		if (!signed)
-		{
-			player = GameObject.FindGameObjectWithTag("Player");
-			player.GetComponent<player>().onGridPositionChange.AddListener(HandleDetection);
-			signed = true;
-		}
-		#endregion
-	}
+        base.Awake();
 
-	public void Initiate()
-	{
-		setInitialPos(GridManager.Instance.TileFromWorldPoint(transform.position).gridPosition);
-		player = GameObject.FindGameObjectWithTag("Player");
-		player.GetComponent<player>().onGridPositionChange.AddListener(HandleDetection);
-	}
+        GridManager.Instance.onUnitMove.AddListener(HandleDetection);
+    }
 
     public void hightlightDetection()
     {
@@ -48,6 +34,7 @@ public class Enemy : Unit
         {
             Tile current_tile = GridManager.Instance.TileFromWorldPoint(transform.position);
             rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range);
+
             GridManager.Instance.DehighlightAll();
             foreach (Tile tile in rangeList)
             {
@@ -57,16 +44,18 @@ public class Enemy : Unit
         }
     }
 
-	private void HandleDetection(Vector2Int previousPos, Vector2Int pos)
+	private void HandleDetection(Unit unit, Vector2Int previousPos, Vector2Int pos)
 	{
-		Tile current_tile = GridManager.Instance.TileFromWorldPoint(transform.position);
-
-		rangeList = ProjectileManager.Instance.getProjectileRange(current_tile,detection_range);
-		if(rangeList.Contains(GridManager.Instance.getTile(pos.x,pos.y)))
+        if (unit.tag == "Player")
         {
-			//detected
-			// add some operation here
-		}
+            Tile current_tile = GridManager.Instance.TileFromWorldPoint(transform.position);
+            rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range);
+
+            if (rangeList.Contains(GridManager.Instance.getTile(pos.x, pos.y)))
+            {
+                //detected
+                // add some operation here
+            }
+        }
 	}
-	
 }
