@@ -195,7 +195,7 @@ public class PlayerController : MouseInteractable
                     {
                         Tile playerTile = GridManager.Instance.TileFromWorldPoint(Player.transform.position);
 
-                        if (MathUtility.ManhattanDistance(tile.x, tile.y, playerTile.x, playerTile.y) <= Player.ActionPoint)
+                        if (tile.IsHighlighted(Tile.HighlightColor.Blue))
                         {
                             Path = Navigation.FindPath(GridManager.Instance, playerTile, tile);
                             CurrentPlayerState = PlayerState.MovementConfirmation;
@@ -236,7 +236,7 @@ public class PlayerController : MouseInteractable
                         {
                             if (tile == path.Last.Previous.Value)
                                 RemoveWayPoint();
-                            else if (GridManager.Instance.IsAdjacent(tile, path.Last.Value) && path.Count < Player.ActionPoint)
+                            else if (GridManager.Instance.IsAdjacent(tile, path.Last.Value) && path.Count < Player.ActionPoint && !path.Contains(tile))
                                 AddWayPoint(tile);
                         }
                         else if (GridManager.Instance.IsAdjacent(tile, GridManager.Instance.TileFromWorldPoint(Player.transform.position)))
