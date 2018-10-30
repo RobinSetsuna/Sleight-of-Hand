@@ -69,11 +69,11 @@ public class ProjectileManager: MonoBehaviour{
                     }
                     if (ret7)
                     {
-                        ret7 = process_status_check(center.x - x, center.y + y);
+                        ret7 = process_status_check(center.x - x, center.y - y);
                     }
                     if (ret8)
                     {
-                        ret8 = process_status_check(center.x - y, center.y + x);
+                        ret8 = process_status_check(center.x - y, center.y - x);
                     }
                 }        
             }

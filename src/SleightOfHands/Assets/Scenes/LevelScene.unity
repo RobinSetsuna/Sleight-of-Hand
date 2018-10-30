@@ -1093,6 +1093,17 @@ MonoBehaviour:
   tilePrefab: {fileID: 4202221461299724, guid: df32d8651c840a9429479bfb9204413a, type: 2}
   wallPrefabs:
   - {fileID: 1703594379124912, guid: fc75abf5d31c88c45a9ff67964bcb828, type: 2}
+  - {fileID: 1495525591947194, guid: 2b620966583e6ce409f08bd47edc0578, type: 2}
+  - {fileID: 1672917832351440, guid: 5646c4701ce2e9a42b556085989590a3, type: 2}
+  - {fileID: 1133360533306462, guid: 5664fbc9aeec59f459c434ec14c4c6de, type: 2}
+  roadTilePrefabs:
+  - {fileID: 1556248182996184, guid: 583b0d9b5c52ada458f3fb9280bb3d65, type: 2}
+  - {fileID: 1554396805812762, guid: 491578dba6f526d44a6eae68aedb7eed, type: 2}
+  - {fileID: 1914031329789324, guid: 9c20a36fccfeb0a4b8acd5ce4be8f9bc, type: 2}
+  - {fileID: 1575053014262756, guid: 7c77f3d8efbb8fa4ba50bf774f6df18a, type: 2}
+  - {fileID: 1487805318453620, guid: 1bf1784c229a6d3448a4264dc56b3308, type: 2}
+  - {fileID: 1607742309056584, guid: d7dffb2347ee64a4f8512d0f5f1fc347, type: 2}
+  - {fileID: 1771194520321890, guid: 25f75603393cd5141bc198b4d85124e6, type: 2}
   environmentTilePrefabs:
   - {fileID: 100002, guid: 8dfedd46392fac84f99bb0d47b1a4155, type: 3}
   - {fileID: 100002, guid: 998206b37c655c74b9da08e0a26eafaf, type: 3}
