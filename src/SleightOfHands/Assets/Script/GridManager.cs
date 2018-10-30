@@ -24,6 +24,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     public float nodeRadius;
     public Transform tilePrefab;
     public GameObject[] wallPrefabs;
+    public GameObject[] roadTilePrefabs;
     public GameObject[] environmentTilePrefabs;
     public Vector2Int mapSize;
     [Range(0,1)] public float outlinePercent;
@@ -158,24 +159,46 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                 
                 // insertion
                 grid[x,y] = tile;
-
-                switch (tileType)
+                Vector3 envTilePosition = tilePosition;
+                envTilePosition.y = -0.55f;
+                if(tileType < 0 )
                 {
-                    case 1:
-                        Quaternion wallRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
-                        Instantiate(wallPrefabs[0], tilePosition, wallRotation, environmentHolder);
-                        goto case 0;
-
-                    case 0:
-                        Vector3 envTilePosition = tilePosition;
-                        envTilePosition.y = -0.55f;
-                        Quaternion envTileRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
-                        int envTileIndex = UnityEngine.Random.Range(0, environmentTilePrefabs.Length);
-                        GameObject envTilePrefab = environmentTilePrefabs[envTileIndex];
-                        Instantiate(envTilePrefab, envTilePosition, envTileRotation, environmentHolder);
-                        break;
-
+                    // tileType < 0, road tile add
+                    Quaternion roadTileRotation = Quaternion.Euler(0,0, 0);
+                    Instantiate(roadTilePrefabs[-tileType-1], envTilePosition, roadTileRotation, environmentHolder);
                 }
+                else
+                {
+                    Quaternion envTileRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
+                    int envTileIndex = UnityEngine.Random.Range(0, environmentTilePrefabs.Length);
+                    GameObject envTilePrefab = environmentTilePrefabs[envTileIndex];
+                    Instantiate(envTilePrefab, envTilePosition, envTileRotation, environmentHolder);
+                    if (tileType != 0&& tileType>0)
+                    {
+                        Quaternion wallRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
+                        Instantiate(wallPrefabs[tileType-1], tilePosition, wallRotation, environmentHolder);
+                    }
+                }
+                #region ORIGINAL_SWITCH_STATE
+//                switch (tileType)
+                   //                {
+                   //                    case 1:
+                   //                        Quaternion wallRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
+                   //                        int wallTileIndex = UnityEngine.Random.Range(0, wallPrefabs.Length);
+                   //                        Instantiate(wallPrefabs[wallTileIndex], tilePosition, wallRotation, environmentHolder);
+                   //                        goto case 0;
+                   //
+                   //                    case 0:
+                   //                        Vector3 envTilePosition = tilePosition;
+                   //                        envTilePosition.y = -0.55f;
+                   //                        Quaternion envTileRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
+                   //                        int envTileIndex = UnityEngine.Random.Range(0, environmentTilePrefabs.Length);
+                   //                        GameObject envTilePrefab = environmentTilePrefabs[envTileIndex];
+                   //                        Instantiate(envTilePrefab, envTilePosition, envTileRotation, environmentHolder);
+                   //                        break;
+                   //                    
+                   //                }
+                #endregion
             }
     }
 
