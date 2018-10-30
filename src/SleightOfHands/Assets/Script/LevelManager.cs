@@ -41,7 +41,7 @@ public class LevelManager : MonoBehaviour
     public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForPlayer = new EventOnDataUpdate<Phase>();
     public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForEnvironment = new EventOnDataUpdate<Phase>();
 
-    public List<Unit> units;
+    // public List<Unit> units;
     public player Player { get; private set; }
 
     internal PlayerController playerController
@@ -156,9 +156,9 @@ public class LevelManager : MonoBehaviour
         SpawnEntities();
         GridManager.Instance.Initialize();
 
-        CardManager.Instance.InitCardDeck();
-        IntiCanvas();
-        InstantiateCard(CardManager.Instance.RandomGetCard());
+        //CardManager.Instance.InitCardDeck();
+        //IntiCanvas();
+        //InstantiateCard(CardManager.Instance.RandomGetCard());
         //InstantiateCard(CardManager.Instance.RandomGetCard());
         //InstantiateCard(CardManager.Instance.RandomGetCard());
   
@@ -194,6 +194,7 @@ public class LevelManager : MonoBehaviour
         canvasWidth = canvas.gameObject.GetComponent<RectTransform>().rect.width;
         canvasHeight = canvas.gameObject.GetComponent<RectTransform>().rect.height;
     }
+
     void InstantiateOnCanvas(GameObject obj)
     {     
         float imageWidth = obj.gameObject.GetComponent<RectTransform>().rect.width;
@@ -219,9 +220,8 @@ public class LevelManager : MonoBehaviour
             imageSpawn.transform.localPosition = new Vector3((canvasWidth / 2 - imageWidth / 2) - 230, (-canvasHeight / 2 + imageHeight / 2), 0);
             cardsNumberOnCanvas = 3;
         }
-
-
     }
+
     internal void EndPlayerActionPhase()
     {
         if (CurrentPhase == Phase.Action && CurrentRound == Round.Player)
@@ -239,7 +239,7 @@ public class LevelManager : MonoBehaviour
         LevelData levelData = LevelData.CreateFromJSON(json);
         currentLevel = levelData;
 
-        GridManager.Instance.GenerateMap(levelData, out units);
+        GridManager.Instance.GenerateMap(levelData);
     }
 
     private void SpawnEntities()

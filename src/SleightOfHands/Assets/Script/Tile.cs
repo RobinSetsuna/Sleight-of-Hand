@@ -61,7 +61,7 @@ public class Tile : MouseInteractable, IEquatable<Tile>
     ///  |                   | |            | |
     ///  t                   e o            g a
     ///  i                   n b            r l
-    ///  l                  e s            e p
+    ///  l                   e s            e p
     ///  e                   m t            e h
     ///                      y a            n a
     ///                        c

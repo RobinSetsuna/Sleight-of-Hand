@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 135423732329885074}
   - component: {fileID: 54986222561116340}
   - component: {fileID: 114018858310208834}
-  - component: {fileID: 114115257868316356}
+  - component: {fileID: 114781160667747748}
   m_Layer: 13
   m_Name: GuardDummy
   m_TagString: Player
@@ -242,14 +242,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a343e0c55f2a12d46abae7695ced8897, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   actionRound: 1
   maxSpeed: 2
-  Gridposition: {x: 0, y: 0}
   initialActionPoint: 3
   detection_range: 5
---- !u!114 &114115257868316356
+--- !u!114 &114781160667747748
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -258,8 +257,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4bd755e3810240439520ac84aeb27a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   Type: 2
 --- !u!135 &135423732329885074
 SphereCollider:

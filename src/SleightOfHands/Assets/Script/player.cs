@@ -1,26 +1,10 @@
-﻿using UnityEngine;
-
-///	<summary/>
+﻿///	<summary/>
 /// Player - derived class of Unit
 /// Active movement range, dragging path action, set heading
 ///
 /// </summary>
 public class player : Unit
 {
-	private bool signed = false;
-	private void Start()
-	{
-		
-	}
-
-	private void LateUpdate()
-	{
-		if (!signed)
-		{
-			//setInitialPos(GridManager.Instance.TileFromWorldPoint(transform.position).gridPosition);
-			signed = true;
-		}
-	}
 	// Update is called once per frame
     //void Update()
     //{

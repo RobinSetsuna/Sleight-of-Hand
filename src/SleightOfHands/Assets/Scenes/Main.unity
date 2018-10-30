@@ -412,7 +412,7 @@ GameObject:
   - component: {fileID: 1168265287}
   m_Layer: 5
   m_Name: UI Manager
-  m_TagString: Untagged
+  m_TagString: Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -639,9 +639,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fe3e32c259e99e439b37ccd62a65d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  units: []
   levelFolderPath: Levels
   levelFilename: test_level
+  Smoke: {fileID: 0}
+  Haste: {fileID: 0}
+  Glue: {fileID: 0}
   currentLevel:
     name: 
     width: 0

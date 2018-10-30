@@ -28,7 +28,7 @@
     }
 
     internal void Execute()
-    {
+    {UnityEngine.Debug.Log(actionQueue);
         if (!actionQueue.IsEmpty())
             actionQueue.Pop().Execute(Execute);
         else if (executionCallback != null)
