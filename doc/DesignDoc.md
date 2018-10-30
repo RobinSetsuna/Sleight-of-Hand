@@ -142,6 +142,10 @@ The game logic is the programming focus of the team. Technically, it is a main l
 
 ![UI Architecture](ui-architecture.png)
 
+### Grid
+We applied a Grid Manager system to manage all the tile data in the actual level. Every single tile of the map can utilize by enemy detection range, card effect range, and player movement range.
+This system works all the render and accessible area range highlight. Besides, all the unit position is holding by the grid position (x,y) instead of Unity world position.
+
 ## Issues and Risks
 * The reliability of Enemy AI could be one of the main factors will impact the user experience. To make the game not too easy or too       hard, we need to adjust enemy intelligence very carefully.
 * The diversity of the cards is one of another issue. If we don't have enough compelling card, there is no power to attract customers.
