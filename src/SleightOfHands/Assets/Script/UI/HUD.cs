@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class HUD : UserInterface
 {
     [SerializeField] private Text turn;
+    [SerializeField] private Text banner;
     [SerializeField] private Button endTurnButton;
 
     public override void OnOpen(params object[] args)
@@ -28,7 +29,6 @@ public class HUD : UserInterface
         LevelManager.Instance.onCurrentTurnChange.RemoveListener(UpdateTurnText);
     }
 
-
     public void ToggleMenu()
     {
         UIManager.Singleton.Toggle("IngameMenu");
@@ -39,9 +39,17 @@ public class HUD : UserInterface
         LevelManager.Instance.EndPlayerActionPhase();
     }
 
-    private void UpdateTurnText(int n)
+    private void UpdateTurnText(int currentTurn)
     {
-        turn.text = n.ToString();
+        turn.text = currentTurn.ToString();
+
+        ShowBanner("Turn " + currentTurn);
+    }
+
+    private void ShowBanner(string content)
+    {
+        banner.text = content;
+        banner.gameObject.SetActive(true);
     }
 
     private void HandleCurrentPlayerStateChange(PlayerState previousState, PlayerState currentState)
