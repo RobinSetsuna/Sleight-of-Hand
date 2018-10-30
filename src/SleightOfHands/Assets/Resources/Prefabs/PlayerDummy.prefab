@@ -113,7 +113,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe6c5f314a056cc4da0fb9fe5b56f2d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  actionRound: 0
   maxSpeed: 2
+  Gridposition: {x: 0, y: 0}
   initialActionPoint: 5
 --- !u!114 &114272990584130552
 MonoBehaviour:
@@ -126,6 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 865e235a3eb7b2c4e98267af0aefaa5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Type: 1
 --- !u!135 &135980113564700868
 SphereCollider:
   m_ObjectHideFlags: 1

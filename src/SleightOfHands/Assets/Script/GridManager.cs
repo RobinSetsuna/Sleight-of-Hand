@@ -162,14 +162,13 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                 switch (tileType)
                 {
                     case 1:
-                        Quaternion wallRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
+                        Quaternion wallRotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 3) * 90f, 0);
                         Instantiate(wallPrefabs[0], tilePosition, wallRotation, environmentHolder);
                         goto case 0;
-
                     case 0:
                         Vector3 envTilePosition = tilePosition;
                         envTilePosition.y = -0.55f;
-                        Quaternion envTileRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
+                        Quaternion envTileRotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 3) * 90f, 0);
                         int envTileIndex = UnityEngine.Random.Range(0, environmentTilePrefabs.Length);
                         GameObject envTilePrefab = environmentTilePrefabs[envTileIndex];
                         Instantiate(envTilePrefab, envTilePosition, envTileRotation, environmentHolder);
