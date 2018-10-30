@@ -49,6 +49,11 @@ public abstract class Unit : InLevelObject
         ActionPoint += point;
     }
 
+    public void DeleteActionPoint(int point)
+    {
+        ActionPoint -= point;
+    }
+
     public void MoveTo(Vector3 destination, System.Action callback)
     {
         start = transform.position;

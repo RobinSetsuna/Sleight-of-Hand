@@ -8,6 +8,8 @@ public enum PlayerState : int
     MovementPlanning,
     MovementConfirmation,
     Move,
+    CardChoosing,
+    PositionChoosing
 }
 
 public class PlayerController : MouseInteractable
@@ -108,6 +110,8 @@ public class PlayerController : MouseInteractable
         LevelManager.Instance.OnCurrentPhaseChangeForPlayer.AddListener(HandleCurrentPhaseChange);
     }
 
+
+
     private void OnDestroy()
     {
         Disable();
@@ -202,6 +206,10 @@ public class PlayerController : MouseInteractable
                         }
                     }
                 }
+                break;
+            case PlayerState.CardChoosing:
+               
+                CurrentPlayerState = PlayerState.PositionChoosing;
                 break;
         }
     }
