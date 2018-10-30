@@ -1300,7 +1300,6 @@ GameObject:
   - component: {fileID: 1372137287}
   - component: {fileID: 1372137286}
   - component: {fileID: 1372137285}
-  - component: {fileID: 1372137284}
   - component: {fileID: 1372137283}
   m_Layer: 0
   m_Name: Enemy
@@ -1308,7 +1307,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1372137283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1325,22 +1324,6 @@ MonoBehaviour:
   Gridposition: {x: 0, y: 0}
   initialActionPoint: 3
   detection_range: 5
---- !u!114 &1372137284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114051677802090668, guid: 768a6dd4fff647d439e92b44d198296c,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1372137282}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe6c5f314a056cc4da0fb9fe5b56f2d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionRound: 0
-  maxSpeed: 2
-  Gridposition: {x: 0, y: 0}
-  initialActionPoint: 5
 --- !u!114 &1372137285
 MonoBehaviour:
   m_ObjectHideFlags: 0
