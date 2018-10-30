@@ -4,6 +4,8 @@
     MovementPlanning,
     MovementConfirmation,
     Move,
+    CardChoosing,
+    PositionChoosing
 }
 
 public class PlayerController : MouseInteractable
@@ -89,6 +91,8 @@ public class PlayerController : MouseInteractable
         ResetToIdle();
     }
 
+
+
     private void OnDestroy()
     {
         Disable();
@@ -170,6 +174,10 @@ public class PlayerController : MouseInteractable
                         InitiatePlayerMovement();
                     }
                 }
+                break;
+            case PlayerState.CardChoosing:
+               
+                CurrentPlayerState = PlayerState.PositionChoosing;
                 break;
         }
     }

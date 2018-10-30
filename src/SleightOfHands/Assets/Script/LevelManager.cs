@@ -44,6 +44,7 @@ public class LevelManager : MonoBehaviour
     private int round;
     private Phase currentPhase;
 
+
     public Round CurrentRound
     {
         get
@@ -132,6 +133,15 @@ public class LevelManager : MonoBehaviour
     public string levelFolderPath;
     public string levelFilename;
 
+    //card related
+    public GameObject Smoke;
+    public GameObject Haste;
+    public GameObject Glue;
+    GameObject canvas;
+    float canvasWidth;
+    float canvasHeight;
+    int cardsNumberOnCanvas = 0;
+
     [SerializeField]
     private LevelData currentLevel;
     public LevelData CurrentLevel
@@ -152,11 +162,71 @@ public class LevelManager : MonoBehaviour
         SpawnPlayer();
         GridManager.Instance.Initialize();
 
+        CardManager.Instance.InitCardDeck();
+        IntiCanvas();
+        InstantiateCard(CardManager.Instance.RandomGetCard());
+        InstantiateCard(CardManager.Instance.RandomGetCard());
+        InstantiateCard(CardManager.Instance.RandomGetCard());
+
         round = 0;
         CurrentPhase = Phase.Start;
     }
 
-	private void LoadLevel(string levelFilename)
+    public void InstantiateCard(Card card)
+    {
+        switch (card.cardName)
+        {
+            case "Smoke":
+                InstantiateOnCanvas(Smoke);
+                Smoke.GetComponent<CardInstance>().InitialCard(card);
+                break;
+            case "Haste":
+                InstantiateOnCanvas(Haste);
+                Haste.GetComponent<CardInstance>().InitialCard(card);
+                break;
+            case "Glue Trap":
+                InstantiateOnCanvas(Glue);
+                Glue.GetComponent<CardInstance>().InitialCard(card);
+                break;
+        }
+    }
+
+    void IntiCanvas()
+    {
+        canvas = GameObject.FindGameObjectWithTag("Canvas");
+        canvasWidth = canvas.gameObject.GetComponent<RectTransform>().rect.width;
+        canvasHeight = canvas.gameObject.GetComponent<RectTransform>().rect.height;
+    }
+    void InstantiateOnCanvas(GameObject obj)
+    {     
+        float imageWidth = obj.gameObject.GetComponent<RectTransform>().rect.width;
+        float imageHeight = obj.gameObject.GetComponent<RectTransform>().rect.height;
+        GameObject imageSpawn = Instantiate(obj) as GameObject;
+
+        imageSpawn.transform.SetParent(canvas.transform);
+        imageSpawn.transform.localRotation = canvas.transform.rotation;
+
+        if (cardsNumberOnCanvas == 0)
+        {
+            // instantiate at the right bottom corner of the canvas
+            imageSpawn.transform.localPosition = new Vector3((canvasWidth / 2 - imageWidth / 2), (-canvasHeight / 2 + imageHeight / 2), 0);
+            cardsNumberOnCanvas = 1;
+        }
+        else if (cardsNumberOnCanvas == 1)
+        {
+            imageSpawn.transform.localPosition = new Vector3((canvasWidth / 2 - imageWidth / 2) - 115, (-canvasHeight / 2 + imageHeight / 2), 0);
+            cardsNumberOnCanvas = 2;
+        }
+        else if (cardsNumberOnCanvas == 2)
+        {
+            imageSpawn.transform.localPosition = new Vector3((canvasWidth / 2 - imageWidth / 2) - 230, (-canvasHeight / 2 + imageHeight / 2), 0);
+            cardsNumberOnCanvas = 3;
+        }
+
+
+    }
+
+    private void LoadLevel(string levelFilename)
     {
         string jsonPath = Path.Combine(Application.streamingAssetsPath, levelFolderPath);
         jsonPath = Path.Combine(jsonPath, levelFilename + ".json");

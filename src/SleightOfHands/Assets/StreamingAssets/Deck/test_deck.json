@@ -1,7 +1,7 @@
 {
 	"cards": [
 		{
-			"cardName": "Smoke Grenade",
+			"cardName": "Smoke",
 			"intro": "This is a smoke grenade",
 			"type": "magic",
 			"effect" : "deal a smoke at the taget tile",
@@ -17,7 +17,7 @@
 			"ID" : 2
 		},
 		{
-			"cardName": "Milk Glue",
+			"cardName": "Glue Trap",
 			"intro": "place a glue on a tile",
 			"type": "magic",
 			"effect" : "xxx",
