@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -31,7 +30,10 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
     [SerializeField] private float time_intervals;
     private float last_mouse_down;
+
+    private Unit[,] units;
     private Tile[,] grid;
+
     public bool dragging;
     public bool ok_to_drag;
     private HashSet<Tile>  recheck_list;
@@ -116,7 +118,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// parameter: None
     /// </summary>
 
-    public void GenerateMap(LevelManager.LevelData levelData, out List<Unit> units)
+    public void GenerateMap(LevelManager.LevelData levelData)
     {
         if (!root)
             root = transform.Find("GridRoot");
@@ -131,12 +133,11 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         if (levelData != null)
             mapSize = new Vector2Int(levelData.width, Mathf.CeilToInt(levelData.tiles.Length / levelData.width));
 
-        // new grid with size [mapSize.x,maoSize.y]
+        // new grid with size [mapSize.x,mapSize.y]
         grid = new Tile[mapSize.x, mapSize.y];
+        units = new Unit[mapSize.x, mapSize.y];
 
         int numExistedTiles = root.childCount;
-
-        units = new List<Unit>();
 
         for (int x = 0; x < mapSize.x; x ++)
             for (int y = 0; y < mapSize.y; y ++)
@@ -169,13 +170,13 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                 }
                 else
                 {
-                    Quaternion envTileRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
-                    int envTileIndex = UnityEngine.Random.Range(0, environmentTilePrefabs.Length);
+                    Quaternion envTileRotation = Quaternion.Euler(0, Random.Range(0, 3) * 90f, 0);
+                    int envTileIndex = Random.Range(0, environmentTilePrefabs.Length);
                     GameObject envTilePrefab = environmentTilePrefabs[envTileIndex];
                     Instantiate(envTilePrefab, envTilePosition, envTileRotation, environmentHolder);
                     if (tileType != 0&& tileType>0)
                     {
-                        Quaternion wallRotation = Quaternion.Euler(0, UnityEngine.Random.Range(0, 3) * 90f, 0);
+                        Quaternion wallRotation = Quaternion.Euler(0, Random.Range(0, 3) * 90f, 0);
                         Instantiate(wallPrefabs[tileType - 1], tilePosition, wallRotation, environmentHolder);
                     }
                 }
@@ -324,45 +325,45 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                     }
                 }
 
-                //if (x + 1 < Length && !isVisited[x + 1, y])
-                //{
-                //    tile = grid[x + 1, y];
+            //    if (x + 1 < Length && !isVisited[x + 1, y])
+            //    {
+            //        tile = grid[x + 1, y];
 
-                //    if (!skipUnmasked || (tile.Mark & mask) != 0)
-                //        q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
-                //    else
-                //        isVisited[x, y] = true;
-                //}
+            //        if (!skipUnmasked || (tile.Mark & mask) != 0)
+            //            q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
+            //        else
+            //            isVisited[x, y] = true;
+            //    }
 
-                //if (x - 1 >= 0 && !isVisited[x - 1, y])
-                //{
-                //    tile = grid[x - 1, y];
+            //    if (x - 1 >= 0 && !isVisited[x - 1, y])
+            //    {
+            //        tile = grid[x - 1, y];
 
-                //    if (!skipUnmasked || (tile.Mark & mask) != 0)
-                //        q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
-                //    else
-                //        isVisited[x, y] = true;
-                //}
+            //        if (!skipUnmasked || (tile.Mark & mask) != 0)
+            //            q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
+            //        else
+            //            isVisited[x, y] = true;
+            //    }
 
-                //if (y + 1 < Width && !isVisited[x, y + 1])
-                //{
-                //    tile = grid[x, y + 1];
+            //    if (y + 1 < Width && !isVisited[x, y + 1])
+            //    {
+            //        tile = grid[x, y + 1];
 
-                //    if (!skipUnmasked || (tile.Mark & mask) != 0)
-                //        q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
-                //    else
-                //        isVisited[x, y] = true;
-                //}
+            //        if (!skipUnmasked || (tile.Mark & mask) != 0)
+            //            q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
+            //        else
+            //            isVisited[x, y] = true;
+            //    }
 
-                //if (y - 1 >= 0 && !isVisited[x, y - 1])
-                //{
-                //    tile = grid[x, y - 1];
+            //    if (y - 1 >= 0 && !isVisited[x, y - 1])
+            //    {
+            //        tile = grid[x, y - 1];
 
-                //    if (!skipUnmasked || (tile.Mark & mask) != 0)
-                //        q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
-                //    else
-                //        isVisited[x, y] = true;
-                //}
+            //        if (!skipUnmasked || (tile.Mark & mask) != 0)
+            //            q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
+            //        else
+            //            isVisited[x, y] = true;
+            //    }
             //}
         }
     }
@@ -386,18 +387,28 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     {
         List<Vector2Int> list = new List<Vector2Int>();
 
-        if (x + 1 < Length && grid[x + 1, y] && grid[x + 1, y].walkable)
+        if (x + 1 < Length && grid[x + 1, y] && grid[x + 1, y].walkable && units[x + 1, y] == null)
             list.Add(new Vector2Int(x + 1, y));
 
-        if (x - 1 >= 0 && grid[x - 1, y] && grid[x - 1, y].walkable)
+        if (x - 1 >= 0 && grid[x - 1, y] && grid[x - 1, y].walkable && units[x - 1, y] == null)
             list.Add(new Vector2Int(x - 1, y));
 
-        if (y + 1 < Width && grid[x, y + 1] && grid[x, y + 1].walkable)
+        if (y + 1 < Width && grid[x, y + 1] && grid[x, y + 1].walkable && units[x, y + 1] == null)
             list.Add(new Vector2Int(x, y + 1));
 
-        if (y - 1 >= 0 && grid[x, y - 1] && grid[x, y - 1].walkable)
+        if (y - 1 >= 0 && grid[x, y - 1] && grid[x, y - 1].walkable && units[x, y - 1] == null)
             list.Add(new Vector2Int(x, y - 1));
 
         return list;
+    }
+
+    internal void NotifyUnitPositionChange(Unit unit, Vector2Int previousGridPosition, Vector2Int currentGridPosition)
+    {
+        Debug.LogFormat("{0}: {1} -> {2}", unit, previousGridPosition, currentGridPosition);
+
+        if (previousGridPosition.x >= 0)
+            units[previousGridPosition.x, previousGridPosition.y] = null;
+
+        units[currentGridPosition.x, currentGridPosition.y] = unit;
     }
 }

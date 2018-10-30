@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 ///	<summary/>
@@ -10,10 +9,29 @@ using UnityEngine;
 public abstract class Unit : InLevelObject
 {
     [SerializeField] private Round actionRound;
-
     [SerializeField] private float maxSpeed;
-    public EventOnDataUpdate<Vector2Int> OnPositionUpdateForUnit = new EventOnDataUpdate<Vector2Int>();
-    public Vector2Int Gridposition;
+
+    public EventOnDataChange<Vector2Int> onGridPositionChange = new EventOnDataChange<Vector2Int>();
+
+    private Vector2Int gridPosition;
+    public Vector2Int GridPosition
+    {
+        get
+        {
+            return gridPosition;
+        }
+
+        private set
+        {
+            Vector2Int previousGridPosition = gridPosition;
+
+            gridPosition = value;
+            onGridPositionChange.Invoke(previousGridPosition, value);
+
+            GridManager.Instance.NotifyUnitPositionChange(this, previousGridPosition, gridPosition);
+        }
+    }
+
     public float MaxSpeed
     {
         get
@@ -41,7 +59,8 @@ public abstract class Unit : InLevelObject
     {
         Vector3 world_pos = GridManager.Instance.GetWorldPosition(pos);
         transform.position = world_pos;
-        Gridposition = pos;
+
+        gridPosition = pos;
     }
     
     public void AddActionPoint(int point)
@@ -75,6 +94,9 @@ public abstract class Unit : InLevelObject
                 LevelManager.Instance.OnCurrentPhaseChangeForEnvironment.AddListener(HandleCurrentPhaseChange);
                 break;
         }
+
+        gridPosition = GridManager.Instance.TileFromWorldPoint(transform.position).gridPosition;
+        GridManager.Instance.NotifyUnitPositionChange(this, new Vector2Int(-1, -1), gridPosition);
     }
 
     private void HandleCurrentPhaseChange(Phase currentPhase)
@@ -100,7 +122,10 @@ public abstract class Unit : InLevelObject
 
             // End move
             if (MathUtility.ManhattanDistance(destination.x, destination.z, position.x, position.z) < 0.05)
+            {
                 speed = 0;
+                break;
+            }
 
             Vector3 orientation = destination - position;
             orientation.y = 0;
@@ -110,19 +135,14 @@ public abstract class Unit : InLevelObject
 
             yield return null;
         }
-        Movement_finished();
+
+        GridPosition = GridManager.Instance.TileFromWorldPoint(transform.position).gridPosition;
+        ActionPoint--;
 
         if (callback != null)
             callback.Invoke();
 
         yield return null;
-    }
-
-    private void Movement_finished()
-    {
-        Gridposition = GridManager.Instance.TileFromWorldPoint(transform.position).gridPosition;
-        ActionPoint--;
-        OnPositionUpdateForUnit.Invoke(Gridposition);
     }
 
     //protected Transform heading;

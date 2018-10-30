@@ -41,7 +41,7 @@ public class LevelManager : MonoBehaviour
     public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForPlayer = new EventOnDataUpdate<Phase>();
     public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForEnvironment = new EventOnDataUpdate<Phase>();
 
-    public List<Unit> units;
+    // public List<Unit> units;
     public player Player { get; private set; }
 
     internal PlayerController playerController
@@ -169,7 +169,7 @@ public class LevelManager : MonoBehaviour
         LevelData levelData = LevelData.CreateFromJSON(json);
         currentLevel = levelData;
 
-        GridManager.Instance.GenerateMap(levelData, out units);
+        GridManager.Instance.GenerateMap(levelData);
     }
 
     private void SpawnEntities()

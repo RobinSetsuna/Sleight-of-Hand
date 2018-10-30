@@ -87,6 +87,8 @@ public class PlayerController : MouseInteractable
                         UIManager.Singleton.Open("ListMenu", UIManager.UIMode.DEFAULT, UIManager.Singleton.GetCanvasPosition(Input.mousePosition), "MOVE", (UnityAction)InitiateMovement, "CANCEL", (UnityAction)ResetMovement);
                         break;
                     case PlayerState.Move:
+                        for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
+                            ActionManager.Singleton.Add(new Movement(GetComponent<player>(), tile));
                         Path = null;
                         ActionManager.Singleton.Execute(ResetToIdle);
                         break;
@@ -165,9 +167,6 @@ public class PlayerController : MouseInteractable
 
     private void InitiateMovement()
     {
-        for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
-            ActionManager.Singleton.Add(new Movement(GetComponent<player>(), tile));
-
         CurrentPlayerState = PlayerState.Move;
     }
 
