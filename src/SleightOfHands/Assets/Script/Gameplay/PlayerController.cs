@@ -188,12 +188,18 @@ public class PlayerController : MouseInteractable
                 else if (obj.GetComponent<Tile>())
                 {
                     Tile tile = obj.GetComponent<Tile>();
-                    Tile playerTile = GridManager.Instance.TileFromWorldPoint(Player.transform.position);
 
-                    if (MathUtility.ManhattanDistance(tile.x, tile.y, playerTile.x, playerTile.y) <= Player.ActionPoint)
+                    if (tile == path.Start)
+                        CurrentPlayerState = PlayerState.Idle;
+                    else
                     {
-                        Path = Navigation.FindPath(GridManager.Instance, playerTile, tile);
-                        CurrentPlayerState = PlayerState.MovementConfirmation;
+                        Tile playerTile = GridManager.Instance.TileFromWorldPoint(Player.transform.position);
+
+                        if (MathUtility.ManhattanDistance(tile.x, tile.y, playerTile.x, playerTile.y) <= Player.ActionPoint)
+                        {
+                            Path = Navigation.FindPath(GridManager.Instance, playerTile, tile);
+                            CurrentPlayerState = PlayerState.MovementConfirmation;
+                        }
                     }
                 }
                 break;
