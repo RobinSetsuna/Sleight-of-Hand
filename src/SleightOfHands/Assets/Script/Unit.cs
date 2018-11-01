@@ -92,7 +92,7 @@ public abstract class Unit : InLevelObject
                 break;
         }
 
-        gridPosition = GridManager.Instance.TileFromWorldPoint(transform.position).gridPosition;
+        gridPosition = GridManager.Instance.GetTile(transform.position).gridPosition;
         GridManager.Instance.NotifyUnitPositionChange(this, new Vector2Int(-1, -1), gridPosition);
     }
 
@@ -133,7 +133,7 @@ public abstract class Unit : InLevelObject
             yield return null;
         }
 
-        GridPosition = GridManager.Instance.TileFromWorldPoint(transform.position).gridPosition;
+        GridPosition = GridManager.Instance.GetTile(transform.position).gridPosition;
         ActionPoint--;
 
         if (callback != null)

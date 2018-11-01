@@ -1,7 +1,7 @@
-﻿public class IngameMenu : UserInterface
+﻿public class IngameMenu : UIWindow
 {
     public void QuitGame()
     {
-        GameManager.Singleton.Quit();
+        GameManager.Singleton.QuitGame();
     }
 }

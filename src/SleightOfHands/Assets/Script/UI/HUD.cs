@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUD : UserInterface
+public class HUD : UIWindow
 {
     [SerializeField] private Text turn;
     [SerializeField] private Text banner;

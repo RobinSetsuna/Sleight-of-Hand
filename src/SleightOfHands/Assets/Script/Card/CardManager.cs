@@ -135,7 +135,7 @@ public class CardManager : MonoBehaviour
 
     private Tile GetPlayerTile()
     {
-        Tile playerTile = GridManager.Instance.TileFromWorldPoint(GameObject.FindGameObjectWithTag("Player").transform.position);
+        Tile playerTile = GridManager.Instance.GetTile(GameObject.FindGameObjectWithTag("Player").transform.position);
         Debug.Log(playerTile.x);
         Debug.Log(playerTile.y);
         return playerTile;
@@ -179,7 +179,7 @@ public class CardManager : MonoBehaviour
         for (int i = 0; i < chests.Length; i++)
         {
             Vector3 chestPos = new Vector3(chests[i].transform.position.x, chests[i].transform.position.y, chests[i].transform.position.z);
-            Tile chestTile = GridManager.Instance.TileFromWorldPoint(chestPos);
+            Tile chestTile = GridManager.Instance.GetTile(chestPos);
             if (GridManager.Instance.IsAdjacent(chestTile, GetPlayerTile()))
             {
                 //2. open the chest
