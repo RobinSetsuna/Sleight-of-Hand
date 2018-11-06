@@ -42,6 +42,7 @@
 * **Player Character**: The player's avatar
   * **Attribute**: A numerical value representing character's ability
     * **Action Point**: A value determining how many grids can the character move in a map
+  * **Shader**: The player character applied with a shader which makes it can be visible through walls/obstacles.
 * **Level**: A map
   * **Obstacle**: An object that is able to block the way of other objects
     * **Wall**
