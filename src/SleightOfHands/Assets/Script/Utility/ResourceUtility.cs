@@ -17,8 +17,8 @@ public struct ResourceUtility
         return Resources.Load<T>("Prefabs/UI/" + name);
     }
 
-    public static UserInterface GetUIPrefab(string name)
+    public static UIWindow GetUIPrefab(string name)
     {
-        return GetUIPrefab<UserInterface>(name);
+        return GetUIPrefab<UIWindow>(name);
     }
 }

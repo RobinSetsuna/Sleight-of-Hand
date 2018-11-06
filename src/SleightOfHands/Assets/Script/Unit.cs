@@ -41,6 +41,7 @@ public abstract class Unit : InLevelObject
     }
 
     [SerializeField] private int initialActionPoint;
+    [SerializeField] private  int initialHealth = 100;
     public int InitialActionPoint
     {
         get
@@ -49,7 +50,16 @@ public abstract class Unit : InLevelObject
         }
     }
 
+    public int InitialHealth
+    {
+        get
+        {
+            return initialHealth;
+        }
+    }
+
     public int ActionPoint { get; protected set; }
+    public float Health { get; protected set; }
 
     [Header("Animations")]
     public GameObject modelHolder;
@@ -61,15 +71,6 @@ public abstract class Unit : InLevelObject
     private Vector3 start;
     private Vector3 destination;
     
-    public void AddActionPoint(int point)
-    {
-        ActionPoint += point;
-    }
-
-    public void DeleteActionPoint(int point)
-    {
-        ActionPoint -= point;
-    }
 
     public void MoveTo(Vector3 destination, System.Action callback)
     {
@@ -88,7 +89,7 @@ public abstract class Unit : InLevelObject
 
     protected virtual void Awake()
     {
-        switch (actionRound)
+        /*switch (actionRound)
         {
             case Round.Player:
                 LevelManager.Instance.OnCurrentPhaseChangeForPlayer.AddListener(HandleCurrentPhaseChange);
@@ -96,9 +97,11 @@ public abstract class Unit : InLevelObject
             case Round.Environment:
                 LevelManager.Instance.OnCurrentPhaseChangeForEnvironment.AddListener(HandleCurrentPhaseChange);
                 break;
-        }
+        }*/
 
-        gridPosition = GridManager.Instance.TileFromWorldPoint(transform.position).gridPosition;
+        LevelManager.Instance.onNewTurnUpdateAttribute.AddListener(HandleAttributesChangeOnTurn);
+        CardManager.Instance.OnAttributesChangeOnEffects.AddListener(HandleAttributesChangeOnEffects);
+        gridPosition = GridManager.Instance.GetTile(transform.position).gridPosition;
         GridManager.Instance.NotifyUnitPositionChange(this, new Vector2Int(-1, -1), gridPosition);
     }
 
@@ -115,7 +118,7 @@ public abstract class Unit : InLevelObject
 
     }
 
-    private void HandleCurrentPhaseChange(Phase currentPhase)
+    /*private void HandleCurrentPhaseChange(Phase currentPhase)
     {
         switch (currentPhase)
         {
@@ -123,12 +126,28 @@ public abstract class Unit : InLevelObject
                 ResetActionPoint();
                 break;
         }
+    }*/
+
+    //when add a new effect to a unit, this will be called to immediately calculate the newest attributes.
+    private void HandleAttributesChangeOnEffects(Effects effects)
+    {
+        //Debug.Log(effects.CurrentAP_c());
+        //Debug.Log(effects.CurrentAP_f());
+        ActionPoint = (ActionPoint + effects.CurrentAP_c()) * ( 1 + effects.CurrentAP_f());
+        Health = (Health + effects.CurrentHP_c()) * (1 + effects.CurrentHP_f());
     }
 
-    private void ResetActionPoint()
+    //When enter a new turn, this will be called to calculate the newest attributes
+    private void HandleAttributesChangeOnTurn(Effects effects)
     {
-        ActionPoint = initialActionPoint;
+        ActionPoint = (initialActionPoint + (int)effects.GetAP_c()) * (1 + (int)effects.GetAP_f());
+        Health = (initialHealth + effects.GetHP_c()) * (1 + effects.GetHP_f());
     }
+
+    //private void ResetActionPoint()
+    //{
+    //    ActionPoint = initialActionPoint;
+    //}
 
     private IEnumerator Move(System.Action callback)
     {
@@ -177,7 +196,8 @@ public abstract class Unit : InLevelObject
 
         transform.position = new Vector3(destination.x, transform.position.y, destination.z);
 
-        GridPosition = GridManager.Instance.TileFromWorldPoint(transform.position).gridPosition;
+        GridPosition = GridManager.Instance.GetTile(transform.position).gridPosition;
+
         ActionPoint--;
 
         if (callback != null)
