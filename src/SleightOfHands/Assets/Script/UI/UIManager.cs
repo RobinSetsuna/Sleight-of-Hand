@@ -5,6 +5,10 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     private static UIManager singleton;
+
+    /// <summary>
+    /// The unique instance
+    /// </summary>
     public static UIManager Singleton
     {
         get
@@ -16,28 +20,54 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// The way to open the new window
+    /// </summary>
     public enum UIMode : int
     {
+        /// <summary>
+        /// The window should be closed in a short period of time, therefore making the viewport not clear when it is not closed
+        /// </summary>
         DEFAULT = 0,
+
+        /// <summary>
+        /// The windows is considered to be a part of the viewport
+        /// </summary>
         PERMANENT,
     }
 
     private Stack<string> uiStack;
-    private Dictionary<string, UserInterface> uiOpened;
+    private Dictionary<string, UIWindow> uiOpened;
 
     private bool isCancelButtonDown = false;
 
+    /// <summary>
+    /// Whether the UI window is opened in the viewport (not considering the UIMode)
+    /// </summary>
+    /// <param name="name"> The name of the UI window </param>
+    /// <returns> Whether the window is opened in the viewport </returns>
     public bool IsInViewport(string name)
     {
         return uiOpened.ContainsKey(name);
     }
 
+    /// <summary>
+    /// Whether any UI windows are opened with UIMode.DEFAULT
+    /// </summary>
+    /// <returns> Whether any UI windows are opened with UIMode.DEFAULT </returns>
     public bool IsViewportClear()
     {
         return uiStack.Count != 0;
     }
 
-    public UserInterface Open(string name, UIMode mode = UIMode.DEFAULT, params object[] args)
+    /// <summary>
+    /// Open a new UI window
+    /// </summary>
+    /// <param name="name"> The name of the UI window to be opened </param>
+    /// <param name="mode"> The mode to be used to open the UI window </param>
+    /// <param name="args"> Extra arguments passed to UIWindow.OnOpen() </param>
+    /// <returns></returns>
+    public UIWindow Open(string name, UIMode mode = UIMode.DEFAULT, params object[] args)
     {
 #if UNITY_EDITOR
         LogUtility.PrintLog("UI", IsInViewport(name) ? name + " is already in viewport" : "Open " + name);
@@ -46,7 +76,7 @@ public class UIManager : MonoBehaviour
         if (IsInViewport(name))
             return uiOpened[name];
 
-        UserInterface ui = Instantiate(ResourceUtility.GetUIPrefab(name), transform, false);
+        UIWindow ui = Instantiate(ResourceUtility.GetUIPrefab(name), transform, false);
 
         uiOpened.Add(name, ui);
 
@@ -58,6 +88,10 @@ public class UIManager : MonoBehaviour
         return ui;
     }
 
+    /// <summary>
+    /// Close a previously opened UI window
+    /// </summary>
+    /// <param name="name"> The name of the UI window to be closed </param>
     public void Close(string name)
     {
 #if UNITY_EDITOR
@@ -66,7 +100,7 @@ public class UIManager : MonoBehaviour
 
         if (IsInViewport(name))
         {
-            UserInterface ui = uiOpened[name];
+            UIWindow ui = uiOpened[name];
 
             ui.OnClose();
 
@@ -86,6 +120,10 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Open the named UI window if it is not opened or close it if it was previously opened
+    /// </summary>
+    /// <param name="name"> The name of the UI window to be toggled </param>
     public void Toggle(string name)
     {
         if (uiOpened.ContainsKey(name))
@@ -94,6 +132,11 @@ public class UIManager : MonoBehaviour
             Open(name);
     }
 
+    /// <summary>
+    /// Convert pixel position to canvas position (can be used to assign transform.localPosition)
+    /// </summary>
+    /// <param name="position"> The pixel position to be converted </param>
+    /// <returns> The converted canvas position </returns>
     public Vector3 GetCanvasPosition(Vector3 position)
     {
         Vector2 referenceResolution = GetComponent<CanvasScaler>().referenceResolution;
@@ -108,25 +151,6 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
 
         uiStack = new Stack<string>();
-        uiOpened = new Dictionary<string, UserInterface>();
+        uiOpened = new Dictionary<string, UIWindow>();
     }
-
-    //void FixedUpdate()
-    //{
-    //    if (Input.GetAxis("Cancel") == 0)
-    //        isCancelButtonDown = false;
-    //    else if (!isCancelButtonDown)
-    //    {
-    //        isCancelButtonDown = true;
-
-    //        if (HasUIOpened())
-    //        {
-    //            Close(uiStack.Peek());
-    //        }
-    //        else
-    //        {
-    //            Open("IngameMenu");
-    //        }
-    //    }
-    //}
 }

@@ -562,10 +562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951776cb935e27b48bda53e140a34af7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unwalkableMask:
-    serializedVersion: 2
-    m_Bits: 512
-  nodeRadius: 0.5
+  tileSize: 0.5
   tilePrefab: {fileID: 4202221461299724, guid: df32d8651c840a9429479bfb9204413a, type: 2}
   wallPrefabs:
   - {fileID: 1703594379124912, guid: fc75abf5d31c88c45a9ff67964bcb828, type: 2}
@@ -595,11 +592,6 @@ MonoBehaviour:
   - {fileID: 100002, guid: 8dfedd46392fac84f99bb0d47b1a4155, type: 3}
   mapSize: {x: 20, y: 20}
   outlinePercent: 0.075
-  time_intervals: 0.05
-  dragging: 0
-  ok_to_drag: 0
-  numHighlightedTiles: 0
-  generatedPath: []
   environmentHolder: {fileID: 1422179120}
 --- !u!4 &1290799990
 Transform:

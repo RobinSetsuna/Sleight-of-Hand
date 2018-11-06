@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUD : UserInterface
+public class HUD : UIWindow
 {
     [SerializeField] private Text turn;
     [SerializeField] private Text banner;
@@ -89,7 +89,6 @@ public class HUD : UserInterface
                     }
 
                 listItem.SetActive(true);
-                listItem.GetComponent<CardInstance>().InitialCard(card);
 
                 hand.Add(card, listItem);
 

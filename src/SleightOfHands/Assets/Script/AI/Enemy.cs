@@ -32,7 +32,7 @@ public class Enemy : Unit
         }
         else
         {
-            Tile current_tile = GridManager.Instance.TileFromWorldPoint(transform.position);
+            Tile current_tile = GridManager.Instance.GetTile(transform.position);
             rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range);
 
             GridManager.Instance.DehighlightAll();
@@ -48,10 +48,10 @@ public class Enemy : Unit
 	{
         if (unit.tag == "Player")
         {
-            Tile current_tile = GridManager.Instance.TileFromWorldPoint(transform.position);
+            Tile current_tile = GridManager.Instance.GetTile(transform.position);
             rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range);
 
-            if (rangeList.Contains(GridManager.Instance.getTile(pos.x, pos.y)))
+            if (rangeList.Contains(GridManager.Instance.GetTile(pos)))
             {
                 //detected
                 // add some operation here
