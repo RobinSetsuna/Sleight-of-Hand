@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// The state of the game
+/// </summary>
 public enum GameState : int
 {
     Start = 0,
@@ -9,15 +12,28 @@ public enum GameState : int
     End = 0,
 }
 
+/// <summary>
+/// A FSM for the whole game at the highest level
+/// </summary>
 public class GameManager : MonoBehaviour
 {
+    /// <summary>
+    /// The unique instance
+    /// </summary>
     public static GameManager Singleton { get; private set; }
 
-    public EventOnDataChange<GameState> OnCurrentGameStateChange = new EventOnDataChange<GameState>();
+    /// <summary>
+    /// An event triggered whenever the state of the game changes
+    /// </summary>
+    public EventOnDataChange<GameState> onCurrentGameStateChange = new EventOnDataChange<GameState>();
 
     [SerializeField] private GameState initialState = (GameState)1;
 
     private GameState currentGameState;
+
+    /// <summary>
+    /// The current state of the game
+    /// </summary>
     public GameState CurrentGameState
     {
         get
@@ -57,19 +73,22 @@ public class GameManager : MonoBehaviour
                         break;
                 }
 
-                OnCurrentGameStateChange.Invoke(previousGameState, currentGameState);
+                onCurrentGameStateChange.Invoke(previousGameState, currentGameState);
             }
         }
     }
 
     private GameManager() {}
 
-    public void Quit()
+    /// <summary>
+    /// Quit the game
+    /// </summary>
+    public void QuitGame()
     {
         Application.Quit();
     }
 
-    private void Start()
+    private void Awake()
     {
         if (!Singleton)
         {
@@ -78,7 +97,10 @@ public class GameManager : MonoBehaviour
         }
         else if (this != Singleton)
             Destroy(gameObject);
-
-        CurrentGameState = initialState;
    }
+
+    private void Start()
+    {
+        CurrentGameState = initialState;
+    }
 }

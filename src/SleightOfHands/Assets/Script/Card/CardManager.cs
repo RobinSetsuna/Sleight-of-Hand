@@ -19,12 +19,15 @@ public class CardManager : MonoBehaviour
     }
 
     public EventOnDataChange3<Card> onHandChange = new EventOnDataChange3<Card>();
+    public EventOnDataUpdate<Attribute> onAttributeTimeOut = new EventOnDataUpdate<Attribute>();
+    public EventOnDataUpdate<Effects> OnAttributesChangeOnEffects = new EventOnDataUpdate<Effects>();
 
     public CardDeck deck;
     public List<Card> usedCards;
     public List<Card> hand;
     public string deckFolderPath;
     public string deckFilename;
+    public GameObject Player { get; private set; }
 
     //gameobject
     public GameObject smokeObject;
@@ -32,25 +35,22 @@ public class CardManager : MonoBehaviour
     int rdNumLast = -1;
 
     // Use this for initialization
-    void Start()
-    {       
-        //hand = new List<Card>();
-        //usedCards = new List<Card>();
-        //Instantiate(card1);
+    void Awake()
+    {
     }
 
     // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown("1"))
-        {
-            print("key 1 enter");
-            Haste(hand[0]);
+        {            
+            Player = GameObject.FindGameObjectWithTag("Player");
+            AddEffect(hand[0], Player);
         }
     }
 
     // randomly take one card from the deck to the player.
-    public Card RandomGetCard()
+    public void RandomGetCard()
     {
         //generate a random num from the number of the cards
 
@@ -70,7 +70,17 @@ public class CardManager : MonoBehaviour
         //delete the selected card from deck
         deck.Remove(card);
 
-        return card;
+    }
+
+    // take one specific card from the deck to the player.
+    public void GetCard(string _cardName)
+    {
+        Card card = deck.FindCard(_cardName);
+        if (card != null)
+        {
+            deck.Remove(card);
+            AddCard(card);
+        }
     }
 
     private void AddCard(Card card)
@@ -78,40 +88,15 @@ public class CardManager : MonoBehaviour
         hand.Add(card);
         onHandChange.Invoke(ChangeType.Incremental, card);
     }
+    
 
-    // take one specific card from the deck to the player.
-    public List<Card> GetCard(string _cardName)
+    public void AddEffect(Card card, GameObject obj)
     {
-        Card card = deck.FindCard(_cardName);
-        if (card != null)
-        {
-            deck.Remove(card);
-            hand.Add(card);
-        }
-
-        return hand;
-    }
-
-    public void UseCard(int index)
-    {
-        switch (hand[index].cardName)
-        {
-            case "Smoke":
-                Smoke(hand[index]);
-                break;
-            case "Haste":
-                Haste(hand[index]);
-                break;
-            case "Chest Key":
-                ChestKey();
-                break;
-            case "Torch":
-                break;
-            case "Glue Trap":
-                break;
-        }
-        //move this card to usedCards
-        HandToUsed(hand[index]);
+        Effects effects = obj.GetComponent<Effects>();
+        LogUtility.PrintLogFormat("CardManager", "Add Card Effect {0}.", card.intro);
+        effects.AddEffect(card);
+        HandToUsed(card);
+        OnAttributesChangeOnEffects.Invoke(effects);
     }
 
     public void InitCardDeck()
@@ -128,14 +113,15 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < deck.cards.Count; i++)
         {
-            Debug.Log("This Card is " + deck.cards[i].cardName);
+            LogUtility.PrintLogFormat("CardManager", "This Card is {0} with Effects: {1}.", deck.cards[i].cardName, deck.cards[i].intro);
         }
 
+       
     }
 
     private Tile GetPlayerTile()
     {
-        Tile playerTile = GridManager.Instance.TileFromWorldPoint(GameObject.FindGameObjectWithTag("Player").transform.position);
+        Tile playerTile = GridManager.Instance.GetTile(GameObject.FindGameObjectWithTag("Player").transform.position);
         Debug.Log(playerTile.x);
         Debug.Log(playerTile.y);
         return playerTile;
@@ -153,7 +139,7 @@ public class CardManager : MonoBehaviour
     void Smoke(Card card)
     {
         //1. hightlight all the possible tile              
-        GridManager.Instance.Highlight(GetPlayerTile(), 3, Tile.HighlightColor.Green);
+        //GridManager.Instance.Highlight(GetPlayerTile(), 3, Tile.HighlightColor.Green);
         //2. get player input tile position
 
         //3. create a smoke on the tile(make sure when the smoke will disappear)
@@ -161,8 +147,8 @@ public class CardManager : MonoBehaviour
         //4. change the visibility of enemy
 
         //5. minus the action point
-        GameObject.FindGameObjectWithTag("Player").GetComponent<player>().DeleteActionPoint(card.cost);
-        print("out Smoke");
+        //GameObject.FindGameObjectWithTag("Player").GetComponent<player>().DeleteActionPoint(card.cost);
+        //print("out Smoke");
     }
 
     public void CreateSmokeOnTile(Tile obj)
@@ -179,7 +165,7 @@ public class CardManager : MonoBehaviour
         for (int i = 0; i < chests.Length; i++)
         {
             Vector3 chestPos = new Vector3(chests[i].transform.position.x, chests[i].transform.position.y, chests[i].transform.position.z);
-            Tile chestTile = GridManager.Instance.TileFromWorldPoint(chestPos);
+            Tile chestTile = GridManager.Instance.GetTile(chestPos);
             if (GridManager.Instance.IsAdjacent(chestTile, GetPlayerTile()))
             {
                 //2. open the chest
@@ -191,13 +177,13 @@ public class CardManager : MonoBehaviour
     void Haste(Card card)
     {
         //1. add action point
-        string effect = card.effect;
-        string result = System.Text.RegularExpressions.Regex.Replace(effect, @"[^0-9]+", "");
-        int point = int.Parse(result);
-        GameObject.FindGameObjectWithTag("Player").GetComponent<player>().AddActionPoint(point);
+        //string effect = card.effect;
+        //string result = System.Text.RegularExpressions.Regex.Replace(effect, @"[^0-9]+", "");
+        //int point = int.Parse(result);
+        //GameObject.FindGameObjectWithTag("Player").GetComponent<player>().AddActionPoint(point);
         //2. move this card to usedCards
-        usedCards.Add(card);
-        hand.Remove(card);
+        //usedCards.Add(card);
+        //hand.Remove(card);
     }
 }
 
@@ -207,9 +193,14 @@ public class Card
     public string cardName;
     public string intro;
     public string type;
-    public string effect;
-    public int cost;
     public int ID;
+    public int HP_c;
+    public int AP_c;
+    public int ATK_c;
+    public int duration;
+    public int HP_f;
+    public int AP_f;
+    public int ATK_f;
 }
 
 [System.Serializable]

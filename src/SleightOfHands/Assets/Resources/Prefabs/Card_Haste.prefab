@@ -38,7 +38,6 @@ GameObject:
   - component: {fileID: 224372910138980040}
   - component: {fileID: 222603275322247724}
   - component: {fileID: 114479243738555344}
-  - component: {fileID: 114093108569409242}
   - component: {fileID: 65388742830640744}
   m_Layer: 5
   m_Name: Card_Haste
@@ -59,17 +58,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 110, y: 170, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114093108569409242
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1644353494951302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fff45af44e26aa41bcc67196e931ca7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114479243738555344
 MonoBehaviour:
   m_ObjectHideFlags: 1

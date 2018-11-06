@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class ListMenu : UserInterface
+public class ListMenu : UIWindow
 {
     [SerializeField] private UIBoxColliderScaler boxCollider;
     [SerializeField] private UIList list;

@@ -2,11 +2,31 @@
 	"cards": [
 		{
 			"cardName": "Haste",
-			"intro": "Add 4 move points",
+			"intro": "Double Current Actionpoints for 1 turn",
 			"type": "enhance",
-			"effect" : "add 3 points",
-			"cost" : 1,
-			"ID" : 2
-		}		
+			"ID" : 1,
+			"HP_c": 0,
+			"AP_c" : 0,
+			"ATK_c" : 0,
+			"duration" : 1,
+			"HP_f": 0,
+			"AP_f" : 1,
+			"ATK_f" : 0
+
+		},
+		{
+			"cardName": "Haste",
+			"intro": "Add 3 ActionPoints for 1 Turn",
+			"type": "enhance",
+			"ID" : 2,
+			"HP_c": 0,
+			"AP_c" : 3,
+			"ATK_c" : 0,
+			"duration" : 1,
+			"HP_f": 0,
+			"AP_f" : 0,
+			"ATK_f" : 0
+
+		}			
 	]
 }

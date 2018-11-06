@@ -87,7 +87,7 @@ public class ProjectileManager: MonoBehaviour{
         //Debug.Log("x:" + x +" y: "+ y);
         if (x >= 0 && x < GridManager.Instance.Width && y >= 0 && y < GridManager.Instance.Length)
         {
-            var temp = GridManager.Instance.getTile(x,y);
+            var temp = GridManager.Instance.GetTile(x,y);
             if ( NeighborCheck(temp) && temp.walkable)
             {
                 //Debug.Log("Highlighted");
@@ -128,12 +128,12 @@ public class ProjectileManager: MonoBehaviour{
                 int temp_y = tile.y + y;
                 if( temp_x >= 0 && temp_x < GridManager.Instance.Width && temp_y >= 0 && temp_y < GridManager.Instance.Length)
                 {
-                    if (retList.Contains(GridManager.Instance.getTile(temp_x,temp_y)))
+                    if (retList.Contains(GridManager.Instance.GetTile(temp_x,temp_y)))
                     {
                         ret = true;
                     }
     
-                    Tile onCheck = GridManager.Instance.getTile(temp_x, temp_y);
+                    Tile onCheck = GridManager.Instance.GetTile(temp_x, temp_y);
                     Vector2Int onCheck_pos = new Vector2Int(temp_x,temp_y);
                     if (!onCheck.walkable&&checked_obstacles.Contains(onCheck_pos))
                     {
