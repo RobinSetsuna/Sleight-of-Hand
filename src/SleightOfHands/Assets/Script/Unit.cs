@@ -51,6 +51,11 @@ public abstract class Unit : InLevelObject
 
     public int ActionPoint { get; protected set; }
 
+    [Header("Animations")]
+    public GameObject modelHolder;
+    public float jumpHeight;
+    public int jumpsPerMove = 1;
+
     private float speed;
     private Vector3 start;
     private Vector3 destination;
@@ -113,12 +118,16 @@ public abstract class Unit : InLevelObject
 
     private IEnumerator Move(System.Action callback)
     {
+
+        float initialDistance = MathUtility.ManhattanDistance(destination.x, destination.z, transform.position.x, transform.position.z);
+
         while (speed > 0)
         {
             Vector3 position = transform.position;
 
             // End move
-            if (MathUtility.ManhattanDistance(destination.x, destination.z, position.x, position.z) < 0.05)
+            float currentDistance = MathUtility.ManhattanDistance(destination.x, destination.z, position.x, position.z);
+            if (currentDistance < 0.05)
             {
                 speed = 0;
                 break;
@@ -130,8 +139,21 @@ public abstract class Unit : InLevelObject
             transform.forward = orientation.normalized;
             transform.Translate(0, 0, Mathf.Min(speed * Time.deltaTime, orientation.magnitude));
 
+            // Hopping
+            if (modelHolder != null) {
+
+                // 0 -> 1
+                float destinationRatio = 1 - ((initialDistance - currentDistance) / initialDistance);
+
+                float localHeight = jumpHeight * Mathf.Abs(Mathf.Sin(destinationRatio * Mathf.PI * jumpsPerMove));
+                modelHolder.transform.localPosition = Vector3.up * localHeight;
+
+            }
+
             yield return null;
         }
+
+        transform.position = new Vector3(destination.x, transform.position.y, destination.z);
 
         GridPosition = GridManager.Instance.TileFromWorldPoint(transform.position).gridPosition;
         ActionPoint--;
