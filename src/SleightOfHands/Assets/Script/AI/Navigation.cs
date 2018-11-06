@@ -23,8 +23,8 @@ public struct Navigation
 
     public static Path<T> FindPath<T>(INavGrid<T> navGrid, T start, T destination) where T : IEquatable<T>
     {
-        Vector2Int startIndices = navGrid.GetIndices(start);
-        Vector2Int destinationIndices = navGrid.GetIndices(destination);
+        Vector2Int startIndices = navGrid.GetGridPosition(start);
+        Vector2Int destinationIndices = navGrid.GetGridPosition(destination);
 
         if (!navGrid.IsAccessible(startIndices.x, startIndices.y) || !navGrid.IsAccessible(destinationIndices.x, destinationIndices.y))
             return null;
@@ -70,7 +70,7 @@ public struct Navigation
 
             closedList[x, y] = true;
 
-            List<Vector2Int> adjacentIndices = navGrid.GetAdjacentIndices(x, y);
+            List<Vector2Int> adjacentIndices = navGrid.GetAccessibleAdjacentGridPositions(x, y);
             for (int i = 0; i < adjacentIndices.Count; i++)
             {
                 Vector2Int neighborIndices = adjacentIndices[i];

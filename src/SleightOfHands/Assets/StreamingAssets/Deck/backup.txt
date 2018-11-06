@@ -1,0 +1,16 @@
+{
+			"cardName": "Haste",
+			"intro": "Add 4 move points",
+			"type": "enhance",
+			"effect" : "add 3 points",
+			"cost" : 1,
+			"ID" : 2
+		},
+		{
+			"cardName": "Glue Trap",
+			"intro": "place a glue on a tile",
+			"type": "magic",
+			"effect" : "xxx",
+			"cost" : 1,
+			"ID" : 3
+		}

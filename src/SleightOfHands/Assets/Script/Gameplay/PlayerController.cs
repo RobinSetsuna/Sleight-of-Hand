@@ -1,196 +1,285 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
+/// <summary>
+/// The state of the player character
+/// </summary>
 public enum PlayerState : int
 {
-    Default = 0,
-    Exploration,
+    Uncontrollable,
     Idle,
     MovementPlanning,
     MovementConfirmation,
     Move,
+    CardChoosing,
+    PositionChoosing
 }
 
-public class playerController : MonoBehaviour
+/// <summary>
+/// A FSM for the player character recieving user inputs to control the player character
+/// </summary>
+public class PlayerController : MouseInteractable
 {
-    //private static GameManager singleton = new GameManager();
-    //public static GameManager Singleton
-    //{
-    //    get
-    //    {
-    //        return singleton;
-    //    }
-    //}
+    /// <summary>
+    /// An event triggered whenever the state of the player character changes
+    /// </summary>
+    public EventOnDataChange<PlayerState> onCurrentPlayerStateChange = new EventOnDataChange<PlayerState>();
 
-    public static playerController Singleton { get; private set; }
+    /// <summary>
+    /// An event triggered whenever the planned path is changed by the player
+    /// </summary>
+    public EventOnDataUpdate<Path<Tile>> onPathUpdate = new EventOnDataUpdate<Path<Tile>>();
+    
+    public player Player { get; private set; }
 
-    //public class EventOnGameState : UnityEvent<GameState> {}
-    //public EventOnGameState OnCurrentGameStateReset = new EventOnGameState();
-
-    public EventOnDataChange2<PlayerState> OnCurrentGameStateChange = new EventOnDataChange2<PlayerState>();
-    public EventOnDataChange1<Path<Tile>> OnPathChange = new EventOnDataChange1<Path<Tile>>();
-
-    [SerializeField] private PlayerState initialState = (PlayerState)1;
+    private bool isEnabled = false;
 
     private Path<Tile> path;
+    private Path<Tile> Path
+    {
+        set
+        {
+            if (value != path)
+            {
+                path = value;
+                onPathUpdate.Invoke(path);
+            }
+        }
+    }
 
-    private PlayerState currentGameState;
-    public PlayerState CurrentGameState
+    private PlayerState currentPlayerState;
+
+    /// <summary>
+    /// The current state of the player character
+    /// </summary>
+    public PlayerState CurrentPlayerState
     {
         get
         {
-            return currentGameState;
+            return currentPlayerState;
         }
 
         private set
         {
 #if UNITY_EDITOR
-            Debug.LogFormat("[GameManager] Make a transition to {0}.", value);
+            LogUtility.PrintLogFormat("PlayerController", "Made a transition to {0}.", value);
 #endif
 
             // Reset current state
-            if (value == currentGameState)
+            if (value == currentPlayerState)
             {
-                switch (currentGameState)
+                switch (currentPlayerState)
                 {
                     case PlayerState.MovementPlanning:
                         path.Clear();
-                        OnPathChange.Invoke(path);
+                        onPathUpdate.Invoke(path);
                         break;
                 }
             }
             else
             {
                 // Before leaving the previous state
-                //switch (currentGameState)
-                //{
-                //}
+                switch (currentPlayerState)
+                {
+                    case PlayerState.Uncontrollable:
+                        Enable();
+                        break;
+                }
 
-                PlayerState previousState = CurrentGameState;
-                currentGameState = value;
+                PlayerState previousPlayerState = CurrentPlayerState;
+                currentPlayerState = value;
 
                 // After entering the new state
-                switch (currentGameState)
+                switch (currentPlayerState)
                 {
-                    case PlayerState.Exploration:
-                        MouseInputManager.Singleton.OnObjectClicked.AddListener(HandleMouseClick);
-                        MouseInputManager.Singleton.OnEndDragging.AddListener(HandleEndDragging);
-                        MouseInputManager.Singleton.OnCurrentMouseTargetChange.AddListener(HandleMouseTargetChange);
-                        ResetToIdle();
+                    case PlayerState.Uncontrollable:
+                        Path = null;
+                        Disable();
                         break;
                     case PlayerState.Idle:
-                        if (previousState != PlayerState.Move)
-                        {
-                            path = null;
-                            OnPathChange.Invoke(path);
-                        }
+                        if (previousPlayerState != PlayerState.Move)
+                            Path = null;
                         break;
                     case PlayerState.MovementPlanning:
-                        path = new Path<Tile>(GridManager.Instance.TileFromWorldPoint(GridManager.Instance.Player.transform.position));
-                        OnPathChange.Invoke(path);
+                        Path = new Path<Tile>(GridManager.Instance.GetTile(Player.transform.position));
                         break;
                     case PlayerState.MovementConfirmation:
-                        // TODO: Show ListMenu
+                        UIManager.Singleton.Open("ListMenu", UIManager.UIMode.DEFAULT, UIManager.Singleton.GetCanvasPosition(Input.mousePosition), "MOVE", (UnityAction)InitiateMovement, "CANCEL", (UnityAction)ResetMovement);
                         break;
                     case PlayerState.Move:
-                        path = null;
-                        OnPathChange.Invoke(path);
+                        for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
+                            ActionManager.Singleton.Add(new Movement(GetComponent<player>(), tile));
+                        Path = null;
                         ActionManager.Singleton.Execute(ResetToIdle);
                         break;
                 }
 
-                OnCurrentGameStateChange.Invoke(previousState, value);
+                onCurrentPlayerStateChange.Invoke(previousPlayerState, currentPlayerState);
             }
         }
     }
 
-    private playerController() { }
+    private PlayerController() {}
 
-    private void OnEnable()
+    private void Awake()
     {
-        if (!Singleton)
-        {
-            Singleton = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (this != Singleton)
-            Destroy(gameObject);
+        Player = GetComponent<player>();
 
-        CurrentGameState = initialState;
+        CurrentPlayerState = 0;
+
+        LevelManager.Instance.OnCurrentPhaseChangeForPlayer.AddListener(HandleCurrentPhaseChange);
     }
 
+    private void OnDestroy()
+    {
+        Disable();
+
+        LevelManager.Instance.OnCurrentPhaseChangeForPlayer.RemoveListener(HandleCurrentPhaseChange);
+    }
+
+    /// <summary>
+    /// Start to recieve user inputs by adding listeners to events in MouseInputManager
+    /// </summary>
+    private void Enable()
+    {
+        if (!isEnabled)
+        {
+            MouseInputManager.Singleton.onMouseClick.AddListener(HandleMouseClick);
+            MouseInputManager.Singleton.onDragEnd.AddListener(HandleEndDragging);
+            MouseInputManager.Singleton.onMouseEnter.AddListener(HandleMouseTargetChange);
+
+            isEnabled = true;
+        }
+    }
+
+    /// <summary>
+    /// End recieving user inputs by removing added listeners to events in MouseInputManager
+    /// </summary>
+    private void Disable()
+    {
+        if (isEnabled)
+        {
+            MouseInputManager.Singleton.onMouseClick.RemoveListener(HandleMouseClick);
+            MouseInputManager.Singleton.onDragEnd.RemoveListener(HandleEndDragging);
+            MouseInputManager.Singleton.onMouseEnter.RemoveListener(HandleMouseTargetChange);
+
+            isEnabled = false;
+        }
+    }
+
+    /// <summary>
+    /// Add a way point to Path
+    /// </summary>
+    /// <param name="tile"></param>
     private void AddWayPoint(Tile tile)
     {
         path.AddLast(tile);
 
-        OnPathChange.Invoke(path);
+        onPathUpdate.Invoke(path);
     }
 
+    /// <summary>
+    /// Remove the last way point added to Path
+    /// </summary>
     private void RemoveWayPoint()
     {
         path.RemoveLast();
 
-        OnPathChange.Invoke(path);
+        onPathUpdate.Invoke(path);
     }
 
+    /// <summary>
+    /// Make a transition to PlayerState.Move
+    /// </summary>
     private void ResetToIdle()
     {
-        CurrentGameState = PlayerState.Idle;
+        CurrentPlayerState = PlayerState.Idle;
     }
 
-    private void InitiatePlayerMovement()
+    /// <summary>
+    /// Make a transition to PlayerState.MovementPlanning
+    /// </summary>
+    private void ResetMovement()
     {
-        for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
-            ActionManager.Singleton.Add(new Movement(GridManager.Instance.Player, tile));
-
-        CurrentGameState = PlayerState.Move;
+        CurrentPlayerState = PlayerState.MovementPlanning;
     }
 
+    /// <summary>
+    /// Make a transition to PlayerState.Move
+    /// </summary>
+    private void InitiateMovement()
+    {
+        CurrentPlayerState = PlayerState.Move;
+    }
+
+    /// <summary>
+    /// An event listener for MouseInputManager.Singleton.onMouseClick
+    /// </summary>
+    /// <param name="obj"> The clicked object </param>
     private void HandleMouseClick(MouseInteractable obj)
     {
-        switch (currentGameState)
+        switch (currentPlayerState)
         {
             case PlayerState.Idle:
-                if (obj.GetComponent<player>() && GridManager.Instance.Player.ActionPoint > 0)
-                    CurrentGameState = PlayerState.MovementPlanning;
+                if (obj == this)
+                    CurrentPlayerState = PlayerState.MovementPlanning;
+                else if (obj.GetComponent<Enemy>())
+                    obj.GetComponent<Enemy>().hightlightDetection();
                 break;
             case PlayerState.MovementPlanning:
-                if (obj.GetComponent<player>())
-                    CurrentGameState = PlayerState.Idle;
+                if (obj == this)
+                    CurrentPlayerState = PlayerState.Idle;
                 else if (obj.GetComponent<Tile>())
                 {
                     Tile tile = obj.GetComponent<Tile>();
 
-                    player _player = GridManager.Instance.Player;
-                    Tile playerTile = GridManager.Instance.TileFromWorldPoint(_player.transform.position);
-
-                    if (MathUtility.ManhattanDistance(tile.x, tile.y, playerTile.x, playerTile.y) <= _player.ActionPoint)
+                    if (tile == path.Start)
+                        CurrentPlayerState = PlayerState.Idle;
+                    else
                     {
-                        path = Navigation.FindPath(GridManager.Instance, playerTile, tile);
-                        InitiatePlayerMovement();
+                        Tile playerTile = GridManager.Instance.GetTile(Player.transform.position);
+
+                        if (tile.IsHighlighted(Tile.HighlightColor.Blue))
+                        {
+                            Path = Navigation.FindPath(GridManager.Instance, playerTile, tile);
+                            CurrentPlayerState = PlayerState.MovementConfirmation;
+                        }
                     }
                 }
                 break;
-        }
-    }
-
-    private void HandleEndDragging(MouseInteractable obj)
-    {
-        switch (currentGameState)
-        {
-            case PlayerState.MovementPlanning:
-                if (obj.GetComponent<player>() && path.Count > 0)
-                    InitiatePlayerMovement();
+            case PlayerState.CardChoosing:
+               
+                CurrentPlayerState = PlayerState.PositionChoosing;
                 break;
         }
     }
 
+    /// <summary>
+    /// An event listener for MouseInputManager.Singleton.onDragEnd
+    /// </summary>
+    /// <param name="obj"> The object from which the player starts to drag </param>
+    private void HandleEndDragging(MouseInteractable obj)
+    {
+        switch (currentPlayerState)
+        {
+            case PlayerState.MovementPlanning:
+                if (obj == this && path.Count > 0)
+                    CurrentPlayerState = PlayerState.MovementConfirmation;
+                break;
+        }
+    }
+
+    /// <summary>
+    /// An event listener for MouseInputManager.Singleton.onMouseEnter
+    /// </summary>
+    /// <param name="obj"> The object at which the mouse is pointing at </param>
     private void HandleMouseTargetChange(MouseInteractable obj)
     {
         if (MouseInputManager.Singleton.IsMouseDragging)
-            switch (currentGameState)
+            switch (currentPlayerState)
             {
                 case PlayerState.MovementPlanning:
-                    if (obj.GetComponent<player>())
+                    if (obj == this)
                     {
                         if (path.Count == 1)
                             RemoveWayPoint();
@@ -203,13 +292,30 @@ public class playerController : MonoBehaviour
                         {
                             if (tile == path.Last.Previous.Value)
                                 RemoveWayPoint();
-                            else if (GridManager.Instance.IsAdjacent(tile, path.Last.Value) && path.Count < GridManager.Instance.Player.ActionPoint)
+                            else if (GridManager.Instance.IsAdjacent(tile, path.Last.Value) && path.Count < Player.ActionPoint && !path.Contains(tile))
                                 AddWayPoint(tile);
                         }
-                        else if (GridManager.Instance.IsAdjacent(tile, GridManager.Instance.TileFromWorldPoint(GridManager.Instance.Player.transform.position)))
+                        else if (GridManager.Instance.IsAdjacent(tile, GridManager.Instance.GetTile(Player.transform.position)))
                             AddWayPoint(tile);
                     }
                     break;
             }
+    }
+
+    /// <summary>
+    /// An event listener for LevelManager.Instance.onCurrentPhaseChangeForPlayer
+    /// </summary>
+    /// <param name="currentPhase"> The phase which the LevelManager just entered </param>
+    private void HandleCurrentPhaseChange(Phase currentPhase)
+    {
+        switch (currentPhase)
+        {
+            case Phase.Action:
+                CurrentPlayerState = PlayerState.Idle;
+                break;
+            case Phase.End:
+                CurrentPlayerState = PlayerState.Uncontrollable;
+                break;
+        }
     }
 }

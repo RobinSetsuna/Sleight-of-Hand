@@ -6,9 +6,9 @@ public interface INavGrid<T>
     int Length { get; }
     int Width { get; }
 
-    Vector2Int GetIndices(T position);
-    T GetTile(Vector2Int indices);
+    Vector2Int GetGridPosition(T tile);
+    T GetTile(Vector2Int gridPosition);
 
     bool IsAccessible(int x, int y);
-    List<Vector2Int> GetAdjacentIndices(int x, int y);
+    List<Vector2Int> GetAccessibleAdjacentGridPositions(int x, int y);
 }
