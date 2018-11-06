@@ -9,7 +9,7 @@ public class UIList : UIWidget
     [SerializeField] Vector2 itemSize;
     [SerializeField] private bool hideInactives = true;
 
-    public override void Refresh()
+    public override void Refresh(params object[] args)
     {
         int i = 0;
         while (i < transform.childCount)

@@ -21,4 +21,14 @@ public struct ResourceUtility
     {
         return GetUIPrefab<UserInterface>(name);
     }
+
+    public static Sprite GetCardBackground(int id)
+    {
+        return Resources.Load<Sprite>("UI/Card/Background/" + id);
+    }
+
+    public static Sprite GetCardIllustration(int id)
+    {
+        return Resources.Load<Sprite>("UI/Card/Illustration/" + id);
+    }
 }

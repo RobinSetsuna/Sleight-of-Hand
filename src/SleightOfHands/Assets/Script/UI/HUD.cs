@@ -75,25 +75,15 @@ public class HUD : UserInterface
                 //if (index < numExistedListItems)
                 //    listItem = listTransform.GetChild(index).gameObject;
                 //else
-                    switch (card.cardName)
-                    {
-                        case "Smoke":
-                            listItem = Instantiate(ResourceUtility.GetPrefab("Card_Smoke"), listTransform);
-                            break;
-                        case "Haste":
-                            listItem = Instantiate(ResourceUtility.GetPrefab("Card_Haste"), listTransform);
-                            break;
-                        default:
-                            listItem = Instantiate(ResourceUtility.GetPrefab("Card_Glue_Trap"), listTransform);
-                            break;
-                    }
+
+                listItem = Instantiate(ResourceUtility.GetPrefab("Card"), listTransform);
 
                 listItem.SetActive(true);
-                listItem.GetComponent<CardInstance>().InitialCard(card);
+                listItem.GetComponent<UICard>().Refresh(card);
 
                 hand.Add(card, listItem);
 
-                cardList.Refresh();
+                cardList.Refresh(card);
 
                 break;
             case ChangeType.Decremental:

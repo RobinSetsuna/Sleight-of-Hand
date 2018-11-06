@@ -9,9 +9,11 @@ public enum UnitType : int
     Item,
     UI,
 }
+
 public class MouseInteractable : MonoBehaviour
 {
     public UnitType Type;
+
     private void OnMouseDown()
     {
         MouseInputManager.Singleton.NotifyMouseDown(this);
