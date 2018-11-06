@@ -61,6 +61,12 @@ public abstract class Unit : InLevelObject
     public int ActionPoint { get; protected set; }
     public float Health { get; protected set; }
 
+    [Header("Animations")]
+    public GameObject modelHolder;
+    public float jumpHeight;
+    public int jumpsPerMove = 1;
+
+    private CharacterController characterController;
     private float speed;
     private Vector3 start;
     private Vector3 destination;
@@ -99,6 +105,19 @@ public abstract class Unit : InLevelObject
         GridManager.Instance.NotifyUnitPositionChange(this, new Vector2Int(-1, -1), gridPosition);
     }
 
+    private void Start() {
+        characterController = GetComponent<CharacterController>();
+    }
+
+    private void Update() {
+
+        // Push player to ground
+        if (characterController != null && !characterController.isGrounded) {
+            characterController.Move(Vector3.up * (-9.81f * Time.deltaTime));
+        }
+
+    }
+
     /*private void HandleCurrentPhaseChange(Phase currentPhase)
     {
         switch (currentPhase)
@@ -132,27 +151,53 @@ public abstract class Unit : InLevelObject
 
     private IEnumerator Move(System.Action callback)
     {
+
+        float initialDistance = MathUtility.ManhattanDistance(destination.x, destination.z, transform.position.x, transform.position.z);
+        Vector3 initialPosition = this.transform.position;
+
+        float travelDistance = 0;
         while (speed > 0)
         {
             Vector3 position = transform.position;
 
             // End move
-            if (MathUtility.ManhattanDistance(destination.x, destination.z, position.x, position.z) < 0.05)
-            {
-                speed = 0;
-                break;
-            }
+            float currentDistance = MathUtility.ManhattanDistance(destination.x, destination.z, position.x, position.z);
 
             Vector3 orientation = destination - position;
             orientation.y = 0;
 
+            travelDistance = Mathf.Min(initialDistance, travelDistance + speed * Time.deltaTime);
+            float travelRatio = travelDistance / initialDistance;
+            Vector3 newPosition = Vector3.Lerp(initialPosition, destination, travelRatio);
+
             transform.forward = orientation.normalized;
-            transform.Translate(0, 0, Mathf.Min(speed * Time.deltaTime, orientation.magnitude));
+
+            if (characterController != null) {
+                Vector3 deltaPos = newPosition - this.transform.position;
+                deltaPos.y = 0;
+                characterController.Move(deltaPos);
+            } else {
+                this.transform.position = new Vector3(newPosition.x, this.transform.position.y, newPosition.z);
+            }
+
+            // Hopping
+            if (modelHolder != null) {
+                float localHeight = jumpHeight * Mathf.Abs(Mathf.Sin(travelRatio * Mathf.PI * jumpsPerMove));
+                modelHolder.transform.localPosition = Vector3.up * localHeight;
+            }
+
+            if (travelRatio >= 1) {
+                speed = 0;
+                break;
+            }
 
             yield return null;
         }
 
+        transform.position = new Vector3(destination.x, transform.position.y, destination.z);
+
         GridPosition = GridManager.Instance.GetTile(transform.position).gridPosition;
+
         ActionPoint--;
 
         if (callback != null)
