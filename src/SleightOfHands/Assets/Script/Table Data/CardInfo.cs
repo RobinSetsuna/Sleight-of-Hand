@@ -5,6 +5,8 @@
     public string Template { get; private set; }
     public string Illustration { get; private set; }
     public string Description { get; private set; }
+    public int Range { get; private set; }
+    public int Duration { get; private set; }
 
     int ITableDataEntry.Set(int row, string[] stringData)
     {
@@ -13,12 +15,14 @@
         Template = stringData[2];
         Illustration = stringData[3];
         Description = stringData[4];
+        Range = int.Parse(stringData[5]);
+        Duration = int.Parse(stringData[6]);
 
         return Id;
     }
 
     public override string ToString()
     {
-        return string.Format("[{0}] {1}: {2} (template: {3}; illustration: {4})", Id, Name, Description, Template, Illustration);
+        return string.Format("Id: {0}\nName: {1}\nTemplate: {2}\nIllustration: {3}\nDescription: {4}\nRange: {5}\nDuration: {6}", Id, Name, Template, Illustration, Description, Range, Duration);
     }
 }

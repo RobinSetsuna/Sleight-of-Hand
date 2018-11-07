@@ -34,6 +34,9 @@ public class PlayerController : MouseInteractable
     /// </summary>
     public EventOnDataUpdate<Path<Tile>> onPathUpdate = new EventOnDataUpdate<Path<Tile>>();
     
+    /// <summary>
+    /// The player controlled by this controller
+    /// </summary>
     public player Player { get; private set; }
 
     private bool isEnabled = false;
@@ -229,6 +232,8 @@ public class PlayerController : MouseInteractable
                     CurrentPlayerState = PlayerState.MovementPlanning;
                 else if (obj.GetComponent<Enemy>())
                     obj.GetComponent<Enemy>().hightlightDetection();
+                else if (obj.GetComponent<UICard>())
+                    CurrentPlayerState = PlayerState.CardUsagePlanning;
                 break;
             case PlayerState.MovementPlanning:
                 if (obj == this)
