@@ -8,11 +8,15 @@ public enum PlayerState : int
 {
     Uncontrollable,
     Idle,
+
     MovementPlanning,
     MovementConfirmation,
     Move,
-    CardChoosing,
-    PositionChoosing
+
+    CardBrowsing,
+    CardUsagePlanning,
+    CardUsageConfirmation,
+    UseCard,
 }
 
 /// <summary>
@@ -97,7 +101,7 @@ public class PlayerController : MouseInteractable
                         Disable();
                         break;
                     case PlayerState.Idle:
-                        if (previousPlayerState != PlayerState.Move)
+                        if (previousPlayerState == PlayerState.MovementPlanning)
                             Path = null;
                         break;
                     case PlayerState.MovementPlanning:
@@ -145,7 +149,7 @@ public class PlayerController : MouseInteractable
         if (!isEnabled)
         {
             MouseInputManager.Singleton.onMouseClick.AddListener(HandleMouseClick);
-            MouseInputManager.Singleton.onDragEnd.AddListener(HandleEndDragging);
+            MouseInputManager.Singleton.onMouseDragEnd.AddListener(HandleEndDragging);
             MouseInputManager.Singleton.onMouseEnter.AddListener(HandleMouseTargetChange);
 
             isEnabled = true;
@@ -160,7 +164,7 @@ public class PlayerController : MouseInteractable
         if (isEnabled)
         {
             MouseInputManager.Singleton.onMouseClick.RemoveListener(HandleMouseClick);
-            MouseInputManager.Singleton.onDragEnd.RemoveListener(HandleEndDragging);
+            MouseInputManager.Singleton.onMouseDragEnd.RemoveListener(HandleEndDragging);
             MouseInputManager.Singleton.onMouseEnter.RemoveListener(HandleMouseTargetChange);
 
             isEnabled = false;
@@ -247,15 +251,14 @@ public class PlayerController : MouseInteractable
                     }
                 }
                 break;
-            case PlayerState.CardChoosing:
-               
-                CurrentPlayerState = PlayerState.PositionChoosing;
+            case PlayerState.CardBrowsing:
+                CurrentPlayerState = PlayerState.CardUsagePlanning;
                 break;
         }
     }
 
     /// <summary>
-    /// An event listener for MouseInputManager.Singleton.onDragEnd
+    /// An event listener for MouseInputManager.Singleton.onMouseDragEnd
     /// </summary>
     /// <param name="obj"> The object from which the player starts to drag </param>
     private void HandleEndDragging(MouseInteractable obj)
