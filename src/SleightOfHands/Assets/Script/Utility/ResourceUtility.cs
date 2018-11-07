@@ -24,11 +24,11 @@ public struct ResourceUtility
 
     public static Sprite GetCardBackground(int id)
     {
-        return Resources.Load<Sprite>("UI/Card/Background/" + id);
+        return Resources.Load<Sprite>("Sprites/Card/Background/" + id);
     }
 
     public static Sprite GetCardIllustration(int id)
     {
-        return Resources.Load<Sprite>("UI/Card/Illustration/" + id);
+        return Resources.Load<Sprite>("Sprites/Card/Illustration/" + id);
     }
 }
