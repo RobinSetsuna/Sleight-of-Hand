@@ -1,4 +1,4 @@
-﻿public class CardInfo : ITableDataEntry
+﻿public class CardData : ITableDataEntry
 {
     public int Id { get; private set; }
     public string Name { get; private set; }

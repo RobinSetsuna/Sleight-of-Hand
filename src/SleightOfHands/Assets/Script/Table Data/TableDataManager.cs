@@ -31,7 +31,7 @@ public class TableDataManager
     /// </summary>
     public void Initialize()
     {
-        AddDataPageFromCSV<CardInfo>("Card");
+        AddDataPageFromCSV<CardData>("Card");
     }
 
     /// <summary>
@@ -72,5 +72,15 @@ public class TableDataManager
         }
 
         dataPages.Add(pageName, dataPage);
+    }
+
+    /// <summary>
+    /// Get the data of a card with a given id
+    /// </summary>
+    /// <param name="id"> The id of the card to concern </param>
+    /// <returns> A CardInfo containing the information of the card </returns>
+    public CardData GetCardData(int id)
+    {
+        return GetData<CardData>("Card", id);
     }
 }
