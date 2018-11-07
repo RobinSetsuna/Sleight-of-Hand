@@ -96,16 +96,22 @@ public class PlayerController : MouseInteractable
                         Path = null;
                         Disable();
                         break;
+
                     case PlayerState.Idle:
                         if (previousPlayerState != PlayerState.Move)
                             Path = null;
                         break;
+
                     case PlayerState.MovementPlanning:
                         Path = new Path<Tile>(GridManager.Instance.GetTile(Player.transform.position));
                         break;
+
                     case PlayerState.MovementConfirmation:
-                        UIManager.Singleton.Open("ListMenu", UIManager.UIMode.DEFAULT, UIManager.Singleton.GetCanvasPosition(Input.mousePosition), "MOVE", (UnityAction)InitiateMovement, "CANCEL", (UnityAction)ResetMovement);
+                        Vector3 tileCenter = GridManager.Instance.GetWorldPosition(path.Destination);
+                        tileCenter.y += GridManager.Instance.TileSize;
+                        UIManager.Singleton.Open("ListMenu", UIManager.UIMode.DEFAULT, UIManager.Singleton.GetCanvasPosition(Camera.main.WorldToScreenPoint(tileCenter)), "MOVE", (UnityAction)InitiateMovement, "CANCEL", (UnityAction)ResetMovement);
                         break;
+
                     case PlayerState.Move:
                         for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
                             ActionManager.Singleton.Add(new Movement(GetComponent<player>(), tile));
@@ -145,7 +151,7 @@ public class PlayerController : MouseInteractable
         if (!isEnabled)
         {
             MouseInputManager.Singleton.onMouseClick.AddListener(HandleMouseClick);
-            MouseInputManager.Singleton.onDragEnd.AddListener(HandleEndDragging);
+            MouseInputManager.Singleton.onDragEnd.AddListener(HandleMouseDragEnd);
             MouseInputManager.Singleton.onMouseEnter.AddListener(HandleMouseTargetChange);
 
             isEnabled = true;
@@ -160,7 +166,7 @@ public class PlayerController : MouseInteractable
         if (isEnabled)
         {
             MouseInputManager.Singleton.onMouseClick.RemoveListener(HandleMouseClick);
-            MouseInputManager.Singleton.onDragEnd.RemoveListener(HandleEndDragging);
+            MouseInputManager.Singleton.onDragEnd.RemoveListener(HandleMouseDragEnd);
             MouseInputManager.Singleton.onMouseEnter.RemoveListener(HandleMouseTargetChange);
 
             isEnabled = false;
@@ -221,11 +227,12 @@ public class PlayerController : MouseInteractable
         switch (currentPlayerState)
         {
             case PlayerState.Idle:
-                if (obj == this)
+                if (obj == this || (obj.GetComponent<Tile>() == GridManager.Instance.GetTile(Player.transform.position)))
                     CurrentPlayerState = PlayerState.MovementPlanning;
                 else if (obj.GetComponent<Enemy>())
                     obj.GetComponent<Enemy>().hightlightDetection();
                 break;
+
             case PlayerState.MovementPlanning:
                 if (obj == this)
                     CurrentPlayerState = PlayerState.Idle;
@@ -247,6 +254,7 @@ public class PlayerController : MouseInteractable
                     }
                 }
                 break;
+
             case PlayerState.CardChoosing:
                
                 CurrentPlayerState = PlayerState.PositionChoosing;
@@ -258,12 +266,12 @@ public class PlayerController : MouseInteractable
     /// An event listener for MouseInputManager.Singleton.onDragEnd
     /// </summary>
     /// <param name="obj"> The object from which the player starts to drag </param>
-    private void HandleEndDragging(MouseInteractable obj)
+    private void HandleMouseDragEnd(MouseInteractable obj)
     {
         switch (currentPlayerState)
         {
             case PlayerState.MovementPlanning:
-                if (obj == this && path.Count > 0)
+                if (path.Count > 0 && (obj == this || obj.GetComponent<Tile>() == path.Start))
                     CurrentPlayerState = PlayerState.MovementConfirmation;
                 break;
         }
@@ -292,10 +300,10 @@ public class PlayerController : MouseInteractable
                         {
                             if (tile == path.Last.Previous.Value)
                                 RemoveWayPoint();
-                            else if (GridManager.Instance.IsAdjacent(tile, path.Last.Value) && path.Count < Player.ActionPoint && !path.Contains(tile))
+                            else if (path.Count < Player.ActionPoint && tile.IsHighlighted(Tile.HighlightColor.Blue) && GridManager.Instance.IsAdjacent(tile, path.Last.Value))
                                 AddWayPoint(tile);
                         }
-                        else if (GridManager.Instance.IsAdjacent(tile, GridManager.Instance.GetTile(Player.transform.position)))
+                        else if (path.Count < Player.ActionPoint && tile.IsHighlighted(Tile.HighlightColor.Blue) && GridManager.Instance.IsAdjacent(tile, path.Start))
                             AddWayPoint(tile);
                     }
                     break;
@@ -313,6 +321,7 @@ public class PlayerController : MouseInteractable
             case Phase.Action:
                 CurrentPlayerState = PlayerState.Idle;
                 break;
+
             case Phase.End:
                 CurrentPlayerState = PlayerState.Uncontrollable;
                 break;

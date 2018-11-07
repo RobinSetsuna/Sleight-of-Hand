@@ -69,6 +69,14 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         }
     }
 
+    public float TileSize
+    {
+        get
+        {
+            return tileSize;
+        }
+    }
+
     //private void Start()
     //{
     //    ok_to_drag = false;
