@@ -300,10 +300,10 @@ public class PlayerController : MouseInteractable
                         {
                             if (tile == path.Last.Previous.Value)
                                 RemoveWayPoint();
-                            else if (GridManager.Instance.IsAdjacent(tile, path.Last.Value) && path.Count < Player.ActionPoint && !path.Contains(tile))
+                            else if (path.Count < Player.ActionPoint && tile.IsHighlighted(Tile.HighlightColor.Blue) && GridManager.Instance.IsAdjacent(tile, path.Last.Value))
                                 AddWayPoint(tile);
                         }
-                        else if (GridManager.Instance.IsAdjacent(tile, GridManager.Instance.GetTile(Player.transform.position)))
+                        else if (path.Count < Player.ActionPoint && tile.IsHighlighted(Tile.HighlightColor.Blue) && GridManager.Instance.IsAdjacent(tile, path.Start))
                             AddWayPoint(tile);
                     }
                     break;
