@@ -12,9 +12,7 @@ public enum Attributes : int
     ATK_f
 }
 
-public class Attribute
-{
-    private static readonly Dictionary<Attributes, float> defaultValues;
+public class Attribute{
 
     private int turnCount = 0;
     private int duration;
@@ -37,19 +35,6 @@ public class Attribute
     {
         LoadAttributeFromCard(card);
         LevelManager.Instance.onCurrentTurnChange.AddListener(HandleTurnChange);
-    }
-
-    public static Attribute Parse(string s)
-    {
-        Attribute attribute = new Attribute();
-
-        foreach (string entry in s.Split(';'))
-        {
-            string[] values = entry.Split(':');
-            attribute.attDic[(Attributes)int.Parse(values[0])] += int.Parse(values[1]);
-        }
-
-        return attribute;
     }
 
     private void LoadAttributeFromCard(Card card)
