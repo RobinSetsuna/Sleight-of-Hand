@@ -6,6 +6,9 @@ public class TableDataManager
 {
     private static readonly TableDataManager singleton = new TableDataManager();
 
+    /// <summary>
+    /// The unique instance
+    /// </summary>
     public static TableDataManager Singleton
     {
         get
@@ -17,27 +20,30 @@ public class TableDataManager
     private string path;
     private Dictionary<string, TableDataPage> dataPages;
 
-    public int NumDataPages
-    {
-        get
-        {
-            return dataPages.Count;
-        }
-    }
-
     private TableDataManager()
     {
         path = Path.Combine(Application.streamingAssetsPath, "Tables\\");
         dataPages = new Dictionary<string, TableDataPage>();
+    }
 
+    /// <summary>
+    /// Read all data from tables
+    /// </summary>
+    public void Initialize()
+    {
         AddDataPageFromCSV<CardInfo>("Card");
     }
 
-    public void Initialize() { }
-
-    public T GetData<T>(string pageName, int id)
+    /// <summary>
+    /// Get data at a specific index in the given data page
+    /// </summary>
+    /// <typeparam name="T"> The type of the data </typeparam>
+    /// <param name="pageName"> The name of the data page containing the desired data entry </param>
+    /// <param name="index"> The index of the data entry to get </param>
+    /// <returns></returns>
+    public T GetData<T>(string pageName, int index)
     {
-        return (T)dataPages[pageName][id];
+        return (T)dataPages[pageName][index];
     }
 
     private void AddDataPageFromCSV<T>(string pageName) where T : ITableDataEntry, new()
@@ -58,7 +64,7 @@ public class TableDataManager
                 {
                     T dataEntry = new T();
 
-                    dataPage.AddEntry(dataEntry.Set(row, line.Split(',')), dataEntry);
+                    dataPage.AddEntry(dataEntry.Initialize(row, line.Split(',')), dataEntry);
                 }
 
                 row++;

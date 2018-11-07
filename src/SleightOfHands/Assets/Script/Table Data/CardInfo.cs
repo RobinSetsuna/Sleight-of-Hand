@@ -8,7 +8,7 @@
     public int Range { get; private set; }
     public int Duration { get; private set; }
 
-    int ITableDataEntry.Set(int row, string[] stringData)
+    int ITableDataEntry.Initialize(int row, string[] stringData)
     {
         Id = int.Parse(stringData[0]);
         Name = stringData[1];
