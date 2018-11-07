@@ -5,11 +5,11 @@
 /// </summary>
 public enum GameState : int
 {
-    Start = 0,
+    Start = 1,
     MainMenu,
     Preparation,
     Exploration,
-    End = 0,
+    End,
 }
 
 /// <summary>
@@ -43,16 +43,17 @@ public class GameManager : MonoBehaviour
 
         private set
         {
-#if UNITY_EDITOR
-            LogUtility.PrintLogFormat("GameManager", "Made a transition to {0}.", value);
-#endif
+
 
             // Reset current state
             if (value == currentGameState)
             {
+#if UNITY_EDITOR
+                LogUtility.PrintLogFormat("GameManager", "Reset {0}.", value);
+#endif
+
                 //switch (currentGameState)
                 //{
-
                 //}
             }
             else
@@ -62,18 +63,33 @@ public class GameManager : MonoBehaviour
                 //{
                 //}
 
+#if UNITY_EDITOR
+                LogUtility.PrintLogFormat("GameManager", "Made a transition to {0}.", value);
+#endif
+
                 GameState previousGameState = CurrentGameState;
                 currentGameState = value;
 
                 // After entering the new state
                 switch (currentGameState)
                 {
+                    case GameState.Start:
+                        TableDataManager.Singleton.Initialize();
+                        break;
+
                     case GameState.Exploration:
                         LevelManager.Instance.StartLevel("test_level");
                         break;
                 }
 
                 onCurrentGameStateChange.Invoke(previousGameState, currentGameState);
+
+                switch (currentGameState)
+                {
+                    case GameState.Start:
+                        CurrentGameState = initialState;
+                        break;
+                }
             }
         }
     }
@@ -101,6 +117,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        CurrentGameState = initialState;
+        CurrentGameState = GameState.Start;
     }
 }

@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-
-
 
 public class CardManager : MonoBehaviour
 {
@@ -115,8 +112,6 @@ public class CardManager : MonoBehaviour
         {
             LogUtility.PrintLogFormat("CardManager", "This Card is {0} with Effects: {1}.", deck.cards[i].cardName, deck.cards[i].intro);
         }
-
-       
     }
 
     private Tile GetPlayerTile()

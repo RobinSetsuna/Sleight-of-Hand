@@ -33,7 +33,7 @@ public class UICard : UIWidget
             title.text = this.card.cardName;
             background.sprite = ResourceUtility.GetCardBackground(0);
             //illustration.sprite = ResourceUtility.GetCardIllustration(0);
-            //description.text = ;
+            description.text = this.card.intro;
         }
     }
 }
