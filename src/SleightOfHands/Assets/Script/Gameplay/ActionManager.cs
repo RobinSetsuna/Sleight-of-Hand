@@ -62,11 +62,13 @@ public class ActionManager
         UnityEngine.Debug.Log(actionQueue);
 #endif
         if (!actionQueue.IsEmpty())
+        {
             actionQueue.Pop().Execute(Execute);
-        else if (executionCallback != null)
+        }
+        else if(executionCallback != null)
         {
             executionCallback();
-            executionCallback = null;
+            //executionCallback = null;
         }
     }
 }

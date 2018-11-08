@@ -224,7 +224,7 @@ public class PlayerController : MouseInteractable
                 if (obj == this)
                     CurrentPlayerState = PlayerState.MovementPlanning;
                 else if (obj.GetComponent<Enemy>())
-                    obj.GetComponent<Enemy>().hightlightDetection();
+                    obj.GetComponent<Enemy>().HightlightDetection();
                 break;
             case PlayerState.MovementPlanning:
                 if (obj == this)

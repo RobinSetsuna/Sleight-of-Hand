@@ -91,12 +91,13 @@ public class LevelManager : MonoBehaviour
             //}
 
             currentPhase = value;
-
+            Debug.Log("current phase: " + currentPhase);
+            Debug.Log("current round: " + CurrentRound);
             // After entering a new phase
             switch (currentPhase)
             {
                 case Phase.Start:
-                    round++;
+                    // for the Environment round, each unit will have a single start, action, end phase, so add it differently
                     if (CurrentRound == Round.Player)
                         onCurrentTurnChange.Invoke(CurrentTurn);
                     break;
@@ -116,14 +117,22 @@ public class LevelManager : MonoBehaviour
             switch (currentPhase)
             {
                 case Phase.Start:
-                    CurrentPhase = Phase.Action;
+                    if (CurrentRound == Round.Player)
+                    {
+                        CurrentPhase = Phase.Action;
+                    }
                     break;
                 case Phase.Action:
-                    if (CurrentRound == Round.Environment)
-                        CurrentPhase = Phase.End;
+//                    if (CurrentRound == Round.Environment)
+//                        CurrentPhase = Phase.End;
                     break;
                 case Phase.End:
-                    CurrentPhase = Phase.Start;
+                    if (CurrentRound == Round.Player)
+                    {
+                        round++;
+                        CurrentPhase = Phase.Start;
+                    }
+                    Debug.Log("added,current round: " + CurrentRound);
                     break;
             }
         }
@@ -131,8 +140,9 @@ public class LevelManager : MonoBehaviour
 
     public string levelFolderPath;
     public string levelFilename;
-
-    //card related
+    //EnemyList
+    public List<Enemy> Enemies;
+    //Card related
     public GameObject Smoke;
     public GameObject Haste;
     public GameObject Glue;
@@ -160,7 +170,7 @@ public class LevelManager : MonoBehaviour
         CardManager.Instance.InitCardDeck();
         CardManager.Instance.RandomGetCard();
         //Debug.LogCardManager.Instance.RandomGetCard();
-        round = -1;
+        round = 0;
         CurrentPhase = Phase.Start;
 
         UIManager.Singleton.Open("HUD", UIManager.UIMode.PERMANENT);
@@ -171,6 +181,21 @@ public class LevelManager : MonoBehaviour
     {
         if (CurrentPhase == Phase.Action && CurrentRound == Round.Player)
             CurrentPhase = Phase.End;
+    }
+    internal void EndEnvironmentActionPhase()
+    {
+        if (CurrentPhase == Phase.Action && CurrentRound == Round.Environment)
+            CurrentPhase = Phase.End;
+    }
+    internal void StartEnvironmentActionPhase()
+    {
+        if (CurrentPhase == Phase.Start && CurrentRound == Round.Environment)
+            CurrentPhase = Phase.Action;
+    }
+    internal void StartNextPhaseTurn()
+    {
+        if (CurrentPhase == Phase.End)
+            CurrentPhase = Phase.Start;
     }
 
 
@@ -189,8 +214,9 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnEntities()
     {
+        Enemies = new List<Enemy>();
+        //int index = 0;
         foreach (SpawnData spawnData in currentLevel.spawns) {
-
             Vector3 spawnPosition = GridManager.Instance.GetWorldPosition(spawnData.position.x, spawnData.position.y) + new Vector3(0, 1, 0);
 
             Quaternion spawnRotation = Quaternion.identity;
@@ -221,14 +247,28 @@ public class LevelManager : MonoBehaviour
                     GameObject.FindGameObjectWithTag("Player").AddComponent<Effects>();
                     break;
 
-                //case SpawnData.Type.Guard:
-                //    Instantiate(ResourceUtility.GetPrefab<Enemy>("GuardDummy"), spawnPosition, spawnRotation, GridManager.Instance.environmentHolder);
-                //    break;
-
+                case SpawnData.Type.Guard:
+                    var temp = Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation,
+                        GridManager.Instance.environmentHolder);
+                    temp.AddComponent<Effects>();
+//                    temp.ID = index;
+//                    index++;
+                    Enemies.Add(temp.GetComponent<Enemy>());
+                    break;
             }
 
         }
+        EnemyManager.Instance.setEnemies(Enemies);
+    } 
 
+    public void NextRound()
+    {
+        round ++;
+    }
+
+    public void RemoveEnemy(Enemy obj)
+    {
+        Enemies.Remove(obj);
     }
 
     [System.Serializable]

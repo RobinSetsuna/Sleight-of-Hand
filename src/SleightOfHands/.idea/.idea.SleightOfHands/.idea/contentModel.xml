@@ -16,16 +16,18 @@
           <e p="CameraDragging.cs" t="Include" />
           <e p="CameraManager.cs" t="Include" />
           <e p="Card" t="Include">
-            <e p="CardInstance.cs" t="Include" />
+            <e p="Attribute.cs" t="Include" />
             <e p="CardManager.cs" t="Include" />
+            <e p="Chest.cs" t="Include" />
+            <e p="Effects.cs" t="Include" />
           </e>
-          <e p="Chest.cs" t="Include" />
           <e p="Data Structures" t="Include">
             <e p="DataStructures.asmdef" t="Include" />
             <e p="EmptyHeapException.cs" t="Include" />
             <e p="FibonacciHeap.cs" t="Include" />
             <e p="FibonacciHeapNode.cs" t="Include" />
           </e>
+          <e p="EnemyManager.cs" t="Include" />
           <e p="Gameplay" t="Include">
             <e p="Action.cs" t="Include" />
             <e p="ActionManager.cs" t="Include" />
@@ -44,6 +46,10 @@
           <e p="PlayerBasicWASD.cs" t="Include" />
           <e p="PlayerCameraControl.cs" t="Include" />
           <e p="ProjectileManager.cs" t="Include" />
+          <e p="Shader" t="Include">
+            <e p="visible.shader" t="Include" />
+            <e p="VisibleImproved.shader" t="Include" />
+          </e>
           <e p="Tile.cs" t="Include" />
           <e p="UI" t="Include">
             <e p="HUD.cs" t="Include" />
@@ -62,6 +68,7 @@
           <e p="Unit.cs" t="Include" />
           <e p="Utility" t="Include">
             <e p="BitOperationUtility.cs" t="Include" />
+            <e p="EnumFlagsAttribute.cs" t="Include" />
             <e p="LogUtility.cs" t="Include" />
             <e p="MathUtility.cs" t="Include" />
             <e p="ResourceUtility.cs" t="Include" />

@@ -645,6 +645,7 @@ GameObject:
   - component: {fileID: 1851337925}
   - component: {fileID: 1851337924}
   - component: {fileID: 1851337926}
+  - component: {fileID: 1851337927}
   m_Layer: 0
   m_Name: Level Manager
   m_TagString: Untagged
@@ -665,6 +666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelFolderPath: Levels
   levelFilename: test_level
+  Enemies: []
   Smoke: {fileID: 0}
   Haste: {fileID: 0}
   Glue: {fileID: 0}
@@ -697,6 +699,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7beffdd35a1d2f24fb2b955f7ee024ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1851337927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1851337923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bb27dbacb48a7740a4083a37f0c966b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemies: []
 --- !u!1 &1922193537
 GameObject:
   m_ObjectHideFlags: 0
