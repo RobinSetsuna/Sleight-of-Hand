@@ -101,6 +101,7 @@ public class PlayerController : MouseInteractable
                             Path = null;
                         break;
                     case PlayerState.MovementPlanning:
+                        Debug.Log(GridManager.Instance.GetTile(Player.transform.position));
                         Path = new Path<Tile>(GridManager.Instance.GetTile(Player.transform.position));
                         break;
                     case PlayerState.MovementConfirmation:
@@ -241,7 +242,7 @@ public class PlayerController : MouseInteractable
 
                         if (tile.IsHighlighted(Tile.HighlightColor.Blue))
                         {
-                            Path = Navigation.FindPath(GridManager.Instance, playerTile, tile);
+                            Path = Navigation.FindPath(GridManager.Instance, playerTile, tile, GridManager.Instance.IsAccessible);
                             CurrentPlayerState = PlayerState.MovementConfirmation;
                         }
                     }

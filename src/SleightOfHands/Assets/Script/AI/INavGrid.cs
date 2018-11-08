@@ -10,5 +10,5 @@ public interface INavGrid<T>
     T GetTile(Vector2Int gridPosition);
 
     bool IsAccessible(int x, int y);
-    List<Vector2Int> GetAccessibleAdjacentGridPositions(int x, int y);
+    List<Vector2Int> GetAdjacentGridPositions(int x, int y);
 }

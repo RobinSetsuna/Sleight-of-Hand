@@ -111,7 +111,7 @@ public class Enemy : Unit
                         Tile enemyTile = GridManager.Instance.GetTile(transform.position);
                         Tile playerTile = GridManager.Instance.GetTile(player.transform.position);
                         playerTile.gridPosition.y += 1;
-                        Path = Navigation.FindPath(GridManager.Instance, enemyTile, playerTile);
+                        Path = Navigation.FindPath(GridManager.Instance, enemyTile, playerTile, GridManager.Instance.IsWalkable);
                         
                         if (path != null)
                         {
