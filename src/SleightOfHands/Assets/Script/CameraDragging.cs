@@ -17,7 +17,7 @@ public class CameraDragging : MonoBehaviour {
 		// demo test, delete when actual use
 		CameraManager.Instance.setDefaultPos();
 
-        MouseInputManager.Singleton.OnMouseDrag.AddListener(HandleMouseDrag);
+        MouseInputManager.Singleton.onMouseDrag.AddListener(HandleMouseDrag);
 	}
 
     void Update()
