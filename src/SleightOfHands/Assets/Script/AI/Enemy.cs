@@ -371,7 +371,7 @@ public class Enemy : Unit
 
         if (center.y + 1 < GridManager.Instance.Length)
         {
-            neighbor.Add(GridManager.Instance.GetTile(new Vector2Int(center.x-1,center.y)));
+            neighbor.Add(GridManager.Instance.GetTile(new Vector2Int(center.x,center.y+1)));
         }
         
         if (center.y - 1 > 0)
