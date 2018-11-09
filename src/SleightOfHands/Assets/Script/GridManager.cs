@@ -69,6 +69,14 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         }
     }
 
+    public float TileSize
+    {
+        get
+        {
+            return tileSize;
+        }
+    }
+
     //private void Start()
     //{
     //    ok_to_drag = false;
@@ -315,8 +323,12 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// </summary>
     public void Initialize()
     {
-        LevelManager.Instance.playerController.onPathUpdate.AddListener(HandlePathChange);
-        LevelManager.Instance.playerController.onCurrentPlayerStateChange.AddListener(HandleCurrentPlayerStateChange);
+        PlayerController playerController = LevelManager.Instance.playerController;
+
+        playerController.onPathUpdate.AddListener(HandlePathChange);
+        playerController.onCurrentPlayerStateChange.AddListener(HandleCurrentPlayerStateChange);
+
+        playerController.onCardToUseUpdate.AddListener(HandleCardToUseChange);
     }
 
     //public void wipeTiles()
@@ -518,6 +530,15 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             foreach (Tile wayPoint in path)
                 Highlight(wayPoint, Tile.HighlightColor.Green);
         }
+    }
+
+    private void HandleCardToUseChange(Card cardToUse)
+    {
+        // TODO: Change highlights according to card's range
+        if (cardToUse != null)
+            Highlight(GetTile(LevelManager.Instance.Player.transform.position), Tile.HighlightColor.Green);
+        else
+            DehighlightAll();
     }
 
     internal void NotifyUnitPositionChange(Unit unit, Vector2Int previousGridPosition, Vector2Int currentGridPosition)

@@ -73,6 +73,7 @@
             <e p="MathUtility.cs" t="Include" />
             <e p="ResourceUtility.cs" t="Include" />
             <e p="TimeUtility.cs" t="Include" />
+            <e p="Utility.asmdef" t="Include" />
           </e>
         </e>
         <e p="StreamingAssets" t="Include">
@@ -89,6 +90,7 @@
       <e p="Temp" t="ExcludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
       </e>
+      <e p="Utility.csproj" t="IncludeRecursive" />
     </e>
   </component>
 </project>

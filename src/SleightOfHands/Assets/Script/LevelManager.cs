@@ -169,6 +169,7 @@ public class LevelManager : MonoBehaviour
 
         CardManager.Instance.InitCardDeck();
         CardManager.Instance.RandomGetCard();
+
         //Debug.LogCardManager.Instance.RandomGetCard();
         round = 0;
         CurrentPhase = Phase.Start;

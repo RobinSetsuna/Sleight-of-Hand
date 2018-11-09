@@ -36,8 +36,8 @@ public class UIManager : MonoBehaviour
         PERMANENT,
     }
 
-    private Stack<string> uiStack;
-    private Dictionary<string, UIWindow> uiOpened;
+    private Stack<string> uiWindowStack;
+    private Dictionary<string, UIWindow> uiWindowsOpened;
 
     private bool isCancelButtonDown = false;
 
@@ -48,7 +48,7 @@ public class UIManager : MonoBehaviour
     /// <returns> Whether the window is opened in the viewport </returns>
     public bool IsInViewport(string name)
     {
-        return uiOpened.ContainsKey(name);
+        return uiWindowsOpened.ContainsKey(name);
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ public class UIManager : MonoBehaviour
     /// <returns> Whether any UI windows are opened with UIMode.DEFAULT </returns>
     public bool IsViewportClear()
     {
-        return uiStack.Count != 0;
+        return uiWindowStack.Count != 0;
     }
 
     /// <summary>
@@ -74,18 +74,18 @@ public class UIManager : MonoBehaviour
 #endif
 
         if (IsInViewport(name))
-            return uiOpened[name];
+            return uiWindowsOpened[name];
 
-        UIWindow ui = Instantiate(ResourceUtility.GetUIPrefab(name), transform, false);
+        UIWindow uiWindow = Instantiate(ResourceUtility.GetUIPrefab<UIWindow>(name), transform, false);
 
-        uiOpened.Add(name, ui);
+        uiWindowsOpened.Add(name, uiWindow);
 
-        ui.OnOpen(args);
+        uiWindow.OnOpen(args);
 
         if (mode != UIMode.PERMANENT)
-            uiStack.Push(name);
+            uiWindowStack.Push(name);
 
-        return ui;
+        return uiWindow;
     }
 
     /// <summary>
@@ -100,23 +100,23 @@ public class UIManager : MonoBehaviour
 
         if (IsInViewport(name))
         {
-            UIWindow ui = uiOpened[name];
+            UIWindow ui = uiWindowsOpened[name];
 
             ui.OnClose();
 
             Stack<string> s = new Stack<string>();
 
-            while (uiStack.Peek().CompareTo(name) != 0)
-                s.Push(uiStack.Pop());
+            while (uiWindowStack.Peek().CompareTo(name) != 0)
+                s.Push(uiWindowStack.Pop());
 
-            uiStack.Pop();
+            uiWindowStack.Pop();
 
             while (s.Count > 0)
-                uiStack.Push(s.Pop());
+                uiWindowStack.Push(s.Pop());
 
             Destroy(ui.gameObject);
 
-            uiOpened.Remove(name);
+            uiWindowsOpened.Remove(name);
         }
     }
 
@@ -126,7 +126,7 @@ public class UIManager : MonoBehaviour
     /// <param name="name"> The name of the UI window to be toggled </param>
     public void Toggle(string name)
     {
-        if (uiOpened.ContainsKey(name))
+        if (uiWindowsOpened.ContainsKey(name))
             Close(name);
         else
             Open(name);
@@ -150,7 +150,7 @@ public class UIManager : MonoBehaviour
         else if (singleton != this)
             Destroy(gameObject);
 
-        uiStack = new Stack<string>();
-        uiOpened = new Dictionary<string, UIWindow>();
+        uiWindowStack = new Stack<string>();
+        uiWindowsOpened = new Dictionary<string, UIWindow>();
     }
 }

@@ -8,7 +8,7 @@ public class UIBoxColliderScaler : UIWidget
             Destroy(this);
     }
 
-    public override void Refresh()
+    public override void Refresh(params object[] args)
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
 

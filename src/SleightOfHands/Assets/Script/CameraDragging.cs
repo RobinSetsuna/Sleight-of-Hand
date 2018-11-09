@@ -17,7 +17,7 @@ public class CameraDragging : MonoBehaviour {
 		// demo test, delete when actual use
 		CameraManager.Instance.setDefaultPos();
 
-        MouseInputManager.Singleton.OnMouseDrag.AddListener(HandleMouseDrag);
+        MouseInputManager.Singleton.onMouseDrag.AddListener(HandleMouseDrag);
 	}
 
     void Update()
@@ -94,7 +94,7 @@ public class CameraDragging : MonoBehaviour {
                 Vector3 mouseMovement = Camera.main.ScreenToViewportPoint(d);
                 Vector3 move = new Vector3(mouseMovement.x * dragSpeed * Time.deltaTime, 0, mouseMovement.y * dragSpeed * Time.deltaTime);
 
-                transform.Translate(move);
+                transform.Translate(-move);
 
                 if (CameraManager.Instance.bounds)
                 {
