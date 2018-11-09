@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -29,6 +30,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     [SerializeField] private GameObject[] wallPrefabs;
     [SerializeField] private GameObject[] roadTilePrefabs;
     [SerializeField] private GameObject[] environmentTilePrefabs;
+    [SerializeField] private TilesetElement[] tilesetElements;
     [SerializeField] private Vector2Int mapSize;
     [SerializeField] [Range(0,1)] private float outlinePercent;
 
@@ -235,6 +237,12 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             root.parent = transform;
         }
 
+        // Setup tilesets
+        Dictionary<int, TilesetElement> tElements = new Dictionary<int, TilesetElement>();
+        foreach (TilesetElement te in tilesetElements) {
+            tElements.Add(te.id, te);
+        }
+
         // Extract data from levelData
         if (levelData != null)
             mapSize = new Vector2Int(levelData.width, Mathf.CeilToInt(levelData.tiles.Length / levelData.width));
@@ -248,10 +256,12 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         for (int x = 0; x < mapSize.x; x ++)
             for (int y = 0; y < mapSize.y; y ++)
             {
-                int i = x + y * Length;
-                int tileType = levelData.tiles[i];
+                int i = x + y * levelData.tiles.Length;
+                int tileType = levelData.GetTile(x, y);
+                TilesetElement te;
+                tElements.TryGetValue(tileType, out te);
+
                 // parse position for tile
-                // Vector3 tilePosition = new Vector3(-mapSize.x/2 +nodeRadius + x + transform.position.x, 2, -mapSize.y/2 + nodeRadius + y + transform.position.z);
                 Vector3 tilePosition = GetWorldPosition(x, y);
 
                 Transform tileTransform = i < numExistedTiles ? root.GetChild(i) : Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right * 90), root);
@@ -261,51 +271,131 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
                 // set tile value
                 Tile tile = tileTransform.GetComponent<Tile>();
-                tile.walkable = tileType == 0;
+                tile.walkable = (te != null ? te.walkable : true);
                 tile.gridPosition = new Vector2Int(x, y);
                 
                 // insertion
                 grid[x,y] = tile;
-                Vector3 envTilePosition = tilePosition;
-                envTilePosition.y = -0.55f;
-                if(tileType < 0 )
-                {
-                    // tileType < 0, road tile add
-                    Quaternion roadTileRotation = Quaternion.Euler(0,0, 0);
-                    Instantiate(roadTilePrefabs[-tileType-1], envTilePosition, roadTileRotation, environmentHolder);
-                }
-                else
-                {
-                    Quaternion envTileRotation = Quaternion.Euler(0, Random.Range(0, 3) * 90f, 0);
-                    int envTileIndex = Random.Range(0, environmentTilePrefabs.Length);
-                    GameObject envTilePrefab = environmentTilePrefabs[envTileIndex];
-                    Instantiate(envTilePrefab, envTilePosition, envTileRotation, environmentHolder);
-                    if (tileType != 0&& tileType>0)
-                    {
-                        Quaternion wallRotation = Quaternion.Euler(0, Random.Range(0, 3) * 90f, 0);
-                        Instantiate(wallPrefabs[tileType - 1], tilePosition, wallRotation, environmentHolder);
+
+                // Tile display
+                if (te != null) {
+
+                    string envTileType;
+                    float envTileRotation;
+                    GetEnvTileType(levelData, x, y, out envTileType, out envTileRotation);
+
+                    Tileset.TileCollection tileCollection = null;
+                    switch (envTileType) {
+                        case "surrounded":
+                            tileCollection = te.tileset.surrounded;
+                            break;
+                        case "t":
+                            tileCollection = te.tileset.t;
+                            break;
+                        case "corner":
+                            tileCollection = te.tileset.corner;
+                            break;
+                        case "straight":
+                            tileCollection = te.tileset.straight;
+                            break;
+                        case "edge":
+                            tileCollection = te.tileset.edge;
+                            break;
+                        default:
+                            tileCollection = te.tileset.fallback;
+                            break;
                     }
+                    if (tileCollection.objects.Length == 0) tileCollection = te.tileset.fallback;
+                    GameObject envTilePrefab = tileCollection.GetRandom();
+
+                    te.tileset.fallback.GetRandom();
+                    Vector3 envTilePosition = tilePosition;
+                    envTilePosition.y = -0.55f;
+
+                    Instantiate(envTilePrefab, envTilePosition, Quaternion.Euler(0, envTileRotation, 0));
+
                 }
-                #region ORIGINAL_SWITCH_STATE
-//                switch (tileType)
-                   //                {
-                   //                    case 1:
-                   //                        Quaternion wallRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
-                   //                        int wallTileIndex = UnityEngine.Random.Range(0, wallPrefabs.Length);
-                   //                        Instantiate(wallPrefabs[wallTileIndex], tilePosition, wallRotation, environmentHolder);
-                   //                        goto case 0;
-                   //
-                   //                    case 0:
-                   //                        Vector3 envTilePosition = tilePosition;
-                   //                        envTilePosition.y = -0.55f;
-                   //                        Quaternion envTileRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
-                   //                        int envTileIndex = UnityEngine.Random.Range(0, environmentTilePrefabs.Length);
-                   //                        GameObject envTilePrefab = environmentTilePrefabs[envTileIndex];
-                   //                        Instantiate(envTilePrefab, envTilePosition, envTileRotation, environmentHolder);
-                   //                        break;
-                   //                }
-                #endregion
+                
             }
+    }
+
+    private void GetEnvTileType(LevelManager.LevelData levelData, int x, int y, out string envTileType, out float rotation) {
+
+        // True = same :: False = not same
+        bool up = false;
+        bool down = false;
+        bool left = false;
+        bool right = false;
+
+        Vector2Int size = levelData.GetSize();
+        int value = levelData.GetTile(x, y);
+
+        if (y > 0 && levelData.GetTile(x, y-1) == value) {
+            up = true;
+        }
+
+        if (y < mapSize.y - 1 && levelData.GetTile(x, y+1) == value) {
+            down = true;
+        }
+
+        if (x > 0 && levelData.GetTile(x-1, y) == value) {
+            left = true;
+        }
+
+        if (x < mapSize.x - 1 && levelData.GetTile(x+1, y) == value) {
+            right = true;
+        }
+
+        if (up && down && left && right) {
+            envTileType = "surrounded";
+            rotation = 0;
+        } else if (left && up && right) {
+            envTileType = "t";
+            rotation = 0;
+        } else if (up && right && down) {
+            envTileType = "t";
+            rotation = 90;
+        } else if (right && down && left) {
+            envTileType = "t";
+            rotation = 180;
+        } else if (down && left && up) {
+            envTileType = "t";
+            rotation = 270;
+        } else if (up && down) {
+            envTileType = "straight";
+            rotation = 0;
+        } else if (left && right) {
+            envTileType = "straight";
+            rotation = 180;
+        } else if (up && right) {
+            envTileType = "corner";
+            rotation = 0;
+        } else if (right && down) {
+            envTileType = "corner";
+            rotation = 90;
+        } else if (down && left) {
+            envTileType = "corner";
+            rotation = 180;
+        } else if (left && up) {
+            envTileType = "corner";
+            rotation = 270;
+        } else if (up) {
+            envTileType = "edge";
+            rotation = 0;
+        } else if (right) {
+            envTileType = "edge";
+            rotation = 90;
+        } else if (down) {
+            envTileType = "edge";
+            rotation = 180;
+        } else if (left) {
+            envTileType = "edge";
+            rotation = 270;
+        } else {
+            envTileType = "fallback";
+            rotation = 0;
+        }
+
     }
 
     /// <summary>
@@ -526,4 +616,13 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
         onUnitMove.Invoke(unit, previousGridPosition, currentGridPosition);
     }
+
+    [Serializable]
+    public class TilesetElement {
+        public string name;
+        public int id;
+        public bool walkable;
+        public Tileset tileset;
+    }
+
 }

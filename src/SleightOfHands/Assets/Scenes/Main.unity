@@ -589,6 +589,15 @@ MonoBehaviour:
   - {fileID: 100002, guid: 8dfedd46392fac84f99bb0d47b1a4155, type: 3}
   - {fileID: 100002, guid: 8dfedd46392fac84f99bb0d47b1a4155, type: 3}
   - {fileID: 100002, guid: 8dfedd46392fac84f99bb0d47b1a4155, type: 3}
+  tilesetElements:
+  - name: Default Tile
+    id: 0
+    walkable: 1
+    tileset: {fileID: 11400000, guid: 43c35ca66ecd2f443a5a0936b7dfdb1f, type: 2}
+  - name: Default Wall
+    id: 1
+    walkable: 0
+    tileset: {fileID: 11400000, guid: 3438213ab3d22b746bc10eb13cad2c4c, type: 2}
   mapSize: {x: 20, y: 20}
   outlinePercent: 0.075
   environmentHolder: {fileID: 1422179120}

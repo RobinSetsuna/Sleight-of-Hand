@@ -12,10 +12,14 @@ MonoBehaviour:
   m_Name: FloorTileCollection
   m_EditorClassIdentifier: 
   fallback:
-    objects: []
+    objects:
+    - prefab: {fileID: 1397348704848754, guid: a6a6a3cce77d87647adf9ffe7b295663, type: 2}
+      weight: 1
   surrounded:
     objects: []
   straight:
+    objects: []
+  edge:
     objects: []
   corner:
     objects: []

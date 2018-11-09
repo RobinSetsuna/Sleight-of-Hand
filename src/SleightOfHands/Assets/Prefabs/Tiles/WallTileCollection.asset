@@ -13,8 +13,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallback:
     objects:
-    - prefab: {fileID: 0}
-      weight: 0
+    - prefab: {fileID: 1125703687301316, guid: 41901802eda4ef54b8766bbd48021af2, type: 2}
+      weight: 1
   surrounded:
     objects: []
   straight:
