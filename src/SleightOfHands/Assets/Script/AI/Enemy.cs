@@ -273,7 +273,7 @@ public class Enemy : Unit
     /// Highlight the detection range in tile 
     /// </summary>
 
-    public void HightlightDetection()
+    public void HighlightDetection()
     {
         // show the range to be detected
         if (detection_highlighted)
@@ -283,6 +283,17 @@ public class Enemy : Unit
                 tile.Dehighlight();
             }
             detection_highlighted = false;
+            Enemy[] allEnemies = FindObjectsOfType<Enemy>();
+            foreach (Enemy enemy in allEnemies)
+            {
+                if (enemy.detection_highlighted)
+                {
+                    foreach (Tile tile in enemy.rangeList)
+                    {
+                        tile.Highlight(Tile.HighlightColor.Red);
+                    }
+                }
+            }
         }
         else
         {

@@ -50,6 +50,13 @@
             <e p="visible.shader" t="Include" />
             <e p="VisibleImproved.shader" t="Include" />
           </e>
+          <e p="Table Data" t="Include">
+            <e p="CardData.cs" t="Include" />
+            <e p="ITableDataEntry.cs" t="Include" />
+            <e p="TableData.asmdef" t="Include" />
+            <e p="TableDataManager.cs" t="Include" />
+            <e p="TableDataPage.cs" t="Include" />
+          </e>
           <e p="Tile.cs" t="Include" />
           <e p="UI" t="Include">
             <e p="HUD.cs" t="Include" />
@@ -61,6 +68,7 @@
             <e p="UserInterface.cs" t="Include" />
             <e p="Widgets" t="Include">
               <e p="UIBoxColliderScaler.cs" t="Include" />
+              <e p="UICard.cs" t="Include" />
               <e p="UIFadeInOut.cs" t="Include" />
               <e p="UIList.cs" t="Include" />
             </e>
@@ -87,6 +95,7 @@
       <e p="obj" t="ExcludeRecursive" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="SleightOfHands.sln" t="IncludeFlat" />
+      <e p="TableData.csproj" t="IncludeRecursive" />
       <e p="Temp" t="ExcludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
       </e>

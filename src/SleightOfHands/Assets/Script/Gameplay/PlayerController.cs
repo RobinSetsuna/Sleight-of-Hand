@@ -275,7 +275,7 @@ public class PlayerController : MouseInteractable
                 if (obj == this || (obj.GetComponent<Tile>() == GridManager.Instance.GetTile(Player.transform.position)))
                     CurrentPlayerState = PlayerState.MovementPlanning;
                 else if (obj.GetComponent<Enemy>())
-                    obj.GetComponent<Enemy>().hightlightDetection();
+                    obj.GetComponent<Enemy>().HighlightDetection();
                 else if (obj.GetComponent<UICard>())
                 {
                     CurrentPlayerState = PlayerState.CardUsagePlanning;
