@@ -196,7 +196,8 @@ public abstract class Unit : InLevelObject
 
         transform.position = new Vector3(destination.x, transform.position.y, destination.z);
 
-        GridPosition = GridManager.Instance.GetTile(transform.position).gridPosition;
+        var temp = GridManager.Instance.GetTile(transform.position).gridPosition;
+        GridPosition = new Vector2Int(temp.x,temp.y);
 
         ActionPoint--;
 

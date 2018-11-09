@@ -236,7 +236,7 @@ MonoBehaviour:
   jumpHeight: 0
   jumpsPerMove: 1
   ID: 0
-  detection_range: 5
+  detection_range: 3
 --- !u!114 &114781160667747748
 MonoBehaviour:
   m_ObjectHideFlags: 1

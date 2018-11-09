@@ -251,6 +251,8 @@ public class LevelManager : MonoBehaviour
                     var temp = Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation,
                         GridManager.Instance.environmentHolder);
                     temp.AddComponent<Effects>();
+                    temp.GetComponent<Enemy>().setPathList(spawnData.GetPath());
+                    temp.GetComponent<Enemy>().SetDetectionState(EnemyDetectionState.Normal); // set default detection state
 //                    temp.ID = index;
 //                    index++;
                     Enemies.Add(temp.GetComponent<Enemy>());
@@ -303,6 +305,7 @@ public class LevelManager : MonoBehaviour
         public string typeString;
         public Vector2Int position;
         public string[] settings;
+        public string[] path;
 
         public string GetSetting(string settingString) {
             if (settings == null) return null;
@@ -313,6 +316,19 @@ public class LevelManager : MonoBehaviour
                 }
             }
             return null;
+        }
+        
+        
+        public List<Vector2Int> GetPath()
+        {
+            List<Vector2Int> pathList = new List<Vector2Int>();
+            if (path == null) return null;
+            for (int i = 0; i < path.Length; i++) {   
+                string[] pos_str = path[i].Split(',');
+                Vector2Int temp = new Vector2Int(Int32.Parse(pos_str[0]),Int32.Parse(pos_str[1]));
+                pathList.Add(temp);
+            }
+            return pathList;
         }
 
         public E GetEnumFromString<E>(string enumString) where E : struct {

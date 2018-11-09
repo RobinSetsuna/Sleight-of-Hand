@@ -189,6 +189,11 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     {
         return grid[x, y].walkable;
     }
+    
+    public bool HasUnitOn(int x, int y)
+    {
+        return units[x, y]!=null;
+    }
 
     /// <summary>
     /// Get all accessible positions surrounding a given grid position

@@ -71,4 +71,12 @@ public class ActionManager
             //executionCallback = null;
         }
     }
+    
+    /// <summary>
+    /// Wipe current ActionQueue, no call back execute
+    /// </summary>
+    internal void Empty()
+    {
+        actionQueue = new ActionQueue();
+    }
 }
