@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Effects : MonoBehaviour {
 
-    
+    public string owner;
     private List<Attribute> attList = new List<Attribute>();
 	// Use this for initialization
 
@@ -22,7 +22,10 @@ public class Effects : MonoBehaviour {
 	void Update () {
 		
 	}
-
+    public void SetOwner(string _owner)
+    {
+        owner = _owner;
+    }
     private void HandleTimeOut(Attribute att)
     {
         attList.Remove(att);

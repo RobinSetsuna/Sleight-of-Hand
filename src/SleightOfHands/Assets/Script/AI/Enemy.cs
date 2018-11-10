@@ -26,7 +26,17 @@ public class Enemy : Unit
 	private GameObject player;
 
 	private int counter = 0;
-    
+    public int DetectionRange
+    {
+        get
+        {
+            return detection_range;
+        }
+        set
+        {
+            detection_range = value;
+        }
+    }
     private bool detection_highlighted = false;
     private HashSet<Tile> rangeList;
     private List<Vector2Int> pathList;

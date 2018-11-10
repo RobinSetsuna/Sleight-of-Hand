@@ -22,12 +22,14 @@ public class CardManager : MonoBehaviour
     public CardDeck deck;
     public List<Card> usedCards;
     public List<Card> hand;
+    private CardData InEffect;
     public string deckFolderPath;
     public string deckFilename;
     public GameObject Player { get; private set; }
 
     //gameobject
     public GameObject smokeObject;
+    public GameObject GlueObject;
 
     int rdNumLast = -1;
 
@@ -39,10 +41,18 @@ public class CardManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown("1"))
-        {            
+        if (Input.GetKeyDown("1"))
+        {
             Player = GameObject.FindGameObjectWithTag("Player");
-            AddEffect(hand[0], Player);
+            UseEnhancenmentCard(hand[0], Player);
+        }
+        else if(Input.GetKeyDown("2"))
+        {
+            UseStrategyCard(0);
+        }
+        else if(Input.GetKeyDown("3"))
+        {
+            UseStrategyCard(2);
         }
     }
 
@@ -85,9 +95,9 @@ public class CardManager : MonoBehaviour
         hand.Add(card);
         onHandChange.Invoke(ChangeType.Incremental, card);
     }
-    
 
-    public void AddEffect(Card card, GameObject obj)
+
+    public void UseEnhancenmentCard(Card card, GameObject obj)
     {
         Effects effects = obj.GetComponent<Effects>();
         LogUtility.PrintLogFormat("CardManager", "Add Card Effect {0}.", card.intro);
@@ -131,27 +141,42 @@ public class CardManager : MonoBehaviour
     }
 
 
-    void Smoke(Card card)
+    void UseStrategyCard(int cardID)
     {
+        var card = TableDataManager.Singleton.GetCardData(cardID);
+        InEffect = card;
         //1. hightlight all the possible tile              
-        //GridManager.Instance.Highlight(GetPlayerTile(), 3, Tile.HighlightColor.Green);
-        //2. get player input tile position
-
-        //3. create a smoke on the tile(make sure when the smoke will disappear)
-
-        //4. change the visibility of enemy
-
-        //5. minus the action point
-        //GameObject.FindGameObjectWithTag("Player").GetComponent<player>().DeleteActionPoint(card.cost);
-        //print("out Smoke");
+        GridManager.Instance.Highlight(GetPlayerTile(), card.Range, Tile.HighlightColor.Green);
+        
+        //3. create a smoke on the tile when mouse click
+        MouseInputManager.Singleton.onMouseClick.AddListener(HandleClick);
     }
-
-    public void CreateSmokeOnTile(Tile obj)
+    void HandleClick(MouseInteractable obj)
     {
-        print("enter csot");
-        Instantiate(smokeObject, obj.transform);
-        //smokeObject.AddComponent<EffectTimer>();
+        
+        if (obj.GetComponent<Tile>().IsHighlighted(Tile.HighlightColor.Green))
+        {
+            var pos = obj.GetComponent<Tile>().transform.position;
+            switch (InEffect.Name)
+            {
+                case "Smoke":
+                    var smoke = Instantiate(smokeObject, pos, Quaternion.identity);
+                    smoke.AddComponent<Smoke>();
+                    break;
+                case "Glue":
+                    var Glue = Instantiate(GlueObject, pos, Quaternion.identity);
+                    Glue.AddComponent<Glue>();
+                    break;
+            }
+
+
+            
+            MouseInputManager.Singleton.onMouseClick.RemoveListener(HandleClick);
+            GridManager.Instance.DehighlightAll();
+        }
+        
     }
+
 
     void ChestKey()
     {
@@ -169,17 +194,6 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    void Haste(Card card)
-    {
-        //1. add action point
-        //string effect = card.effect;
-        //string result = System.Text.RegularExpressions.Regex.Replace(effect, @"[^0-9]+", "");
-        //int point = int.Parse(result);
-        //GameObject.FindGameObjectWithTag("Player").GetComponent<player>().AddActionPoint(point);
-        //2. move this card to usedCards
-        //usedCards.Add(card);
-        //hand.Remove(card);
-    }
 }
 
 [System.Serializable]
