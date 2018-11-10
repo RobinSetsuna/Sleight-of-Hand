@@ -88,7 +88,7 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 
 	public int y
     {
-		get
+	    get
 		{
             // return  Mathf.RoundToInt(gridPosition.y);
             return gridPosition.y;

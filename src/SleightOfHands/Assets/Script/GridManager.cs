@@ -193,26 +193,36 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         return grid[x, y].walkable;
     }
 
+    public bool IsWalkable(int x, int y)
+    {
+        return grid[x, y].walkable;
+    }
+    
+    public bool HasUnitOn(int x, int y)
+    {
+        return units[x, y]!=null;
+    }
+
     /// <summary>
     /// Get all accessible positions surrounding a given grid position
     /// </summary>
     /// <param name="x"> The x value of the grid position to concern </param>
     /// <param name="y"> The y value of the grid position to concern </param>
     /// <returns> A List of Vector2Int containing all grid positions </returns>
-    public List<Vector2Int> GetAccessibleAdjacentGridPositions(int x, int y)
+    public List<Vector2Int> GetAdjacentGridPositions(int x, int y)
     {
         List<Vector2Int> list = new List<Vector2Int>();
 
-        if (x + 1 < Length && grid[x + 1, y] && grid[x + 1, y].walkable && units[x + 1, y] == null)
+        if (x + 1 < Length && grid[x + 1, y])
             list.Add(new Vector2Int(x + 1, y));
 
-        if (x - 1 >= 0 && grid[x - 1, y] && grid[x - 1, y].walkable && units[x - 1, y] == null)
+        if (x - 1 >= 0 && grid[x - 1, y])
             list.Add(new Vector2Int(x - 1, y));
 
-        if (y + 1 < Width && grid[x, y + 1] && grid[x, y + 1].walkable && units[x, y + 1] == null)
+        if (y + 1 < Width && grid[x, y + 1])
             list.Add(new Vector2Int(x, y + 1));
 
-        if (y - 1 >= 0 && grid[x, y - 1] && grid[x, y - 1].walkable && units[x, y - 1] == null)
+        if (y - 1 >= 0 && grid[x, y - 1])
             list.Add(new Vector2Int(x, y - 1));
 
         return list;
@@ -406,7 +416,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
             if (++distance <= upper)
                 //{
-                foreach (Vector2Int coordinate in GetAccessibleAdjacentGridPositions(x, y))
+                foreach (Vector2Int coordinate in GetAdjacentGridPositions(x, y))
                 {
                     int xi = coordinate.x;
                     int yi = coordinate.y;
@@ -510,7 +520,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         if (path != null)
         {
             player _player = LevelManager.Instance.Player;
-
+            Debug.LogWarning(_player.transform.position);
+            Debug.LogWarning(GetTile(_player.transform.position));
             if (path.Count == 0)
                 Highlight(GetTile(_player.transform.position), _player.ActionPoint, Tile.HighlightColor.Blue, true);
             else
@@ -538,5 +549,14 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         units[currentGridPosition.x, currentGridPosition.y] = unit;
 
         onUnitMove.Invoke(unit, previousGridPosition, currentGridPosition);
+    }
+
+
+    /// <summary>
+    /// Find the cloest tile to target destination in a certain range, use for AI moving in Detected mode
+    /// </summary>
+    private void FindCloestTileToDes(Tile start, int range)
+    {
+
     }
 }

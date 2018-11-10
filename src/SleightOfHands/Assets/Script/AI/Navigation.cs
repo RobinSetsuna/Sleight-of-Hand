@@ -4,6 +4,8 @@ using UnityEngine;
 
 public struct Navigation
 {
+    public delegate bool AccessibilityChecker(int x, int y);
+
     private struct AStarTile<T> : IComparable where T : IEquatable<T>
     {
         public Vector2Int indices;
@@ -21,12 +23,13 @@ public struct Navigation
         }
     }
 
-    public static Path<T> FindPath<T>(INavGrid<T> navGrid, T start, T destination) where T : IEquatable<T>
+    public static Path<T> FindPath<T>(INavGrid<T> navGrid, T start, T destination, AccessibilityChecker IsAccessible) where T : IEquatable<T>
     {
         Vector2Int startIndices = navGrid.GetGridPosition(start);
         Vector2Int destinationIndices = navGrid.GetGridPosition(destination);
 
-        if (!navGrid.IsAccessible(startIndices.x, startIndices.y) || !navGrid.IsAccessible(destinationIndices.x, destinationIndices.y))
+        //if (!navGrid.IsAccessible(startIndices.x, startIndices.y) || !navGrid.IsAccessible(destinationIndices.x, destinationIndices.y))
+        if (!IsAccessible(startIndices.x, startIndices.y) || !IsAccessible(destinationIndices.x, destinationIndices.y))
             return null;
 
         if (start.Equals(destination))
@@ -70,10 +73,10 @@ public struct Navigation
 
             closedList[x, y] = true;
 
-            List<Vector2Int> adjacentIndices = navGrid.GetAccessibleAdjacentGridPositions(x, y);
-            for (int i = 0; i < adjacentIndices.Count; i++)
+            List<Vector2Int> adjacentGridPositions = navGrid.GetAdjacentGridPositions(x, y);
+            for (int i = 0; i < adjacentGridPositions.Count; i++)
             {
-                Vector2Int neighborIndices = adjacentIndices[i];
+                Vector2Int neighborIndices = adjacentGridPositions[i];
 
                 int xi = neighborIndices.x;
                 int yi = neighborIndices.y;
@@ -93,7 +96,7 @@ public struct Navigation
                     return new Path<T>(start, wayPoints);
                 }
 
-                if (closedList[xi, yi] || !navGrid.IsAccessible(xi, yi))
+                if (closedList[xi, yi] || !IsAccessible(xi, yi))
                     continue;
 
                 float gNew = current.g + MathUtility.ManhattanDistance(xi, yi, x, y);

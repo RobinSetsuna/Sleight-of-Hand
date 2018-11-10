@@ -35,7 +35,7 @@ public class PlayerController : MouseInteractable
     public EventOnDataUpdate<Path<Tile>> onPathUpdate = new EventOnDataUpdate<Path<Tile>>();
 
     public EventOnDataUpdate<Card> onCardToUseUpdate = new EventOnDataUpdate<Card>();
-    
+
     /// <summary>
     /// The player controlled by this controller
     /// </summary>
@@ -127,6 +127,7 @@ public class PlayerController : MouseInteractable
                         break;
 
                     case PlayerState.MovementPlanning:
+                        Debug.Log(GridManager.Instance.GetTile(Player.transform.position));
                         Path = new Path<Tile>(GridManager.Instance.GetTile(Player.transform.position));
                         break;
 
@@ -256,7 +257,7 @@ public class PlayerController : MouseInteractable
     private void UseCard()
     {
         CardToUse = null;
-        
+
         // TODO: Use card
 
         CurrentPlayerState = PlayerState.Idle;
@@ -274,7 +275,7 @@ public class PlayerController : MouseInteractable
                 if (obj == this || (obj.GetComponent<Tile>() == GridManager.Instance.GetTile(Player.transform.position)))
                     CurrentPlayerState = PlayerState.MovementPlanning;
                 else if (obj.GetComponent<Enemy>())
-                    obj.GetComponent<Enemy>().hightlightDetection();
+                    obj.GetComponent<Enemy>().HighlightDetection();
                 else if (obj.GetComponent<UICard>())
                 {
                     CurrentPlayerState = PlayerState.CardUsagePlanning;
@@ -297,7 +298,7 @@ public class PlayerController : MouseInteractable
 
                         if (tile.IsHighlighted(Tile.HighlightColor.Blue))
                         {
-                            Path = Navigation.FindPath(GridManager.Instance, playerTile, tile);
+                            Path = Navigation.FindPath(GridManager.Instance, playerTile, tile, GridManager.Instance.IsAccessible);
                             CurrentPlayerState = PlayerState.MovementConfirmation;
                         }
                     }
