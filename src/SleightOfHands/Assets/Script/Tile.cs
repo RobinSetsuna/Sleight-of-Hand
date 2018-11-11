@@ -28,7 +28,7 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 
     //[SerializeField]private Color highlightColor;
 
-    [SerializeField][Range(0, 1)] private float alpha = 0.5f;
+    [SerializeField][Range(0, 1)] private float alpha;
 
     public bool walkable
     {
@@ -185,10 +185,17 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 	public void Highlight(HighlightColor color)
 	{
         int mask = (int)color;
-
         if (((mark ^ mask) & 0xf) != 0)
         {
-            BitOperationUtility.WriteBits(ref mark, mask, 0, 3);
+            //BitOperationUtility.WriteBits(ref mark, mask, 0, 3);
+            if (color != HighlightColor.None)
+            {
+                mark |= mask;
+            }
+            else
+            {
+                BitOperationUtility.WriteBits(ref mark, mask, 0, 3);
+            }
             RefreshHighlight();
         }
 	}

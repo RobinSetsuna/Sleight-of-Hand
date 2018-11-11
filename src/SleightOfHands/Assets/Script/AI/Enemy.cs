@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum EnemyMoveState : int
@@ -129,13 +130,19 @@ public class Enemy : Unit
                         }
                         else
                         {
-                            EnterActionDecision();
+                            CurrentEnemyState = EnemyMoveState.Move;
                         }
                         Path = null;
                         break;
                     case EnemyMoveState.Move:
-                        MovementDecision();
-                        AttackDecision();//check if there is a chance to attack
+                        if (!InAttackRange())
+                        {
+                            StartCoroutine(MovementDecision());
+                        }
+                        else
+                        {
+                            StartCoroutine(AttackDecision());//check if there is a chance to attack
+                        }
                         break;
                 }
                 onCurrentEnemyStateChange.Invoke(previousEnemyState, currentEnemyState);
@@ -151,52 +158,40 @@ public class Enemy : Unit
     }
     
     /// <summary>
-    /// The main decision tree 
-    /// </summary>
-    public void EnterActionDecision()
-    {
-        if (ActionPoint > 0)
-        {
-            AttackDecision();
-            //decsion tree here, move or attack or another thing
-            CurrentEnemyState = EnemyMoveState.Move;
-        }
-        else
-        {
-            //exhausted
-            LevelManager.Instance.EndEnvironmentActionPhase();
-        } 
-    }
-    
-    /// <summary>
     /// Attack Decision Tree
     /// </summary>
-    private void AttackDecision()
+    private IEnumerator AttackDecision()
     {
-        if (InAttackRange() && ActionPoint >= 1)
+        if (InAttackRange() && ActionPoint >= 1 && currentDetectionState ==  EnemyDetectionState.Found)
         {
             //is ok to Atk 
             // do some operation here.
+            EnemyManager.Instance.AttackPop(transform);
             ActionPoint--;
+            yield return new WaitForSeconds(1.5f);
+            LevelManager.Instance.EndEnvironmentActionPhase();
             // remove the actionPoint
         }
+        yield return null;
     }
 
     /// <summary>
     /// Movement Decision Tree
     /// </summary>
-    private void MovementDecision()
+    private IEnumerator MovementDecision()
     {
         Tile enemyTile = GridManager.Instance.GetTile(transform.position);
         switch (CurrentDetectionState)
         {
                 case EnemyDetectionState.Found:
+                    EnemyManager.Instance.FoundPop(transform);
+                    yield return new WaitForSeconds(1.5f);
                     Tile playerTile = GridManager.Instance.GetTile(player.transform.position);
                     Tile finalDes = NearPosition(playerTile, enemyTile);
                     if (finalDes == null)
                     {
                         LevelManager.Instance.EndEnvironmentActionPhase();
-                        return;
+                        yield return null;
                     }
                     Path = Navigation.FindPath(GridManager.Instance, enemyTile, finalDes, GridManager.Instance.IsWalkable);
                     break;
@@ -205,6 +200,9 @@ public class Enemy : Unit
                     {
                         break;
                     }
+
+                    EnemyManager.Instance.IdlePop(transform);
+                    yield return new WaitForSeconds(1.5f);
                     var enemyPos = enemyTile.gridPosition;
                     if (pathList.Exists(node=>node.x==enemyPos.x&&node.y== enemyPos.y))
                     {
@@ -224,11 +222,12 @@ public class Enemy : Unit
                     break;
                 case EnemyDetectionState.Doubt:
                     // currently not use doubt status
-                    Debug.Log("Doubt status, the code should never trigger this.");
+                   // Debug.Log("Doubt status, the code should never trigger this.");
                     break;
         }
         if (path != null)
         {
+            
             int temp = ActionPoint;
             for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
                 if (temp > 0)
@@ -237,10 +236,8 @@ public class Enemy : Unit
                     temp--;
                 }
             Path = null;
+            CameraManager.Instance.boundCameraFallow(transform);
             ActionManager.Singleton.Execute(ResetToIdle);
-        }else
-        {
-            LevelManager.Instance.EndEnvironmentActionPhase();
         }
     }
     
@@ -260,6 +257,10 @@ public class Enemy : Unit
     /// </summary>
     public void SetDetectionState(EnemyDetectionState current)
     {
+        if (currentDetectionState == EnemyDetectionState.Found && current != EnemyDetectionState.Found)
+        {
+            EnemyManager.Instance.QuestionPop(transform);
+        }
         currentDetectionState = current;
         
     }
@@ -324,7 +325,7 @@ public class Enemy : Unit
     /// </summary>
 	private void HandleDetection(Unit unit, Vector2Int previousPos, Vector2Int pos)
 	{
-        if (unit.tag == "Player")
+        if (unit.tag == "Player"&&currentDetectionState==EnemyDetectionState.Normal)
         {
             Tile current_tile = GridManager.Instance.GetTile(transform.position);
             rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range);
@@ -333,14 +334,8 @@ public class Enemy : Unit
             {
                 //detected
                 // add some operation here
-                if (currentDetectionState != EnemyDetectionState.Found)
-                {
-                    AudioSource s = this.gameObject.GetComponentInChildren<AudioSource>();
-                    s.PlayOneShot(s.clip);
-                }
                 SetDetectionState(EnemyDetectionState.Found);
-                
-
+                StartCoroutine(Founded());
             }
         }
 	}
@@ -414,5 +409,11 @@ public class Enemy : Unit
         return nearest;
     }
 
-
+    private IEnumerator Founded()
+    {
+        CameraManager.Instance.FocusAt(transform.position);
+        yield return new WaitForSeconds(3f);
+        EnemyManager.Instance.AlertPop(transform);
+        
+    }
 }
