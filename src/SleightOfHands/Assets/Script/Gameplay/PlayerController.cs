@@ -269,6 +269,13 @@ public class PlayerController : MouseInteractable
     /// <param name="obj"> The clicked object </param>
     private void HandleMouseClick(MouseInteractable obj)
     {
+        //handle click sound
+        AudioSource _audioSource = this.gameObject.GetComponent<AudioSource>();
+        AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/tapTile");
+
+        _audioSource.clip = audioClip;
+        _audioSource.Play();
+
         switch (currentPlayerState)
         {
             case PlayerState.Idle:

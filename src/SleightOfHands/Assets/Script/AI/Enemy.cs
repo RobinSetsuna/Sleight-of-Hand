@@ -261,6 +261,7 @@ public class Enemy : Unit
     public void SetDetectionState(EnemyDetectionState current)
     {
         currentDetectionState = current;
+        
     }
     
     /// <summary>
@@ -332,7 +333,14 @@ public class Enemy : Unit
             {
                 //detected
                 // add some operation here
+                if (currentDetectionState != EnemyDetectionState.Found)
+                {
+                    AudioSource s = this.gameObject.GetComponentInChildren<AudioSource>();
+                    s.PlayOneShot(s.clip);
+                }
                 SetDetectionState(EnemyDetectionState.Found);
+                
+
             }
         }
 	}

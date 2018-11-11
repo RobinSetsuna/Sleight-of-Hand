@@ -72,7 +72,10 @@ public abstract class Unit : InLevelObject
     private Vector3 start;
     public Vector3 destination;
     public string unitName;
-    
+    AudioSource _audioSource;
+    AudioClip audioClip;
+
+
 
     public void MoveTo(Vector3 destination, System.Action callback)
     {
@@ -111,12 +114,13 @@ public abstract class Unit : InLevelObject
         characterController = GetComponent<CharacterController>();
     }
 
-    private void Update() {
+    private void FixedUpdate() {
 
         // Push player to ground
         if (characterController != null && !characterController.isGrounded) {
             characterController.Move(Vector3.up * (-9.81f * Time.deltaTime));
         }
+       
 
     }
 
@@ -201,6 +205,10 @@ public abstract class Unit : InLevelObject
             if (modelHolder != null) {
                 float localHeight = jumpHeight * Mathf.Abs(Mathf.Sin(travelRatio * Mathf.PI * jumpsPerMove));
                 modelHolder.transform.localPosition = Vector3.up * localHeight;
+                
+                
+
+                
             }
 
             if (travelRatio >= 1) {
@@ -210,7 +218,11 @@ public abstract class Unit : InLevelObject
 
             yield return null;
         }
+        _audioSource = this.gameObject.GetComponentInChildren<AudioSource>();
+        audioClip = Resources.Load<AudioClip>("Audio/SFX/jump");
 
+        _audioSource.clip = audioClip;
+        _audioSource.Play();
         //transform.position = new Vector3(destination.x, transform.position.y, destination.z);
 
         var temp = GridManager.Instance.GetTile(transform.position).gridPosition;
@@ -253,4 +265,6 @@ public abstract class Unit : InLevelObject
     //	//heading is the next tile unit will move to.
     //	heading = tile.transform;
     //}
+
+
 }
