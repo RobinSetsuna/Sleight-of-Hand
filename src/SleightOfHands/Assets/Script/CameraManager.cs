@@ -50,6 +50,15 @@ public class CameraManager : MonoBehaviour
 	{
 		return typeWhiteList.Contains(obj.Type);
 	}
+	public void CameraZoomIn()
+	{
+		StartCoroutine(ZoomIn());
+	}
+
+	public void CameraZoomOut()
+	{
+		StartCoroutine(ZoomOut());
+	}
 
 	public void Finished()
 	{
@@ -59,6 +68,10 @@ public class CameraManager : MonoBehaviour
 			destination = FocusQueue.Dequeue();
 			StartCoroutine(Focus());
 		}
+//		else
+//		{
+//			StartCoroutine(ZoomOut());
+//		}
 	}
 
 	public void setDefaultPos()
@@ -285,7 +298,7 @@ public class CameraManager : MonoBehaviour
 				}
 			}
 		}
-		StartCoroutine(Focus());
+		//StartCoroutine(Focus());
 		//Finished();
 		yield return null;
 	}

@@ -82,9 +82,10 @@ public class EnemyManager : MonoBehaviour {
 				{
 					//all the enemy has moved
 					index = 0;
+					CameraManager.Instance.CameraZoomOut();
 					LevelManager.Instance.NextRound();
 				}
-				CameraManager.Instance.unboundCameraFallow();;
+				CameraManager.Instance.unboundCameraFallow();
 				LevelManager.Instance.StartNextPhaseTurn();
 				break;
 		}
