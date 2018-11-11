@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 0
-  alpha: 0.5
+  alpha: 0.25
   gridPosition: {x: 0, y: 0}
   distance: 9999
   selected: 0
