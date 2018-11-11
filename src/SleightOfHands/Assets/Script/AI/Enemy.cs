@@ -404,7 +404,7 @@ public class Enemy : Unit
     private IEnumerator Founded()
     {
         CameraManager.Instance.FocusAt(transform.position);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         EnemyManager.Instance.AlertPop(transform);
         
     }
