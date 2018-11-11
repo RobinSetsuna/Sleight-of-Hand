@@ -954,9 +954,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac1622e5ae9de74489476913be3f093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTimeY: 4
-  smoothTimeX: 4
-  bounds: 1
+  smoothTimeY: 0.7
+  smoothTimeX: 0.7
+  bounds: 0
   minCameraPos: {x: -11.66781, y: 19.04, z: -12.5332}
   maxCanmeraPos: {x: 4.866974, y: 19.04, z: -1.610182}
   rotate_speed: 1.25

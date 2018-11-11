@@ -8,6 +8,7 @@ public class Smoke : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         LevelManager.Instance.onCurrentTurnChange.AddListener(HandleTimeOut);
+        CameraManager.Instance.FocusAt(this.transform.position);
     }
 	
 	// Update is called once per frame
@@ -19,6 +20,7 @@ public class Smoke : MonoBehaviour {
             {
                 if(CheckEnemy(obj))
                 {
+                    StartCoroutine(Question(obj));
                     obj.GetComponent<Enemy>().DetectionRange = 0;
                 }
                 else
@@ -55,5 +57,12 @@ public class Smoke : MonoBehaviour {
             Destroy(this.gameObject);
         }
         
+    }
+
+    private IEnumerator Question(GameObject obj)
+    {
+
+        EnemyManager.Instance.QuestionPop(obj.transform);
+        yield return new WaitForSeconds(1f);
     }
 }

@@ -8,6 +8,7 @@ public class Glue : MonoBehaviour {
     // Use this for initialization
     void Start () {
         LevelManager.Instance.onCurrentTurnChange.AddListener(HandleTimeOut);
+        CameraManager.Instance.FocusAt(this.transform.position);
     }
 	
 	// Update is called once per frame
@@ -21,6 +22,7 @@ public class Glue : MonoBehaviour {
                 Tile GlueTile = GridManager.Instance.GetTile(this.gameObject.transform.position);
                 if (enemyTile.transform.position == GlueTile.transform.position)
                 {
+                    StartCoroutine(Question(obj));
                     obj.GetComponent<Enemy>().speed = -10;
                   
                     //obj.transform.position = new Vector3(GlueTile.transform.position.x, obj.transform.position.y, GlueTile.transform.position.z);
@@ -39,5 +41,12 @@ public class Glue : MonoBehaviour {
             Destroy(this.gameObject);
         }
 
+    }
+
+    private IEnumerator Question(GameObject obj)
+    {
+
+        EnemyManager.Instance.QuestionPop(obj.transform);
+        yield return new WaitForSeconds(1f);
     }
 }

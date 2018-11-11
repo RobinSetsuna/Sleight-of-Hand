@@ -72,8 +72,6 @@ public abstract class Unit : InLevelObject
     private Vector3 start;
     public Vector3 destination;
     public string unitName;
-    AudioSource _audioSource;
-    AudioClip audioClip;
 
 
 
@@ -218,9 +216,8 @@ public abstract class Unit : InLevelObject
 
             yield return null;
         }
-        _audioSource = this.gameObject.GetComponentInChildren<AudioSource>();
-        audioClip = Resources.Load<AudioClip>("Audio/SFX/jump");
-
+        AudioSource _audioSource = this.gameObject.GetComponent<AudioSource>();
+        AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/jump");
         _audioSource.clip = audioClip;
         _audioSource.Play();
         //transform.position = new Vector3(destination.x, transform.position.y, destination.z);
