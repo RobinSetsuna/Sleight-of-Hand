@@ -57,7 +57,7 @@ public class CameraManager : MonoBehaviour
 		if (FocusQueue.Count != 0)
 		{
 			destination = FocusQueue.Dequeue();
-			StartCoroutine(ZoomOut());
+			StartCoroutine(Focus());
 		}
 	}
 
@@ -111,7 +111,7 @@ public class CameraManager : MonoBehaviour
 		{
 			allocated = true;
 			this.destination = destination;
-			StartCoroutine(ZoomOut());
+			StartCoroutine(Focus());
 		}
 	}
 		

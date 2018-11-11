@@ -217,6 +217,7 @@ public class Enemy : Unit
         }
         if (path != null)
         {
+            
             int temp = ActionPoint;
             for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
                 if (temp > 0)
@@ -225,6 +226,7 @@ public class Enemy : Unit
                     temp--;
                 }
             Path = null;
+            CameraManager.Instance.boundCameraFallow(transform);
             ActionManager.Singleton.Execute(ResetToIdle);
         }
     }
