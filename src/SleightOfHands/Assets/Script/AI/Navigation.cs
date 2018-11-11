@@ -70,7 +70,7 @@ public struct Navigation
 
             closedList[x, y] = true;
 
-            List<Vector2Int> adjacentIndices = navGrid.GetAccessibleAdjacentGridPositions(x, y);
+            List<Vector2Int> adjacentIndices = navGrid.GetAdjacentGridPositions(x, y);
             for (int i = 0; i < adjacentIndices.Count; i++)
             {
                 Vector2Int neighborIndices = adjacentIndices[i];

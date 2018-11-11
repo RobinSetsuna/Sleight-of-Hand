@@ -88,7 +88,7 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 
 	public int y
     {
-		get
+	    get
 		{
             // return  Mathf.RoundToInt(gridPosition.y);
             return gridPosition.y;
@@ -96,7 +96,6 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 	}
 
 	public bool selected = false;
-    public bool smokeOnTile = false;
 
     //private void OnMouseEnter()
     //{
@@ -180,16 +179,25 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 
     public void Dehighlight()
     {
-        Highlight(HighlightColor.None);
+        if ((mark & 0xf) != 0)
+        {
+            BitOperationUtility.WriteBits(ref mark, 0, 0, 3);
+            RefreshHighlight();
+        }
     }
 
-	public void Highlight(HighlightColor color)
+	public void Highlight(HighlightColor color, bool isAdditive = true)
 	{
+        Debug.LogFormat("{0}.Highlight({1}, {2})", this, color, isAdditive);
         int mask = (int)color;
 
-        if (((mark ^ mask) & 0xf) != 0)
+        if (((mark & 0xf) ^ mask) != 0)
         {
-            BitOperationUtility.WriteBits(ref mark, mask, 0, 3);
+            if (isAdditive)
+                mark |= mask;
+            else
+                BitOperationUtility.WriteBits(ref mark, mask, 0, 3);
+
             RefreshHighlight();
         }
 	}

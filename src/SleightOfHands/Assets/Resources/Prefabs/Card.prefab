@@ -1,290 +1,388 @@
-  {
-        return tile.gridPosition;
-    }
-
-    /// <summary>
-    /// Get the world position from a grid position
-    /// </summary>
-    /// <param name="x"> The x value of the grid position to concern </param>
-    /// <param name="y"> The y value of the grid position to concern </param>
-    /// <returns> A Vector3 struct representing the world position </returns>
-    public Vector3 GetWorldPosition(int x, int y)
-    {
-        return new Vector3((x * 2 + 1) * tileSize, 0, (y * 2 + 1) * tileSize);
-    }
-
-    /// <summary>
-    /// Get the world position from a grid position
-    /// </summary>
-    /// <param name="gridPosition"> The grid position to concern </param>
-    /// <returns> A Vector3 struct representing the world position </returns>
-    public Vector3 GetWorldPosition(Vector2Int gridPosition)
-    {
-        return GetWorldPosition(gridPosition.x, gridPosition.y);
-    }
-
-    /// <summary>
-    /// Get the world position of the tile
-    /// </summary>
-    /// <param name="tile"> The tile to concern </param>
-    /// <returns> A Vector3 struct representing the world position </returns>
-    public Vector3 GetWorldPosition(Tile tile)
-    {
-        return GetWorldPosition(tile.gridPosition);
-    }
-
-    /// <summary>
-    /// Evalueate whether two tiles are considered to be adjacent
-    /// </summary>
-    /// <param name="A"> The first tile to concern </param>
-    /// <param name="B"> The second tile to concern </param>
-    /// <returns> A boolean indicating the result of evaluation </returns>
-    public bool IsAdjacent(Tile A, Tile B)
-    {
-        return MathUtility.ManhattanDistance(A.x, A.y, B.x, B.y) == 1;
-    }
-
-    /// <summary>
-    /// Evaluate whether the grid position is accessible
-    /// </summary>
-    /// <param name="x"> The x value of the grid position to concern </param>
-    /// <param name="y"> The y value of the grid position to concern </param>
-    /// <returns> A boolean indicating the result of evaluation </returns>
-    public bool IsAccessible(int x, int y)
-    {
-        return grid[x, y].walkable;
-    }
-
-    public bool IsWalkable(int x, int y)
-    {
-        return grid[x, y].walkable;
-    }
-    
-    public bool HasUnitOn(int x, int y)
-    {
-        return units[x, y]!=null;
-    }
-
-    /// <summary>
-    /// Get all accessible positions surrounding a given grid position
-    /// </summary>
-    /// <param name="x"> The x value of the grid position to concern </param>
-    /// <param name="y"> The y value of the grid position to concern </param>
-    /// <returns> A List of Vector2Int containing all grid positions </returns>
-    public List<Vector2Int> GetAdjacentGridPositions(int x, int y)
-    {
-        List<Vector2Int> list = new List<Vector2Int>();
-
-        if (x + 1 < Length && grid[x + 1, y])
-            list.Add(new Vector2Int(x + 1, y));
-
-        if (x - 1 >= 0 && grid[x - 1, y])
-            list.Add(new Vector2Int(x - 1, y));
-
-        if (y + 1 < Width && grid[x, y + 1])
-            list.Add(new Vector2Int(x, y + 1));
-
-        if (y - 1 >= 0 && grid[x, y - 1])
-            list.Add(new Vector2Int(x, y - 1));
-
-        return list;
-    }
-
-    /// <summary>
-    /// generated grid map
-    /// map_size : the number of cube in row and column
-    /// node_radius: the cube radius
-    /// parameter: None
-    /// </summary>
-    public void GenerateMap(LevelManager.LevelData levelData)
-    {
-        if (!root)
-            root = transform.Find("GridRoot");
-
-        if (!root)
-        {
-            root = new GameObject("GridRoot").transform;
-            root.parent = transform;
-        }
-
-        // Extract data from levelData
-        if (levelData != null)
-            mapSize = new Vector2Int(levelData.width, Mathf.CeilToInt(levelData.tiles.Length / levelData.width));
-
-        // new grid with size [mapSize.x,mapSize.y]
-        grid = new Tile[mapSize.x, mapSize.y];
-        units = new Unit[mapSize.x, mapSize.y];
-
-        int numExistedTiles = root.childCount;
-
-        for (int x = 0; x < mapSize.x; x ++)
-            for (int y = 0; y < mapSize.y; y ++)
-            {
-                int i = x + y * Length;
-                int tileType = levelData.tiles[i];
-                // parse position for tile
-                // Vector3 tilePosition = new Vector3(-mapSize.x/2 +nodeRadius + x + transform.position.x, 2, -mapSize.y/2 + nodeRadius + y + transform.position.z);
-                Vector3 tilePosition = GetWorldPosition(x, y);
-
-                Transform tileTransform = i < numExistedTiles ? root.GetChild(i) : Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right * 90), root);
-
-                // initiate outline
-                tileTransform.localScale = Vector3.one * (1 - outlinePercent);
-
-                // set tile value
-                Tile tile = tileTransform.GetComponent<Tile>();
-                tile.walkable = tileType == 0;
-                tile.gridPosition = new Vector2Int(x, y);
-                
-                // insertion
-                grid[x,y] = tile;
-                Vector3 envTilePosition = tilePosition;
-                envTilePosition.y = -0.55f;
-                if(tileType < 0 )
-                {
-                    // tileType < 0, road tile add
-                    Quaternion roadTileRotation = Quaternion.Euler(0,0, 0);
-                    Instantiate(roadTilePrefabs[-tileType-1], envTilePosition, roadTileRotation, environmentHolder);
-                }
-                else
-                {
-                    Quaternion envTileRotation = Quaternion.Euler(0, Random.Range(0, 3) * 90f, 0);
-                    int envTileIndex = Random.Range(0, environmentTilePrefabs.Length);
-                    GameObject envTilePrefab = environmentTilePrefabs[envTileIndex];
-                    Instantiate(envTilePrefab, envTilePosition, envTileRotation, environmentHolder);
-                    if (tileType != 0&& tileType>0)
-                    {
-                        Quaternion wallRotation = Quaternion.Euler(0, Random.Range(0, 3) * 90f, 0);
-                        Instantiate(wallPrefabs[tileType - 1], tilePosition, wallRotation, environmentHolder);
-                    }
-                }
-                #region ORIGINAL_SWITCH_STATE
-//                switch (tileType)
-                   //                {
-                   //                    case 1:
-                   //                        Quaternion wallRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
-                   //                        int wallTileIndex = UnityEngine.Random.Range(0, wallPrefabs.Length);
-                   //                        Instantiate(wallPrefabs[wallTileIndex], tilePosition, wallRotation, environmentHolder);
-                   //                        goto case 0;
-                   //
-                   //                    case 0:
-                   //                        Vector3 envTilePosition = tilePosition;
-                   //                        envTilePosition.y = -0.55f;
-                   //                        Quaternion envTileRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
-                   //                        int envTileIndex = UnityEngine.Random.Range(0, environmentTilePrefabs.Length);
-                   //                        GameObject envTilePrefab = environmentTilePrefabs[envTileIndex];
-                   //                        Instantiate(envTilePrefab, envTilePosition, envTileRotation, environmentHolder);
-                   //                        break;
-                   //                }
-                #endregion
-            }
-    }
-
-    /// <summary>
-    /// Initialize the manager by starting to listen to important events
-    /// </summary>
-    public void Initialize()
-    {
-        PlayerController playerController = LevelManager.Instance.playerController;
-
-        playerController.onPathUpdate.AddListener(HandlePathChange);
-        playerController.onCurrentPlayerStateChange.AddListener(HandleCurrentPlayerStateChange);
-
-        playerController.onCardToUseUpdate.AddListener(HandleCardToUseChange);
-    }
-
-    //public void wipeTiles()
-    //{
-    //    if (numHighlightedTiles > 0)
-    //    {
-    //        numHighlightedTiles = 0;
-    //        foreach (Tile tile in grid)
-    //        {
-    //            //reset all tiles
-    //            tile.Wipe();
-    //        }
-    //    }
-    //}
-
-    /// <summary>
-    /// High light the tile with a given color
-    /// </summary>
-    /// <param name="tile"> The tile to highlight </param>
-    /// <param name="color"> The color to highlight with </param>
-    public void Highlight(Tile tile, Tile.HighlightColor color, bool isAdditive = true)
-    {
-        Highlight(tile, 0, 0, int.MinValue, color, isAdditive);
-    }
-
-    /// <summary>
-    /// High light tiles within a certain range of a central tile with a given color
-    /// </summary>
-    /// <param name="center"> The central tile to concern </param>
-    /// <param name="range"> The range to concern </param>
-    /// <param name="color"> The color to highlight with </param>
-    /// <param name="skipUnmasked"> [optional] </param>
-    public void Highlight(Tile center, int range, Tile.HighlightColor color, bool isAdditive = true, bool skipUnmasked = false)
-    {
-        Highlight(center, 0, range, int.MinValue, color, isAdditive, skipUnmasked);
-    }
-
-    /// <summary>
-    /// High light tiles filtered by a certain mask within a certain range of a central tile with a given color
-    /// </summary>
-    /// <param name="center"> The central tile to concern </param>
-    /// <param name="range"> The range to concern </param>
-    /// <param name="mask"> The mask for filtering </param>
-    /// <param name="color"> The color to highlight with </param>
-    /// <param name="skipUnmasked"> [optional] </param>
-    public void Highlight(Tile center, int range, int mask, Tile.HighlightColor color, bool isAdditive = true, bool skipUnmasked = false)
-    {
-        Highlight(center, 0, range, mask, color, isAdditive, skipUnmasked);
-    }
-
-    /// <summary>
-    /// High light tiles filtered by a certain mask within a certain interval of distance to a central tile with a given color
-    /// </summary>
-    /// <param name="center"> The central tile to concern </param>
-    /// <param name="lower"> The lower boundary of the distance </param>
-    /// <param name="upper"> The higher boundary of the distance </param>
-    /// <param name="mask"> The mask for filtering </param>
-    /// <param name="color"> The color to highlight with </param>
-    /// <param name="skipUnmasked"> [optional] </param>
-    public void Highlight(Tile center, int lower, int upper, int mask, Tile.HighlightColor color, bool isAdditive = true, bool skipUnmasked = false)
-    {
-        bool[,] isVisited = new bool[Length, Width];
-
-        Queue<KeyValuePair<Tile, int>> q = new Queue<KeyValuePair<Tile, int>>();
-
-        q.Enqueue(new KeyValuePair<Tile, int>(center, 0));
-
-        while (q.Count > 0)
-        {
-            KeyValuePair<Tile, int> pair = q.Dequeue();
-
-            Tile tile = pair.Key;
-            int distance = pair.Value;
-
-            if (distance >= lower && distance <= upper && (skipUnmasked || (center.Mark & mask) != 0))
-            {
-                tile.Highlight(color, isAdditive);
-                numHighlightedTiles++;
-            }
-
-            int x = tile.x;
-            int y = tile.y;
-
-            isVisited[x, y] = true;
-
-            if (++distance <= upper)
-                //{
-                foreach (Vector2Int coordinate in GetAdjacentGridPositions(x, y))
-                {
-                    int xi = coordinate.x;
-                    int yi = coordinate.y;
-
-                    if (!isVisited[xi, yi])
-                    {
-                        tile = grid[xi, yi];
-
-   
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1644353494951302}
+  m_IsPrefabAsset: 1
+--- !u!1 &1320563785371994
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224636288577177808}
+  - component: {fileID: 222550740069052606}
+  - component: {fileID: 114580403772599468}
+  m_Layer: 5
+  m_Name: Illustration
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1353903181612444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224038578676840550}
+  - component: {fileID: 222687639761474888}
+  - component: {fileID: 114425125311613224}
+  m_Layer: 5
+  m_Name: Background
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1458205117747672
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224644848198980188}
+  - component: {fileID: 222463070123434574}
+  - component: {fileID: 114028115241578034}
+  m_Layer: 5
+  m_Name: Description
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1526768689426982
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224761876668312980}
+  - component: {fileID: 222584300567908474}
+  - component: {fileID: 114617597167366710}
+  m_Layer: 5
+  m_Name: Title
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1644353494951302
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224372910138980040}
+  - component: {fileID: 222603275322247724}
+  - component: {fileID: 65388742830640744}
+  - component: {fileID: 114572517674035136}
+  - component: {fileID: 114208334706400898}
+  m_Layer: 5
+  m_Name: Card
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &65388742830640744
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1644353494951302}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 110, y: 170, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114028115241578034
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1458205117747672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 58b647c5b2ec4184e9a07a561cdf0644, type: 3}
+    m_FontSize: 16
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!114 &114208334706400898
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1644353494951302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4bd755e3810240439520ac84aeb27a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 0
+--- !u!114 &114425125311613224
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1353903181612444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 1fc3154f8d459754bb6f577158670abd, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!114 &114572517674035136
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1644353494951302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5861cd8be669eaf46867d6415177ff3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: {fileID: 114617597167366710}
+  background: {fileID: 114425125311613224}
+  illustration: {fileID: 114580403772599468}
+  description: {fileID: 114028115241578034}
+--- !u!114 &114580403772599468
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1320563785371994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!114 &114617597167366710
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1526768689426982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 58b647c5b2ec4184e9a07a561cdf0644, type: 3}
+    m_FontSize: 16
+    m_FontStyle: 0
+    m_BestFit: 1
+    m_MinSize: 1
+    m_MaxSize: 40
+    m_Alignment: 7
+    m_AlignByGeometry: 0
+    m_RichText: 0
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &222463070123434574
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1458205117747672}
+  m_CullTransparentMesh: 0
+--- !u!222 &222550740069052606
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1320563785371994}
+  m_CullTransparentMesh: 0
+--- !u!222 &222584300567908474
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1526768689426982}
+  m_CullTransparentMesh: 0
+--- !u!222 &222603275322247724
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1644353494951302}
+  m_CullTransparentMesh: 0
+--- !u!222 &222687639761474888
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1353903181612444}
+  m_CullTransparentMesh: 0
+--- !u!224 &224038578676840550
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1353903181612444}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224372910138980040}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 110, y: 170}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224372910138980040
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1644353494951302}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 224038578676840550}
+  - {fileID: 224636288577177808}
+  - {fileID: 224761876668312980}
+  - {fileID: 224644848198980188}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224636288577177808
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1320563785371994}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224372910138980040}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 14}
+  m_SizeDelta: {x: 86, y: 42}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224644848198980188
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1458205117747672}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224372910138980040}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -45}
+  m_SizeDelta: {x: 80, y: 60}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!224 &224761876668312980
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1526768689426982}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224372910138980040}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 66}
+  m_SizeDelta: {x: 80, y: 20}
+  m_Pivot: {x: 0.5, y: 0.5}

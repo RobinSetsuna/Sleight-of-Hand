@@ -50,41 +50,40 @@ public class EnemyManager : MonoBehaviour {
 
 	private void HandleCurrentPhaseChange(Phase currentPhase)
 	{
-		switch (currentPhase)
-		{
-			case Phase.Start:
-				if (currentEnemy == null && index < Enemies.Count())
-				{
-					currentEnemy = Enemies[index];
-				}
-				LevelManager.Instance.StartEnvironmentActionPhase(); // finish start phase, to the action phase
-				break;
-			case Phase.Action:
-				if (currentEnemy)
-				{
-					currentEnemy.CurrentEnemyState = EnemyMoveState.Idle;
-				}
-				else
-				{
-					LevelManager.Instance.EndEnvironmentActionPhase();
-				}
-				break;
-			case Phase.End:
-				if (currentEnemy != null)
-				{
-					currentEnemy.CurrentEnemyState = EnemyMoveState.Unmoveable;
-				}
-				currentEnemy = null;
-				index++;
-				if (index >= Enemies.Count())
-				{
-					//all the enemy has moved
-					index = 0;
-					LevelManager.Instance.NextRound();
-				}
-				LevelManager.Instance.StartNextPhaseTurn();
-				break;
-		}
+		//switch (currentPhase)
+		//{
+		//	case Phase.Start:
+		//		if (currentEnemy == null && index < Enemies.Count())
+		//		{
+		//			currentEnemy = Enemies[index];
+		//		}
+		//		LevelManager.Instance.StartEnvironmentActionPhase(); // finish start phase, to the action phase
+		//		break;
+		//	case Phase.Action:
+		//		if (currentEnemy)
+		//		{
+		//			currentEnemy.CurrentEnemyState = EnemyMoveState.Idle;
+		//		}
+		//		else
+		//		{
+		//			LevelManager.Instance.EndEnvironmentActionPhase();
+		//		}
+		//		break;
+		//	case Phase.End:
+		//		if (currentEnemy != null)
+		//		{
+		//			currentEnemy.CurrentEnemyState = EnemyMoveState.Unmoveable;
+		//		}
+		//		currentEnemy = null;
+		//		index++;
+		//		if (index >= Enemies.Count())
+		//		{
+		//			//all the enemy has moved
+		//			index = 0;
+		//			LevelManager.Instance.NextRound();
+		//		}
+		//		LevelManager.Instance.StartNextPhaseTurn();
+		//		break;
+		//}
 	}
-
 }
