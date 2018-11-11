@@ -8,11 +8,11 @@ public class UICard : UIWidget
     [SerializeField] private Image illustration;
     [SerializeField] private Text description;
 
-    public Card card { get; private set; }
+    public Card Card { get; private set; }
 
     internal void Clear()
     {
-        card = null;
+        Card = null;
 
         title.text = "";
         background.sprite = null;
@@ -25,16 +25,15 @@ public class UICard : UIWidget
         Card card = (Card)args[0];
 
         if (card != null)
-            this.card = card;
+            Card = card;
 
         // TODO: Load card information
-        if (this.card != null)
+        if (Card != null)
         {
-            
-            //title.text = TableDataManager.Singleton.GetData<CardInfo>("Card", this.card.ID).Name;
-            background.sprite = ResourceUtility.GetCardBackground(0);
+            title.text = Card.Data.Name;
+            background.sprite = ResourceUtility.GetCardBackground(Card.Data.Template);
             //illustration.sprite = ResourceUtility.GetCardIllustration(0);
-            //description.text = TableDataManager.Singleton.GetData<CardInfo>("Card", this.card.ID).Description;
+            description.text = Card.Data.Description;
         }
     }
 }

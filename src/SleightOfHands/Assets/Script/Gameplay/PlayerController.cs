@@ -277,7 +277,7 @@ public class PlayerController : MouseInteractable
                 else if (obj.GetComponent<UICard>())
                 {
                     CurrentPlayerState = PlayerState.CardUsagePlanning;
-                    CardToUse = obj.GetComponent<UICard>().card;
+                    CardToUse = obj.GetComponent<UICard>().Card;
                 }
                 break;
 
@@ -324,7 +324,7 @@ public class PlayerController : MouseInteractable
                         CurrentPlayerState = PlayerState.CardUsageConfirmation;
                     }
                 }
-                else if (obj.GetComponent<UICard>() && obj.GetComponent<UICard>().card == cardToUse)
+                else if (obj.GetComponent<UICard>() && obj.GetComponent<UICard>().Card == cardToUse)
                     CurrentPlayerState = PlayerState.Idle;
                 break;
         }

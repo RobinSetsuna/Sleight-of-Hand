@@ -17,12 +17,12 @@ public struct ResourceUtility
         return Resources.Load<T>("Prefabs/UI/" + name);
     }
 
-    public static Sprite GetCardBackground(int id)
+    public static Sprite GetCardBackground(string id)
     {
         return Resources.Load<Sprite>("Sprites/Card/Background/" + id);
     }
 
-    public static Sprite GetCardIllustration(int id)
+    public static Sprite GetCardIllustration(string id)
     {
         return Resources.Load<Sprite>("Sprites/Card/Illustration/" + id);
     }

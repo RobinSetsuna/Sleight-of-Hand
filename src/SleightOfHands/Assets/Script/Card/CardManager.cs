@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 
 public class CardManager : MonoBehaviour
@@ -32,11 +31,6 @@ public class CardManager : MonoBehaviour
 
     int rdNumLast = -1;
 
-    // Use this for initialization
-    void Awake()
-    {
-    }
-
     // Update is called once per frame
     //void Update()
     //{
@@ -48,25 +42,28 @@ public class CardManager : MonoBehaviour
     //}
 
     // randomly take one card from the deck to the player.
-    public void RandomGetCard()
+    public void RandomGetCard(int n = 1)
     {
         //generate a random num from the number of the cards
 
         //ensure random number is different
-        int rdNum;
-        do
-        {
-            rdNum = Random.Range(0, deck.CountDeck());
-        } while (rdNum == rdNumLast);
-        rdNumLast = rdNum;
+        //int rdNum;
+        //do
+        //{
+        //    rdNum = Random.Range(0, deck.CountDeck());
+        //} while (rdNum == rdNumLast);
+        //rdNumLast = rdNum;
 
-        Card card = deck.GetCardAt(rdNum);
+        //Card card = deck.GetCardAt(Random.Range(0, deck.CountDeck()));
 
-        //add deleted card into hand
-        AddCard(card);
+        ////add deleted card into hand
+        //AddCard(card);
 
-        //delete the selected card from deck
-        deck.Remove(card);
+        ////delete the selected card from deck
+        //deck.Remove(card);
+
+        foreach (Card card in deck.GetRandom(2))
+            AddCard(card);
     }
 
     // take one specific card from the deck to the player.
@@ -208,7 +205,7 @@ public class Card
 [System.Serializable]
 public class CardDeck : IEnumerable<Card>
 {
-    public List<Card> cards;
+    private List<Card> cards;
 
     public CardDeck()
     {
@@ -239,6 +236,31 @@ public class CardDeck : IEnumerable<Card>
     public void Remove(Card card)
     {
         cards.Remove(card);
+    }
+
+    public List<Card> GetRandom(int n = 1)
+    {
+        HashSet<int> indices = new HashSet<int>();
+
+        int N = cards.Count;
+        while (indices.Count < n)
+        {
+            int i;
+
+            do
+            {
+                i = Random.Range(0, N);
+            } while (indices.Contains(i));
+
+            indices.Add(i);
+        }
+
+        List<Card> list = new List<Card>();
+
+        foreach (int i in indices)
+            list.Add(cards[i]);
+
+        return list;
     }
 
     public IEnumerator<Card> GetEnumerator()
