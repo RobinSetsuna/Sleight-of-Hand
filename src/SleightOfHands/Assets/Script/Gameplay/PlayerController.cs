@@ -138,9 +138,9 @@ public class PlayerController : MouseInteractable
 
                     case PlayerState.Move:
                         for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
-                            ActionManager.Singleton.AddBack(new Movement(GetComponent<player>(), tile));
+                            ActionManager.Singleton.AddBack(new Movement(GetComponent<player>(), tile), tile == path.Destination ? (System.Action)ResetToIdle : null);
                         Path = null;
-                        ActionManager.Singleton.Execute(ResetToIdle);
+                        // ActionManager.Singleton.Execute(ResetToIdle);
                         break;
 
                     case PlayerState.CardUsageConfirmation:
@@ -255,8 +255,8 @@ public class PlayerController : MouseInteractable
 
     private void UseCard()
     {
-        ActionManager.Singleton.AddBack(new CardUsage(Player, cardToUse, targetTile));
-        ActionManager.Singleton.Execute(ResetToIdle);
+        ActionManager.Singleton.AddBack(new CardUsage(Player, cardToUse, targetTile), ResetToIdle);
+        // ActionManager.Singleton.Execute(ResetToIdle);
 
         CardToUse = null;
     }
