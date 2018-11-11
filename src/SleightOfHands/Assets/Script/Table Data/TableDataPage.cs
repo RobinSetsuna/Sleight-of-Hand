@@ -17,6 +17,10 @@ public class TableDataPage
         }
     }
 
+    public int CountRow()
+    {
+        return entries.Count;
+    }
     /// <summary>
     /// Construct an empty data page
     /// </summary>

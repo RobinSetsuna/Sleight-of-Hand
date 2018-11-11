@@ -31,32 +31,27 @@
 		{
 			"typeString": "Guard",
 			"position": {"x": 15, "y": 4},
-			"settings": ["heading", "west"],
-			"path":["15,4","13,4","11,4","9,4","7,4","5,4","3,4","5,4","7,4","9,4","11,4","13,4"]
+			"settings": ["heading", "west"]
 		},
 		{
 			"typeString": "Guard",
 			"position": {"x": 15, "y": 8},
-			"settings": ["heading", "west"],
-			"path":["15,8","17,8","19,8","17,8"]
+			"settings": ["heading", "west"]
 		},
 		{
 			"typeString": "Guard",
 			"position": {"x": 10, "y": 7},
-			"settings": ["heading", "south"],
-			"path":["10,7","10,5"]
+			"settings": ["heading", "south"]
 		},
 		{
 			"typeString": "Guard",
-			"position": {"x": 0, "y": 15},
-			"settings": ["heading", "east"],
-			"path":["0,15","2,15","4,15","4,13","4,11","4,9","4,11","4,13","4,15","2,15"]
+			"position": {"x": 5, "y": 1},
+			"settings": ["heading", "north"]
 		},
 		{
 			"typeString": "Guard",
 			"position": {"x": 4, "y": 1},
-			"settings": ["heading", "north"],
-			"path":["4,1","4,3","4,5","4,3"]
+			"settings": ["heading", "north"]
 		}
 	]
 }

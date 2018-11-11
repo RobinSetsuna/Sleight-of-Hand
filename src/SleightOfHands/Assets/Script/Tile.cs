@@ -88,7 +88,7 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 
 	public int y
     {
-	    get
+		get
 		{
             // return  Mathf.RoundToInt(gridPosition.y);
             return gridPosition.y;
@@ -96,6 +96,7 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 	}
 
 	public bool selected = false;
+    public bool smokeOnTile = false;
 
     //private void OnMouseEnter()
     //{

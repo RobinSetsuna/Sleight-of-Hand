@@ -10,8 +10,12 @@ public abstract class Unit : InLevelObject
 {
     [SerializeField] private Round actionRound;
     [SerializeField] private float maxSpeed;
+    [SerializeField] private int initialActionPoint;
+    [SerializeField] private int initialHealth = 100;
 
     public EventOnDataChange<Vector2Int> onGridPositionChange = new EventOnDataChange<Vector2Int>();
+
+    public StatisticSystem.EventOnStatisticChange onAttributeChange;
 
     private Vector2Int gridPosition;
     public Vector2Int GridPosition
@@ -40,8 +44,6 @@ public abstract class Unit : InLevelObject
         }
     }
 
-    [SerializeField] private int initialActionPoint;
-    [SerializeField] private  int initialHealth = 100;
     public int InitialActionPoint
     {
         get
@@ -58,7 +60,16 @@ public abstract class Unit : InLevelObject
         }
     }
 
-    public int ActionPoint { get; protected set; }
+    public int actionPoint { get; protected set; }
+
+    public int Ap
+    {
+        get
+        {
+            return Mathf.RoundToInt(Statistics[StatisticType.Ap]);
+        }
+    }
+
     public float Health { get; protected set; }
 
     [Header("Animations")]
@@ -70,7 +81,8 @@ public abstract class Unit : InLevelObject
     private float speed;
     private Vector3 start;
     private Vector3 destination;
-    
+
+    public StatisticSystem Statistics { get; private set; }
 
     public void MoveTo(Vector3 destination, System.Action callback)
     {
@@ -87,6 +99,20 @@ public abstract class Unit : InLevelObject
         MoveTo(GridManager.Instance.GetWorldPosition(tile.x, tile.y), callback);
     }
 
+    public void UseCard(Card card, Tile targetTile, System.Action callback)
+    {
+        CardData cardData = card.Data;
+
+        switch (cardData.Type)
+        {
+            case "Enhancement":
+                string[] values = cardData.Effect.Split(':');
+                ActionManager.Singleton.AddFront(new StatusEffectApplication(new StatusEffect(int.Parse(values[0]), int.Parse(values[1])), GridManager.Instance.GetUnit(targetTile)));
+                callback.Invoke();
+                break;
+        }
+    }
+
     protected virtual void Awake()
     {
         /*switch (actionRound)
@@ -99,20 +125,25 @@ public abstract class Unit : InLevelObject
                 break;
         }*/
 
+        Statistics = new StatisticSystem(AttributeSet.Parse((int)AttributeType.Ap_i + ":" + initialActionPoint));
+        onAttributeChange = Statistics.onStatisticChange;
+
         LevelManager.Instance.onNewTurnUpdateAttribute.AddListener(HandleAttributesChangeOnTurn);
         CardManager.Instance.OnAttributesChangeOnEffects.AddListener(HandleAttributesChangeOnEffects);
         gridPosition = GridManager.Instance.GetTile(transform.position).gridPosition;
         GridManager.Instance.NotifyUnitPositionChange(this, new Vector2Int(-1, -1), gridPosition);
     }
 
-    private void Start() {
+    private void Start()
+    {
         characterController = GetComponent<CharacterController>();
     }
 
-    private void Update() {
-
+    private void Update()
+    {
         // Push player to ground
-        if (characterController != null && !characterController.isGrounded) {
+        if (characterController != null && !characterController.isGrounded)
+        {
             characterController.Move(Vector3.up * (-9.81f * Time.deltaTime));
         }
 
@@ -133,15 +164,13 @@ public abstract class Unit : InLevelObject
     {
         //Debug.Log(effects.CurrentAP_c());
         //Debug.Log(effects.CurrentAP_f());
-        ActionPoint = (ActionPoint + effects.CurrentAP_c()) * ( 1 + effects.CurrentAP_f());
-        Health = (Health + effects.CurrentHP_c()) * (1 + effects.CurrentHP_f());
+        actionPoint = (actionPoint + effects.CurrentAP_c()) * ( 1 + effects.CurrentAP_f());
     }
 
     //When enter a new turn, this will be called to calculate the newest attributes
     private void HandleAttributesChangeOnTurn(Effects effects)
     {
-        ActionPoint = (initialActionPoint + (int)effects.GetAP_c()) * (1 + (int)effects.GetAP_f());
-        Health = (initialHealth + effects.GetHP_c()) * (1 + effects.GetHP_f());
+        actionPoint = (initialActionPoint + (int)effects.GetAP_c()) * (1 + (int)effects.GetAP_f());
     }
 
     //private void ResetActionPoint()
@@ -153,7 +182,7 @@ public abstract class Unit : InLevelObject
     {
 
         float initialDistance = MathUtility.ManhattanDistance(destination.x, destination.z, transform.position.x, transform.position.z);
-        Vector3 initialPosition = this.transform.position;
+        Vector3 initialPosition = transform.position;
 
         float travelDistance = 0;
         while (speed > 0)
@@ -173,11 +202,11 @@ public abstract class Unit : InLevelObject
             transform.forward = orientation.normalized;
 
             if (characterController != null) {
-                Vector3 deltaPos = newPosition - this.transform.position;
+                Vector3 deltaPos = newPosition - transform.position;
                 deltaPos.y = 0;
                 characterController.Move(deltaPos);
             } else {
-                this.transform.position = new Vector3(newPosition.x, this.transform.position.y, newPosition.z);
+                transform.position = new Vector3(newPosition.x, transform.position.y, newPosition.z);
             }
 
             // Hopping
@@ -196,10 +225,10 @@ public abstract class Unit : InLevelObject
 
         transform.position = new Vector3(destination.x, transform.position.y, destination.z);
 
-        var temp = GridManager.Instance.GetTile(transform.position).gridPosition;
-        GridPosition = new Vector2Int(temp.x,temp.y);
+        GridPosition = GridManager.Instance.GetTile(transform.position).gridPosition;
 
-        ActionPoint--;
+        actionPoint--;
+        Statistics.AddStatusEffect(new StatusEffect(1, 2));
 
         if (callback != null)
             callback.Invoke();

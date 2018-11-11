@@ -30,10 +30,11 @@ public class UICard : UIWidget
         // TODO: Load card information
         if (this.card != null)
         {
-            title.text = this.card.cardName;
+            
+            //title.text = TableDataManager.Singleton.GetData<CardInfo>("Card", this.card.ID).Name;
             background.sprite = ResourceUtility.GetCardBackground(0);
             //illustration.sprite = ResourceUtility.GetCardIllustration(0);
-            description.text = this.card.intro;
+            //description.text = TableDataManager.Singleton.GetData<CardInfo>("Card", this.card.ID).Description;
         }
     }
 }

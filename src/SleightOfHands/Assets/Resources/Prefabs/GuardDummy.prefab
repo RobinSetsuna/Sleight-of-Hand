@@ -230,13 +230,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionRound: 1
   maxSpeed: 2
-  initialActionPoint: 2
-  initialHealth: 100
+  initialActionPoint: 3
   modelHolder: {fileID: 0}
   jumpHeight: 0
   jumpsPerMove: 1
-  ID: 0
-  detection_range: 3
+  detection_range: 5
 --- !u!114 &114781160667747748
 MonoBehaviour:
   m_ObjectHideFlags: 1
