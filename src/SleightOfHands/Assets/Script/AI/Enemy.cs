@@ -299,8 +299,9 @@ public class Enemy : Unit
         }
         else
         {
+            var yRot = transform.rotation.eulerAngles.y; 
             Tile current_tile = GridManager.Instance.GetTile(transform.position);
-            rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range);
+            rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range,true,yRot);
 
             GridManager.Instance.DehighlightAll();
             foreach (Tile tile in rangeList)
@@ -314,11 +315,12 @@ public class Enemy : Unit
     /// Every movement from enemy and player will get detected, and check the range of detection to set the detection status
     /// </summary>
 	private void HandleDetection(Unit unit, Vector2Int previousPos, Vector2Int pos)
-	{
+    {
+        var yRot = transform.rotation.eulerAngles.y; 
         if (unit.tag == "Player"&&currentDetectionState==EnemyDetectionState.Normal)
         {
             Tile current_tile = GridManager.Instance.GetTile(transform.position);
-            rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range);
+            rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range,true,yRot);
 
             if (rangeList.Contains(GridManager.Instance.GetTile(player.GetComponent<player>().GridPosition)))
             {
