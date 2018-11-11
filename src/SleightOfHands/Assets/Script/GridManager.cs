@@ -520,8 +520,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         if (path != null)
         {
             player _player = LevelManager.Instance.Player;
-            Debug.LogWarning(_player.transform.position);
-            Debug.LogWarning(GetTile(_player.transform.position));
+//            Debug.LogWarning(_player.transform.position);
+//            Debug.LogWarning(GetTile(_player.transform.position));
             if (path.Count == 0)
                 Highlight(GetTile(_player.transform.position), _player.ActionPoint, Tile.HighlightColor.Blue, true);
             else

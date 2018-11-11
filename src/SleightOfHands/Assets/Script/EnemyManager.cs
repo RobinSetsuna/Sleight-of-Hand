@@ -63,6 +63,8 @@ public class EnemyManager : MonoBehaviour {
 				if (currentEnemy)
 				{
 					currentEnemy.CurrentEnemyState = EnemyMoveState.Idle;
+					CameraManager.Instance.FocusAt(currentEnemy.transform.position);
+					//yield return new WaitForSeconds(1f);
 				}
 				else
 				{
@@ -80,11 +82,39 @@ public class EnemyManager : MonoBehaviour {
 				{
 					//all the enemy has moved
 					index = 0;
+					CameraManager.Instance.CameraZoomOut();
 					LevelManager.Instance.NextRound();
 				}
+				CameraManager.Instance.unboundCameraFallow();
 				LevelManager.Instance.StartNextPhaseTurn();
 				break;
 		}
+	}
+
+	public void AlertPop(Transform enemy)
+	{
+		var temp = Instantiate(ResourceUtility.GetPrefab<GameObject>("AlertBubble"), enemy.position, Quaternion.identity,enemy);
+		Destroy(temp,0.5f);
+	}
+	public void AttackPop(Transform enemy)
+	{
+		var temp = Instantiate(ResourceUtility.GetPrefab<GameObject>("AttackBubble"), enemy.position, Quaternion.identity,enemy);
+		Destroy(temp,1.5f);
+	}
+	public void IdlePop(Transform enemy)
+	{
+		var temp = Instantiate(ResourceUtility.GetPrefab<GameObject>("IdleBubble"), enemy.position, Quaternion.identity,enemy);
+		Destroy(temp,1.5f);
+	}
+	public void FoundPop(Transform enemy)
+	{
+		var temp = Instantiate(ResourceUtility.GetPrefab<GameObject>("FoundBubble"), enemy.position, Quaternion.identity,enemy);
+		Destroy(temp,1.5f);
+	}
+	public void QuestionPop(Transform enemy)
+	{
+		var temp = Instantiate(ResourceUtility.GetPrefab<GameObject>("QuestionBubble"), enemy.position, Quaternion.identity,enemy);
+		Destroy(temp,1.5f);
 	}
 
 }
