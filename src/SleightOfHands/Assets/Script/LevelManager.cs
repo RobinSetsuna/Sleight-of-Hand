@@ -169,7 +169,7 @@ public class LevelManager : MonoBehaviour
 
         CardManager.Instance.InitCardDeck();
         CardManager.Instance.RandomGetCard();
-
+       // CardManager.Instance.RandomGetCard();
         //Debug.LogCardManager.Instance.RandomGetCard();
         round = 0;
         CurrentPhase = Phase.Start;
@@ -245,19 +245,24 @@ public class LevelManager : MonoBehaviour
 
                 case SpawnData.Type.Player:
                     Player = Instantiate(ResourceUtility.GetPrefab<player>("player_temp"), spawnPosition, spawnRotation, GridManager.Instance.environmentHolder);
+                    Player.GetComponent<player>().initializeEventListener();
                     GameObject.FindGameObjectWithTag("Player").AddComponent<Effects>();
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<Effects>().SetOwner("Player");
                     break;
 
                 case SpawnData.Type.Guard:
                     var temp = Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation,
                         GridManager.Instance.environmentHolder);
                     temp.AddComponent<Effects>();
+                    temp.GetComponent<Effects>().SetOwner("Enemy");
+                    temp.tag = "Enemy";
                     temp.GetComponent<Enemy>().setPathList(spawnData.GetPath());
                     temp.GetComponent<Enemy>().SetDetectionState(EnemyDetectionState.Normal); // set default detection state
 //                    temp.ID = index;
 //                    index++;
                     Enemies.Add(temp.GetComponent<Enemy>());
                     break;
+
             }
 
         }

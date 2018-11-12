@@ -58,8 +58,9 @@ public abstract class Unit : InLevelObject
         }
     }
 
-    public int ActionPoint { get; protected set; }
+    public int ActionPoint { get; set; }
     public float Health { get; protected set; }
+    public bool movable = true;
 
     [Header("Animations")]
     public GameObject modelHolder;
@@ -67,10 +68,12 @@ public abstract class Unit : InLevelObject
     public int jumpsPerMove = 1;
 
     private CharacterController characterController;
-    private float speed;
+    public float speed;
     private Vector3 start;
-    private Vector3 destination;
-    
+    public Vector3 destination;
+    public string unitName;
+
+
 
     public void MoveTo(Vector3 destination, System.Action callback)
     {
@@ -109,11 +112,40 @@ public abstract class Unit : InLevelObject
         characterController = GetComponent<CharacterController>();
     }
 
-    private void Update() {
+    private void FixedUpdate() {
 
         // Push player to ground
         if (characterController != null && !characterController.isGrounded) {
             characterController.Move(Vector3.up * (-9.81f * Time.deltaTime));
+        }
+       
+
+    }
+
+    public void HandleAttributesChangeOnEffects(Effects effects)
+    {
+        //Debug.Log(effects.CurrentAP_c());
+        //Debug.Log(effects.CurrentAP_f());
+        if (effects.owner == this.unitName)
+        {
+            ActionPoint = (ActionPoint + effects.CurrentAP_c()) * (1 + effects.CurrentAP_f());
+            Health = (Health + effects.CurrentHP_c()) * (1 + effects.CurrentHP_f());
+        }
+
+    }
+
+    //When enter a new turn, this will be called to calculate the newest attributes
+    public void HandleAttributesChangeOnTurn(Effects effects)
+    {
+        if(effects.owner == this.unitName)
+        {
+            ActionPoint = (InitialActionPoint + (int)effects.GetAP_c()) * (1 + (int)effects.GetAP_f());
+            Health = (InitialHealth + effects.GetHP_c()) * (1 + effects.GetHP_f());
+        }
+        else
+        {
+            ActionPoint = InitialActionPoint;
+            Health = InitialHealth;
         }
 
     }
@@ -129,20 +161,7 @@ public abstract class Unit : InLevelObject
     }*/
 
     //when add a new effect to a unit, this will be called to immediately calculate the newest attributes.
-    private void HandleAttributesChangeOnEffects(Effects effects)
-    {
-        //Debug.Log(effects.CurrentAP_c());
-        //Debug.Log(effects.CurrentAP_f());
-        ActionPoint = (ActionPoint + effects.CurrentAP_c()) * ( 1 + effects.CurrentAP_f());
-        Health = (Health + effects.CurrentHP_c()) * (1 + effects.CurrentHP_f());
-    }
 
-    //When enter a new turn, this will be called to calculate the newest attributes
-    private void HandleAttributesChangeOnTurn(Effects effects)
-    {
-        ActionPoint = (initialActionPoint + (int)effects.GetAP_c()) * (1 + (int)effects.GetAP_f());
-        Health = (initialHealth + effects.GetHP_c()) * (1 + effects.GetHP_f());
-    }
 
     //private void ResetActionPoint()
     //{
@@ -184,6 +203,10 @@ public abstract class Unit : InLevelObject
             if (modelHolder != null) {
                 float localHeight = jumpHeight * Mathf.Abs(Mathf.Sin(travelRatio * Mathf.PI * jumpsPerMove));
                 modelHolder.transform.localPosition = Vector3.up * localHeight;
+                
+                
+
+                
             }
 
             if (travelRatio >= 1) {
@@ -193,8 +216,11 @@ public abstract class Unit : InLevelObject
 
             yield return null;
         }
-
-        transform.position = new Vector3(destination.x, transform.position.y, destination.z);
+        AudioSource _audioSource = this.gameObject.GetComponent<AudioSource>();
+        AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/jump");
+        _audioSource.clip = audioClip;
+        _audioSource.Play();
+        //transform.position = new Vector3(destination.x, transform.position.y, destination.z);
 
         var temp = GridManager.Instance.GetTile(transform.position).gridPosition;
         GridPosition = new Vector2Int(temp.x,temp.y);
@@ -236,4 +262,6 @@ public abstract class Unit : InLevelObject
     //	//heading is the next tile unit will move to.
     //	heading = tile.transform;
     //}
+
+
 }

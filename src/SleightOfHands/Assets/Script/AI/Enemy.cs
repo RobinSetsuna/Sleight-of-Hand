@@ -27,7 +27,17 @@ public class Enemy : Unit
 	private GameObject player;
 
 	private int counter = 0;
-    
+    public int DetectionRange
+    {
+        get
+        {
+            return detection_range;
+        }
+        set
+        {
+            detection_range = value;
+        }
+    }
     private bool detection_highlighted = false;
     private HashSet<Tile> rangeList;
     private List<Vector2Int> pathList;
@@ -323,8 +333,10 @@ public class Enemy : Unit
             if (rangeList.Contains(GridManager.Instance.GetTile(player.GetComponent<player>().GridPosition)))
             {
                 //detected
+                
                 // add some operation here
                 SetDetectionState(EnemyDetectionState.Found);
+
                 StartCoroutine(Founded());
             }
         }
@@ -404,6 +416,11 @@ public class Enemy : Unit
         CameraManager.Instance.FocusAt(transform.position);
         yield return new WaitForSeconds(3f);
         EnemyManager.Instance.AlertPop(transform);
-        
+        AudioSource _audioSource = this.gameObject.GetComponent<AudioSource>();
+        AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/beDetected");
+
+        _audioSource.clip = audioClip;
+        _audioSource.Play();
+
     }
 }
