@@ -8,6 +8,7 @@ public class HUD : UIWindow
     [SerializeField] private Text banner;
     [SerializeField] private Button endTurnButton;
     [SerializeField] private UIList cardList;
+    [SerializeField] private Text actionPoint;
 
     private Dictionary<Card, GameObject> hand = new Dictionary<Card, GameObject>();
 
@@ -19,12 +20,16 @@ public class HUD : UIWindow
             endTurnButton.interactable = false;
 
         endTurnButton.onClick.AddListener(EndCurrentTurn);
+
         UpdateTurnText(LevelManager.Instance.CurrentTurn);
-        
+        UpdateActionPointText(LevelManager.Instance.Player.Ap);
+
         foreach (Card card in CardManager.Instance.hand)
             HandleHandChange(ChangeType.Incremental, card);
 
         CardManager.Instance.onHandChange.AddListener(HandleHandChange);
+
+        LevelManager.Instance.Player.onAttributeChange.AddListener(HandlePlayerStatisticChange);
         LevelManager.Instance.playerController.onCurrentPlayerStateChange.AddListener(HandleCurrentPlayerStateChange);
         LevelManager.Instance.OnCurrentPhaseChangeForPlayer.AddListener(HandleCurrentPhaseChangeForPlayer);
         LevelManager.Instance.onCurrentTurnChange.AddListener(UpdateTurnText);
@@ -32,6 +37,9 @@ public class HUD : UIWindow
 
     public override void OnClose()
     {
+        CardManager.Instance.onHandChange.RemoveListener(HandleHandChange);
+
+        LevelManager.Instance.Player.onAttributeChange.RemoveListener(HandlePlayerStatisticChange);
         LevelManager.Instance.playerController.onCurrentPlayerStateChange.RemoveListener(HandleCurrentPlayerStateChange);
         LevelManager.Instance.OnCurrentPhaseChangeForPlayer.RemoveListener(HandleCurrentPhaseChangeForPlayer);
         LevelManager.Instance.onCurrentTurnChange.RemoveListener(UpdateTurnText);
@@ -52,6 +60,11 @@ public class HUD : UIWindow
         turn.text = currentTurn.ToString();
 
         ShowBanner("Turn " + currentTurn);
+    }
+
+    private void UpdateActionPointText(int ap)
+    {
+        actionPoint.text = ap.ToString();
     }
 
     private void ShowBanner(string content)
@@ -90,6 +103,16 @@ public class HUD : UIWindow
                 Destroy(hand[card]);
                 hand.Remove(card);
                 cardList.Refresh();
+                break;
+        }
+    }
+
+    private void HandlePlayerStatisticChange(StatisticType statistic, float originalValue, float currentValue)
+    {
+        switch (statistic)
+        {
+            case StatisticType.Ap:
+                UpdateActionPointText(Mathf.RoundToInt(currentValue));
                 break;
         }
     }

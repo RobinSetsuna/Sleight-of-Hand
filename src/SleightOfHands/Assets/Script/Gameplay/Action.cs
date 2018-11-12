@@ -74,6 +74,57 @@ public class Movement : Action
 
     override public string ToString()
     {
-        return string.Format("[{0}] Moved to {1}.", unit, destination);
+        return string.Format("[{0}] Move to {1}.", unit, destination);
+    }
+}
+
+public class CardUsage : Action
+{
+    public readonly Unit initiator;
+    public readonly Card card;
+    public readonly Tile targetTile;
+
+    public CardUsage(Unit initiator, Card card, Tile targetTile)
+    {
+        actionDelegate = UseCard;
+
+        this.initiator = initiator;
+        this.card = card;
+        this.targetTile = targetTile;
+    }
+
+    public void UseCard(System.Action callback)
+    {
+        initiator.UseCard(card, targetTile, callback);
+    }
+
+    override public string ToString()
+    {
+        return string.Format("[{0}] Use a card \"{1}\" at {2}.", initiator, card.Data.Name, targetTile);
+    }
+}
+
+public class StatusEffectApplication : Action
+{
+    public readonly StatusEffect statusEffect;
+    public readonly StatisticSystem target;
+
+    public StatusEffectApplication(StatusEffect statusEffect, StatisticSystem target)
+    {
+        actionDelegate = ApplyStatusEffect;
+
+        this.statusEffect = statusEffect;
+        this.target = target;
+    }
+
+    public void ApplyStatusEffect(System.Action callback)
+    {
+        target.AddStatusEffect(statusEffect);
+        callback.Invoke();
+    }
+
+    override public string ToString()
+    {
+        return string.Format("Apply a status effect \"{0}\" on {1}.", statusEffect, target);
     }
 }

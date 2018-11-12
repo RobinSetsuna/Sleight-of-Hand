@@ -179,23 +179,23 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 
     public void Dehighlight()
     {
-        Highlight(HighlightColor.None);
+        if ((mark & 0xf) != 0)
+        {
+            BitOperationUtility.WriteBits(ref mark, 0, 0, 3);
+            RefreshHighlight();
+        }
     }
 
-	public void Highlight(HighlightColor color)
+	public void Highlight(HighlightColor color, bool isAdditive = true)
 	{
         int mask = (int)color;
-        if (((mark ^ mask) & 0xf) != 0)
+        if (((mark & 0xf) ^ mask) != 0)
         {
-            //BitOperationUtility.WriteBits(ref mark, mask, 0, 3);
-            if (color != HighlightColor.None)
-            {
+            if (isAdditive)
                 mark |= mask;
-            }
             else
-            {
                 BitOperationUtility.WriteBits(ref mark, mask, 0, 3);
-            }
+
             RefreshHighlight();
         }
 	}

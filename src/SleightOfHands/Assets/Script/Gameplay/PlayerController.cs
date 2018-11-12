@@ -35,7 +35,7 @@ public class PlayerController : MouseInteractable
     public EventOnDataUpdate<Path<Tile>> onPathUpdate = new EventOnDataUpdate<Path<Tile>>();
 
     public EventOnDataUpdate<Card> onCardToUseUpdate = new EventOnDataUpdate<Card>();
-
+    
     /// <summary>
     /// The player controlled by this controller
     /// </summary>
@@ -127,7 +127,6 @@ public class PlayerController : MouseInteractable
                         break;
 
                     case PlayerState.MovementPlanning:
-                        Debug.Log(GridManager.Instance.GetTile(Player.transform.position));
                         Path = new Path<Tile>(GridManager.Instance.GetTile(Player.transform.position));
                         break;
 
@@ -139,7 +138,7 @@ public class PlayerController : MouseInteractable
 
                     case PlayerState.Move:
                         for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
-                            ActionManager.Singleton.Add(new Movement(GetComponent<player>(), tile));
+                            ActionManager.Singleton.AddBack(new Movement(GetComponent<player>(), tile));
                         Path = null;
                         ActionManager.Singleton.Execute(ResetToIdle);
                         break;
@@ -256,11 +255,10 @@ public class PlayerController : MouseInteractable
 
     private void UseCard()
     {
+        ActionManager.Singleton.AddBack(new CardUsage(Player, cardToUse, targetTile));
+        ActionManager.Singleton.Execute(ResetToIdle);
+
         CardToUse = null;
-
-        // TODO: Use card
-
-        CurrentPlayerState = PlayerState.Idle;
     }
 
     /// <summary>
@@ -286,7 +284,7 @@ public class PlayerController : MouseInteractable
                 else if (obj.GetComponent<UICard>())
                 {
                     CurrentPlayerState = PlayerState.CardUsagePlanning;
-                    CardToUse = obj.GetComponent<UICard>().card;
+                    CardToUse = obj.GetComponent<UICard>().Card;
                 }
                 break;
 
@@ -333,7 +331,7 @@ public class PlayerController : MouseInteractable
                         CurrentPlayerState = PlayerState.CardUsageConfirmation;
                     }
                 }
-                else if (obj.GetComponent<UICard>() && obj.GetComponent<UICard>().card == cardToUse)
+                else if (obj.GetComponent<UICard>() && obj.GetComponent<UICard>().Card == cardToUse)
                     CurrentPlayerState = PlayerState.Idle;
                 break;
         }
@@ -377,10 +375,10 @@ public class PlayerController : MouseInteractable
                         {
                             if (tile == path.Last.Previous.Value)
                                 RemoveWayPoint();
-                            else if (path.Count < Player.ActionPoint && tile.IsHighlighted(Tile.HighlightColor.Blue) && GridManager.Instance.IsAdjacent(tile, path.Last.Value))
+                            else if (path.Count < Player.Ap && tile.IsHighlighted(Tile.HighlightColor.Blue) && GridManager.Instance.IsAdjacent(tile, path.Last.Value))
                                 AddWayPoint(tile);
                         }
-                        else if (path.Count < Player.ActionPoint && tile.IsHighlighted(Tile.HighlightColor.Blue) && GridManager.Instance.IsAdjacent(tile, path.Start))
+                        else if (path.Count < Player.Ap && tile.IsHighlighted(Tile.HighlightColor.Blue) && GridManager.Instance.IsAdjacent(tile, path.Start))
                             AddWayPoint(tile);
                     }
                     break;

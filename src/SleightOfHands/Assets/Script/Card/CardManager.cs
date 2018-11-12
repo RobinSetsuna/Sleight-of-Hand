@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CardManager : MonoBehaviour
@@ -21,7 +21,7 @@ public class CardManager : MonoBehaviour
 
     public CardDeck deck;
     public List<Card> usedCards;
-    public List<Card> hand;
+    public List<Card> hand = new List<Card>();
     private CardData InEffect;
     public string deckFolderPath;
     public string deckFilename;
@@ -33,62 +33,59 @@ public class CardManager : MonoBehaviour
 
     int rdNumLast = -1;
 
-    // Use this for initialization
-    void Awake()
-    {
-    }
-
     // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown("1"))
-        {
-            Player = GameObject.FindGameObjectWithTag("Player");
-            UseEnhancenmentCard(hand[0], Player);
-        }
-        else if(Input.GetKeyDown("2"))
-        {
-            UseStrategyCard(0);
-        }
-        else if(Input.GetKeyDown("3"))
-        {
-            UseStrategyCard(2);
-        }
-    }
+    //void Update()
+    //{
+    //    if (Input.GetKeyDown("1"))
+    //    {
+    //        Player = GameObject.FindGameObjectWithTag("Player");
+    //        UseEnhancenmentCard(hand[0], Player);
+    //    }
+    //    else if(Input.GetKeyDown("2"))
+    //    {
+    //        UseStrategyCard(0);
+    //    }
+    //    else if(Input.GetKeyDown("3"))
+    //    {
+    //        UseStrategyCard(2);
+    //    }
+    //}
 
     // randomly take one card from the deck to the player.
-    public void RandomGetCard()
+    public void RandomGetCard(int n = 1)
     {
         //generate a random num from the number of the cards
 
         //ensure random number is different
-        int rdNum;
-        do
-        {
-            rdNum = Random.Range(0, deck.CountDeck());
-        } while (rdNum == rdNumLast);
-        rdNumLast = rdNum;
+        //int rdNum;
+        //do
+        //{
+        //    rdNum = Random.Range(0, deck.CountDeck());
+        //} while (rdNum == rdNumLast);
+        //rdNumLast = rdNum;
 
-        Card card = deck.GetCardAt(rdNum);
+        //Card card = deck.GetCardAt(Random.Range(0, deck.CountDeck()));
 
-        //add deleted card into hand
-        AddCard(card);
+        ////add deleted card into hand
+        //AddCard(card);
 
-        //delete the selected card from deck
-        deck.Remove(card);
+        ////delete the selected card from deck
+        //deck.Remove(card);
 
+        foreach (Card card in deck.GetRandom(2))
+            AddCard(card);
     }
 
     // take one specific card from the deck to the player.
-    public void GetCard(string _cardName)
-    {
-        Card card = deck.FindCard(_cardName);
-        if (card != null)
-        {
-            deck.Remove(card);
-            AddCard(card);
-        }
-    }
+    //public void GetCard(string _cardName)
+    //{
+    //    Card card = deck.FindCard(_cardName);
+    //    if (card != null)
+    //    {
+    //        deck.Remove(card);
+    //        AddCard(card);
+    //    }
+    //}
 
     private void AddCard(Card card)
     {
@@ -96,40 +93,45 @@ public class CardManager : MonoBehaviour
         onHandChange.Invoke(ChangeType.Incremental, card);
     }
 
+    //public void AddEffect(Card card, GameObject obj)
+    //{
+    //    Effects effects = obj.GetComponent<Effects>();
+    //    LogUtility.PrintLogFormat("CardManager", "Add Card Effect {0}.", card.intro);
+    //    effects.AddEffect(card);
+    //    HandToUsed(card);
+    //    OnAttributesChangeOnEffects.Invoke(effects);
+    //}
 
-    public void UseEnhancenmentCard(Card card, GameObject obj)
-    {
-        Effects effects = obj.GetComponent<Effects>();
-        LogUtility.PrintLogFormat("CardManager", "Add Card Effect {0}.", card.intro);
-        effects.AddEffect(card);
-        HandToUsed(card);
-        OnAttributesChangeOnEffects.Invoke(effects);
-    }
+    //public void UseEnhancenmentCard(Card card, GameObject obj)
+    //{
+    //    Effects effects = obj.GetComponent<Effects>();
+    //    LogUtility.PrintLogFormat("CardManager", "Add Card Effect {0}.", card.intro);
+    //    effects.AddEffect(card);
+    //    HandToUsed(card);
+    //    OnAttributesChangeOnEffects.Invoke(effects);
+    //}
 
     public void InitCardDeck()
     {
-        string jsonPath = Path.Combine(Application.streamingAssetsPath, deckFolderPath);
-        jsonPath = Path.Combine(jsonPath, deckFilename + ".json");
+        //string jsonPath = Path.Combine(Application.streamingAssetsPath, deckFolderPath);
+        //jsonPath = Path.Combine(jsonPath, deckFilename + ".json");
 
-        string json = File.ReadAllText(jsonPath);
+        //string json = File.ReadAllText(jsonPath);
 
-        deck = JsonUtility.FromJson<CardDeck>(json);
+        //deck = JsonUtility.FromJson<CardDeck>(json);
 
-        if (deck.cards == null)
-            Debug.Log("null");
+        //if (deck.cards == null)
+        //    Debug.Log("null");
 
-        for (int i = 0; i < deck.cards.Count; i++)
-        {
-            LogUtility.PrintLogFormat("CardManager", "This Card is {0} with Effects: {1}.", deck.cards[i].cardName, deck.cards[i].intro);
-        }
+        deck = new CardDeck(new int[2] { 1, 1 });
+
+        foreach (Card card in deck)
+            LogUtility.PrintLogFormat("CardManager", card.Data.ToString());
     }
 
     private Tile GetPlayerTile()
     {
-        Tile playerTile = GridManager.Instance.GetTile(GameObject.FindGameObjectWithTag("Player").transform.position);
-        Debug.Log(playerTile.x);
-        Debug.Log(playerTile.y);
-        return playerTile;
+        return GridManager.Instance.GetTile(GameObject.FindGameObjectWithTag("Player").transform.position);
     }
 
     private void HandToUsed(Card card)
@@ -196,26 +198,47 @@ public class CardManager : MonoBehaviour
 
 }
 
-[System.Serializable]
+//[System.Serializable]
+//public class Card
+//{
+//    public string cardName;
+//    public string intro;
+//    public string type;
+//    public int ID;
+//    public int HP_c;
+//    public int AP_c;
+//    public int ATK_c;
+//    public int duration;
+//    public int HP_f;
+//    public int AP_f;
+//    public int ATK_f;
+//}
+
 public class Card
 {
-    public string cardName;
-    public string intro;
-    public string type;
-    public int ID;
-    public int HP_c;
-    public int AP_c;
-    public int ATK_c;
-    public int duration;
-    public int HP_f;
-    public int AP_f;
-    public int ATK_f;
+    public CardData Data { get; private set; }
+
+    public Card(int id)
+    {
+        Data = TableDataManager.Singleton.GetCardData(id);
+    }
 }
 
 [System.Serializable]
-public class CardDeck
+public class CardDeck : IEnumerable<Card>
 {
-    public List<Card> cards;
+    private List<Card> cards;
+
+    public CardDeck()
+    {
+        cards = new List<Card>();
+    }
+
+    public CardDeck(int[] ids) : this()
+    {
+        for (int i = 0; i < ids.Length; i++)
+            cards.Add(new Card(ids[i]));
+    }
 
     public Card GetCardAt(int index)
     {
@@ -237,16 +260,51 @@ public class CardDeck
         cards.Remove(card);
     }
 
-    public Card FindCard(string _cardName)
+    public List<Card> GetRandom(int n = 1)
     {
-        foreach (Card card in cards)
+        HashSet<int> indices = new HashSet<int>();
+
+        int N = cards.Count;
+        while (indices.Count < n)
         {
-            if (card.cardName == _cardName)
+            int i;
+
+            do
             {
-                return card;
-            }
+                i = Random.Range(0, N);
+            } while (indices.Contains(i));
+
+            indices.Add(i);
         }
 
-        return null;
+        List<Card> list = new List<Card>();
+
+        foreach (int i in indices)
+            list.Add(cards[i]);
+
+        return list;
     }
+
+    public IEnumerator<Card> GetEnumerator()
+    {
+        return cards.GetEnumerator();
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return cards.GetEnumerator();
+    }
+
+    //public Card FindCard(string _cardName)
+    //{
+    //    foreach (Card card in cards)
+    //    {
+    //        if (card.cardName == _cardName)
+    //        {
+    //            return card;
+    //        }
+    //    }
+
+    //    return null;
+    //}
 }

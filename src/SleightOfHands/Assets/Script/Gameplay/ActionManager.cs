@@ -25,22 +25,21 @@ public class ActionManager
     }
 
     /// <summary>
-    /// Add a new action into the system
+    /// Add a new action to be executed immediately
     /// </summary>
     /// <param name="action"> The action to be added </param>
-    internal void Add(Action action)
+    internal void AddFront(Action action)
     {
-        actionQueue.PushBack(action);
+        actionQueue.PushFront(action);
     }
 
     /// <summary>
-    /// Construct and add a new action into the system
+    /// Add a new action to be executed at last
     /// </summary>
-    /// <param name="callback"> The callback function for the new action to be added </param>
-    /// <returns> The new action constructed and added </returns>
-    internal Action AddNewAction(System.Action<System.Action> callback)
+    /// <param name="action"> The action to be added </param>
+    internal void AddBack(Action action)
     {
-        return actionQueue.PushBack(callback);
+        actionQueue.PushBack(action);
     }
 
     /// <summary>
@@ -59,24 +58,14 @@ public class ActionManager
     internal void Execute()
     {
 #if UNITY_EDITOR
-        UnityEngine.Debug.Log(actionQueue);
+        UnityEngine.Debug.Log(LogUtility.MakeLogString("ActionManager", "Execute\n" + actionQueue));
 #endif
         if (!actionQueue.IsEmpty())
-        {
             actionQueue.Pop().Execute(Execute);
-        }
-        else if(executionCallback != null)
+        else if (executionCallback != null)
         {
             executionCallback();
-            //executionCallback = null;
+            executionCallback = null;
         }
-    }
-    
-    /// <summary>
-    /// Wipe current ActionQueue, no call back execute
-    /// </summary>
-    internal void Empty()
-    {
-        actionQueue = new ActionQueue();
     }
 }
