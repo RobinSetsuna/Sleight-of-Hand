@@ -122,11 +122,14 @@ public class PlayerController : MouseInteractable
                         break;
 
                     case PlayerState.Idle:
+                        CameraManager.Instance.UnboundCameraFollow();
                         if (previousPlayerState == PlayerState.MovementPlanning)
                             Path = null;
                         break;
 
                     case PlayerState.MovementPlanning:
+                        CameraManager.Instance.FocusAt(transform.position);
+                        CameraManager.Instance.BoundCameraFollow(transform);
                         Path = new Path<Tile>(GridManager.Instance.GetTile(Player.transform.position));
                         break;
 
@@ -395,6 +398,7 @@ public class PlayerController : MouseInteractable
         {
             case Phase.Action:
                 CurrentPlayerState = PlayerState.Idle;
+                CameraManager.Instance.FocusAt(transform.position);
                 break;
 
             case Phase.End:

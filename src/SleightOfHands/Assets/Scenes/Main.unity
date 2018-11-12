@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -206,10 +206,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ad281967ab548e4fa49577afada4fca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deck:
-    cards: []
-  usedCards: []
-  hand: []
   deckFolderPath: Deck
   deckFilename: test_deck
   smokeObject: {fileID: 1595472967320516, guid: debaed0b1b82b5b439a12bf731c5c867,
@@ -318,7 +314,7 @@ Camera:
   far clip plane: 1000
   field of view: 48.9
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -932,7 +928,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragSpeed: 10
-  curZoomPos: 10
+  curZoomPos: 5
   zoomTo: 15
   zoomFrom: 3
   zoomSpeed: 15
