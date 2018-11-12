@@ -98,21 +98,19 @@ public class Enemy : Unit
 #if UNITY_EDITOR
             LogUtility.PrintLogFormat("Enemy", "Made a transition to {0}.", value);
 #endif
+
             // Reset current state
             if (value == currentEnemyState)
             {
-                switch (currentEnemyState)
-                {
-                    case EnemyMoveState.Idle:
-//                        path.Clear();
-//                        onPathUpdate.Invoke(path);
-                        break;
-                }
+                //switch (currentEnemyState)
+                //{
+                //}
             }
             else
             {
 
-                EnemyMoveState previousEnemyState = CurrentEnemyState;
+                EnemyMoveState previousEnemyState = currentEnemyState;
+
                 currentEnemyState = value;
 
                 // After entering the new state
@@ -120,29 +118,19 @@ public class Enemy : Unit
                 {
                     case EnemyMoveState.Unmoveable:
                         Path = null;
-                        //Disable();
                         break;
                     case EnemyMoveState.Idle:
-                        if (ActionPoint <= 0)
-                        {
-                            //exhausted
+                        if (Ap <= 0)
                             LevelManager.Instance.EndEnvironmentActionPhase();
-                        }
                         else
-                        {
                             CurrentEnemyState = EnemyMoveState.Move;
-                        }
                         Path = null;
                         break;
                     case EnemyMoveState.Move:
-                        if (!InAttackRange())
-                        {
-                            StartCoroutine(MovementDecision());
-                        }
+                        if (InAttackRange())
+                            StartCoroutine(AttackDecision());
                         else
-                        {
-                            StartCoroutine(AttackDecision());//check if there is a chance to attack
-                        }
+                            StartCoroutine(MovementDecision());
                         break;
                 }
                 onCurrentEnemyStateChange.Invoke(previousEnemyState, currentEnemyState);
@@ -162,12 +150,14 @@ public class Enemy : Unit
     /// </summary>
     private IEnumerator AttackDecision()
     {
-        if (InAttackRange() && ActionPoint >= 1 && currentDetectionState ==  EnemyDetectionState.Found)
+        if (InAttackRange() && Ap >= 1 && currentDetectionState ==  EnemyDetectionState.Found)
         {
             //is ok to Atk 
             // do some operation here.
             EnemyManager.Instance.AttackPop(transform);
-            ActionPoint--;
+
+            Statistics.AddStatusEffect(new StatusEffect(1, 2));
+
             yield return new WaitForSeconds(1.5f);
             LevelManager.Instance.EndEnvironmentActionPhase();
             // remove the actionPoint
@@ -225,18 +215,28 @@ public class Enemy : Unit
                    // Debug.Log("Doubt status, the code should never trigger this.");
                     break;
         }
+
+        Debug.LogWarning(path);
+
         if (path != null)
         {
             
-            int temp = ActionPoint;
+            int temp = Ap;
+
             for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
-                if (temp > 0)
-                {
-                    ActionManager.Singleton.Add(new Movement(GetComponent<Enemy>(), tile));
-                    temp--;
-                }
+            {
+                if (temp == 0)
+                    break;
+
+                ActionManager.Singleton.AddBack(new Movement(this, tile));//, --temp == 0 ? (System.Action)ResetToIdle : null);
+
+                temp--;
+            }
+
             Path = null;
+
             CameraManager.Instance.boundCameraFallow(transform);
+
             ActionManager.Singleton.Execute(ResetToIdle);
         }
     }
@@ -413,8 +413,9 @@ public class Enemy : Unit
 
     private IEnumerator Founded()
     {
-        CameraManager.Instance.FocusAt(transform.position);
-        yield return new WaitForSeconds(3f);
+        // CameraManager.Instance.FocusAt(transform.position);
+        // yield return new WaitForSeconds(3f);
+
         EnemyManager.Instance.AlertPop(transform);
         AudioSource _audioSource = this.gameObject.GetComponent<AudioSource>();
         AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/beDetected");
@@ -422,5 +423,6 @@ public class Enemy : Unit
         _audioSource.clip = audioClip;
         _audioSource.Play();
 
+        yield break;
     }
 }

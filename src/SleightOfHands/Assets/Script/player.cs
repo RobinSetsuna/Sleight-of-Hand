@@ -5,10 +5,10 @@
 /// </summary>
 public class player : Unit
 {
-    public void initializeEventListener()
-    {
-        unitName = "Player";
-    }
+    //public void initializeEventListener()
+    //{
+    //    unitName = "Player";
+    //}
     
     // Update is called once per frame
     //void Update()

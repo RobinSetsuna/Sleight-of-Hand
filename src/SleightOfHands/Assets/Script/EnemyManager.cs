@@ -63,7 +63,7 @@ public class EnemyManager : MonoBehaviour {
 				if (currentEnemy)
 				{
 					currentEnemy.CurrentEnemyState = EnemyMoveState.Idle;
-					CameraManager.Instance.FocusAt(currentEnemy.transform.position);
+					//CameraManager.Instance.FocusAt(currentEnemy.transform.position);
 					//yield return new WaitForSeconds(1f);
 				}
 				else

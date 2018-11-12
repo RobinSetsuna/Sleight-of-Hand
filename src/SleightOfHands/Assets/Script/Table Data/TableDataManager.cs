@@ -32,6 +32,7 @@ public class TableDataManager
     public void Initialize()
     {
         AddDataPageFromCSV<CardData>("Card");
+        AddDataPageFromCSV<StatusEffectData>("StatusEffect");
     }
 
     /// <summary>
@@ -44,6 +45,16 @@ public class TableDataManager
     public T GetData<T>(string pageName, int index)
     {
         return (T)dataPages[pageName][index];
+    }
+
+    public StatusEffectData GetStatusEffectData(int id)
+    {
+        return GetData<StatusEffectData>("StatusEffect", id);
+    }
+
+    public TableDataPage GetTableDataPage(string pageName)
+    {
+        return dataPages[pageName];
     }
 
     private void AddDataPageFromCSV<T>(string pageName) where T : ITableDataEntry, new()

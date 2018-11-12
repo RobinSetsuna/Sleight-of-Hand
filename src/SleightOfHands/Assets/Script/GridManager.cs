@@ -171,6 +171,21 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         return GetWorldPosition(tile.gridPosition);
     }
 
+    public Unit GetUnit(int x, int y)
+    {
+        return units[x, y];
+    }
+
+    public Unit GetUnit(Vector2Int gridPosition)
+    {
+        return GetUnit(gridPosition.x, gridPosition.y);
+    }
+
+    public Unit GetUnit(Tile tile)
+    {
+        return GetUnit(tile.gridPosition);
+    }
+
     /// <summary>
     /// Evalueate whether two tiles are considered to be adjacent
     /// </summary>
@@ -349,9 +364,9 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// </summary>
     /// <param name="tile"> The tile to highlight </param>
     /// <param name="color"> The color to highlight with </param>
-    public void Highlight(Tile tile, Tile.HighlightColor color)
+    public void Highlight(Tile tile, Tile.HighlightColor color, bool isAdditive = true)
     {
-        Highlight(tile, 0, 0, int.MinValue, color);
+        Highlight(tile, 0, 0, int.MinValue, color, isAdditive);
     }
 
     /// <summary>
@@ -361,9 +376,9 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// <param name="range"> The range to concern </param>
     /// <param name="color"> The color to highlight with </param>
     /// <param name="skipUnmasked"> [optional] </param>
-    public void Highlight(Tile center, int range, Tile.HighlightColor color, bool skipUnmasked = false)
+    public void Highlight(Tile center, int range, Tile.HighlightColor color, bool isAdditive = true, bool skipUnmasked = false)
     {
-        Highlight(center, 0, range, int.MinValue, color, skipUnmasked);
+        Highlight(center, 0, range, int.MinValue, color, isAdditive, skipUnmasked);
     }
 
     /// <summary>
@@ -374,9 +389,9 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// <param name="mask"> The mask for filtering </param>
     /// <param name="color"> The color to highlight with </param>
     /// <param name="skipUnmasked"> [optional] </param>
-    public void Highlight(Tile center, int range, int mask, Tile.HighlightColor color, bool skipUnmasked = false)
+    public void Highlight(Tile center, int range, int mask, Tile.HighlightColor color, bool isAdditive = true, bool skipUnmasked = false)
     {
-        Highlight(center, 0, range, mask, color, skipUnmasked);
+        Highlight(center, 0, range, mask, color, isAdditive, skipUnmasked);
     }
 
     /// <summary>
@@ -388,7 +403,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// <param name="mask"> The mask for filtering </param>
     /// <param name="color"> The color to highlight with </param>
     /// <param name="skipUnmasked"> [optional] </param>
-    public void Highlight(Tile center, int lower, int upper, int mask, Tile.HighlightColor color, bool skipUnmasked = false)
+    public void Highlight(Tile center, int lower, int upper, int mask, Tile.HighlightColor color, bool isAdditive = true, bool skipUnmasked = false)
     {
         bool[,] isVisited = new bool[Length, Width];
 
@@ -405,7 +420,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
             if (distance >= lower && distance <= upper && (skipUnmasked || (center.Mark & mask) != 0))
             {
-                tile.Highlight(color);
+                tile.Highlight(color, isAdditive);
                 numHighlightedTiles++;
             }
 
@@ -520,15 +535,15 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         if (path != null)
         {
             player _player = LevelManager.Instance.Player;
-//            Debug.LogWarning(_player.transform.position);
-//            Debug.LogWarning(GetTile(_player.transform.position));
+
+
             if (path.Count == 0)
-                Highlight(GetTile(_player.transform.position), _player.ActionPoint, Tile.HighlightColor.Blue, true);
+                Highlight(GetTile(_player.transform.position), _player.Ap, Tile.HighlightColor.Blue, true, true);
             else
-                Highlight(path.Destination, _player.ActionPoint - path.Count, Tile.HighlightColor.Blue, true);
+                Highlight(path.Destination, _player.Ap - path.Count, Tile.HighlightColor.Blue, true, true);
 
             foreach (Tile wayPoint in path)
-                Highlight(wayPoint, Tile.HighlightColor.Green);
+                Highlight(wayPoint, Tile.HighlightColor.Green, false);
         }
     }
 
@@ -536,7 +551,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     {
         // TODO: Change highlights according to card's range
         if (cardToUse != null)
-            Highlight(GetTile(LevelManager.Instance.Player.transform.position), Tile.HighlightColor.Green);
+            Highlight(GetTile(LevelManager.Instance.Player.transform.position), Tile.HighlightColor.Green, false);
         else
             DehighlightAll();
     }

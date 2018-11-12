@@ -38,7 +38,10 @@ public class LevelManager : MonoBehaviour
     }
 
     public EventOnDataUpdate<Effects> onNewTurnUpdateAttribute = new EventOnDataUpdate<Effects>();
+
     public EventOnDataUpdate<int> onCurrentTurnChange = new EventOnDataUpdate<int>();
+    public EventOnDataUpdate<int> onRoundNumberChange = new EventOnDataUpdate<int>();
+
     public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForPlayer = new EventOnDataUpdate<Phase>();
     public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForEnvironment = new EventOnDataUpdate<Phase>();
 
@@ -53,15 +56,13 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private int round;
-    private Phase currentPhase;
-
+    public int RoundNumber { get; private set; }
 
     public Round CurrentRound
     {
         get
         {
-            return (Round)(round % 2);
+            return (Round)(RoundNumber % 2);
         }
     }
 
@@ -69,10 +70,11 @@ public class LevelManager : MonoBehaviour
     {
         get
         {
-            return round / 2 + 1;
+            return RoundNumber / 2 + 1;
         }
     }
-    
+
+    private Phase currentPhase;
     public Phase CurrentPhase
     {
         get
@@ -91,13 +93,14 @@ public class LevelManager : MonoBehaviour
             //}
 
             currentPhase = value;
-            Debug.Log("current phase: " + currentPhase);
-            Debug.Log("current round: " + CurrentRound);
+
             // After entering a new phase
             switch (currentPhase)
             {
                 case Phase.Start:
                     // for the Environment round, each unit will have a single start, action, end phase, so add it differently
+                    // RoundNumber++;
+                    // onRoundNumberChange.Invoke(RoundNumber);
                     if (CurrentRound == Round.Player)
                         onCurrentTurnChange.Invoke(CurrentTurn);
                     break;
@@ -129,7 +132,8 @@ public class LevelManager : MonoBehaviour
                 case Phase.End:
                     if (CurrentRound == Round.Player)
                     {
-                        round++;
+                        RoundNumber++;
+                        onRoundNumberChange.Invoke(RoundNumber);
                         CurrentPhase = Phase.Start;
                     }
                     Debug.Log("added,current round: " + CurrentRound);
@@ -171,7 +175,7 @@ public class LevelManager : MonoBehaviour
         CardManager.Instance.RandomGetCard();
        // CardManager.Instance.RandomGetCard();
         //Debug.LogCardManager.Instance.RandomGetCard();
-        round = 0;
+        RoundNumber = 0;
         CurrentPhase = Phase.Start;
 
         UIManager.Singleton.Open("HUD", UIManager.UIMode.PERMANENT);
@@ -245,7 +249,7 @@ public class LevelManager : MonoBehaviour
 
                 case SpawnData.Type.Player:
                     Player = Instantiate(ResourceUtility.GetPrefab<player>("player_temp"), spawnPosition, spawnRotation, GridManager.Instance.environmentHolder);
-                    Player.GetComponent<player>().initializeEventListener();
+                    // Player.GetComponent<player>().initializeEventListener();
                     GameObject.FindGameObjectWithTag("Player").AddComponent<Effects>();
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Effects>().SetOwner("Player");
                     break;
@@ -271,7 +275,8 @@ public class LevelManager : MonoBehaviour
 
     public void NextRound()
     {
-        round ++;
+        RoundNumber++;
+        onRoundNumberChange.Invoke(RoundNumber);
     }
 
     public void RemoveEnemy(Enemy obj)
@@ -340,6 +345,5 @@ public class LevelManager : MonoBehaviour
         public E GetEnumFromString<E>(string enumString) where E : struct {
             return (E)Enum.Parse(typeof(E), enumString, true);
         }
-
     }
 }
