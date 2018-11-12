@@ -413,9 +413,8 @@ public class Enemy : Unit
 
     private IEnumerator Founded()
     {
-        //CameraManager.Instance.FocusAt(transform.position);
-        //yield return new WaitForSeconds(3f);
-
+        CameraManager.Instance.FocusAt(transform.position);
+        yield return new WaitForSeconds(1f);
         EnemyManager.Instance.AlertPop(transform);
         AudioSource _audioSource = gameObject.GetComponent<AudioSource>();
         AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/beDetected");
