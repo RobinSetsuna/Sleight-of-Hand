@@ -19,9 +19,17 @@ MonoBehaviour:
     objects: []
   straight:
     objects: []
-  edge:
+  peninsula:
     objects: []
   corner:
     objects: []
+  cornerFill:
+    objects: []
   t:
+    objects: []
+  tFill:
+    objects: []
+  tFillLeft:
+    objects: []
+  tFillRight:
     objects: []

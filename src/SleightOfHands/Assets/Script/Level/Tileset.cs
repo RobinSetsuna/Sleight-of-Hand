@@ -8,10 +8,18 @@ public class Tileset : ScriptableObject {
 
 	public TileCollection fallback;
     public TileCollection surrounded;
+    public TileCollection surrounded1;
+    public TileCollection surrounded2Adjacent;
+    public TileCollection surrounded2Diagonal;
+    public TileCollection surrounded3;
     public TileCollection straight;
-    public TileCollection edge;
+    public TileCollection peninsula;
     public TileCollection corner;
+    public TileCollection cornerFill;
     public TileCollection t;
+    public TileCollection tFill;
+    public TileCollection tFillLeft;
+    public TileCollection tFillRight;
 
     [Serializable]
     public class TileCollection {

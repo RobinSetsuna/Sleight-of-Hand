@@ -279,36 +279,16 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
                 // Tile display
                 if (te != null) {
-
-                    string envTileType;
-                    float envTileRotation;
-                    GetEnvTileType(levelData, x, y, out envTileType, out envTileRotation);
-
+                    
                     Tileset.TileCollection tileCollection = null;
-                    switch (envTileType) {
-                        case "surrounded":
-                            tileCollection = te.tileset.surrounded;
-                            break;
-                        case "t":
-                            tileCollection = te.tileset.t;
-                            break;
-                        case "corner":
-                            tileCollection = te.tileset.corner;
-                            break;
-                        case "straight":
-                            tileCollection = te.tileset.straight;
-                            break;
-                        case "edge":
-                            tileCollection = te.tileset.edge;
-                            break;
-                        default:
-                            tileCollection = te.tileset.fallback;
-                            break;
-                    }
+                    float envTileRotation;
+                    GetEnvTileType(levelData, x, y, te.tileset, out tileCollection, out envTileRotation);
                     if (tileCollection.objects.Length == 0) tileCollection = te.tileset.fallback;
-                    GameObject envTilePrefab = tileCollection.GetRandom();
 
-                    te.tileset.fallback.GetRandom();
+                    GameObject envTilePrefab = tileCollection.GetRandom();
+                    if (envTilePrefab == null) {
+                        envTilePrefab = te.tileset.fallback.GetRandom();
+                    }
                     Vector3 envTilePosition = tilePosition;
                     envTilePosition.y = -0.55f;
 
@@ -319,7 +299,10 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             }
     }
 
-    private void GetEnvTileType(LevelManager.LevelData levelData, int x, int y, out string envTileType, out float rotation) {
+    private void GetEnvTileType(LevelManager.LevelData levelData, int x, int y, Tileset tileset, out Tileset.TileCollection tileCollection, out float rotation) {
+
+        tileCollection = tileset.fallback;
+        rotation = 0;
 
         // True = same :: False = not same
         bool up = false;
@@ -330,69 +313,158 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         Vector2Int size = levelData.GetSize();
         int value = levelData.GetTile(x, y);
 
-        if (y > 0 && levelData.GetTile(x, y-1) == value) {
+        if (y > 0 && levelData.GetTile(x, y - 1) == value) {
             up = true;
         }
 
-        if (y < mapSize.y - 1 && levelData.GetTile(x, y+1) == value) {
+        if (y < mapSize.y - 1 && levelData.GetTile(x, y + 1) == value) {
             down = true;
         }
 
-        if (x > 0 && levelData.GetTile(x-1, y) == value) {
+        if (x > 0 && levelData.GetTile(x - 1, y) == value) {
             left = true;
         }
 
-        if (x < mapSize.x - 1 && levelData.GetTile(x+1, y) == value) {
+        if (x < mapSize.x - 1 && levelData.GetTile(x + 1, y) == value) {
             right = true;
         }
 
+        bool upleft = false;
+        bool upright = false;
+        bool downleft = false;
+        bool downright = false;
+
+        if (up && left && levelData.GetTile(x - 1, y - 1) == value) {
+            upleft = true;
+        }
+
+        if (up && right && levelData.GetTile(x + 1,y - 1) == value) {
+            upright = true;
+        }
+
+        if (down && left && levelData.GetTile(x - 1, y + 1) == value) {
+            downleft = true;
+        }
+
+        if (down && right && levelData.GetTile(x + 1, y + 1) == value) {
+            downright = true;
+        }
+
         if (up && down && left && right) {
-            envTileType = "surrounded";
+            tileCollection = tileset.surrounded;
             rotation = 0;
+            if (!upleft) {
+                tileCollection = tileset.surrounded1;
+                rotation = 180;
+            } else if (!upright) {
+                tileCollection = tileset.surrounded1;
+                rotation = 90;
+            } else if (!downright) {
+                tileCollection = tileset.surrounded1;
+                rotation = 0;
+            } else if (!downleft) {
+                tileCollection = tileset.surrounded1;
+                rotation = 270;
+            }
+            if (tileCollection.objects.Length == 0) {
+                tileCollection = tileset.surrounded;
+                rotation = 0;
+            }
         } else if (left && up && right) {
-            envTileType = "t";
+            if (upleft && upright) {
+                tileCollection = tileset.tFill;
+            } else if (upleft) {
+                tileCollection = tileset.tFillRight;
+            } else if (upright) {
+                tileCollection = tileset.tFillLeft;
+            } else {
+                tileCollection = tileset.t;
+            }
             rotation = 0;
         } else if (up && right && down) {
-            envTileType = "t";
-            rotation = 90;
+            if (upright && downright) {
+                tileCollection = tileset.tFill;
+            } else if (upright) {
+                tileCollection = tileset.tFillRight;
+            } else if (downright) {
+                tileCollection = tileset.tFillLeft;
+            } else {
+                tileCollection = tileset.t;
+            }
+            rotation = 270;
         } else if (right && down && left) {
-            envTileType = "t";
+            if (downright && downleft) {
+                tileCollection = tileset.tFill;
+            } else if (downright) {
+                tileCollection = tileset.tFillRight;
+            } else if (downleft) {
+                tileCollection = tileset.tFillLeft;
+            } else {
+                tileCollection = tileset.t;
+            }
             rotation = 180;
         } else if (down && left && up) {
-            envTileType = "t";
-            rotation = 270;
+            if (downleft && upleft) {
+                tileCollection = tileset.tFill;
+            } else if (downleft) {
+                tileCollection = tileset.tFillRight;
+            } else if (upleft) {
+                tileCollection = tileset.tFillLeft;
+            } else {
+                tileCollection = tileset.t;
+            }
+            rotation = 90;
         } else if (up && down) {
-            envTileType = "straight";
-            rotation = 0;
+            tileCollection = tileset.straight;
+            rotation = 90;
         } else if (left && right) {
-            envTileType = "straight";
-            rotation = 180;
+            tileCollection = tileset.straight;
+            rotation = 0;
         } else if (up && right) {
-            envTileType = "corner";
+            if (upright) {
+                tileCollection = tileset.cornerFill;
+            } else {
+                tileCollection = tileset.corner;
+            }
             rotation = 0;
         } else if (right && down) {
-            envTileType = "corner";
-            rotation = 90;
+            if (downright) {
+                tileCollection = tileset.cornerFill;
+            } else {
+                tileCollection = tileset.corner;
+            }
+            rotation = 270;
         } else if (down && left) {
-            envTileType = "corner";
+            if (downleft) {
+                tileCollection = tileset.cornerFill;
+            } else {
+                tileCollection = tileset.corner;
+            }
             rotation = 180;
         } else if (left && up) {
-            envTileType = "corner";
-            rotation = 270;
-        } else if (up) {
-            envTileType = "edge";
-            rotation = 0;
-        } else if (right) {
-            envTileType = "edge";
+            if (upleft) {
+                tileCollection = tileset.cornerFill;
+            } else {
+                tileCollection = tileset.corner;
+            }
             rotation = 90;
-        } else if (down) {
-            envTileType = "edge";
+        } else if (up) {
+            tileCollection = tileset.peninsula;
+            rotation = 90;
+        } else if (right) {
+            tileCollection = tileset.peninsula;
             rotation = 180;
-        } else if (left) {
-            envTileType = "edge";
+        } else if (down) {
+            tileCollection = tileset.peninsula;
             rotation = 270;
-        } else {
-            envTileType = "fallback";
+        } else if (left) {
+            tileCollection = tileset.peninsula;
+            rotation = 0;
+        }
+
+        // Fallback
+        if (tileCollection == null) {
+            tileCollection = tileset.fallback;
             rotation = 0;
         }
 
