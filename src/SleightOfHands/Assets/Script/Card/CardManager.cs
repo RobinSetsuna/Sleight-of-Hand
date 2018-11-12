@@ -160,7 +160,7 @@ public class CardManager : MonoBehaviour
             switch (InEffect.Name)
             {
                 case "Smoke":
-                    var smoke = Instantiate(smokeObject, pos, Quaternion.identity);
+                    var smoke = Instantiate(smokeObject, pos + new Vector3(0,0.5f, 0), Quaternion.EulerAngles(-90,0,0));
                     smoke.AddComponent<Smoke>();
                     break;
                 case "Glue":
