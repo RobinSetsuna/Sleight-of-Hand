@@ -912,7 +912,7 @@ MonoBehaviour:
   smoothTimeX: 0.5
   bounds: 1
   minCameraPos: {x: -15, y: 19.04, z: -16}
-  maxCanmeraPos: {x: 5, y: 19.04, z: 5}
+  maxCanmeraPos: {x: 8, y: 19.04, z: 8}
   rotate_speed: 1.25
   CameraDistance: 12
   fallowing: 0
