@@ -63,9 +63,10 @@ public class EnemyManager : MonoBehaviour {
 				if (currentEnemy)
 				{
 					currentEnemy.CurrentEnemyState = EnemyMoveState.Idle;
-					//CameraManager.Instance.FocusAt(currentEnemy.transform.position);
-					//yield return new WaitForSeconds(1f);
-				}
+                    Transform enemyTransform = currentEnemy.transform;
+                    CameraManager.Instance.FocusAt(enemyTransform.position);
+                    CameraManager.Instance.BoundCameraFollow(enemyTransform);
+                }
 				else
 				{
 					LevelManager.Instance.EndEnvironmentActionPhase();
@@ -85,7 +86,7 @@ public class EnemyManager : MonoBehaviour {
 					CameraManager.Instance.CameraZoomOut();
 					LevelManager.Instance.NextRound();
 				}
-				CameraManager.Instance.unboundCameraFallow();
+				CameraManager.Instance.UnboundCameraFollow();
 				LevelManager.Instance.StartNextPhaseTurn();
 				break;
 		}

@@ -218,8 +218,6 @@ public class Enemy : Unit
                     break;
         }
 
-        Debug.LogWarning(path);
-
         if (path != null)
         {
             
@@ -236,8 +234,6 @@ public class Enemy : Unit
             }
 
             Path = null;
-
-            CameraManager.Instance.boundCameraFallow(transform);
 
             ActionManager.Singleton.Execute(ResetToIdle);
         }
@@ -312,7 +308,7 @@ public class Enemy : Unit
         else
         {
             Tile current_tile = GridManager.Instance.GetTile(transform.position);
-            rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range);
+            rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range, true, transform.rotation.eulerAngles.y);
 
             GridManager.Instance.DehighlightAll();
             foreach (Tile tile in rangeList)
@@ -333,8 +329,6 @@ public class Enemy : Unit
             if (currentDetectionState == EnemyDetectionState.Normal) {
                 Tile current_tile = GridManager.Instance.GetTile(transform.position);
                 rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range, true, yRot);
-
-
                 if (rangeList.Contains(GridManager.Instance.GetTile(player.GetComponent<player>().GridPosition)))
                 {
                     //detected
@@ -419,11 +413,11 @@ public class Enemy : Unit
 
     private IEnumerator Founded()
     {
-        // CameraManager.Instance.FocusAt(transform.position);
-        // yield return new WaitForSeconds(3f);
+        //CameraManager.Instance.FocusAt(transform.position);
+        //yield return new WaitForSeconds(3f);
 
         EnemyManager.Instance.AlertPop(transform);
-        AudioSource _audioSource = this.gameObject.GetComponent<AudioSource>();
+        AudioSource _audioSource = gameObject.GetComponent<AudioSource>();
         AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/beDetected");
 
         _audioSource.clip = audioClip;

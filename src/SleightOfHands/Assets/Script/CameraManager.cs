@@ -98,7 +98,7 @@ public class CameraManager : MonoBehaviour
 		return fallowing;
 	}
 
-	public void boundCameraFallow(Transform unit)
+	public void BoundCameraFollow(Transform unit)
 	{
 		// bound Camera fallow to Transform, Camera will fallow the target until it release
 		//FocusAt(unit.transform.position, null);
@@ -106,7 +106,7 @@ public class CameraManager : MonoBehaviour
 		StartCoroutine(CameraFallow(unit,true));
 	}
 	
-	public void unboundCameraFallow()
+	public void UnboundCameraFollow()
 	{
 		// release Camera
 		fallowing = false;
@@ -114,9 +114,10 @@ public class CameraManager : MonoBehaviour
 
 	public void FocusAt(Vector3 destination)
 	{
-		// Make a one time focus 
+		// Make a one time focus
 		// may add a camera action queue for camera action
-		unboundCameraFallow();
+		UnboundCameraFollow();
+
 		if (allocated)
 		{
 			FocusQueue.Enqueue(destination);
@@ -276,7 +277,7 @@ public class CameraManager : MonoBehaviour
 			}
 		}
 		StartCoroutine(ZoomIn());
-		yield return null;
+		yield break;
 	}
 
 	private IEnumerator ZoomOut()
