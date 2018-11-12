@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10045769a2aa2a4594092e81f6eb483, type: 3}
+  m_Name: WallTileCollection
+  m_EditorClassIdentifier: 
+  fallback:
+    objects:
+    - prefab: {fileID: 1839070797657850, guid: a1a8a37c56d08ce40b298195090866c3, type: 2}
+      weight: 1
+  surrounded:
+    objects:
+    - prefab: {fileID: 1839070797657850, guid: a1a8a37c56d08ce40b298195090866c3, type: 2}
+      weight: 1
+  surrounded1:
+    objects:
+    - prefab: {fileID: 1609553350245524, guid: f5ac269f42170cb479afda7bf3e204dc, type: 2}
+      weight: 1
+  surrounded2Adjacent:
+    objects: []
+  surrounded2Diagonal:
+    objects: []
+  surrounded3:
+    objects: []
+  straight:
+    objects:
+    - prefab: {fileID: 1044586834614864, guid: 7efb14bd2f864ec43ad761adb7c4060a, type: 2}
+      weight: 2
+    - prefab: {fileID: 1535581226112516, guid: a9ffe3f0ce055b043acf8d050f9c462e, type: 2}
+      weight: 1
+  peninsula:
+    objects:
+    - prefab: {fileID: 1992566041560848, guid: 92887f423df3ffb46bd3db71d4b65b67, type: 2}
+      weight: 1
+  corner:
+    objects:
+    - prefab: {fileID: 1695236000974246, guid: dc6ebb8a016fb9c418d8bf1eb4eee6dd, type: 2}
+      weight: 1
+  cornerFill:
+    objects:
+    - prefab: {fileID: 1614395664256610, guid: b65e78217a5e9234f94f8b0b3a6ed951, type: 2}
+      weight: 1
+  t:
+    objects:
+    - prefab: {fileID: 1534072813011826, guid: c86e90bf7eee6f046a809352c2df99b6, type: 2}
+      weight: 1
+  tFill:
+    objects:
+    - prefab: {fileID: 1622091040727452, guid: 0170ae8d87e965b4e98c53f52161d96d, type: 2}
+      weight: 0
+  tFillLeft:
+    objects:
+    - prefab: {fileID: 1812123409550632, guid: fe897757e4980fb479999edbaf1aacd4, type: 2}
+      weight: 0
+  tFillRight:
+    objects:
+    - prefab: {fileID: 1738561580016314, guid: ad7aa771fe8a5f24ea880e35c4ea6575, type: 2}
+      weight: 0

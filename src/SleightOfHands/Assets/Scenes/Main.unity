@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -210,7 +210,7 @@ MonoBehaviour:
   deckFilename: test_deck
   smokeObject: {fileID: 1595472967320516, guid: debaed0b1b82b5b439a12bf731c5c867,
     type: 2}
-  GlueObject: {fileID: 1624584859440258, guid: 8a1fcaca756c0ea4f9ccf27c13b02a47, type: 2}
+  GlueObject: {fileID: 0}
 --- !u!4 &384315690
 Transform:
   m_ObjectHideFlags: 0
@@ -683,6 +683,15 @@ MonoBehaviour:
   - {fileID: 1060067950125124, guid: d76e344024dd11f4aa61c57f0c402f4d, type: 2}
   - {fileID: 1060067950125124, guid: d76e344024dd11f4aa61c57f0c402f4d, type: 2}
   - {fileID: 1060067950125124, guid: d76e344024dd11f4aa61c57f0c402f4d, type: 2}
+  tilesetElements:
+  - name: Base
+    id: 0
+    walkable: 1
+    tileset: {fileID: 11400000, guid: 43c35ca66ecd2f443a5a0936b7dfdb1f, type: 2}
+  - name: Walls
+    id: 1
+    walkable: 0
+    tileset: {fileID: 11400000, guid: 3438213ab3d22b746bc10eb13cad2c4c, type: 2}
   mapSize: {x: 20, y: 20}
   outlinePercent: 0.075
   environmentHolder: {fileID: 1422179120}
@@ -912,7 +921,7 @@ MonoBehaviour:
   smoothTimeX: 0.5
   bounds: 1
   minCameraPos: {x: -15, y: 19.04, z: -16}
-  maxCanmeraPos: {x: 5, y: 19.04, z: 5}
+  maxCanmeraPos: {x: 8, y: 19.04, z: 8}
   rotate_speed: 1.25
   CameraDistance: 12
   fallowing: 0

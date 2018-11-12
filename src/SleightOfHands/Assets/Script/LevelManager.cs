@@ -293,6 +293,17 @@ public class LevelManager : MonoBehaviour
             return levelInfo;
         }
 
+        public int GetTile(int x, int y) {
+            int i = x + y * width;
+            return tiles[i];
+        }
+
+        public Vector2Int GetSize() {
+            int height = (tiles.Length / width);
+            if (tiles.Length % width != 0) height++;
+            return new Vector2Int(width, height);
+        }
+
     }
 
     [System.Serializable]

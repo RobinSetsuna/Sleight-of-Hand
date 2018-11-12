@@ -16,7 +16,6 @@ public abstract class Unit : InLevelObject
     public EventOnDataChange<Vector2Int> onGridPositionChange = new EventOnDataChange<Vector2Int>();
 
     public StatisticSystem.EventOnStatisticChange onAttributeChange;
-
     private Vector2Int gridPosition;
     public Vector2Int GridPosition
     {
