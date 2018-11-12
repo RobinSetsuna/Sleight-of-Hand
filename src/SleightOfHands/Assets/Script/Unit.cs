@@ -12,7 +12,6 @@ public abstract class Unit : InLevelObject
     [SerializeField] private float maxSpeed;
 
     public EventOnDataChange<Vector2Int> onGridPositionChange = new EventOnDataChange<Vector2Int>();
-
     private Vector2Int gridPosition;
     public Vector2Int GridPosition
     {

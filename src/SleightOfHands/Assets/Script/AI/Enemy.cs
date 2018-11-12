@@ -165,7 +165,9 @@ public class Enemy : Unit
         if (InAttackRange() && ActionPoint >= 1 && currentDetectionState ==  EnemyDetectionState.Found)
         {
             //is ok to Atk 
-            // do some operation here.
+            // TODO 
+            //ADD HEALTH UPDATE HERE
+
             EnemyManager.Instance.AttackPop(transform);
             ActionPoint--;
             yield return new WaitForSeconds(1.5f);
@@ -327,20 +329,22 @@ public class Enemy : Unit
 	private void HandleDetection(Unit unit, Vector2Int previousPos, Vector2Int pos)
     {
         var yRot = transform.rotation.eulerAngles.y; 
-        if (unit.tag == "Player"&&currentDetectionState==EnemyDetectionState.Normal)
+        if (unit.tag == "Player"||unit.tag == "Enemy")
         {
-            Tile current_tile = GridManager.Instance.GetTile(transform.position);
-            rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range,true,yRot);
+            if (currentDetectionState == EnemyDetectionState.Normal) {
+                Tile current_tile = GridManager.Instance.GetTile(transform.position);
+                rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range, true, yRot);
 
-            if (rangeList.Contains(GridManager.Instance.GetTile(player.GetComponent<player>().GridPosition)))
-            {
-                //detected
-                
-                // add some operation here
-                SetDetectionState(EnemyDetectionState.Found);
+                if (rangeList.Contains(GridManager.Instance.GetTile(player.GetComponent<player>().GridPosition)))
+                {
+                    //detected
 
-                StartCoroutine(Founded());
+                    // add some operation here
+                    SetDetectionState(EnemyDetectionState.Found);
+                    StartCoroutine(Founded());
+                }
             }
+
         }
 	}
 
