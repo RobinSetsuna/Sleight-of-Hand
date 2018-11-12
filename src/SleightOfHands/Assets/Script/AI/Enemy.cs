@@ -310,7 +310,7 @@ public class Enemy : Unit
         else
         {
             Tile current_tile = GridManager.Instance.GetTile(transform.position);
-            rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range);
+            rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range, true, transform.rotation.eulerAngles.y);
 
             GridManager.Instance.DehighlightAll();
             foreach (Tile tile in rangeList)
@@ -328,7 +328,7 @@ public class Enemy : Unit
         if (unit.tag == "Player"&&currentDetectionState==EnemyDetectionState.Normal)
         {
             Tile current_tile = GridManager.Instance.GetTile(transform.position);
-            rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range);
+            rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range, true, transform.rotation.eulerAngles.y);
 
             if (rangeList.Contains(GridManager.Instance.GetTile(player.GetComponent<player>().GridPosition)))
             {
