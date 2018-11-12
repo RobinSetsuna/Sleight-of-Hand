@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -20,23 +20,73 @@ public class ProjectileManager: MonoBehaviour{
     
     private HashSet<Vector2Int> checked_obstacles;
     private HashSet<Tile> retList;
-    public HashSet<Tile> getProjectileRange(Tile center,int detection_range)
+    public HashSet<Tile> getProjectileRange(Tile center,int detection_range,bool directed,float yRot)
     {
         // Player moved; Stealth Detection
         retList = new HashSet<Tile>();
         checked_obstacles = new HashSet<Vector2Int>();
         int range = detection_range;
         retList.Add(center);
+        bool Quadrant_1 = false;
+        bool Quadrant_2 = false;
+        bool Quadrant_3 = false;
+        bool Quadrant_4 = false;
+        if (directed)
+        {
+            if (Math.Round(yRot) == 0)
+            {
+                Quadrant_1 = true;
+                Quadrant_2 = true;
+            }else if (Math.Round(yRot) == 90)
+            {
+                Quadrant_1 = true;
+                Quadrant_4 = true;
+            }else if (Math.Round(yRot) == 180)
+            {
+                Quadrant_3 = true;
+                Quadrant_4 = true;
+            }
+            else if (Math.Round(yRot) == 270)
+            {
+                Quadrant_2 = true;
+                Quadrant_3 = true;
+            }
+        }
+        else
+        {
+             Quadrant_1 = true;
+             Quadrant_2 = true;
+             Quadrant_3 = true;
+             Quadrant_4 = true;
+        }
+
         for (int x = 0; x <= range; x++)
         {
-            bool ret1 = true;
-            bool ret2 = true;
-            bool ret3 = true;
-            bool ret4 = true;
-            bool ret5 = true;
-            bool ret6 = true;
-            bool ret7 = true;
-            bool ret8 = true;
+            bool ret1 = false;
+            bool ret2 = false;
+            bool ret3 = false;
+            bool ret4 = false;
+            bool ret5 = false;
+            bool ret6 = false;
+            bool ret7 = false;
+            bool ret8 = false;
+            if (Quadrant_1){
+                ret1 = true;
+                ret2 = true;
+            }
+            if (Quadrant_2){
+                ret3 = true;
+                ret4 = true;
+            }
+            if (Quadrant_3){
+                ret5 = true;
+                ret6 = true;
+            }
+            if (Quadrant_4){
+                ret7 = true;
+                ret8 = true;
+            }
+
             for (int y = x; y <= range; y++)
             {
 				
@@ -61,19 +111,19 @@ public class ProjectileManager: MonoBehaviour{
                     }
                     if (ret5)
                     {
-                        ret5 = process_status_check(center.x + x, center.y - y);
+                        ret5 = process_status_check(center.x - x, center.y - y);
                     }
                     if (ret6)
                     {
-                        ret6 = process_status_check(center.x + y, center.y - x);
+                        ret6 = process_status_check(center.x - y, center.y - x);
                     }
                     if (ret7)
                     {
-                        ret7 = process_status_check(center.x - x, center.y - y);
+                        ret7 = process_status_check(center.x + x, center.y - y);
                     }
                     if (ret8)
                     {
-                        ret8 = process_status_check(center.x - y, center.y - x);
+                        ret8 = process_status_check(center.x + y, center.y - x);
                     }
                 }        
             }
