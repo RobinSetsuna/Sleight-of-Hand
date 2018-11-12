@@ -48,10 +48,17 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     //public Tile[] generatedPath;
     //private int action_point;
 
-    private Transform root;
+    private Transform gridRoot;
 
     [Header("References")]
-    public Transform environmentHolder;
+    [SerializeField] private Transform environmentRoot;
+    public Transform EnvironmentRoot
+    {
+        get
+        {
+            return environmentRoot;
+        }
+    }
 
     public int Length
     {
@@ -251,13 +258,13 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// </summary>
     public void GenerateMap(LevelManager.LevelData levelData)
     {
-        if (!root)
-            root = transform.Find("GridRoot");
+        if (!gridRoot)
+            gridRoot = transform.Find("GridRoot");
 
-        if (!root)
+        if (!gridRoot)
         {
-            root = new GameObject("GridRoot").transform;
-            root.parent = transform;
+            gridRoot = new GameObject("GridRoot").transform;
+            gridRoot.parent = transform;
         }
 
         // Extract data from levelData
@@ -268,7 +275,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         grid = new Tile[mapSize.x, mapSize.y];
         units = new Unit[mapSize.x, mapSize.y];
 
-        int numExistedTiles = root.childCount;
+        int numExistedTiles = gridRoot.childCount;
 
         for (int x = 0; x < mapSize.x; x ++)
             for (int y = 0; y < mapSize.y; y ++)
@@ -279,7 +286,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                 // Vector3 tilePosition = new Vector3(-mapSize.x/2 +nodeRadius + x + transform.position.x, 2, -mapSize.y/2 + nodeRadius + y + transform.position.z);
                 Vector3 tilePosition = GetWorldPosition(x, y);
 
-                Transform tileTransform = i < numExistedTiles ? root.GetChild(i) : Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right * 90), root);
+                Transform tileTransform = i < numExistedTiles ? gridRoot.GetChild(i) : Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right * 90), gridRoot);
 
                 // initiate outline
                 tileTransform.localScale = Vector3.one * (1 - outlinePercent);
@@ -297,18 +304,18 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                 {
                     // tileType < 0, road tile add
                     Quaternion roadTileRotation = Quaternion.Euler(0,0, 0);
-                    Instantiate(roadTilePrefabs[-tileType-1], envTilePosition, roadTileRotation, environmentHolder);
+                    Instantiate(roadTilePrefabs[-tileType-1], envTilePosition, roadTileRotation, environmentRoot);
                 }
                 else
                 {
                     Quaternion envTileRotation = Quaternion.Euler(0, Random.Range(0, 3) * 90f, 0);
                     int envTileIndex = Random.Range(0, environmentTilePrefabs.Length);
                     GameObject envTilePrefab = environmentTilePrefabs[envTileIndex];
-                    Instantiate(envTilePrefab, envTilePosition, envTileRotation, environmentHolder);
+                    Instantiate(envTilePrefab, envTilePosition, envTileRotation, environmentRoot);
                     if (tileType != 0&& tileType>0)
                     {
                         Quaternion wallRotation = Quaternion.Euler(0, Random.Range(0, 3) * 90f, 0);
-                        Instantiate(wallPrefabs[tileType - 1], tilePosition, wallRotation, environmentHolder);
+                        Instantiate(wallPrefabs[tileType - 1], tilePosition, wallRotation, environmentRoot);
                     }
                 }
                 #region ORIGINAL_SWITCH_STATE
@@ -344,6 +351,11 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         playerController.onCurrentPlayerStateChange.AddListener(HandleCurrentPlayerStateChange);
 
         playerController.onCardToUseUpdate.AddListener(HandleCardToUseChange);
+    }
+
+    public T Spawn<T>(T obj, Vector3 position, Quaternion rotation)
+    {
+        Instantiate(obj, position, rotation, EnvironmentRoot);
     }
 
     //public void wipeTiles()
@@ -564,14 +576,5 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         units[currentGridPosition.x, currentGridPosition.y] = unit;
 
         onUnitMove.Invoke(unit, previousGridPosition, currentGridPosition);
-    }
-
-
-    /// <summary>
-    /// Find the cloest tile to target destination in a certain range, use for AI moving in Detected mode
-    /// </summary>
-    private void FindCloestTileToDes(Tile start, int range)
-    {
-
     }
 }

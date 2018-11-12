@@ -17,13 +17,18 @@ public struct ResourceUtility
         return Resources.Load<T>("Prefabs/UI/" + name);
     }
 
-    public static Sprite GetCardBackground(string id)
+    public static Sprite GetCardTemplate(string name)
     {
-        return Resources.Load<Sprite>("Sprites/Card/Background/" + id);
+        return Resources.Load<Sprite>("Sprites/Card/Template/" + name);
     }
 
-    public static Sprite GetCardIllustration(string id)
+    public static Sprite GetCardIllustration(string name)
     {
-        return Resources.Load<Sprite>("Sprites/Card/Illustration/" + id);
+        return Resources.Load<Sprite>("Sprites/Card/Illustration/" + name);
+    }
+
+    public static GameObject GetCardEffect(string name)
+    {
+        return Resources.Load<GameObject>("Prefabs/CardEffect/" + name);
     }
 }

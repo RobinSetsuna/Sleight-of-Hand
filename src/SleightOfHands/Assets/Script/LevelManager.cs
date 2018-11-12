@@ -155,8 +155,7 @@ public class LevelManager : MonoBehaviour
     float canvasHeight;
     int cardsNumberOnCanvas = 0;
 
-    [SerializeField]
-    private LevelData currentLevel;
+    [SerializeField] private LevelData currentLevel;
     public LevelData CurrentLevel
     {
         get
@@ -172,15 +171,13 @@ public class LevelManager : MonoBehaviour
         GridManager.Instance.Initialize();
 
         CardManager.Instance.InitCardDeck();
-        CardManager.Instance.RandomGetCard();
-       // CardManager.Instance.RandomGetCard();
-        //Debug.LogCardManager.Instance.RandomGetCard();
+        CardManager.Instance.RandomGetCard(3);
+
         RoundNumber = 0;
         CurrentPhase = Phase.Start;
 
         UIManager.Singleton.Open("HUD", UIManager.UIMode.PERMANENT);
     }
-   
 
     internal void EndPlayerActionPhase()
     {
@@ -248,15 +245,14 @@ public class LevelManager : MonoBehaviour
             switch (spawnData.SpawnType) {
 
                 case SpawnData.Type.Player:
-                    Player = Instantiate(ResourceUtility.GetPrefab<player>("player_temp"), spawnPosition, spawnRotation, GridManager.Instance.environmentHolder);
+                    Player = Instantiate(ResourceUtility.GetPrefab<player>("player_temp"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
                     // Player.GetComponent<player>().initializeEventListener();
                     GameObject.FindGameObjectWithTag("Player").AddComponent<Effects>();
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Effects>().SetOwner("Player");
                     break;
 
                 case SpawnData.Type.Guard:
-                    var temp = Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation,
-                        GridManager.Instance.environmentHolder);
+                    var temp = Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
                     temp.AddComponent<Effects>();
                     temp.GetComponent<Effects>().SetOwner("Enemy");
                     temp.tag = "Enemy";
