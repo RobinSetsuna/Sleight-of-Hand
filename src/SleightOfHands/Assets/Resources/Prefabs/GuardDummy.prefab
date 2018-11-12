@@ -329,15 +329,15 @@ MonoBehaviour:
   initialActionPoint: 2
   initialHealth: 100
   movable: 1
-  modelHolder: {fileID: 0}
-  jumpHeight: 0
+  modelHolder: {fileID: 1801817489718384}
+  jumpHeight: 0.25
   jumpsPerMove: 1
   speed: 0
   destination: {x: 0, y: 0, z: 0}
   unitName: 
   ID: 0
   detection_range: 3
-  attack_range: 0
+  attack_range: 1
 --- !u!114 &114781160667747748
 MonoBehaviour:
   m_ObjectHideFlags: 1
