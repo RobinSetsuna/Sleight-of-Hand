@@ -37,10 +37,10 @@ public class MouseInputManager
     /// <summary>
     /// An event triggered as long as the mouse is dragging
     /// </summary>
-    public EventOnDataUpdate<MouseInteractable> OnMouseDrag = new EventOnDataUpdate<MouseInteractable>();
+    public EventOnDataUpdate<MouseInteractable> onMouseDrag = new EventOnDataUpdate<MouseInteractable>();
 
-    //public EventOnDataUpdate<MouseInteractable> OnMouseDown = new EventOnDataUpdate<MouseInteractable>();
-    //public EventOnDataUpdate<MouseInteractable> OnMouseUp = new EventOnDataUpdate<MouseInteractable>();
+    //public EventOnDataUpdate<MouseInteractable> onMouseDown = new EventOnDataUpdate<MouseInteractable>();
+    //public EventOnDataUpdate<MouseInteractable> onMouseUp = new EventOnDataUpdate<MouseInteractable>();
 
     /// <summary>
     /// An event triggered whenever the mouse is entering a new object on screen
@@ -60,7 +60,7 @@ public class MouseInputManager
     /// <summary>
     /// An event triggered whenever a mouse drag ends
     /// </summary>
-    public EventOnDataUpdate<MouseInteractable> onDragEnd = new EventOnDataUpdate<MouseInteractable>();
+    public EventOnDataUpdate<MouseInteractable> onMouseDragEnd = new EventOnDataUpdate<MouseInteractable>();
 
     /// <summary>
     /// Whether the mouse is currently pressed
@@ -95,29 +95,35 @@ public class MouseInputManager
         MouseDownTime = TimeUtility.localTimeInMilisecond;
         MouseDownPosition = Input.mousePosition;
 
-        //OnMouseDown.Invoke(obj);
+        //onMouseDown.Invoke(obj);
     }
 
     internal void NotifyMouseDrag(MouseInteractable obj)
     {
-
         if (!IsMouseDragging)
         {
             if (Vector3.Distance(Input.mousePosition, MouseDownPosition) > mouseDragThreshold)
             {
+#if UNITY_EDITOR
+                Debug.Log(LogUtility.MakeLogString("MouseInputManager", "Start dragging"));
+#endif
                 IsMouseDragging = true;
-                OnMouseDrag.Invoke(obj);
             }
         }
         else
-            OnMouseDrag.Invoke(obj);
+            onMouseDrag.Invoke(obj);
     }
 
     internal void NotifyMouseEnter(MouseInteractable obj)
     {
         if (!IsMouseDragging && IsMouseDown)
+        {
+#if UNITY_EDITOR
+            Debug.Log(LogUtility.MakeLogString("MouseInputManager", "Start dragging"));
+#endif
             IsMouseDragging = true;
-        
+        }
+
         CurrentMouseTarget = obj;
 
         onMouseEnter.Invoke(obj);
@@ -130,19 +136,29 @@ public class MouseInputManager
         if (!IsMouseDragging)
         {
             if (TimeUtility.localTimeInMilisecond - MouseDownTime > mouseFocusThreshold)
+            {
+#if UNITY_EDITOR
+                Debug.Log(LogUtility.MakeLogString("MouseInputManager", "Focus " + obj));
+#endif
                 onMouseFocus.Invoke(obj);
+            }
             else
             {
+#if UNITY_EDITOR
+                Debug.Log(LogUtility.MakeLogString("MouseInputManager", "Click " + obj));
+#endif
                 onMouseClick.Invoke(obj);
-                Debug.Log(obj);
             }
         }
         else
         {
+#if UNITY_EDITOR
+            Debug.Log(LogUtility.MakeLogString("MouseInputManager", "End dragging (started from " + obj + ")"));
+#endif
             IsMouseDragging = false;
-            onDragEnd.Invoke(obj);
+            onMouseDragEnd.Invoke(obj);
         }
 
-        //OnMouseUp.Invoke(obj);
+        //onMouseUp.Invoke(obj);
     }
 }

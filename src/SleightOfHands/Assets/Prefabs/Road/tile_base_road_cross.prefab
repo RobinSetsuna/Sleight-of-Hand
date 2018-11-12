@@ -173,12 +173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7bef4cc71cfcde40985784ee75abaac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultColor: {r: 1, g: 1, b: 1, a: 0}
-  mouseOverColor: {r: 0.1945087, g: 0.34448448, b: 0.4433962, a: 0}
-  selectedColor: {r: 0.24056605, g: 0.47098097, b: 0.9622642, a: 0}
-  highlightColor: {r: 0.2687344, g: 0.9339623, b: 0.75989807, a: 0}
-  walkable: 0
+  Type: 0
+  alpha: 0.25
   gridPosition: {x: 0, y: 0}
   distance: 9999
-  highlighted: 0
   selected: 0

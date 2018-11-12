@@ -173,6 +173,21 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         return GetWorldPosition(tile.gridPosition);
     }
 
+    public Unit GetUnit(int x, int y)
+    {
+        return units[x, y];
+    }
+
+    public Unit GetUnit(Vector2Int gridPosition)
+    {
+        return GetUnit(gridPosition.x, gridPosition.y);
+    }
+
+    public Unit GetUnit(Tile tile)
+    {
+        return GetUnit(tile.gridPosition);
+    }
+
     /// <summary>
     /// Evalueate whether two tiles are considered to be adjacent
     /// </summary>
@@ -195,26 +210,36 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         return grid[x, y].walkable;
     }
 
+    public bool IsWalkable(int x, int y)
+    {
+        return grid[x, y].walkable;
+    }
+    
+    public bool HasUnitOn(int x, int y)
+    {
+        return units[x, y]!=null;
+    }
+
     /// <summary>
     /// Get all accessible positions surrounding a given grid position
     /// </summary>
     /// <param name="x"> The x value of the grid position to concern </param>
     /// <param name="y"> The y value of the grid position to concern </param>
     /// <returns> A List of Vector2Int containing all grid positions </returns>
-    public List<Vector2Int> GetAccessibleAdjacentGridPositions(int x, int y)
+    public List<Vector2Int> GetAdjacentGridPositions(int x, int y)
     {
         List<Vector2Int> list = new List<Vector2Int>();
 
-        if (x + 1 < Length && grid[x + 1, y] && grid[x + 1, y].walkable && units[x + 1, y] == null)
+        if (x + 1 < Length && grid[x + 1, y])
             list.Add(new Vector2Int(x + 1, y));
 
-        if (x - 1 >= 0 && grid[x - 1, y] && grid[x - 1, y].walkable && units[x - 1, y] == null)
+        if (x - 1 >= 0 && grid[x - 1, y])
             list.Add(new Vector2Int(x - 1, y));
 
-        if (y + 1 < Width && grid[x, y + 1] && grid[x, y + 1].walkable && units[x, y + 1] == null)
+        if (y + 1 < Width && grid[x, y + 1])
             list.Add(new Vector2Int(x, y + 1));
 
-        if (y - 1 >= 0 && grid[x, y - 1] && grid[x, y - 1].walkable && units[x, y - 1] == null)
+        if (y - 1 >= 0 && grid[x, y - 1])
             list.Add(new Vector2Int(x, y - 1));
 
         return list;
@@ -475,8 +500,12 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// </summary>
     public void Initialize()
     {
-        LevelManager.Instance.playerController.onPathUpdate.AddListener(HandlePathChange);
-        LevelManager.Instance.playerController.onCurrentPlayerStateChange.AddListener(HandleCurrentPlayerStateChange);
+        PlayerController playerController = LevelManager.Instance.playerController;
+
+        playerController.onPathUpdate.AddListener(HandlePathChange);
+        playerController.onCurrentPlayerStateChange.AddListener(HandleCurrentPlayerStateChange);
+
+        playerController.onCardToUseUpdate.AddListener(HandleCardToUseChange);
     }
 
     //public void wipeTiles()
@@ -497,9 +526,9 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// </summary>
     /// <param name="tile"> The tile to highlight </param>
     /// <param name="color"> The color to highlight with </param>
-    public void Highlight(Tile tile, Tile.HighlightColor color)
+    public void Highlight(Tile tile, Tile.HighlightColor color, bool isAdditive = true)
     {
-        Highlight(tile, 0, 0, int.MinValue, color);
+        Highlight(tile, 0, 0, int.MinValue, color, isAdditive);
     }
 
     /// <summary>
@@ -509,9 +538,9 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// <param name="range"> The range to concern </param>
     /// <param name="color"> The color to highlight with </param>
     /// <param name="skipUnmasked"> [optional] </param>
-    public void Highlight(Tile center, int range, Tile.HighlightColor color, bool skipUnmasked = false)
+    public void Highlight(Tile center, int range, Tile.HighlightColor color, bool isAdditive = true, bool skipUnmasked = false)
     {
-        Highlight(center, 0, range, int.MinValue, color, skipUnmasked);
+        Highlight(center, 0, range, int.MinValue, color, isAdditive, skipUnmasked);
     }
 
     /// <summary>
@@ -522,9 +551,9 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// <param name="mask"> The mask for filtering </param>
     /// <param name="color"> The color to highlight with </param>
     /// <param name="skipUnmasked"> [optional] </param>
-    public void Highlight(Tile center, int range, int mask, Tile.HighlightColor color, bool skipUnmasked = false)
+    public void Highlight(Tile center, int range, int mask, Tile.HighlightColor color, bool isAdditive = true, bool skipUnmasked = false)
     {
-        Highlight(center, 0, range, mask, color, skipUnmasked);
+        Highlight(center, 0, range, mask, color, isAdditive, skipUnmasked);
     }
 
     /// <summary>
@@ -536,7 +565,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// <param name="mask"> The mask for filtering </param>
     /// <param name="color"> The color to highlight with </param>
     /// <param name="skipUnmasked"> [optional] </param>
-    public void Highlight(Tile center, int lower, int upper, int mask, Tile.HighlightColor color, bool skipUnmasked = false)
+    public void Highlight(Tile center, int lower, int upper, int mask, Tile.HighlightColor color, bool isAdditive = true, bool skipUnmasked = false)
     {
         bool[,] isVisited = new bool[Length, Width];
 
@@ -553,7 +582,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
             if (distance >= lower && distance <= upper && (skipUnmasked || (center.Mark & mask) != 0))
             {
-                tile.Highlight(color);
+                tile.Highlight(color, isAdditive);
                 numHighlightedTiles++;
             }
 
@@ -564,7 +593,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
             if (++distance <= upper)
                 //{
-                foreach (Vector2Int coordinate in GetAccessibleAdjacentGridPositions(x, y))
+                foreach (Vector2Int coordinate in GetAdjacentGridPositions(x, y))
                 {
                     int xi = coordinate.x;
                     int yi = coordinate.y;
@@ -669,14 +698,24 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         {
             player _player = LevelManager.Instance.Player;
 
+
             if (path.Count == 0)
-                Highlight(GetTile(_player.transform.position), _player.ActionPoint, Tile.HighlightColor.Blue, true);
+                Highlight(GetTile(_player.transform.position), _player.Ap, Tile.HighlightColor.Blue, true, true);
             else
-                Highlight(path.Destination, _player.ActionPoint - path.Count, Tile.HighlightColor.Blue, true);
+                Highlight(path.Destination, _player.Ap - path.Count, Tile.HighlightColor.Blue, true, true);
 
             foreach (Tile wayPoint in path)
-                Highlight(wayPoint, Tile.HighlightColor.Green);
+                Highlight(wayPoint, Tile.HighlightColor.Green, false);
         }
+    }
+
+    private void HandleCardToUseChange(Card cardToUse)
+    {
+        // TODO: Change highlights according to card's range
+        if (cardToUse != null)
+            Highlight(GetTile(LevelManager.Instance.Player.transform.position), Tile.HighlightColor.Green, false);
+        else
+            DehighlightAll();
     }
 
     internal void NotifyUnitPositionChange(Unit unit, Vector2Int previousGridPosition, Vector2Int currentGridPosition)
@@ -687,6 +726,14 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         units[currentGridPosition.x, currentGridPosition.y] = unit;
 
         onUnitMove.Invoke(unit, previousGridPosition, currentGridPosition);
+    }
+
+    /// <summary>
+    /// Find the cloest tile to target destination in a certain range, use for AI moving in Detected mode
+    /// </summary>
+    private void FindCloestTileToDes(Tile start, int range)
+    {
+
     }
 
     [Serializable]

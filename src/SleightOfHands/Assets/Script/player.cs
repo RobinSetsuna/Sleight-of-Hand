@@ -5,7 +5,12 @@
 /// </summary>
 public class player : Unit
 {
-	// Update is called once per frame
+    //public void initializeEventListener()
+    //{
+    //    unitName = "Player";
+    //}
+    
+    // Update is called once per frame
     //void Update()
     //{
     //if (Input.GetButtonDown("Jump"))
@@ -55,27 +60,27 @@ public class player : Unit
     //}
 
     //public void movementEnable()
-	//{
-	//	// enable movement mode, ok for highlight, selected tiles in map.
-	//	GridManager.Instance.wipeTiles();
-	//	Tile tile_stand = GridManager.Instance.TileFromWorldPoint(transform.position);
-	//	GridManager.Instance.Highlight(tile_stand,ActionPoint,3);
-	//	tile_stand.setSelected();
-	//	GridManager.Instance.ok_to_drag = true;
-	//}
+    //{
+    //	// enable movement mode, ok for highlight, selected tiles in map.
+    //	GridManager.Instance.wipeTiles();
+    //	Tile tile_stand = GridManager.Instance.TileFromWorldPoint(transform.position);
+    //	GridManager.Instance.Highlight(tile_stand,ActionPoint,3);
+    //	tile_stand.setSelected();
+    //	GridManager.Instance.ok_to_drag = true;
+    //}
 
-	//public void movementDisable()
-	//{
-	//	// disable movement mode, wipe highlight, selected tiles in map.
-	//	GridManager.Instance.wipeTiles();
-	//	GridManager.Instance.ok_to_drag = false;
-	//}
+    //public void movementDisable()
+    //{
+    //	// disable movement mode, wipe highlight, selected tiles in map.
+    //	GridManager.Instance.wipeTiles();
+    //	GridManager.Instance.ok_to_drag = false;
+    //}
 
-	//public void setActionPoints(int _Action_point)
-	//{
-	//	//set Action points
-	//	ActionPoint = _Action_point;
-	//}
+    //public void setActionPoints(int _Action_point)
+    //{
+    //	//set Action points
+    //	ActionPoint = _Action_point;
+    //}
 
     //public void Move()
     //{

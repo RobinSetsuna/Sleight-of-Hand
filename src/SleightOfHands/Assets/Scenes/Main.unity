@@ -206,13 +206,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ad281967ab548e4fa49577afada4fca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deck:
-    cards: []
-  usedCards: []
-  hand: []
   deckFolderPath: Deck
   deckFilename: test_deck
-  smokeObject: {fileID: 0}
+  smokeObject: {fileID: 1595472967320516, guid: debaed0b1b82b5b439a12bf731c5c867,
+    type: 2}
+  GlueObject: {fileID: 0}
 --- !u!4 &384315690
 Transform:
   m_ObjectHideFlags: 0
@@ -253,7 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c7e24078f04dfc4bb6c00e72f552d52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialState: 3
+  initialState: 4
 --- !u!4 &440463893
 Transform:
   m_ObjectHideFlags: 0
@@ -277,6 +275,7 @@ GameObject:
   - component: {fileID: 534669905}
   - component: {fileID: 534669904}
   - component: {fileID: 534669903}
+  - component: {fileID: 534669906}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -315,16 +314,16 @@ Camera:
   far clip plane: 1000
   field of view: 48.9
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1073804055
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 0
+  m_HDR: 1
   m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
@@ -344,6 +343,101 @@ Transform:
   m_Father: {fileID: 2128856420}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+--- !u!82 &534669906
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 534669902}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: db249b7aa9d588e4e8ab81853d7b9942, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &818662164
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,9 +598,9 @@ Canvas:
   m_GameObject: {fileID: 1168265286}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_RenderMode: 1
+  m_Camera: {fileID: 534669904}
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -577,24 +671,24 @@ MonoBehaviour:
   - {fileID: 1607742309056584, guid: d7dffb2347ee64a4f8512d0f5f1fc347, type: 2}
   - {fileID: 1771194520321890, guid: 25f75603393cd5141bc198b4d85124e6, type: 2}
   environmentTilePrefabs:
-  - {fileID: 100002, guid: 8dfedd46392fac84f99bb0d47b1a4155, type: 3}
-  - {fileID: 100002, guid: 998206b37c655c74b9da08e0a26eafaf, type: 3}
-  - {fileID: 100002, guid: 4bcff743673bb534dba591a551f8cc9e, type: 3}
-  - {fileID: 100002, guid: 7d6d6f4fc23d3284ab10efe1244fa30d, type: 3}
+  - {fileID: 1060067950125124, guid: d76e344024dd11f4aa61c57f0c402f4d, type: 2}
+  - {fileID: 1299703111463500, guid: 4531ca848128cc945a4ebf65254f119a, type: 2}
+  - {fileID: 1982307635171964, guid: 7ea0df4a3805a8e47a553710d1fc0616, type: 2}
+  - {fileID: 1544520553244294, guid: 8592c9267ad2f024bb35e39be82ffd9c, type: 2}
   - {fileID: 100002, guid: b7e4d8b0b359bb34086c57d5380ebd93, type: 3}
-  - {fileID: 100002, guid: bd185bc6caad73f4eab1533fa79c538a, type: 3}
-  - {fileID: 100002, guid: 004f0f47822cafa41b5c723525dbb1c9, type: 3}
-  - {fileID: 100002, guid: 8dfedd46392fac84f99bb0d47b1a4155, type: 3}
-  - {fileID: 100002, guid: 8dfedd46392fac84f99bb0d47b1a4155, type: 3}
-  - {fileID: 100002, guid: 8dfedd46392fac84f99bb0d47b1a4155, type: 3}
-  - {fileID: 100002, guid: 8dfedd46392fac84f99bb0d47b1a4155, type: 3}
-  - {fileID: 100002, guid: 8dfedd46392fac84f99bb0d47b1a4155, type: 3}
+  - {fileID: 1268907340978742, guid: 9c47f8a31f4ead146a5224daf8dc5f5b, type: 2}
+  - {fileID: 1805978060452240, guid: 296222ae15301154da11ec85c4acc845, type: 2}
+  - {fileID: 1060067950125124, guid: d76e344024dd11f4aa61c57f0c402f4d, type: 2}
+  - {fileID: 1060067950125124, guid: d76e344024dd11f4aa61c57f0c402f4d, type: 2}
+  - {fileID: 1060067950125124, guid: d76e344024dd11f4aa61c57f0c402f4d, type: 2}
+  - {fileID: 1060067950125124, guid: d76e344024dd11f4aa61c57f0c402f4d, type: 2}
+  - {fileID: 1060067950125124, guid: d76e344024dd11f4aa61c57f0c402f4d, type: 2}
   tilesetElements:
-  - name: Default Tile
+  - name: Base
     id: 0
     walkable: 1
     tileset: {fileID: 11400000, guid: 43c35ca66ecd2f443a5a0936b7dfdb1f, type: 2}
-  - name: Default Wall
+  - name: Walls
     id: 1
     walkable: 0
     tileset: {fileID: 11400000, guid: 3438213ab3d22b746bc10eb13cad2c4c, type: 2}
@@ -653,6 +747,7 @@ GameObject:
   - component: {fileID: 1851337925}
   - component: {fileID: 1851337924}
   - component: {fileID: 1851337926}
+  - component: {fileID: 1851337927}
   m_Layer: 0
   m_Name: Level Manager
   m_TagString: Untagged
@@ -673,6 +768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelFolderPath: Levels
   levelFilename: test_level
+  Enemies: []
   Smoke: {fileID: 0}
   Haste: {fileID: 0}
   Glue: {fileID: 0}
@@ -705,6 +801,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7beffdd35a1d2f24fb2b955f7ee024ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1851337927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1851337923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bb27dbacb48a7740a4083a37f0c966b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Enemies: []
 --- !u!1 &1922193537
 GameObject:
   m_ObjectHideFlags: 0
@@ -790,7 +898,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2128856419}
-  m_LocalRotation: {x: -0, y: 0.38268343, z: -0, w: 0.92387956}
+  m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -5, y: 20, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -809,11 +917,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cac1622e5ae9de74489476913be3f093, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTimeY: 4
-  smoothTimeX: 4
+  smoothTimeY: 0.5
+  smoothTimeX: 0.5
   bounds: 1
-  minCameraPos: {x: -11.66781, y: 19.04, z: -12.5332}
-  maxCanmeraPos: {x: 4.866974, y: 19.04, z: -1.610182}
+  minCameraPos: {x: -15, y: 19.04, z: -16}
+  maxCanmeraPos: {x: 5, y: 19.04, z: 5}
   rotate_speed: 1.25
   CameraDistance: 12
   fallowing: 0
@@ -828,8 +936,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b752c0905d5c0d469351717013ed04d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragSpeed: 15
-  curZoomPos: 10
+  dragSpeed: 10
+  curZoomPos: 5
   zoomTo: 15
   zoomFrom: 3
   zoomSpeed: 15

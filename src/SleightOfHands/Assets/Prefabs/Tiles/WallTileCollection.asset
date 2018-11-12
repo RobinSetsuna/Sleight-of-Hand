@@ -21,7 +21,7 @@ MonoBehaviour:
       weight: 1
   surrounded1:
     objects:
-    - prefab: {fileID: 1839070797657850, guid: a1a8a37c56d08ce40b298195090866c3, type: 2}
+    - prefab: {fileID: 1609553350245524, guid: f5ac269f42170cb479afda7bf3e204dc, type: 2}
       weight: 1
   surrounded2Adjacent:
     objects: []

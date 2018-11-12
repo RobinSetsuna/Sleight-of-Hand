@@ -17,13 +17,14 @@ public class CameraDragging : MonoBehaviour {
 		// demo test, delete when actual use
 		CameraManager.Instance.setDefaultPos();
 
-        MouseInputManager.Singleton.OnMouseDrag.AddListener(HandleMouseDrag);
+        MouseInputManager.Singleton.onMouseDrag.AddListener(HandleMouseDrag);
 	}
 
     void Update()
     {
         #region ZOOM
         // If the wheel goes up it, decrement 5 from "zoomTo"
+        curZoomPos = Camera.main.orthographicSize;
         if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
             Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + zoomSpeed * Time.deltaTime, zoomFrom, zoomTo);
@@ -40,19 +41,24 @@ public class CameraDragging : MonoBehaviour {
         {
             if (!CameraManager.Instance.fallowing)
             {
-                CameraManager.Instance.boundCameraFallow(GameObject.FindGameObjectWithTag("Player").transform);
+                CameraManager.Instance.BoundCameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
             }
 
         }
+        if (Input.GetKey(KeyCode.S))
+        {
+            CameraManager.Instance.FocusAt(GameObject.FindGameObjectWithTag("Player").transform.position);
+        }
+      
 
         if (Input.GetKey(KeyCode.D))
         {
-            CameraManager.Instance.Shaking(0.3f, 0.1f, null);
+            CameraManager.Instance.Shaking(0.3f, 0.1f);
         }
 
         if (Input.GetKey(KeyCode.F))
         {
-            CameraManager.Instance.ResetPos(null);
+            CameraManager.Instance.ResetPos();
         }
         #endregion
 

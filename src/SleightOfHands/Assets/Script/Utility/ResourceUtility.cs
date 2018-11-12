@@ -17,8 +17,13 @@ public struct ResourceUtility
         return Resources.Load<T>("Prefabs/UI/" + name);
     }
 
-    public static UIWindow GetUIPrefab(string name)
+    public static Sprite GetCardBackground(string id)
     {
-        return GetUIPrefab<UIWindow>(name);
+        return Resources.Load<Sprite>("Sprites/Card/Background/" + id);
+    }
+
+    public static Sprite GetCardIllustration(string id)
+    {
+        return Resources.Load<Sprite>("Sprites/Card/Illustration/" + id);
     }
 }

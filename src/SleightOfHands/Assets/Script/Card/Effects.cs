@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Effects : MonoBehaviour {
 
-    
+    public string owner;
     private List<Attribute> attList = new List<Attribute>();
 	// Use this for initialization
 
-    public void AddEffect(Card card)
+    public void AddEffect(CardData card)
     {
         Attribute att = new Attribute(card);
         attList.Add(att);
@@ -22,7 +22,10 @@ public class Effects : MonoBehaviour {
 	void Update () {
 		
 	}
-
+    public void SetOwner(string _owner)
+    {
+        owner = _owner;
+    }
     private void HandleTimeOut(Attribute att)
     {
         attList.Remove(att);
@@ -49,20 +52,7 @@ public class Effects : MonoBehaviour {
             totalAPf += att.GetDic(Attributes.AP_f);
         return totalAPf;
     }
-    public float GetHP_c()
-    {
-        float totalHPc = 0;
-        foreach (Attribute att in attList)
-            totalHPc += att.GetDic(Attributes.HP_c);
-        return totalHPc;
-    }
-    public float GetHP_f()
-    {
-        float totalHPf = 0;
-        foreach (Attribute att in attList)
-            totalHPf += att.GetDic(Attributes.HP_f);
-        return totalHPf;
-    }
+
 
     public int CurrentAP_c()
     {
@@ -73,13 +63,21 @@ public class Effects : MonoBehaviour {
     {
         return (int)attList[attList.Count - 1].GetDic(Attributes.AP_f);
     }
-    public float CurrentHP_c()
+
+    void OnCollisionEnter(Collision collision)
     {
-        return attList[attList.Count - 1].GetDic(Attributes.AP_c);
+        if(collision.gameObject.tag == "Enemy")
+            CardManager.Instance.OnAttributesChangeOnEffects.Invoke(this);
     }
 
-    public float CurrentHP_f()
+    void OnCollisionExit(Collision collision)
     {
-        return attList[attList.Count - 1].GetDic(Attributes.AP_f);
+
     }
+
+    void OnCollisionStay(Collision collision)
+    {
+
+    }
+
 }
