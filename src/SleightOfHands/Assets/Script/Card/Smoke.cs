@@ -5,6 +5,7 @@ using UnityEngine;
 public class Smoke : MonoBehaviour {
     int duration = 2;
     int counter = 0;
+    int detectionRange = 3;
 	// Use this for initialization
 	void Start () {
         LevelManager.Instance.onCurrentTurnChange.AddListener(HandleTimeOut);
@@ -18,14 +19,21 @@ public class Smoke : MonoBehaviour {
             var enemies = GameObject.FindGameObjectsWithTag("Enemy");
             foreach(GameObject obj in enemies)
             {
-                if(CheckEnemy(obj))
+                Enemy enemy = obj.GetComponent<Enemy>();
+                if (CheckEnemy(obj))
                 {
-                    StartCoroutine(Question(obj));
-                    obj.GetComponent<Enemy>().DetectionRange = 0;
+                    //StartCoroutine(Question(obj));
+                    if (enemy.CurrentDetectionState == EnemyDetectionState.Found)
+                    {
+                        EnemyManager.Instance.QuestionPop(obj.transform);
+
+                        enemy.DetectionRange = 0;
+                        enemy.SetDetectionState(EnemyDetectionState.Normal);
+                    }
                 }
                 else
                 {
-                    obj.GetComponent<Enemy>().DetectionRange = 3;
+                        enemy.DetectionRange = 3;
                 }
             }
         }
@@ -35,7 +43,7 @@ public class Smoke : MonoBehaviour {
     {
         Tile enemyTile = GridManager.Instance.GetTile(obj.transform.position);
         Tile smokeTile = GridManager.Instance.GetTile(this.transform.position);
-        if (GridManager.Instance.IsAdjacent(enemyTile, smokeTile))
+        if (MathUtility.ManhattanDistance(enemyTile.x, enemyTile.y, smokeTile.x, smokeTile.y) <= detectionRange)
             return true;
         else
             return false;
@@ -57,12 +65,5 @@ public class Smoke : MonoBehaviour {
             Destroy(this.gameObject);
         }
         
-    }
-
-    private IEnumerator Question(GameObject obj)
-    {
-
-        EnemyManager.Instance.QuestionPop(obj.transform);
-        yield return new WaitForSeconds(1f);
     }
 }
