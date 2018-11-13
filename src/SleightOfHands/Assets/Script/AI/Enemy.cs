@@ -117,7 +117,6 @@ public class Enemy : Unit
             }
             else
             {
-
                 EnemyMoveState previousEnemyState = currentEnemyState;
 
                 currentEnemyState = value;
@@ -142,6 +141,7 @@ public class Enemy : Unit
                             StartCoroutine(MovementDecision());
                         break;
                 }
+
                 onCurrentEnemyStateChange.Invoke(previousEnemyState, currentEnemyState);
             }
         }
@@ -409,8 +409,7 @@ public class Enemy : Unit
                 {
                     // Player is detected
                     SetDetectionState(EnemyDetectionState.Found);
-                    //CameraManager.Instance.FocusAt(transform.position, Founded);
-                    Founded();
+                    CameraManager.Instance.FocusAt(transform.position, Founded);
                 }
             }
 

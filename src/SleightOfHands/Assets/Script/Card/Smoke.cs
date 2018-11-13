@@ -72,7 +72,7 @@ public class Smoke : MonoBehaviour
 
             enemy.Statistics.AddStatusEffect(new StatusEffect(3, 2));
             enemy.Statistics.AddStatusEffect(new StatusEffect(4, duration));
-            enemy.SetDetectionState(EnemyDetectionState.Normal);
+            enemy.SetDetectionState(EnemyDetectionState.Doubt);
         }
         else if (other.GetComponent<player>())
         {
@@ -84,13 +84,8 @@ public class Smoke : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Enemy")
-        {
-            Enemy enemy = other.gameObject.GetComponent<Enemy>();
-            if (enemy)
-                enemy.SetDetectionState(EnemyDetectionState.Normal);
-            enemy.Statistics.RemoveStatusEffect(4);
-        }
+        if (other.GetComponent<Enemy>())
+            other.GetComponent<Enemy>().Statistics.RemoveStatusEffect(4);
     }
 
     //private void HandleUnitMove(Unit unit, Vector2Int previousGridPosition, Vector2Int currentGridPosition)

@@ -81,8 +81,7 @@ public class EnemyManager : MonoBehaviour
 					currentEnemy.CurrentEnemyState = EnemyMoveState.Unmoveable;
 				}
 				currentEnemy = null;
-				index++;
-				if (index >= Enemies.Count())
+				if (++index >= Enemies.Count())
 				{
 					//all the enemy has moved
 					index = 0;
@@ -90,7 +89,6 @@ public class EnemyManager : MonoBehaviour
 					CameraManager.Instance.CameraZoomOut();
 					LevelManager.Instance.NextRound();
 				}
-				CameraManager.Instance.UnboundCameraFollow();
 				LevelManager.Instance.StartNextPhaseTurn();
 				break;
 		}

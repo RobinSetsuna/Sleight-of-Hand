@@ -88,7 +88,7 @@ public class LevelManager : MonoBehaviour
         private set
         {
 #if UNITY_EDITOR
-            LogUtility.PrintLogFormat("LevelManager", "Made a transition to {0}.", value);
+            Debug.Log(LogUtility.MakeLogString("LevelManager", string.Format("Made a transition to {0}.", value)));
 #endif
             // Before leaving the previous phase
             //switch (currentPhase)
@@ -107,11 +107,13 @@ public class LevelManager : MonoBehaviour
                     if (CurrentRound == Round.Player)
                         onCurrentTurnChange.Invoke(CurrentTurn);
                     break;
+
                 case Phase.Success:
                     UIManager.Singleton.Open("ExplorationSuccess");
                     ActionManager.Singleton.Clear();
                     onGameEnd.Invoke();
                     return;
+
                 case Phase.Failure:
                     UIManager.Singleton.Open("ExplorationFailure");
                     ActionManager.Singleton.Clear();
@@ -124,6 +126,7 @@ public class LevelManager : MonoBehaviour
                 case Round.Player:
                     OnCurrentPhaseChangeForPlayer.Invoke(currentPhase);
                     break;
+
                 case Round.Environment:
                     OnCurrentPhaseChangeForEnvironment.Invoke(currentPhase);
                     break;
@@ -138,10 +141,12 @@ public class LevelManager : MonoBehaviour
                         CurrentPhase = Phase.Action;
                     }
                     break;
-                case Phase.Action:
-//                    if (CurrentRound == Round.Environment)
-//                        CurrentPhase = Phase.End;
-                    break;
+
+                //case Phase.Action:
+                //    if (CurrentRound == Round.Environment)
+                //        CurrentPhase = Phase.End;
+                //    break;
+
                 case Phase.End:
                     if (CurrentRound == Round.Player)
                     {
@@ -149,7 +154,6 @@ public class LevelManager : MonoBehaviour
                         onRoundNumberChange.Invoke(RoundNumber);
                         CurrentPhase = Phase.Start;
                     }
-                    Debug.Log("added,current round: " + CurrentRound);
                     break;
             }
         }
