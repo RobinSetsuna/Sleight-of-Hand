@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 114781160667747748}
   - component: {fileID: 143898985038416060}
   - component: {fileID: 82482950872398194}
+  - component: {fileID: 65914821895829518}
   m_Layer: 13
   m_Name: GuardDummy
   m_TagString: Player
@@ -218,6 +219,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1350173765049908}
   m_Mesh: {fileID: 4300000, guid: 3ba5336613f108547b41ec879ccefff3, type: 3}
+--- !u!65 &65914821895829518
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1452462458653018}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6966703, y: 1.2894475, z: 0.5907457}
+  m_Center: {x: 0.002407372, y: 0.6310142, z: -0.06018436}
 --- !u!82 &82482950872398194
 AudioSource:
   m_ObjectHideFlags: 1
@@ -322,8 +335,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a343e0c55f2a12d46abae7695ced8897, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   actionRound: 1
   maxSpeed: 2
   initialActionPoint: 4
@@ -346,8 +359,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4bd755e3810240439520ac84aeb27a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   Type: 2
 --- !u!143 &143898985038416060
 CharacterController:

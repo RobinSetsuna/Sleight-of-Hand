@@ -49,6 +49,10 @@ public abstract class Unit : InLevelObject
         {
             return initialActionPoint;
         }
+        set
+        {
+            initialActionPoint = value;
+        }
     }
 
     public int InitialHealth
@@ -66,6 +70,14 @@ public abstract class Unit : InLevelObject
         get
         {
             return Mathf.RoundToInt(Statistics[StatisticType.Ap]);
+        }
+    }
+
+    public int Hp
+    {
+        get
+        {
+            return Mathf.RoundToInt(Statistics[StatisticType.Hp]);
         }
     }
 
@@ -151,7 +163,7 @@ public abstract class Unit : InLevelObject
         {
             characterController.Move(Vector3.up * (-9.81f * Time.deltaTime));
         }
-       
+
 
     }
 
@@ -247,7 +259,6 @@ public abstract class Unit : InLevelObject
         AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/jump");
         _audioSource.clip = audioClip;
         _audioSource.Play();
-        //transform.position = new Vector3(destination.x, transform.position.y, destination.z);
 
         var temp = GridManager.Instance.GetTile(transform.position).gridPosition;
         GridPosition = new Vector2Int(temp.x,temp.y);

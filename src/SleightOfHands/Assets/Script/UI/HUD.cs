@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,29 +11,18 @@ public class HUD : UIWindow
     [SerializeField] private UIList cardList;
     [SerializeField] private Text actionPoint;
 
-    private Dictionary<Card, GameObject> hand = new Dictionary<Card, GameObject>();
+    private Dictionary<Card, GameObject> uiCards = new Dictionary<Card, GameObject>();
 
     public override void OnOpen(params object[] args)
     {
-        if (LevelManager.Instance.CurrentRound == Round.Player)
-            HandleCurrentPhaseChangeForPlayer(LevelManager.Instance.CurrentPhase);
-        else
-            endTurnButton.interactable = false;
-
-        endTurnButton.onClick.AddListener(EndCurrentTurn);
-
-        UpdateTurnText(LevelManager.Instance.CurrentTurn);
-        UpdateActionPointText(LevelManager.Instance.Player.Ap);
-
-        foreach (Card card in CardManager.Instance.hand)
-            HandleHandChange(ChangeType.Incremental, card);
+        UpdateAll();
 
         CardManager.Instance.onHandChange.AddListener(HandleHandChange);
 
         LevelManager.Instance.Player.onAttributeChange.AddListener(HandlePlayerStatisticChange);
         LevelManager.Instance.playerController.onCurrentPlayerStateChange.AddListener(HandleCurrentPlayerStateChange);
         LevelManager.Instance.OnCurrentPhaseChangeForPlayer.AddListener(HandleCurrentPhaseChangeForPlayer);
-        LevelManager.Instance.onCurrentTurnChange.AddListener(UpdateTurnText);
+        LevelManager.Instance.onCurrentTurnChange.AddListener(HandleTurnChange);
     }
 
     public override void OnClose()
@@ -42,29 +32,67 @@ public class HUD : UIWindow
         LevelManager.Instance.Player.onAttributeChange.RemoveListener(HandlePlayerStatisticChange);
         LevelManager.Instance.playerController.onCurrentPlayerStateChange.RemoveListener(HandleCurrentPlayerStateChange);
         LevelManager.Instance.OnCurrentPhaseChangeForPlayer.RemoveListener(HandleCurrentPhaseChangeForPlayer);
-        LevelManager.Instance.onCurrentTurnChange.RemoveListener(UpdateTurnText);
+        LevelManager.Instance.onCurrentTurnChange.RemoveListener(HandleTurnChange);
     }
 
-    public void ToggleMenu()
+    override public void UpdateAll()
     {
-        UIManager.Singleton.Toggle("IngameMenu");
-    }
+        if (LevelManager.Instance.CurrentRound == Round.Player)
+            HandleCurrentPhaseChangeForPlayer(LevelManager.Instance.CurrentPhase);
+        else
+            endTurnButton.interactable = false;
 
-    private void EndCurrentTurn()
-    {
-        LevelManager.Instance.EndPlayerActionPhase();
+        UpdateTurnText(LevelManager.Instance.CurrentTurn);
+        UpdateActionPointText(LevelManager.Instance.Player.Ap);
+        UpdateHand(CardManager.Instance.hand);
     }
 
     private void UpdateTurnText(int currentTurn)
     {
         turn.text = currentTurn.ToString();
-
-        ShowBanner("Turn " + currentTurn);
     }
 
     private void UpdateActionPointText(int ap)
     {
         actionPoint.text = ap.ToString();
+    }
+
+    private void UpdateHand(List<Card> hand)
+    {
+        Transform listTransform = cardList.transform;
+
+        uiCards.Clear();
+
+        int numCards = hand.Count;
+        int numExistedListItems = listTransform.childCount;
+        for (int i = 0; i < Math.Max(numExistedListItems, numCards); i++)
+        {
+            if (i < numCards)
+            {
+                Card card = hand[i];
+
+                GameObject uiCard;
+
+                if (i < numExistedListItems)
+                    uiCard = listTransform.GetChild(i).gameObject;
+                else
+                    uiCard = Instantiate(ResourceUtility.GetPrefab("Card"), listTransform);
+
+                uiCards.Add(card, uiCard);
+
+                UpdateCard(uiCard, card);
+            }
+            else
+                listTransform.GetChild(i).gameObject.SetActive(false);
+        }
+
+        cardList.Refresh();
+    }
+
+    private void UpdateCard(GameObject uiCard, Card card)
+    {
+        uiCard.SetActive(true);
+        uiCard.GetComponent<UICard>().Refresh(card);
     }
 
     private void ShowBanner(string content)
@@ -73,28 +101,42 @@ public class HUD : UIWindow
         banner.gameObject.SetActive(true);
     }
 
+    public void ToggleMenu()
+    {
+        UIManager.Singleton.Toggle("IngameMenu");
+    }
+
+    public void EndCurrentTurn()
+    {
+        LevelManager.Instance.EndPlayerActionPhase();
+    }
+
+    private void HandleTurnChange(int currentTurn)
+    {
+        UpdateTurnText(currentTurn);
+        ShowBanner("Turn " + currentTurn);
+    }
+
     private void HandleHandChange(ChangeType change, Card card)
     {
         switch (change)
         {
             case ChangeType.Incremental:
                 Transform listTransform = cardList.transform;
-                //int index = hand.Count;
-                //int numExistedListItems = listTransform.childCount;
-                GameObject listItem;
-                //if (index < numExistedListItems)
-                //    listItem = listTransform.GetChild(index).gameObject;
-                //else
-                listItem = Instantiate(ResourceUtility.GetPrefab("Card"), listTransform);
-                listItem.SetActive(true);
-                listItem.GetComponent<UICard>().Refresh(card);
-                hand.Add(card, listItem);
-                cardList.Refresh(card);
+                int i = uiCards.Count;
+                GameObject uiCard;
+                if (i < listTransform.childCount)
+                    uiCard = listTransform.GetChild(i).gameObject;
+                else
+                    uiCard = Instantiate(ResourceUtility.GetPrefab("Card"), listTransform);
+                uiCards.Add(card, uiCard);
+                UpdateCard(uiCard, card);
+                cardList.Refresh();
                 break;
 
             case ChangeType.Decremental:
-                Destroy(hand[card]);
-                hand.Remove(card);
+                uiCards[card].SetActive(false);
+                uiCards.Remove(card);
                 cardList.Refresh();
                 break;
         }

@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
-
 public class CameraManager : MonoBehaviour
 {
 	private HashSet<UnitType> typeWhiteList = new HashSet<UnitType>(
@@ -14,7 +13,7 @@ public class CameraManager : MonoBehaviour
 		UnitType.UI,
 		UnitType.Enemy,
 		UnitType.Item
-	}); // hold all the mouse Interactable UnitType will not cause camera dragging. 
+	}); // hold all the mouse Interactable UnitType will not cause camera dragging.
 	private Vector3 destination;
 	[SerializeField]private float smoothTimeY;
 	[SerializeField]private float smoothTimeX;
@@ -26,7 +25,7 @@ public class CameraManager : MonoBehaviour
 	[SerializeField]private float CameraDistance; // the distance between camera and target, include fallow, focus
 
 	
-	private bool fallowing;
+	private bool following;
 	private Vector3 velocity;
 	private bool shaking;
 	private float shakeMagnitude;
@@ -35,7 +34,7 @@ public class CameraManager : MonoBehaviour
 	private Quaternion defaultRotation;
 	private Queue<Vector3> focusQueue;
 	private bool allocated;
-	
+
 	private static CameraManager instance;
 	public static CameraManager Instance
 	{
@@ -50,7 +49,18 @@ public class CameraManager : MonoBehaviour
 	{
 		return typeWhiteList.Contains(obj.Type);
 	}
-	public void CameraZoomIn()
+
+    public void EnableZoom()
+    {
+        GetComponent<CameraDragging>().isZoomEnabled = true;
+    }
+
+    public void DisableZoom()
+    {
+        GetComponent<CameraDragging>().isZoomEnabled = false;
+    }
+
+    public void CameraZoomIn()
 	{
 		StartCoroutine(ZoomIn());
 	}
@@ -86,7 +96,7 @@ public class CameraManager : MonoBehaviour
 	public void ResetPos()
 	{
 		// reset the position back to default
-		fallowing = false;
+		following = false;
 		destination = defaultPosition;
 		transform.rotation = defaultRotation;
 		StartCoroutine(Moveto(1));
@@ -95,21 +105,21 @@ public class CameraManager : MonoBehaviour
 	public bool IsBoundedForFallow()
 	{
 		// check the Camera is fallowing
-		return fallowing;
+		return following;
 	}
 
 	public void BoundCameraFollow(Transform unit)
 	{
 		// bound Camera fallow to Transform, Camera will fallow the target until it release
 		//FocusAt(unit.transform.position, null);
-		fallowing = true;
+		following = true;
 		StartCoroutine(CameraFallow(unit,true));
 	}
-	
+
 	public void UnboundCameraFollow()
 	{
 		// release Camera
-		fallowing = false;
+		following = false;
 	}
 
 	public void FocusAt(Vector3 destination)
@@ -128,18 +138,18 @@ public class CameraManager : MonoBehaviour
 			StartCoroutine(Focus());
 		}
 	}
-		
+
 	public void Shaking(float Duration,float Magnitude)
 	{
 		// may add a camera action queue for camera action
 		// shaking the screen for effect, like earthquake, explosion
 		StartCoroutine(Shake(Duration,Magnitude));
 	}
-	
+
 	private IEnumerator CameraFallow(Transform unit,bool chasing)
 	{
 		Vector3 temp = unit.position;
-		while (fallowing)
+		while (following)
 		{
 				// smooth camera movement
 				float posy = transform.position.z+(unit.position.z - temp.z);
@@ -158,7 +168,7 @@ public class CameraManager : MonoBehaviour
 		}
 		yield return null;
 	}
-			
+
 //		while (fallowing)
 //		{
 //			// two type of chasing:
@@ -208,7 +218,7 @@ public class CameraManager : MonoBehaviour
 		transform.position = temp;
 		yield return null;
 	}
-	
+
 	private IEnumerator Rotateback()
 	{
 		Vector3 dirFromAtoB = (-destination - transform.position).normalized;
@@ -225,13 +235,13 @@ public class CameraManager : MonoBehaviour
 		}
 		yield return null;
 	}
-	
+
 	private IEnumerator Moveto(float Distance)
 	{
 		while(MathUtility.ManhattanDistance(destination.x, destination.z, transform.position.x, transform.position.z) > Distance){
 			    // smooth movement
 				float x = 0;
-				float y = 0;	
+				float y = 0;
 				float posy = Mathf.SmoothDamp(transform.position.z, destination.z, ref velocity.z, smoothTimeY);
 				float posx = Mathf.SmoothDamp(transform.position.x, destination.x, ref velocity.x, smoothTimeX);
 
@@ -247,7 +257,7 @@ public class CameraManager : MonoBehaviour
 		}
 		yield return null;
 	}
-	
+
 	private IEnumerator Focus()
 	{
 		Camera cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
