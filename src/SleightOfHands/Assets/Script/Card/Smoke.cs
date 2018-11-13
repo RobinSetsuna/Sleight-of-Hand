@@ -71,6 +71,7 @@ public class Smoke : MonoBehaviour
 
             EnemyManager.Instance.QuestionPop(enemy.transform);
 
+            enemy.Statistics.AddStatusEffect(new StatusEffect(3, 2));
             enemy.Statistics.AddStatusEffect(new StatusEffect(4, duration));
             enemy.SetDetectionState(EnemyDetectionState.Normal);
         }
