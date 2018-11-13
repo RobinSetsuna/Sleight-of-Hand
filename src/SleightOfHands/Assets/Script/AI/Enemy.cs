@@ -228,14 +228,12 @@ public class Enemy : Unit
                 if (temp == 0)
                     break;
 
-                ActionManager.Singleton.AddBack(new Movement(this, tile));//, --temp == 0 ? (System.Action)ResetToIdle : null);
-
-                temp--;
+                ActionManager.Singleton.AddBack(new Movement(this, tile), --temp == 0 ? (System.Action)ResetToIdle : null);
             }
 
             Path = null;
 
-            ActionManager.Singleton.Execute(ResetToIdle);
+            // ActionManager.Singleton.Execute(ResetToIdle);
         }
     }
     
