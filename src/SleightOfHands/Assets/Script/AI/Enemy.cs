@@ -374,7 +374,7 @@ public class Enemy : Unit
                 {
                     // Player is detected
                     SetDetectionState(EnemyDetectionState.Found);
-                    StartCoroutine(Founded());
+                    CameraManager.Instance.FocusAt(transform.position, Founded);
                 }
             }
 
@@ -450,16 +450,13 @@ public class Enemy : Unit
         return nearest;
     }
 
-    private IEnumerator Founded()
+    private void Founded()
     {
-        CameraManager.Instance.FocusAt(transform.position);
         EnemyManager.Instance.AlertPop(transform);
         AudioSource _audioSource = gameObject.GetComponent<AudioSource>();
         AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/beDetected");
 
         _audioSource.clip = audioClip;
         _audioSource.Play();
-
-        yield break;
     }
 }

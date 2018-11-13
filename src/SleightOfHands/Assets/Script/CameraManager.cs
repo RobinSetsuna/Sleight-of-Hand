@@ -24,7 +24,7 @@ public class CameraManager : MonoBehaviour
 	[SerializeField]private float rotate_speed;
 	[SerializeField]private float CameraDistance; // the distance between camera and target, include fallow, focus
 
-    [SerializeField] private float focusSpeed = 5f;
+    [SerializeField] private float smoothTime = 2f;
 
 	
 	private bool following;
@@ -35,6 +35,7 @@ public class CameraManager : MonoBehaviour
 	private Vector3 defaultPosition;
 	private Quaternion defaultRotation;
 	private Queue<Vector3> focusQueue;
+    private Dictionary<Vector3, System.Action> focusCallbacks = new Dictionary<Vector3, System.Action>();
 	private bool allocated;
 
 	private static CameraManager instance;
@@ -74,7 +75,14 @@ public class CameraManager : MonoBehaviour
 
 	public void Finished()
 	{
-		allocated = false;
+        allocated = false;
+
+        if (focusCallbacks.ContainsKey(destination))
+        {
+            focusCallbacks[destination].Invoke();
+            focusCallbacks.Remove(destination);
+        }
+
 		if (focusQueue.Count != 0)
 		{
 			destination = focusQueue.Dequeue();
@@ -124,16 +132,18 @@ public class CameraManager : MonoBehaviour
 		following = false;
 	}
 
-	public void FocusAt(Vector3 destination)
+	public void FocusAt(Vector3 destination, System.Action callback = null)
 	{
 		// Make a one time focus
 		// may add a camera action queue for camera action
 		UnboundCameraFollow();
 
-		if (allocated)
-		{
+        if (callback != null)
+            focusCallbacks.Add(destination, callback);
+
+        if (allocated)
 			focusQueue.Enqueue(destination);
-		}else
+        else
 		{
 			allocated = true;
 			this.destination = destination;
@@ -267,34 +277,27 @@ public class CameraManager : MonoBehaviour
 
 	private IEnumerator Focus()
 	{
-        Camera camera = Camera.main;
-
-        Vector3 cameraForward = camera.transform.forward;
-        Vector3 cameraPosition = camera.transform.position;
+        Vector3 cameraForward = Camera.main.transform.forward;
+        Vector3 cameraPosition = transform.position;
 
         Vector3 tilePosition = GridManager.Instance.GetTile(destination).transform.position;
+        Vector3 targetPosition = tilePosition - Mathf.Abs((cameraPosition.y - tilePosition.y) / cameraForward.y) * cameraForward;
 
-        Vector3 viewPoint = cameraPosition + Mathf.Abs((cameraPosition.y - tilePosition.y) / cameraForward.y) * cameraForward;
+        targetPosition.y = cameraPosition.y;
 
-        float distance;
+        float time = smoothTime;
 
-        while ((distance = MathUtility.EuclideanDistance(viewPoint.x, viewPoint.y, tilePosition.x, tilePosition.y)) > 0.1f)
+        while (MathUtility.EuclideanDistance(targetPosition.x, targetPosition.y, cameraPosition.x, cameraPosition.y) > 0.2f)
         {
-            cameraPosition = camera.transform.position;
-
-            viewPoint = cameraPosition + Mathf.Abs((cameraPosition.y - tilePosition.y) / cameraForward.y) * cameraForward;
-
-            Vector3 orientation = tilePosition - viewPoint;
-            orientation.y = 0;
-
-            transform.position += Mathf.Min(distance, focusSpeed * Time.deltaTime) * orientation.normalized;
+            transform.position = Vector3.SmoothDamp(cameraPosition, targetPosition, ref velocity, Mathf.Sqrt(time));
+            cameraPosition = transform.position;
 
             yield return null;
-        } 
+        }
 
         StartCoroutine(ZoomIn());
 
-		yield break;
+        yield break;
 	}
 
 	private IEnumerator ZoomOut()

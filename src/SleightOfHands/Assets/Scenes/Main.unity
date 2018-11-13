@@ -926,7 +926,7 @@ MonoBehaviour:
   maxCanmeraPos: {x: 8, y: 19.04, z: 8}
   rotate_speed: 1.25
   CameraDistance: 12
-  focusSpeed: 5
+  smoothTime: 0.5
 --- !u!114 &2128856423
 MonoBehaviour:
   m_ObjectHideFlags: 0

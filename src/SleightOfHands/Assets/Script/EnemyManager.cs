@@ -65,9 +65,8 @@ public class EnemyManager : MonoBehaviour
 			case Phase.Action:
 				if (currentEnemy)
 				{
-					currentEnemy.CurrentEnemyState = EnemyMoveState.Idle;
                     Transform enemyTransform = currentEnemy.transform;
-                    CameraManager.Instance.FocusAt(enemyTransform.position);
+                    CameraManager.Instance.FocusAt(enemyTransform.position, MoveCurrentEnemy);
                     CameraManager.Instance.BoundCameraFollow(enemyTransform);
                 }
 				else
@@ -96,6 +95,11 @@ public class EnemyManager : MonoBehaviour
 				break;
 		}
 	}
+
+    public void MoveCurrentEnemy()
+    {
+        currentEnemy.CurrentEnemyState = EnemyMoveState.Idle;
+    }
 
 	public void DehighlightAll()
 	{
