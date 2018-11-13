@@ -272,18 +272,22 @@ public class CameraManager : MonoBehaviour
         Vector3 cameraForward = camera.transform.forward;
         Vector3 cameraPosition = camera.transform.position;
 
-        Vector3 viewPoint = cameraPosition + Mathf.Abs((cameraPosition.y - destination.y) / cameraForward.y) * cameraForward;
+        Vector3 tilePosition = GridManager.Instance.GetTile(destination).transform.position;
 
-        while (MathUtility.EuclideanDistance(viewPoint.x, viewPoint.y, destination.x, destination.y) > 0.1f)
+        Vector3 viewPoint = cameraPosition + Mathf.Abs((cameraPosition.y - tilePosition.y) / cameraForward.y) * cameraForward;
+
+        float distance;
+
+        while ((distance = MathUtility.EuclideanDistance(viewPoint.x, viewPoint.y, tilePosition.x, tilePosition.y)) > 0.1f)
         {
             cameraPosition = camera.transform.position;
 
-            viewPoint = cameraPosition + Mathf.Abs((cameraPosition.y - destination.y) / cameraForward.y) * cameraForward;
+            viewPoint = cameraPosition + Mathf.Abs((cameraPosition.y - tilePosition.y) / cameraForward.y) * cameraForward;
 
-            Vector3 orientation = destination - viewPoint;
+            Vector3 orientation = tilePosition - viewPoint;
             orientation.y = 0;
 
-            transform.Translate(focusSpeed * Time.deltaTime * orientation.normalized);
+            transform.position += Mathf.Min(distance, focusSpeed * Time.deltaTime) * orientation.normalized;
 
             yield return null;
         } 

@@ -270,7 +270,7 @@ public class Enemy : Unit
     {
         Tile enemyTile = GridManager.Instance.GetTile(transform.position);
         Tile playerTile = GridManager.Instance.GetTile(Player.transform.position);
-        Debug.LogWarning(AttackRange);
+
         return MathUtility.ManhattanDistance(enemyTile.x, enemyTile.y, playerTile.x, playerTile.y) <= AttackRange;
     }
 

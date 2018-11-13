@@ -145,7 +145,7 @@ public class StatisticSystem
             UpdateChangedStatistics(statusEffect);
 
 #if UNITY_EDITOR
-        Debug.LogWarning(LogUtility.MakeLogString("StatisticSystem", "Add " + statusEffect + "\n" + ToString()));
+        Debug.Log(LogUtility.MakeLogString("StatisticSystem", "Add " + statusEffect + "\n" + ToString()));
 #endif
     }
 
@@ -154,7 +154,7 @@ public class StatisticSystem
         StatusEffect statusEffect = statusEffects.Remove(id);
 
 #if UNITY_EDITOR
-        Debug.LogWarning(LogUtility.MakeLogString("StatisticSystem", "Remove " + statusEffect + "\n" + ToString()));
+        Debug.Log(LogUtility.MakeLogString("StatisticSystem", "Remove " + statusEffect + "\n" + ToString()));
 #endif
 
         return statusEffect;
