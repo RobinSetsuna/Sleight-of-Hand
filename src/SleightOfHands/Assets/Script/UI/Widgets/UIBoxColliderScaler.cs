@@ -16,7 +16,7 @@ public class UIBoxColliderScaler : UIWidget
         Vector2 size = rectTransform.sizeDelta;
 
         BoxCollider boxCollider = GetComponent<BoxCollider>();
-        boxCollider.center = size * 0.5f - pivot * size;
+        boxCollider.center = (Vector3)(size * 0.5f - pivot * size) + new Vector3(0, 0, 1);
         boxCollider.size = size;
     }
 }
