@@ -343,7 +343,7 @@ public class Enemy : Unit
         }
         else
         {
-            //ActionManager.Singleton.Clear();
+            ActionManager.Singleton.Clear();
             CurrentEnemyState = EnemyMoveState.Idle;
             yield return null;
         }
@@ -410,6 +410,7 @@ public class Enemy : Unit
                     // Player is detected
                     SetDetectionState(EnemyDetectionState.Found);
                     //CameraManager.Instance.FocusAt(transform.position, Founded);
+                    Founded();
                 }
             }
 
