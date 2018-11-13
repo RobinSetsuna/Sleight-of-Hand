@@ -22,9 +22,11 @@ public class Enemy : Unit
     public int ID;
     public EventOnDataChange<EnemyMoveState> onCurrentEnemyStateChange = new EventOnDataChange<EnemyMoveState>();
 
-	[SerializeField]private int detection_range;
-    [SerializeField]private int attack_range;
-	private GameObject player;
+	[SerializeField] private int detection_range;
+    [SerializeField] private int attack_range;
+    [SerializeField] private int attack = 100;
+
+	private player Player;
 
 	private int counter = 0;
     public int AttackRange
@@ -154,7 +156,9 @@ public class Enemy : Unit
     protected override void Awake()
     {
         base.Awake();
-        player = GameObject.FindWithTag("Player");
+
+        Player = LevelManager.Instance.Player;
+
         GridManager.Instance.onUnitMove.AddListener(HandleDetection);
     }
 
@@ -170,19 +174,18 @@ public class Enemy : Unit
     /// </summary>
     private IEnumerator AttackDecision()
     {
-        if (InAttackRange() && Ap >= 1 && currentDetectionState ==  EnemyDetectionState.Found)
+        if (InAttackRange() && Ap >= 1 && currentDetectionState == EnemyDetectionState.Found)
         {
-            //is ok to Atk
-            // TODO
-            //ADD HEALTH UPDATE HERE
+            transform.LookAt(Player.transform, Vector3.up);
 
             EnemyManager.Instance.AttackPop(transform);
 
+            yield return new WaitForSeconds(1.5f);
+
+            Player.Statistics.ApplyDamage(attack);
             Statistics.AddStatusEffect(new StatusEffect(1, 2));
 
-            yield return new WaitForSeconds(1.5f);
             LevelManager.Instance.EndEnvironmentActionPhase();
-            // remove the actionPoint
         }
         yield return null;
     }
@@ -202,7 +205,7 @@ public class Enemy : Unit
                         newRound = false;
                      }
 
-                    Tile playerTile = GridManager.Instance.GetTile(player.transform.position);
+                    Tile playerTile = GridManager.Instance.GetTile(Player.transform.position);
                     Tile finalDes = NearPosition(playerTile, enemyTile);
                     if (finalDes == null)
                     {
@@ -266,7 +269,7 @@ public class Enemy : Unit
     private bool InAttackRange()
     {
         Tile enemyTile = GridManager.Instance.GetTile(transform.position);
-        Tile playerTile = GridManager.Instance.GetTile(player.transform.position);
+        Tile playerTile = GridManager.Instance.GetTile(Player.transform.position);
         int distance = Mathf.Abs(enemyTile.x - playerTile.x) + Mathf.Abs(enemyTile.y - playerTile.y)  ;
         return distance <= attack_range;
     }
@@ -360,7 +363,7 @@ public class Enemy : Unit
             if (currentDetectionState == EnemyDetectionState.Normal) {
                 Tile current_tile = GridManager.Instance.GetTile(transform.position);
                 RangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range, true, yRot);
-                if (RangeList.Contains(GridManager.Instance.GetTile(player.GetComponent<player>().GridPosition)))
+                if (RangeList.Contains(GridManager.Instance.GetTile(Player.GridPosition)))
                 {
                     //detected
 

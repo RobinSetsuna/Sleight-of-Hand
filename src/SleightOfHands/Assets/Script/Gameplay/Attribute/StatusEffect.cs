@@ -44,7 +44,7 @@ public class StatusEffect : IAttributeGetter, IComparable
     public StatusEffect(int id, int duration, int numStacks = 1)
     {
         Id = id;
-        EndRound = LevelManager.Instance.RoundNumber + duration;
+        EndRound = duration == int.MaxValue ? int.MaxValue : LevelManager.Instance.RoundNumber + duration;
         NumStacks = numStacks;
 
         Data = TableDataManager.Singleton.GetStatusEffectData(id);

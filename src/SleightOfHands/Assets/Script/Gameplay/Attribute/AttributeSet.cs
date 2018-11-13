@@ -45,6 +45,12 @@ public class AttributeSet : IAttributeGetter
         attributes = new Dictionary<int, float>();
     }
 
+    public AttributeSet(params object[] args) : this()
+    {
+        for (int i = 0; i < args.Length; i += 2)
+            Set((AttributeType)args[i], (float)args[i + 1]);
+    }
+
     private AttributeSet(string s) : this()
     {
         foreach (string field in s.Split(';'))
@@ -97,6 +103,11 @@ public class AttributeSet : IAttributeGetter
             attributes.Add(id, value);
         else
             attributes[id] = value;
+    }
+
+    public void Set(AttributeType attribute, float value)
+    {
+        Set((int)attribute, value);
     }
 
     public IEnumerator<KeyValuePair<int, float>> GetEnumerator()

@@ -9,7 +9,8 @@ public class HUD : UIWindow
     [SerializeField] private Text banner;
     [SerializeField] private Button endTurnButton;
     [SerializeField] private UIList cardList;
-    [SerializeField] private Text actionPoint;
+    [SerializeField] private Text ap;
+    [SerializeField] private Text hp;
 
     private Dictionary<Card, GameObject> uiCards = new Dictionary<Card, GameObject>();
 
@@ -42,19 +43,27 @@ public class HUD : UIWindow
         else
             endTurnButton.interactable = false;
 
-        UpdateTurnText(LevelManager.Instance.CurrentTurn);
-        UpdateActionPointText(LevelManager.Instance.Player.Ap);
+        player Player = LevelManager.Instance.Player;
+
+        UpdateTurn(LevelManager.Instance.CurrentTurn);
+        UpdateAp(Player.Ap);
+        UpdateHp(Player.Hp);
         UpdateHand(CardManager.Instance.hand);
     }
 
-    private void UpdateTurnText(int currentTurn)
+    private void UpdateTurn(int turn)
     {
-        turn.text = currentTurn.ToString();
+        this.turn.text = turn.ToString();
     }
 
-    private void UpdateActionPointText(int ap)
+    private void UpdateAp(int ap)
     {
-        actionPoint.text = ap.ToString();
+        this.ap.text = ap.ToString();
+    }
+
+    private void UpdateHp(int hp)
+    {
+        this.hp.text = hp.ToString();
     }
 
     private void UpdateHand(List<Card> hand)
@@ -113,7 +122,7 @@ public class HUD : UIWindow
 
     private void HandleTurnChange(int currentTurn)
     {
-        UpdateTurnText(currentTurn);
+        UpdateTurn(currentTurn);
         ShowBanner("Turn " + currentTurn);
     }
 
@@ -146,8 +155,12 @@ public class HUD : UIWindow
     {
         switch (statistic)
         {
+            case StatisticType.Hp:
+                UpdateHp(Math.Max(0, Mathf.RoundToInt(currentValue)));
+                break;
+
             case StatisticType.Ap:
-                UpdateActionPointText(Mathf.RoundToInt(currentValue));
+                UpdateAp(Mathf.RoundToInt(currentValue));
                 break;
         }
     }

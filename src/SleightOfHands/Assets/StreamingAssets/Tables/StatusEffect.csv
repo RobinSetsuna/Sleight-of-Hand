@@ -1,3 +1,4 @@
 Id,Type,Name,Description,Attributes,MaxNumStack
+0,0,Damage,Damage,19:1,2147483647
 1,1,Fatigue,Action point comsumption,29:1,2147483647
 2,2,Haste,Your AP is increased,21:2,1

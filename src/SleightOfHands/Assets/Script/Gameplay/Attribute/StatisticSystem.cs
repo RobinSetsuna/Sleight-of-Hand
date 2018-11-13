@@ -63,9 +63,19 @@ public class StatisticSystem
     {
         this.talents = talents;
 
-        RefreshChangedStatistics(this.talents);
+        UpdateChangedStatistics(this.talents);
 
         LevelManager.Instance.onRoundNumberChange.AddListener(HandleRoundNumberChange);
+    }
+
+    public void ApplyDamage(int damage)
+    {
+        AddStatusEffect(new StatusEffect(0, int.MaxValue, damage));
+    }
+
+    public float Sum(AttributeType attribute)
+    {
+        return AttributeSet.Sum(attribute, talents, statusEffects);
     }
 
     //~StatisticSystem()
@@ -92,7 +102,7 @@ public class StatisticSystem
     {
         statusEffects.Push(statusEffect);
 
-        RefreshChangedStatistics(statusEffect);
+        UpdateChangedStatistics(statusEffect);
 
 #if UNITY_EDITOR
         UnityEngine.Debug.Log(LogUtility.MakeLogString("StatisticSystem", "Add " + statusEffect + "\n" + ToString()));
@@ -105,10 +115,10 @@ public class StatisticSystem
         while (statusEffects.Top() != null && statusEffects.Top().EndRound == round)
             pastStatusEffects.Add(statusEffects.Pop());
 
-        RefreshChangedStatistics(pastStatusEffects);
+        UpdateChangedStatistics(pastStatusEffects);
     }
 
-    private void RefreshChangedStatistics(IAttributeGetter attributes)
+    private void UpdateChangedStatistics(IAttributeGetter attributes)
     {
         HashSet<int> changedStatistics = new HashSet<int>();
         foreach (KeyValuePair<int, float> attribute in attributes)
@@ -121,7 +131,7 @@ public class StatisticSystem
         }
     }
 
-    private void RefreshChangedStatistics(List<StatusEffect> statusEffects)
+    private void UpdateChangedStatistics(List<StatusEffect> statusEffects)
     {
         HashSet<int> changedStatistics = new HashSet<int>();
         foreach (StatusEffect statusEffect in statusEffects)

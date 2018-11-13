@@ -142,11 +142,12 @@ public abstract class Unit : InLevelObject
         //        break;
         //}
 
-        Statistics = new StatisticSystem(AttributeSet.Parse((int)AttributeType.Ap_i + ":" + initialActionPoint));
+        Statistics = new StatisticSystem(new AttributeSet(AttributeType.Ap_i, (float)initialActionPoint, AttributeType.Hp_i, (float)initialHealth));
         onAttributeChange = Statistics.onStatisticChange;
 
         // LevelManager.Instance.onNewTurnUpdateAttribute.AddListener(HandleAttributesChangeOnTurn);
         // CardManager.Instance.OnAttributesChangeOnEffects.AddListener(HandleAttributesChangeOnEffects);
+
         gridPosition = GridManager.Instance.GetTile(transform.position).gridPosition;
         GridManager.Instance.NotifyUnitPositionChange(this, new Vector2Int(-1, -1), gridPosition);
     }

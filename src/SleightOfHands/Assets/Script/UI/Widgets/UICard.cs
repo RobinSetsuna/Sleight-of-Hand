@@ -27,7 +27,6 @@ public class UICard : UIWidget
         if (card != null)
             Card = card;
 
-        // TODO: Load card information
         if (Card != null)
         {
             CardData cardData = Card.Data;
