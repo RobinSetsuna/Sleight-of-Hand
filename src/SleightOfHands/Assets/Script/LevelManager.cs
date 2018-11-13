@@ -256,7 +256,7 @@ public class LevelManager : MonoBehaviour
                     temp.AddComponent<Effects>();
                     temp.GetComponent<Effects>().SetOwner("Enemy");
                     temp.tag = "Enemy";
-                    temp.GetComponent<Enemy>().setPathList(spawnData.GetPath());
+                    temp.GetComponent<Enemy>().SetPathList(spawnData.GetPath());
                     temp.GetComponent<Enemy>().SetDetectionState(EnemyDetectionState.Normal); // set default detection state
 //                    temp.ID = index;
 //                    index++;

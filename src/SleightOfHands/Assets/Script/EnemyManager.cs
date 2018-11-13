@@ -56,7 +56,7 @@ public class EnemyManager : MonoBehaviour {
 				if (currentEnemy == null && index < Enemies.Count())
 				{
 					currentEnemy = Enemies[index];
-                    currentEnemy.refresh();
+                    currentEnemy.Refresh();
                 }
 				LevelManager.Instance.StartEnvironmentActionPhase(); // finish start phase, to the action phase
 				break;
@@ -76,7 +76,7 @@ public class EnemyManager : MonoBehaviour {
 			case Phase.End:
 				if (currentEnemy != null)
 				{
-                    currentEnemy.mute();
+                    currentEnemy.Mute();
 					currentEnemy.CurrentEnemyState = EnemyMoveState.Unmoveable;
 				}
 				currentEnemy = null;

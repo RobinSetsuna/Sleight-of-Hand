@@ -234,10 +234,6 @@ public abstract class Unit : InLevelObject
             if (modelHolder != null) {
                 float localHeight = jumpHeight * Mathf.Abs(Mathf.Sin(travelRatio * Mathf.PI * jumpsPerMove));
                 modelHolder.transform.localPosition = Vector3.up * localHeight;
-                
-                
-
-                
             }
 
             if (travelRatio >= 1) {

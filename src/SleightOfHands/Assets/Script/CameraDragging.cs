@@ -39,7 +39,7 @@ public class CameraDragging : MonoBehaviour {
         // demo test, delete when actual use
         if (Input.GetKey(KeyCode.A))
         {
-            if (!CameraManager.Instance.fallowing)
+            if (!CameraManager.Instance.IsBoundedForFallow())
             {
                 CameraManager.Instance.BoundCameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
             }
@@ -102,7 +102,7 @@ public class CameraDragging : MonoBehaviour {
 
                 transform.Translate(-move);
 
-                if (CameraManager.Instance.bounds)
+                if (CameraManager.Instance.Bounds)
                 {
                     // if there is a bounds for camera movement
                     transform.position = new Vector3(

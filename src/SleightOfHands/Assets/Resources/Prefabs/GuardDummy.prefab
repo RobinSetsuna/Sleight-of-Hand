@@ -334,8 +334,9 @@ MonoBehaviour:
   jumpsPerMove: 1
   speed: 0
   ID: 0
-  detection_range: 3
-  attack_range: 1
+  detectionRange: 3
+  attackRange: 1
+  DetectionHighlighted: 0
 --- !u!114 &114781160667747748
 MonoBehaviour:
   m_ObjectHideFlags: 1
