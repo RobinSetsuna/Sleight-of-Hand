@@ -267,24 +267,26 @@ public class CameraManager : MonoBehaviour
 
 	private IEnumerator Focus()
 	{
-        Vector3 viewPoint;
+        Camera camera = Camera.main;
 
-        do
+        Vector3 cameraForward = camera.transform.forward;
+        Vector3 cameraPosition = camera.transform.position;
+
+        Vector3 viewPoint = cameraPosition + Mathf.Abs((cameraPosition.y - destination.y) / cameraForward.y) * cameraForward;
+
+        while (MathUtility.EuclideanDistance(viewPoint.x, viewPoint.y, destination.x, destination.y) > 0.1f)
         {
-            Camera camera = Camera.main;
-
-            Vector3 cameraPosition = camera.transform.position;
-            Vector3 cameraForward = camera.transform.forward;
+            cameraPosition = camera.transform.position;
 
             viewPoint = cameraPosition + Mathf.Abs((cameraPosition.y - destination.y) / cameraForward.y) * cameraForward;
 
             Vector3 orientation = destination - viewPoint;
             orientation.y = 0;
 
-            transform.position += focusSpeed * Time.deltaTime * orientation.normalized;
+            transform.Translate(focusSpeed * Time.deltaTime * orientation.normalized);
 
             yield return null;
-        } while (MathUtility.EuclideanDistance(viewPoint.x, viewPoint.y, destination.x, destination.y) > 0.1f);
+        } 
 
         StartCoroutine(ZoomIn());
 
