@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class StatisticSystem
@@ -90,8 +91,8 @@ public class StatisticSystem
             case StatisticType.Hp: // Hp = (∑Hp_i + ∑Hp_f) * (1 + ∑Hp_p) - ∑Hp_c
                 return (AttributeSet.Sum(AttributeType.Hp_i, attributeSets) + AttributeSet.Sum(AttributeType.Hp_f, attributeSets)) * (1 + AttributeSet.Sum(AttributeType.Hp_p, attributeSets)) - AttributeSet.Sum(AttributeType.Hp_c, attributeSets);
 
-            case StatisticType.Ap: // Ap = (∑Ap_i + ∑Ap_f) * (1 + ∑Ap_p) - ∑Ap_c
-                return (AttributeSet.Sum(AttributeType.Ap_i, attributeSets) + AttributeSet.Sum(AttributeType.Ap_f, attributeSets)) * (1 + AttributeSet.Sum(AttributeType.Ap_p, attributeSets)) - AttributeSet.Sum(AttributeType.Ap_c, attributeSets);
+            case StatisticType.Ap: // Ap = MAX(0, (∑Ap_i + ∑Ap_f) * (1 + ∑Ap_p) - ∑Ap_c)
+                return Mathf.Max(0, (AttributeSet.Sum(AttributeType.Ap_i, attributeSets) + AttributeSet.Sum(AttributeType.Ap_f, attributeSets)) * (1 + AttributeSet.Sum(AttributeType.Ap_p, attributeSets)) - AttributeSet.Sum(AttributeType.Ap_c, attributeSets));
 
             default:
                 return 0;

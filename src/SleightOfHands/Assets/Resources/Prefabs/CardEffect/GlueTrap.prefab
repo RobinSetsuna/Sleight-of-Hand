@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 4580644133469596}
   - component: {fileID: 33617781362285910}
   - component: {fileID: 23680321689872492}
-  - component: {fileID: 65502744360571222}
+  - component: {fileID: 65325752056459416}
   - component: {fileID: 114563683084295124}
   - component: {fileID: 54541465451838126}
   m_Layer: 2
@@ -89,7 +89,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 977a229103bfb564996789e55bc35253, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -131,7 +131,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65502744360571222
+--- !u!65 &65325752056459416
 BoxCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,8 +141,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 200, z: 1}
+  m_Center: {x: 0, y: 100, z: 0}
 --- !u!82 &82656250928652382
 AudioSource:
   m_ObjectHideFlags: 1

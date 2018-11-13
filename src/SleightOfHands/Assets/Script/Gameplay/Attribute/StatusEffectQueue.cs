@@ -62,7 +62,7 @@ public class StatusEffectQueue : IAttributeGetter
             if (needReposition)
             {
                 list.Remove(existedStatusEffect);
-                Add(existedStatusEffect, current, list.Count - 1);
+                Insert(existedStatusEffect, current, list.Count - 1);
             }
         }
         else
@@ -70,7 +70,7 @@ public class StatusEffectQueue : IAttributeGetter
             if (IsEmpty())
                 list.Add(statusEffect);
             else
-                Add(statusEffect, current, list.Count - 1);
+                Insert(statusEffect, current, list.Count - 1);
 
             map.Add(id, statusEffect);
 
@@ -99,23 +99,21 @@ public class StatusEffectQueue : IAttributeGetter
         return statusEffect;
     }
 
-    private void Add(StatusEffect statusEffect, int start, int end)
+    private void Insert(StatusEffect statusEffect, int start, int end)
     {
         if (start == end)
         {
-            list.Insert(start + 1, statusEffect);
-
+            list.Insert(statusEffect.CompareTo(list[start]) < 0 ? start : start + 1, statusEffect);
             return;
         }
 
         int mid = (start + end + 1) / 2;
 
         int compare = statusEffect.CompareTo(list[mid]);
-
         if (compare < 0)
-            Add(statusEffect, start, mid - 1);
+            Insert(statusEffect, start, mid - 1);
         else
-            Add(statusEffect, mid, end);
+            Insert(statusEffect, mid, end);
     }
 
     public IEnumerator<KeyValuePair<int, float>> GetEnumerator()

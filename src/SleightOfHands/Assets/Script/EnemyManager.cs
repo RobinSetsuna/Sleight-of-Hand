@@ -100,13 +100,12 @@ public class EnemyManager : MonoBehaviour {
 	{
 		Enemy[] allEnemies = FindObjectsOfType<Enemy>();
 		foreach (Enemy enemy in allEnemies)
-		{
-			enemy.DetectionHighlighted = false;
-				foreach (Tile tile in enemy.RangeList)
-				{
-					tile.Dehighlight();
-				}
-		}
+            if (enemy.DetectionHighlighted)
+            {
+                enemy.DetectionHighlighted = false;
+                foreach (Tile tile in enemy.RangeList)
+                    tile.Dehighlight();
+            }
 	}
 
 	public void AlertPop(Transform enemy)
