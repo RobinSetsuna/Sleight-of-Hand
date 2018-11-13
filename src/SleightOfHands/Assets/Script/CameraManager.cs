@@ -145,8 +145,13 @@ public class CameraManager : MonoBehaviour
 		// shaking the screen for effect, like earthquake, explosion
 		StartCoroutine(Shake(Duration,Magnitude));
 	}
-	
-	private IEnumerator CameraFallow(Transform unit,bool chasing)
+
+    private void Start()
+    {
+        LevelManager.Instance.onGameEnd.AddListener(StopAllCoroutines);
+    }
+
+    private IEnumerator CameraFallow(Transform unit,bool chasing)
 	{
 		Vector3 temp = unit.position;
 		while (following)

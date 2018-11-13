@@ -58,15 +58,11 @@ public class ActionManager
         if (actionInExecution == null)
             Execute();
     }
-
-    /// <summary>
-    /// Assign a callback to be executed after all actions are executed and start to execute existing actions
-    /// </summary>
-    /// <param name="callback"></param>
-    //internal void Execute(System.Action callback)
-    //{
-    //    Execute();
-    //}
+    
+    internal void Clear()
+    {
+        actionQueue.Clear();
+    }
 
     /// <summary>
     /// Execute the first action in the queue if the queue is not empty or execute assigned callback function if it exists

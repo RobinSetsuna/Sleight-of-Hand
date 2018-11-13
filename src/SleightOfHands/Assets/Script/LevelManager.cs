@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum Phase : int
 {
     Start = 0,
     Action,
     End,
+    Success,
+    Failure,
 }
 
 public enum Round : int
@@ -36,6 +39,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public UnityEvent onGameEnd = new UnityEvent();
     public EventOnDataUpdate<Effects> onNewTurnUpdateAttribute = new EventOnDataUpdate<Effects>();
 
     public EventOnDataUpdate<int> onCurrentTurnChange = new EventOnDataUpdate<int>();
@@ -103,6 +107,11 @@ public class LevelManager : MonoBehaviour
                     if (CurrentRound == Round.Player)
                         onCurrentTurnChange.Invoke(CurrentTurn);
                     break;
+                case Phase.Failure:
+                    UIManager.Singleton.Open("ExplorationFailure");
+                    ActionManager.Singleton.Clear();
+                    onGameEnd.Invoke();
+                    return;
             }
 
             switch (CurrentRound)
@@ -316,9 +325,7 @@ public class LevelManager : MonoBehaviour
     private void HandlePlayerAttributeChange(StatisticType statistic, float previousValue, float currentValue)
     {
         if (statistic == StatisticType.Hp && currentValue <= 0)
-        {
-
-        }
+            CurrentPhase = Phase.Failure;
     }
 
     [System.Serializable]

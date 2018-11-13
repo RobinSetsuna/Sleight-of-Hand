@@ -159,6 +159,8 @@ public class Enemy : Unit
 
         Player = LevelManager.Instance.Player;
 
+        LevelManager.Instance.onGameEnd.AddListener(StopAllCoroutines);
+
         GridManager.Instance.onUnitMove.AddListener(HandleDetection);
     }
 

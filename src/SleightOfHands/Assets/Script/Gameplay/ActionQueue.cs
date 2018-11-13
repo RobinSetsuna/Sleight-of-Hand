@@ -60,7 +60,6 @@ public class ActionQueue
         if (current == actions.Last)
             PushFront(action);
         else
-
             actions.AddBefore(actions.Last, action);
     }
 
@@ -92,6 +91,15 @@ public class ActionQueue
         current = current.Next;
 
         return action;
+    }
+
+    public void Clear()
+    {
+        if (!IsEmpty())
+        {
+            while (current != actions.Last)
+                actions.RemoveLast();
+        }
     }
 
     public override string ToString()
