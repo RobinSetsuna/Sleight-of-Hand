@@ -49,6 +49,10 @@ public abstract class Unit : InLevelObject
         {
             return initialActionPoint;
         }
+        set
+        {
+            initialActionPoint = value;
+        }
     }
 
     public int InitialHealth
@@ -241,11 +245,7 @@ public abstract class Unit : InLevelObject
             // Hopping
             if (modelHolder != null) {
                 float localHeight = jumpHeight * Mathf.Abs(Mathf.Sin(travelRatio * Mathf.PI * jumpsPerMove));
-                modelHolder.transform.localPosition = Vector3.up * localHeight;
-                
-                
-
-                
+                modelHolder.transform.localPosition = Vector3.up * localHeight;  
             }
 
             if (travelRatio >= 1) {
@@ -259,7 +259,6 @@ public abstract class Unit : InLevelObject
         AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/jump");
         _audioSource.clip = audioClip;
         _audioSource.Play();
-        //transform.position = new Vector3(destination.x, transform.position.y, destination.z);
 
         var temp = GridManager.Instance.GetTile(transform.position).gridPosition;
         GridPosition = new Vector2Int(temp.x,temp.y);

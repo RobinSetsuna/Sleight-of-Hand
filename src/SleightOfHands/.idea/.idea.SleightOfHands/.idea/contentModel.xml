@@ -20,6 +20,8 @@
             <e p="CardManager.cs" t="Include" />
             <e p="Chest.cs" t="Include" />
             <e p="Effects.cs" t="Include" />
+            <e p="Glue.cs" t="Include" />
+            <e p="Smoke.cs" t="Include" />
           </e>
           <e p="Data Structures" t="Include">
             <e p="DataStructures.asmdef" t="Include" />
@@ -32,6 +34,13 @@
             <e p="Action.cs" t="Include" />
             <e p="ActionManager.cs" t="Include" />
             <e p="ActionQueue.cs" t="Include" />
+            <e p="Attribute" t="Include">
+              <e p="AttributeSet.cs" t="Include" />
+              <e p="IAttributeGetter.cs" t="Include" />
+              <e p="StatisticSystem.cs" t="Include" />
+              <e p="StatusEffect.cs" t="Include" />
+              <e p="StatusEffectQueue.cs" t="Include" />
+            </e>
             <e p="Events.cs" t="Include" />
             <e p="GameManager.cs" t="Include" />
             <e p="MouseInputManager.cs" t="Include" />
@@ -40,6 +49,9 @@
           </e>
           <e p="GridManager.cs" t="Include" />
           <e p="InLevelObject.cs" t="Include" />
+          <e p="Level" t="Include">
+            <e p="Tileset.cs" t="Include" />
+          </e>
           <e p="LevelManager.cs" t="Include" />
           <e p="OBSTransparent.cs" t="Include" />
           <e p="player.cs" t="Include" />
@@ -53,6 +65,7 @@
           <e p="Table Data" t="Include">
             <e p="CardData.cs" t="Include" />
             <e p="ITableDataEntry.cs" t="Include" />
+            <e p="StatusEffectData.cs" t="Include" />
             <e p="TableData.asmdef" t="Include" />
             <e p="TableDataManager.cs" t="Include" />
             <e p="TableDataPage.cs" t="Include" />
