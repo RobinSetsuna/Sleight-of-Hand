@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour
                 if (go)
                     instance = go.GetComponent<LevelManager>();
             }
-                
+
 
             return instance;
         }
@@ -114,7 +114,7 @@ public class LevelManager : MonoBehaviour
                     OnCurrentPhaseChangeForEnvironment.Invoke(currentPhase);
                     break;
             }
-            
+
             // In new phase
             switch (currentPhase)
             {
@@ -168,7 +168,7 @@ public class LevelManager : MonoBehaviour
     public void StartLevel(string level)
     {
         LoadLevel(level);
-        
+
         InitializeLevel();
 
         GridManager.Instance.Initialize();
@@ -256,7 +256,7 @@ public class LevelManager : MonoBehaviour
         {
             Vector3 spawnPosition = GridManager.Instance.GetWorldPosition(spawnData.position.x, spawnData.position.y) + new Vector3(0, 1, 0);
             Quaternion spawnRotation = Quaternion.identity;
-            
+
             string heading = spawnData.GetSetting("heading");
 
             if (heading != null)
@@ -290,17 +290,21 @@ public class LevelManager : MonoBehaviour
                     break;
 
                 case SpawnData.Type.Guard:
-                    Enemy enemy = GridManager.Instance.Spawn(ResourceUtility.GetPrefab<Enemy>("GuardDummy"), spawnPosition, spawnRotation); //Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
-                    enemy.tag = "Enemy";
-                    enemy.setPathList(spawnData.GetPath());
-                    enemy.SetDetectionState(EnemyDetectionState.Normal); // set default detection state
-                    Enemies.Add(enemy);
+                    var temp = GridManager.Instance.Spawn(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation); //Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
+                    temp.AddComponent<Effects>();
+                    temp.GetComponent<Effects>().SetOwner("Enemy");
+                    temp.tag = "Enemy";
+                    temp.GetComponent<Enemy>().SetPathList(spawnData.GetPath());
+                    temp.GetComponent<Enemy>().SetDetectionState(EnemyDetectionState.Normal); // set default detection state
+//                    temp.ID = index;
+//                    index++;
+                    Enemies.Add(temp.GetComponent<Enemy>());
                     break;
             }
         }
 
         EnemyManager.Instance.setEnemies(Enemies);
-    } 
+    }
 
     public void NextRound()
     {
@@ -376,13 +380,13 @@ public class LevelManager : MonoBehaviour
             }
             return null;
         }
-        
-        
+
+
         public List<Vector2Int> GetPath()
         {
             List<Vector2Int> pathList = new List<Vector2Int>();
             if (path == null) return null;
-            for (int i = 0; i < path.Length; i++) {   
+            for (int i = 0; i < path.Length; i++) {
                 string[] pos_str = path[i].Split(',');
                 Vector2Int temp = new Vector2Int(Int32.Parse(pos_str[0]),Int32.Parse(pos_str[1]));
                 pathList.Add(temp);

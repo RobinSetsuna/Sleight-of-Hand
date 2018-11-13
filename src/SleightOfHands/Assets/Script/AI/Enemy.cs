@@ -22,8 +22,8 @@ public class Enemy : Unit
     public int ID;
     public EventOnDataChange<EnemyMoveState> onCurrentEnemyStateChange = new EventOnDataChange<EnemyMoveState>();
 
-	[SerializeField]private int detection_range;
-    [SerializeField]private int attack_range;
+	[SerializeField]private int detectionRange;
+    [SerializeField]private int attackRange;
 	private GameObject player;
 
 	private int counter = 0;
@@ -31,22 +31,22 @@ public class Enemy : Unit
     {
         get
         {
-            return attack_range;
+            return attackRange;
         }
         set
         {
-            attack_range = value;
+            attackRange = value;
         }
     }
     public int DetectionRange
     {
         get
         {
-            return detection_range;
+            return detectionRange;
         }
         set
         {
-            detection_range = value;
+            detectionRange = value;
         }
     }
     public bool DetectionHighlighted = false;
@@ -158,10 +158,10 @@ public class Enemy : Unit
         GridManager.Instance.onUnitMove.AddListener(HandleDetection);
     }
 
-    public void refresh() {
+    public void Refresh() {
         newRound = true;
     }
-    public void mute() {
+    public void Mute() {
         newRound = false;
     }
 
@@ -177,14 +177,11 @@ public class Enemy : Unit
             //ADD HEALTH UPDATE HERE
 
             EnemyManager.Instance.AttackPop(transform);
-
             Statistics.AddStatusEffect(new StatusEffect(1, 2));
-
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(2f);
             LevelManager.Instance.EndEnvironmentActionPhase();
             // remove the actionPoint
         }
-        yield return null;
     }
 
     /// <summary>
@@ -255,7 +252,6 @@ public class Enemy : Unit
 
                 ActionManager.Singleton.AddBack(new Movement(this, tile),(System.Action)ResetToIdle);
             }
-
             Path = null;
         }
     }
@@ -268,7 +264,7 @@ public class Enemy : Unit
         Tile enemyTile = GridManager.Instance.GetTile(transform.position);
         Tile playerTile = GridManager.Instance.GetTile(player.transform.position);
         int distance = Mathf.Abs(enemyTile.x - playerTile.x) + Mathf.Abs(enemyTile.y - playerTile.y)  ;
-        return distance <= attack_range;
+        return distance <= attackRange;
     }
 
     /// <summary>
@@ -288,7 +284,7 @@ public class Enemy : Unit
     /// <summary>
     /// a set the pathList from loadedData
     /// </summary>
-    public void setPathList(List<Vector2Int> pl)
+    public void SetPathList(List<Vector2Int> pl)
     {
         pathList = pl;
     }
@@ -301,9 +297,12 @@ public class Enemy : Unit
         StartCoroutine(resetToIdle());
     }
     private IEnumerator resetToIdle() {
-        if (previousState != currentDetectionState) {
+        if (previousState != currentDetectionState)
+        {
+            previousState = currentDetectionState;
             yield return new WaitForSeconds(1f);
         }
+        ActionManager.Singleton.Reset();
         CurrentEnemyState = EnemyMoveState.Idle;
         yield return null;
     }
@@ -359,7 +358,7 @@ public class Enemy : Unit
         {
             if (currentDetectionState == EnemyDetectionState.Normal) {
                 Tile current_tile = GridManager.Instance.GetTile(transform.position);
-                RangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range, true, yRot);
+                RangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detectionRange, true, yRot);
                 if (RangeList.Contains(GridManager.Instance.GetTile(player.GetComponent<player>().GridPosition)))
                 {
                     //detected

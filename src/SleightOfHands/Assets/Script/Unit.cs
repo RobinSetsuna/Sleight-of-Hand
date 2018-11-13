@@ -163,7 +163,7 @@ public abstract class Unit : InLevelObject
         {
             characterController.Move(Vector3.up * (-9.81f * Time.deltaTime));
         }
-       
+
 
     }
 
@@ -245,7 +245,7 @@ public abstract class Unit : InLevelObject
             // Hopping
             if (modelHolder != null) {
                 float localHeight = jumpHeight * Mathf.Abs(Mathf.Sin(travelRatio * Mathf.PI * jumpsPerMove));
-                modelHolder.transform.localPosition = Vector3.up * localHeight;  
+                modelHolder.transform.localPosition = Vector3.up * localHeight;
             }
 
             if (travelRatio >= 1) {
