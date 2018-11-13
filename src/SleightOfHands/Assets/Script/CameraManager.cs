@@ -24,6 +24,8 @@ public class CameraManager : MonoBehaviour
 	[SerializeField]private float rotate_speed;
 	[SerializeField]private float CameraDistance; // the distance between camera and target, include fallow, focus
 
+    [SerializeField] private float focusSpeed = 5f;
+
 	
 	private bool following;
 	private Vector3 velocity;
@@ -265,44 +267,26 @@ public class CameraManager : MonoBehaviour
 
 	private IEnumerator Focus()
 	{
-		Camera cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        Vector3 viewPoint;
 
-		Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-
-		RaycastHit hit;
-		if (Physics.Raycast(ray, out hit, cam.farClipPlane, ~LayerMask.GetMask("UI")))
+        do
         {
-			// Debug.Log("I'm looking at " + hit.transform.name + " @ " + hit.transform.gameObject.layer);
-			Tile temp = GridManager.Instance.GetTile(hit.transform.position);
+            Camera camera = Camera.main;
 
-			Tile desTile = GridManager.Instance.GetTile(destination);
+            Vector3 cameraPosition = camera.transform.position;
+            Vector3 cameraForward = camera.transform.forward;
 
-            while (desTile.x != temp.x || desTile.y != temp.y)
-            {
-				float posy = Mathf.SmoothDamp(hit.transform.position.z, destination.z, ref velocity.z, smoothTimeY);
-				float posx = Mathf.SmoothDamp(hit.transform.position.x, destination.x, ref velocity.x, smoothTimeX);
+            viewPoint = cameraPosition + Mathf.Abs((cameraPosition.y - destination.y) / cameraForward.y) * cameraForward;
 
-				posy -= hit.transform.position.z;
-				posx -= hit.transform.position.x;
+            Vector3 orientation = destination - viewPoint;
+            orientation.y = 0;
 
-				transform.position = new Vector3(transform.position.x+posx, transform.position.y, transform.position.z+ posy);
+            transform.position += focusSpeed * Time.deltaTime * orientation.normalized;
 
-//				if (bounds)
-//				{
-//					transform.position = new Vector3(
-//						Mathf.Clamp(transform.position.x, minCameraPos.x, maxCanmeraPos.x),
-//						transform.position.y, Mathf.Clamp(transform.position.z, minCameraPos.z, maxCanmeraPos.z)
-//					);
-//				}
+            yield return null;
+        } while (MathUtility.EuclideanDistance(viewPoint.x, viewPoint.y, destination.x, destination.y) > 0.1f);
 
-				ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-				Physics.Raycast(ray, out hit, cam.farClipPlane, ~LayerMask.GetMask("UI"));
-				temp = GridManager.Instance.GetTile(hit.transform.position);
-				yield return null;
-			}
-		}
-
-		StartCoroutine(ZoomIn());
+        StartCoroutine(ZoomIn());
 
 		yield break;
 	}

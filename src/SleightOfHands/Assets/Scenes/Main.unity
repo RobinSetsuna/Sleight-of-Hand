@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -208,9 +208,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deckFolderPath: Deck
   deckFilename: test_deck
-  smokeObject: {fileID: 1595472967320516, guid: debaed0b1b82b5b439a12bf731c5c867,
-    type: 2}
-  GlueObject: {fileID: 0}
 --- !u!4 &384315690
 Transform:
   m_ObjectHideFlags: 0
@@ -766,6 +763,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fe3e32c259e99e439b37ccd62a65d77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onGameEnd:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   levelFolderPath: Levels
   levelFilename: test_level
   Enemies: []
@@ -919,12 +921,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   smoothTimeY: 0.5
   smoothTimeX: 0.5
-  bounds: 1
+  Bounds: 0
   minCameraPos: {x: -15, y: 19.04, z: -16}
   maxCanmeraPos: {x: 8, y: 19.04, z: 8}
   rotate_speed: 1.25
   CameraDistance: 12
-  following: 0
+  focusSpeed: 5
 --- !u!114 &2128856423
 MonoBehaviour:
   m_ObjectHideFlags: 0

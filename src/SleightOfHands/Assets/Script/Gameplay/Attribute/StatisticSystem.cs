@@ -19,6 +19,9 @@ public enum AttributeType : int
 
     Ar_i = 40,
     Ar_f = 41,
+
+    Vr_i = 50,
+    Vr_f = 51,
 }
 
 public enum StatisticType : int
@@ -27,6 +30,7 @@ public enum StatisticType : int
     Ap = 2,
     DetectionRange = 3,
     AttackRange = 4,
+    VisibleRange = 5,
 }
 
 public class StatisticSystem
@@ -126,6 +130,9 @@ public class StatisticSystem
 
             case StatisticType.AttackRange: // AttackRange = MAX(0, ∑Ar_i + ∑Ar_f)
                 return Mathf.Max(0, AttributeSet.Sum(AttributeType.Ar_i, attributeSets) + AttributeSet.Sum(AttributeType.Ar_f, attributeSets));
+
+            case StatisticType.VisibleRange: // VisibleRange = MAX(0, ∑Ar_i + ∑Ar_f)
+                return Mathf.Max(0, AttributeSet.Sum(AttributeType.Vr_i, attributeSets) + AttributeSet.Sum(AttributeType.Vr_f, attributeSets));
 
             default:
                 return 0;

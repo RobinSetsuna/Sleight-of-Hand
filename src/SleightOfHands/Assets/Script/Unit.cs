@@ -96,8 +96,6 @@ public abstract class Unit : InLevelObject
     private Vector3 start;
     private Vector3 destination;
 
-
-
     public void MoveTo(Vector3 destination, System.Action callback)
     {
         start = transform.position;
@@ -144,9 +142,9 @@ public abstract class Unit : InLevelObject
         //        break;
         //}
 
-        Statistics = new StatisticSystem(new AttributeSet(AttributeType.Ap_i, (float)initialActionPoint,
-                                                          AttributeType.Hp_i, (float)initialHealth));
-        onAttributeChange = Statistics.onStatisticChange;
+        //Statistics = new StatisticSystem(new AttributeSet(AttributeType.Ap_i, (float)initialActionPoint,
+        //                                                  AttributeType.Hp_i, (float)initialHealth));
+        //onAttributeChange = Statistics.onStatisticChange;
 
         // LevelManager.Instance.onNewTurnUpdateAttribute.AddListener(HandleAttributesChangeOnTurn);
         // CardManager.Instance.OnAttributesChangeOnEffects.AddListener(HandleAttributesChangeOnEffects);

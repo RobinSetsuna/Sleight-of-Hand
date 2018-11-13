@@ -156,6 +156,8 @@ public class Enemy : Unit
                                                           AttributeType.Dr_i, (float)detectionRange,
                                                           AttributeType.Ar_i, (float)attackRange));
 
+        onAttributeChange = Statistics.onStatisticChange;
+
         Player = LevelManager.Instance.Player;
 
         LevelManager.Instance.onGameEnd.AddListener(StopAllCoroutines);
@@ -359,18 +361,19 @@ public class Enemy : Unit
 	private void HandleDetection(Unit unit, Vector2Int previousPos, Vector2Int pos)
     {
         var yRot = transform.rotation.eulerAngles.y;
-        if (unit.tag == "Player"||unit.tag == "Enemy")
+        if (unit.tag == "Player"|| unit == this)
         {
-            if (currentDetectionState == EnemyDetectionState.Normal) {
+            if (currentDetectionState == EnemyDetectionState.Normal)
+            {
                 Tile current_tile = GridManager.Instance.GetTile(transform.position);
-                RangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detectionRange, true, yRot);
-                if (RangeList.Contains(GridManager.Instance.GetTile(Player.GridPosition)))
+                RangeList = ProjectileManager.Instance.getProjectileRange(current_tile, DetectionRange, true, yRot);
+
+                Tile playerTile = GridManager.Instance.GetTile(Player.GridPosition);
+
+                if (RangeList.Contains(playerTile) && MathUtility.ManhattanDistance(current_tile.x, current_tile.y, playerTile.x, playerTile.y) <= Player.VisibleRange)
                 {
-                    //detected
-
-                    // add some operation here
+                    // Player is detected
                     SetDetectionState(EnemyDetectionState.Found);
-
                     StartCoroutine(Founded());
                 }
             }

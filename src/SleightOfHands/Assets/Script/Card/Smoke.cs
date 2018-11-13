@@ -65,14 +65,20 @@ public class Smoke : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Enemy enemy = other.gameObject.GetComponent<Enemy>();
-
-        if (enemy)
+        if (other.GetComponent<Enemy>())
         {
+            Enemy enemy = other.GetComponent<Enemy>();
+
             EnemyManager.Instance.QuestionPop(enemy.transform);
 
             enemy.Statistics.AddStatusEffect(new StatusEffect(4, duration));
             enemy.SetDetectionState(EnemyDetectionState.Normal);
+        }
+        else if (other.GetComponent<player>())
+        {
+            player Player = other.GetComponent<player>();
+
+            Player.Statistics.AddStatusEffect(new StatusEffect(5, duration));
         }
     }
 
