@@ -177,14 +177,11 @@ public class Enemy : Unit
             //ADD HEALTH UPDATE HERE
 
             EnemyManager.Instance.AttackPop(transform);
-
             Statistics.AddStatusEffect(new StatusEffect(1, 2));
-
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(3f);
             LevelManager.Instance.EndEnvironmentActionPhase();
             // remove the actionPoint
         }
-        yield return null;
     }
 
     /// <summary>
@@ -301,7 +298,9 @@ public class Enemy : Unit
         StartCoroutine(resetToIdle());
     }
     private IEnumerator resetToIdle() {
-        if (previousState != currentDetectionState) {
+        if (previousState != currentDetectionState)
+        {
+            previousState = currentDetectionState;
             yield return new WaitForSeconds(1f);
         }
         CurrentEnemyState = EnemyMoveState.Idle;
