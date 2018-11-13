@@ -107,6 +107,11 @@ public class LevelManager : MonoBehaviour
                     if (CurrentRound == Round.Player)
                         onCurrentTurnChange.Invoke(CurrentTurn);
                     break;
+                case Phase.Success:
+                    UIManager.Singleton.Open("ExplorationSuccess");
+                    ActionManager.Singleton.Clear();
+                    onGameEnd.Invoke();
+                    return;
                 case Phase.Failure:
                     UIManager.Singleton.Open("ExplorationFailure");
                     ActionManager.Singleton.Clear();
@@ -198,6 +203,11 @@ public class LevelManager : MonoBehaviour
 
         RoundNumber = 0;
         CurrentPhase = Phase.Start;
+    }
+
+    public void NotifySuccess()
+    {
+        CurrentPhase = Phase.Success;
     }
 
     internal void EndPlayerActionPhase()
@@ -337,6 +347,7 @@ public class LevelManager : MonoBehaviour
         public int width;
         public int[] tiles;
         public SpawnData[] spawns;
+        public int[] endingPoints;
 
         public static LevelData CreateFromJSON(string jsonFile) {
             LevelData levelInfo = JsonUtility.FromJson<LevelData>(jsonFile);

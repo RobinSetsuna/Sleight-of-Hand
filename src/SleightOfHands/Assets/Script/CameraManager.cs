@@ -278,8 +278,8 @@ public class CameraManager : MonoBehaviour
 	private IEnumerator Focus()
 	{
         Vector3 cameraForward = Camera.main.transform.forward;
-        Vector3 cameraPosition = transform.position;
 
+        Vector3 cameraPosition = transform.position;
         Vector3 tilePosition = GridManager.Instance.GetTile(destination).transform.position;
         Vector3 targetPosition = tilePosition - Mathf.Abs((cameraPosition.y - tilePosition.y) / cameraForward.y) * cameraForward;
 
@@ -287,9 +287,9 @@ public class CameraManager : MonoBehaviour
 
         float time = smoothTime;
 
-        while (MathUtility.EuclideanDistance(targetPosition.x, targetPosition.y, cameraPosition.x, cameraPosition.y) > 0.2f)
+        while (MathUtility.EuclideanDistance(targetPosition.x, targetPosition.z, cameraPosition.x, cameraPosition.z) > 0.1f)
         {
-            transform.position = Vector3.SmoothDamp(cameraPosition, targetPosition, ref velocity, Mathf.Sqrt(time));
+            transform.position = Vector3.SmoothDamp(cameraPosition, targetPosition, ref velocity, time);
             cameraPosition = transform.position;
 
             yield return null;

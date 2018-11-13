@@ -337,6 +337,9 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                     Spawn(envTilePrefab, envTilePosition, Quaternion.Euler(0, envTileRotation, 0));
                 }
             }
+
+        for (int i = 0; i < levelData.endingPoints.Length; i += 2)
+            Spawn(ResourceUtility.GetPrefab("EndingPoint"), GetWorldPosition(levelData.endingPoints[i], levelData.endingPoints[i + 1]) + new Vector3(0, TileSize * 0.9f, 0), Quaternion.identity);
     }
 
     private void GetEnvTileType(LevelManager.LevelData levelData, int x, int y, Tileset tileset, out Tileset.TileCollection tileCollection, out float rotation) {

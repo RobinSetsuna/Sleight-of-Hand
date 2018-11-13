@@ -779,6 +779,7 @@ MonoBehaviour:
     width: 0
     tiles: 
     spawns: []
+    endingPoints: 
 --- !u!4 &1851337925
 Transform:
   m_ObjectHideFlags: 0
@@ -938,7 +939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b752c0905d5c0d469351717013ed04d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragSpeed: 10
+  dragSpeed: 20
   curZoomPos: 5
   zoomTo: 15
   zoomFrom: 3
