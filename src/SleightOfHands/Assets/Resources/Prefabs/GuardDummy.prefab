@@ -339,7 +339,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionRound: 1
   maxSpeed: 2
-  initialActionPoint: 2
+  initialActionPoint: 4
   initialHealth: 100
   movable: 1
   modelHolder: {fileID: 1801817489718384}

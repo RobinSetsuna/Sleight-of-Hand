@@ -56,7 +56,8 @@ public class EnemyManager : MonoBehaviour {
 				if (currentEnemy == null && index < Enemies.Count())
 				{
 					currentEnemy = Enemies[index];
-				}
+                    currentEnemy.refresh();
+                }
 				LevelManager.Instance.StartEnvironmentActionPhase(); // finish start phase, to the action phase
 				break;
 			case Phase.Action:
@@ -75,6 +76,7 @@ public class EnemyManager : MonoBehaviour {
 			case Phase.End:
 				if (currentEnemy != null)
 				{
+                    currentEnemy.mute();
 					currentEnemy.CurrentEnemyState = EnemyMoveState.Unmoveable;
 				}
 				currentEnemy = null;
@@ -83,12 +85,26 @@ public class EnemyManager : MonoBehaviour {
 				{
 					//all the enemy has moved
 					index = 0;
+					DehighlightAll();
 					CameraManager.Instance.CameraZoomOut();
 					LevelManager.Instance.NextRound();
 				}
 				CameraManager.Instance.UnboundCameraFollow();
 				LevelManager.Instance.StartNextPhaseTurn();
 				break;
+		}
+	}
+
+	public void DehighlightAll()
+	{
+		Enemy[] allEnemies = FindObjectsOfType<Enemy>();
+		foreach (Enemy enemy in allEnemies)
+		{
+			enemy.DetectionHighlighted = false;
+				foreach (Tile tile in enemy.RangeList)
+				{
+					tile.Dehighlight();
+				}
 		}
 	}
 
