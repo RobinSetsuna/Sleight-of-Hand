@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
 
-
 public class CameraManager : MonoBehaviour
 {
 	private HashSet<UnitType> typeWhiteList = new HashSet<UnitType>(
@@ -26,7 +25,7 @@ public class CameraManager : MonoBehaviour
 	[SerializeField]private float CameraDistance; // the distance between camera and target, include fallow, focus
 
 	
-	public bool fallowing;
+	public bool following;
 	private Vector3 velocity;
 	private bool shaking;
 	private float shake_magnitude;
@@ -50,7 +49,18 @@ public class CameraManager : MonoBehaviour
 	{
 		return typeWhiteList.Contains(obj.Type);
 	}
-	public void CameraZoomIn()
+
+    public void EnableZoom()
+    {
+        GetComponent<CameraDragging>().isZoomEnabled = true;
+    }
+
+    public void DisableZoom()
+    {
+        GetComponent<CameraDragging>().isZoomEnabled = false;
+    }
+
+    public void CameraZoomIn()
 	{
 		StartCoroutine(ZoomIn());
 	}
@@ -86,7 +96,7 @@ public class CameraManager : MonoBehaviour
 	public void ResetPos()
 	{
 		// reset the position back to default
-		fallowing = false;
+		following = false;
 		destination = defaultPosition;
 		transform.rotation = defaultRotation;
 		StartCoroutine(Moveto(1));
@@ -95,21 +105,21 @@ public class CameraManager : MonoBehaviour
 	public bool isBoundedForFallow()
 	{
 		// check the Camera is fallowing
-		return fallowing;
+		return following;
 	}
 
 	public void BoundCameraFollow(Transform unit)
 	{
 		// bound Camera fallow to Transform, Camera will fallow the target until it release
 		//FocusAt(unit.transform.position, null);
-		fallowing = true;
+		following = true;
 		StartCoroutine(CameraFallow(unit,true));
 	}
 	
 	public void UnboundCameraFollow()
 	{
 		// release Camera
-		fallowing = false;
+		following = false;
 	}
 
 	public void FocusAt(Vector3 destination)
@@ -139,7 +149,7 @@ public class CameraManager : MonoBehaviour
 	private IEnumerator CameraFallow(Transform unit,bool chasing)
 	{
 		Vector3 temp = unit.position;
-		while (fallowing)
+		while (following)
 		{
 				// smooth camera movement
 				float posy = transform.position.z+(unit.position.z - temp.z);

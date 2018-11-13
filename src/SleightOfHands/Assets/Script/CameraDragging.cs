@@ -1,16 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CameraDragging : MonoBehaviour {
-	
+public class CameraDragging : MonoBehaviour
+{
 	private Vector3 dragOrigin;
-	[SerializeField]private float dragSpeed;
+	[SerializeField] private float dragSpeed;
 	
-	[SerializeField]private float curZoomPos, zoomTo; // curZoomPos will be the value
-	[SerializeField]private float zoomFrom = 10;
+	[SerializeField] private float curZoomPos, zoomTo; // curZoomPos will be the value
+	[SerializeField] private float zoomFrom = 10;
     [SerializeField] private float zoomSpeed = 10;
 
+    public bool isZoomEnabled = true;
 
     private void Start()
 	{
@@ -24,14 +23,17 @@ public class CameraDragging : MonoBehaviour {
     {
         #region ZOOM
         // If the wheel goes up it, decrement 5 from "zoomTo"
-        curZoomPos = Camera.main.orthographicSize;
-        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        if (isZoomEnabled)
         {
-            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + zoomSpeed * Time.deltaTime, zoomFrom, zoomTo);
-        }
-        else if (Input.GetAxis("Mouse ScrollWheel") > 0)
-        {
-            Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - zoomSpeed * Time.deltaTime, zoomFrom, zoomTo);
+            curZoomPos = Camera.main.orthographicSize;
+            if (Input.GetAxis("Mouse ScrollWheel") < 0)
+            {
+                Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize + zoomSpeed * Time.deltaTime, zoomFrom, zoomTo);
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") > 0)
+            {
+                Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - zoomSpeed * Time.deltaTime, zoomFrom, zoomTo);
+            }
         }
         #endregion
 
@@ -39,7 +41,7 @@ public class CameraDragging : MonoBehaviour {
         // demo test, delete when actual use
         if (Input.GetKey(KeyCode.A))
         {
-            if (!CameraManager.Instance.fallowing)
+            if (!CameraManager.Instance.following)
             {
                 CameraManager.Instance.BoundCameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
             }

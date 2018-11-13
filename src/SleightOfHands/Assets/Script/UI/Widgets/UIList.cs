@@ -3,22 +3,27 @@ using UnityEngine;
 
 public class UIList : UIWidget
 {
-    [SerializeField] Vector2 margin = new Vector2(10, 10);
+    [SerializeField] private Vector2 margin = new Vector2(10, 10);
     [SerializeField] private int row = 1;
     [SerializeField] private int column = 1;
-    [SerializeField] Vector2 itemSize;
+    [SerializeField] private Vector2 itemSize;
     [SerializeField] private bool hideInactives = true;
     [SerializeField] private RectTransform background; 
 
     public override void Refresh(params object[] args)
     {
         int i = 0;
-        while (i < transform.childCount)
+        int N = transform.childCount;
+
+        while (i < N)
         {
             Transform item = transform.GetChild(i);
 
-            if (!item.gameObject.activeSelf && hideInactives)
-                break;
+            if (hideInactives && !item.gameObject.activeSelf)
+            {
+                item.SetSiblingIndex(--N);
+                continue;
+            }
 
             int x = i % column;
             int y = i / column;
