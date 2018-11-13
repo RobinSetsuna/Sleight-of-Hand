@@ -253,11 +253,10 @@ public class Enemy : Unit
                 if (temp == 0)
                     break;
 
-                ActionManager.Singleton.AddBack(new Movement(this, tile), --temp == 0 ? (System.Action)ResetToIdle : null);
+                ActionManager.Singleton.AddBack(new Movement(this, tile),(System.Action)ResetToIdle);
             }
 
             Path = null;
-            ActionManager.Singleton.Execute(ResetToIdle);
         }
     }
 
