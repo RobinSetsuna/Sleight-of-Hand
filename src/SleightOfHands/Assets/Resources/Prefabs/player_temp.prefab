@@ -236,8 +236,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionRound: 0
   maxSpeed: 2
-  initialActionPoint: 4
-  initialHealth: 100
+  initialActionPoint: 3
+  initialHealth: 200
   movable: 1
   modelHolder: {fileID: 1831866132108444}
   jumpHeight: 0.25
