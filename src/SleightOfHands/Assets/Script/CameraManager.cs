@@ -13,28 +13,28 @@ public class CameraManager : MonoBehaviour
 		UnitType.UI,
 		UnitType.Enemy,
 		UnitType.Item
-	}); // hold all the mouse Interactable UnitType will not cause camera dragging. 
+	}); // hold all the mouse Interactable UnitType will not cause camera dragging.
 	private Vector3 destination;
 	[SerializeField]private float smoothTimeY;
 	[SerializeField]private float smoothTimeX;
 
-	public bool bounds; // check if the camera hit the boundary
+	public bool Bounds; // check if the camera hit the boundary
 	public Vector3 minCameraPos;
 	public Vector3 maxCanmeraPos;
 	[SerializeField]private float rotate_speed;
 	[SerializeField]private float CameraDistance; // the distance between camera and target, include fallow, focus
 
 	
-	public bool following;
+	private bool following;
 	private Vector3 velocity;
 	private bool shaking;
-	private float shake_magnitude;
+	private float shakeMagnitude;
 
 	private Vector3 defaultPosition;
 	private Quaternion defaultRotation;
-	private Queue<Vector3> FocusQueue;
+	private Queue<Vector3> focusQueue;
 	private bool allocated;
-	
+
 	private static CameraManager instance;
 	public static CameraManager Instance
 	{
@@ -73,9 +73,9 @@ public class CameraManager : MonoBehaviour
 	public void Finished()
 	{
 		allocated = false;
-		if (FocusQueue.Count != 0)
+		if (focusQueue.Count != 0)
 		{
-			destination = FocusQueue.Dequeue();
+			destination = focusQueue.Dequeue();
 			StartCoroutine(Focus());
 		}
 //		else
@@ -90,7 +90,7 @@ public class CameraManager : MonoBehaviour
 		// make a function call when Initiate
 		defaultPosition = transform.position;
 		defaultRotation = transform.rotation;
-		FocusQueue = new Queue<Vector3>();
+		focusQueue = new Queue<Vector3>();
 	}
 
 	public void ResetPos()
@@ -102,7 +102,7 @@ public class CameraManager : MonoBehaviour
 		StartCoroutine(Moveto(1));
 	}
 
-	public bool isBoundedForFallow()
+	public bool IsBoundedForFallow()
 	{
 		// check the Camera is fallowing
 		return following;
@@ -115,7 +115,7 @@ public class CameraManager : MonoBehaviour
 		following = true;
 		StartCoroutine(CameraFallow(unit,true));
 	}
-	
+
 	public void UnboundCameraFollow()
 	{
 		// release Camera
@@ -130,7 +130,7 @@ public class CameraManager : MonoBehaviour
 
 		if (allocated)
 		{
-			FocusQueue.Enqueue(destination);
+			focusQueue.Enqueue(destination);
 		}else
 		{
 			allocated = true;
@@ -138,7 +138,7 @@ public class CameraManager : MonoBehaviour
 			StartCoroutine(Focus());
 		}
 	}
-		
+
 	public void Shaking(float Duration,float Magnitude)
 	{
 		// may add a camera action queue for camera action
@@ -160,7 +160,7 @@ public class CameraManager : MonoBehaviour
 				float posy = transform.position.z+(unit.position.z - temp.z);
 				float posx = transform.position.x+(unit.position.x - temp.x);
 				transform.position = new Vector3(posx, transform.position.y, posy);
-				if (bounds)
+				if (Bounds)
 				{
 					// if there is a bounds for camera movement
 					transform.position = new Vector3(
@@ -173,7 +173,7 @@ public class CameraManager : MonoBehaviour
 		}
 		yield return null;
 	}
-			
+
 //		while (fallowing)
 //		{
 //			// two type of chasing:
@@ -210,7 +210,7 @@ public class CameraManager : MonoBehaviour
 			float y = Random.Range(-1f, 1f) * Magnitude;
 			// shaking
 			transform.position = new Vector3(transform.position.x+x,transform.position.y,transform.position.z+y);
-			if (bounds)
+			if (Bounds)
 			{
 				//bounds shaking
 				transform.position = new Vector3(Mathf.Clamp(transform.position.x, minCameraPos.x, maxCanmeraPos.x)+x,
@@ -223,7 +223,7 @@ public class CameraManager : MonoBehaviour
 		transform.position = temp;
 		yield return null;
 	}
-	
+
 	private IEnumerator Rotateback()
 	{
 		Vector3 dirFromAtoB = (-destination - transform.position).normalized;
@@ -240,18 +240,18 @@ public class CameraManager : MonoBehaviour
 		}
 		yield return null;
 	}
-	
+
 	private IEnumerator Moveto(float Distance)
 	{
 		while(MathUtility.ManhattanDistance(destination.x, destination.z, transform.position.x, transform.position.z) > Distance){
 			    // smooth movement
 				float x = 0;
-				float y = 0;	
+				float y = 0;
 				float posy = Mathf.SmoothDamp(transform.position.z, destination.z, ref velocity.z, smoothTimeY);
 				float posx = Mathf.SmoothDamp(transform.position.x, destination.x, ref velocity.x, smoothTimeX);
 
 				transform.position = new Vector3(posx + x, transform.position.y, posy + y);
-				if (bounds)
+				if (Bounds)
 				{
 					transform.position = new Vector3(
 						Mathf.Clamp(transform.position.x, minCameraPos.x, maxCanmeraPos.x) + x,
@@ -262,22 +262,31 @@ public class CameraManager : MonoBehaviour
 		}
 		yield return null;
 	}
-	
+
 	private IEnumerator Focus()
 	{
 		Camera cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-		Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
+
+		Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+
 		RaycastHit hit;
-		if (Physics.Raycast(ray, out hit)){
-			//Debug.Log("I'm looking at " + hit.transform.name);
+		if (Physics.Raycast(ray, out hit, cam.farClipPlane, ~LayerMask.GetMask("UI")))
+        {
+			// Debug.Log("I'm looking at " + hit.transform.name + " @ " + hit.transform.gameObject.layer);
 			Tile temp = GridManager.Instance.GetTile(hit.transform.position);
+
 			Tile desTile = GridManager.Instance.GetTile(destination);
-			while (desTile.x != temp.x || desTile.y != temp.y){
+
+            while (desTile.x != temp.x || desTile.y != temp.y)
+            {
 				float posy = Mathf.SmoothDamp(hit.transform.position.z, destination.z, ref velocity.z, smoothTimeY);
 				float posx = Mathf.SmoothDamp(hit.transform.position.x, destination.x, ref velocity.x, smoothTimeX);
+
 				posy -= hit.transform.position.z;
 				posx -= hit.transform.position.x;
+
 				transform.position = new Vector3(transform.position.x+posx, transform.position.y, transform.position.z+ posy);
+
 //				if (bounds)
 //				{
 //					transform.position = new Vector3(
@@ -285,13 +294,16 @@ public class CameraManager : MonoBehaviour
 //						transform.position.y, Mathf.Clamp(transform.position.z, minCameraPos.z, maxCanmeraPos.z)
 //					);
 //				}
-				ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
-				Physics.Raycast(ray,out hit);
+
+				ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+				Physics.Raycast(ray, out hit, cam.farClipPlane, ~LayerMask.GetMask("UI"));
 				temp = GridManager.Instance.GetTile(hit.transform.position);
 				yield return null;
 			}
 		}
+
 		StartCoroutine(ZoomIn());
+
 		yield break;
 	}
 

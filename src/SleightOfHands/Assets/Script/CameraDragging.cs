@@ -4,7 +4,7 @@ public class CameraDragging : MonoBehaviour
 {
 	private Vector3 dragOrigin;
 	[SerializeField] private float dragSpeed;
-	
+
 	[SerializeField] private float curZoomPos, zoomTo; // curZoomPos will be the value
 	[SerializeField] private float zoomFrom = 10;
     [SerializeField] private float zoomSpeed = 10;
@@ -41,7 +41,7 @@ public class CameraDragging : MonoBehaviour
         // demo test, delete when actual use
         if (Input.GetKey(KeyCode.A))
         {
-            if (!CameraManager.Instance.following)
+            if (!CameraManager.Instance.IsBoundedForFallow())
             {
                 CameraManager.Instance.BoundCameraFollow(GameObject.FindGameObjectWithTag("Player").transform);
             }
@@ -51,7 +51,7 @@ public class CameraDragging : MonoBehaviour
         {
             CameraManager.Instance.FocusAt(GameObject.FindGameObjectWithTag("Player").transform.position);
         }
-      
+
 
         if (Input.GetKey(KeyCode.D))
         {
@@ -104,7 +104,7 @@ public class CameraDragging : MonoBehaviour
 
                 transform.Translate(-move);
 
-                if (CameraManager.Instance.bounds)
+                if (CameraManager.Instance.Bounds)
                 {
                     // if there is a bounds for camera movement
                     transform.position = new Vector3(

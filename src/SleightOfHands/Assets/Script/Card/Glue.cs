@@ -9,6 +9,7 @@ public class Glue : MonoBehaviour {
     void Start () {
         LevelManager.Instance.onCurrentTurnChange.AddListener(HandleTimeOut);
         CameraManager.Instance.FocusAt(this.transform.position);
+        //GridManager.Instance.GetTile(this.transform.position).walkable = false;
     }
 	
 	// Update is called once per frame
@@ -37,7 +38,7 @@ public class Glue : MonoBehaviour {
         counter++;
         if (counter == duration)
         {
-
+            //GridManager.Instance.GetTile(this.transform.position).walkable = true;
             Destroy(this.gameObject);
         }
 
