@@ -58,6 +58,7 @@ public class EnemyManager : MonoBehaviour {
 					currentEnemy = Enemies[index];
                     currentEnemy.Refresh();
                 }
+				DehighlightAll();
 				LevelManager.Instance.StartEnvironmentActionPhase(); // finish start phase, to the action phase
 				break;
 			case Phase.Action:

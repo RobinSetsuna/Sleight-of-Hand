@@ -178,7 +178,7 @@ public class Enemy : Unit
 
             EnemyManager.Instance.AttackPop(transform);
             Statistics.AddStatusEffect(new StatusEffect(1, 2));
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(2f);
             LevelManager.Instance.EndEnvironmentActionPhase();
             // remove the actionPoint
         }
@@ -252,7 +252,6 @@ public class Enemy : Unit
 
                 ActionManager.Singleton.AddBack(new Movement(this, tile),(System.Action)ResetToIdle);
             }
-
             Path = null;
         }
     }
@@ -303,6 +302,7 @@ public class Enemy : Unit
             previousState = currentDetectionState;
             yield return new WaitForSeconds(1f);
         }
+        ActionManager.Singleton.Reset();
         CurrentEnemyState = EnemyMoveState.Idle;
         yield return null;
     }
