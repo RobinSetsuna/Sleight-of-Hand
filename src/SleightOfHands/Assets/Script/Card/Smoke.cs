@@ -18,7 +18,7 @@ public class Smoke : MonoBehaviour
         //GridManager.Instance.onUnitMove.AddListener(HandleUnitMove);
         //CameraManager.Instance.FocusAt(transform.position);
     }
-	
+
 	// Update is called once per frame
 	//void Update ()
  //   {
@@ -65,15 +65,21 @@ public class Smoke : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Enemy")
+        if (other.GetComponent<Enemy>())
         {
-            Enemy enemy = other.gameObject.GetComponent<Enemy>();
-            if (enemy)
-            {
-                EnemyManager.Instance.QuestionPop(enemy.transform);
-                //enemy.Statistics.AddStatusEffect(new StatusEffect(4, duration));
-                enemy.SetDetectionState(EnemyDetectionState.Doubt);
-            }
+            Enemy enemy = other.GetComponent<Enemy>();
+
+            EnemyManager.Instance.QuestionPop(enemy.transform);
+
+            enemy.Statistics.AddStatusEffect(new StatusEffect(3, 2));
+            enemy.Statistics.AddStatusEffect(new StatusEffect(4, duration));
+            enemy.SetDetectionState(EnemyDetectionState.Normal);
+        }
+        else if (other.GetComponent<player>())
+        {
+            player Player = other.GetComponent<player>();
+
+            Player.Statistics.AddStatusEffect(new StatusEffect(5, duration));
         }
     }
 

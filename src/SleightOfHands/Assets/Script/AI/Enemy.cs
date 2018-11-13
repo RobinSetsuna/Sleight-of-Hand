@@ -117,7 +117,7 @@ public class Enemy : Unit
             }
             else
             {
-                
+
                 EnemyMoveState previousEnemyState = currentEnemyState;
 
                 currentEnemyState = value;
@@ -155,6 +155,8 @@ public class Enemy : Unit
                                                           AttributeType.Hp_i, (float)initialHealth,
                                                           AttributeType.Dr_i, (float)detectionRange,
                                                           AttributeType.Ar_i, (float)attackRange));
+
+        onAttributeChange = Statistics.onStatisticChange;
 
         Player = LevelManager.Instance.Player;
 
@@ -258,7 +260,7 @@ public class Enemy : Unit
                     if (GridManager.Instance.HasUnitOn(temp_x, temp_y) ||
                         !GridManager.Instance.IsAccessible(temp_x, temp_y))
                     {
-                        // Oops, no movement 
+                        // Oops, no movement
                         path = null;
                         LevelManager.Instance.EndEnvironmentActionPhase();
                     }
@@ -292,7 +294,7 @@ public class Enemy : Unit
     {
         Tile enemyTile = GridManager.Instance.GetTile(transform.position);
         Tile playerTile = GridManager.Instance.GetTile(Player.transform.position);
-        //Debug.LogWarning(AttackRange);
+
         return MathUtility.ManhattanDistance(enemyTile.x, enemyTile.y, playerTile.x, playerTile.y) <= AttackRange;
     }
 
@@ -331,7 +333,7 @@ public class Enemy : Unit
             previousState = currentDetectionState;
             yield return new WaitForSeconds(1f);
         }
-        
+
         if (previousState == EnemyDetectionState.Doubt)
         {
             LevelManager.Instance.EndEnvironmentActionPhase();
@@ -392,18 +394,19 @@ public class Enemy : Unit
 	private void HandleDetection(Unit unit, Vector2Int previousPos, Vector2Int pos)
     {
         var yRot = transform.rotation.eulerAngles.y;
-        if (unit.tag == "Player"||unit.tag == "Enemy")
+        if (unit.tag == "Player"|| unit == this)
         {
-            if (currentDetectionState == EnemyDetectionState.Normal) {
+            if (currentDetectionState == EnemyDetectionState.Normal)
+            {
                 Tile current_tile = GridManager.Instance.GetTile(transform.position);
-                RangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detectionRange, true, yRot);
-                if (RangeList.Contains(GridManager.Instance.GetTile(Player.GridPosition)))
+                RangeList = ProjectileManager.Instance.getProjectileRange(current_tile, DetectionRange, true, yRot);
+
+                Tile playerTile = GridManager.Instance.GetTile(Player.GridPosition);
+
+                if (RangeList.Contains(playerTile) && MathUtility.ManhattanDistance(current_tile.x, current_tile.y, playerTile.x, playerTile.y) <= Player.VisibleRange)
                 {
-                    //detected
-
-                    // add some operation here
+                    // Player is detected
                     SetDetectionState(EnemyDetectionState.Found);
-
                     StartCoroutine(Founded());
                 }
             }
