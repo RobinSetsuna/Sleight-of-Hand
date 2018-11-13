@@ -78,6 +78,8 @@ public class UIManager : MonoBehaviour
 
         UIWindow uiWindow = Instantiate(ResourceUtility.GetUIPrefab<UIWindow>(name), transform, false);
 
+        uiWindow.transform.SetSiblingIndex(0);
+
         uiWindowsOpened.Add(name, uiWindow);
 
         uiWindow.OnOpen(args);
