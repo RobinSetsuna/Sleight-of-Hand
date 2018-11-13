@@ -77,17 +77,12 @@ public class CameraManager : MonoBehaviour
 	{
         allocated = false;
 
-        Debug.LogWarning(allocated);
-        Debug.LogWarning(destination);
-        Debug.LogWarning(focusCallbacks.ContainsKey(destination));
         if (focusCallbacks.ContainsKey(destination))
         {
             System.Action callback = focusCallbacks[destination];
             focusCallbacks.Remove(destination);
 
             callback.Invoke();
-
-            Debug.LogWarning("RRRRRRRRRRRRR");
         }
 
 		if (focusQueue.Count != 0)
@@ -146,13 +141,7 @@ public class CameraManager : MonoBehaviour
 		UnboundCameraFollow();
 
         if (callback != null)
-        {
             focusCallbacks.Add(destination, callback);
-            Debug.LogWarning("AAAAAAAAAAAA");
-            Debug.LogWarning(allocated);
-            Debug.LogWarning(destination);
-            Debug.LogWarning(focusCallbacks.ContainsKey(destination));
-        }
 
         if (allocated)
 			focusQueue.Enqueue(destination);
@@ -297,8 +286,6 @@ public class CameraManager : MonoBehaviour
 
 	private IEnumerator Focus()
 	{
-        Debug.LogWarning("?????????");
-
         Vector3 cameraForward = Camera.main.transform.forward;
 
         Vector3 cameraPosition = transform.position;
@@ -347,7 +334,6 @@ public class CameraManager : MonoBehaviour
 	}
 	private IEnumerator ZoomIn()
 	{
-        Debug.LogWarning("!!!!!!!!!");
 		//allocated = true;
 		while (Camera.main.orthographicSize > 4)
         {
