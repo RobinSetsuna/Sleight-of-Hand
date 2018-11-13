@@ -163,10 +163,9 @@ public class PlayerController : MouseInteractable
                         break;
 
                     case PlayerState.UseCard:
-                        ActionManager.Singleton.AddBack(new CardUsage(Player, cardToUse, targetTile));
+                        ActionManager.Singleton.AddBack(new CardUsage(Player, cardToUse, targetTile), ResetToIdle);
                         CardManager.Instance.RemoveCard(cardToUse);
                         CardToUse = null;
-                        ActionManager.Singleton.Execute(ResetToIdle);
                         break;
                 }
 
