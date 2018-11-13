@@ -156,7 +156,7 @@ public class HUD : UIWindow
         switch (statistic)
         {
             case StatisticType.Hp:
-                UpdateHp(Math.Max(0, Mathf.RoundToInt(currentValue)));
+                UpdateHp(Mathf.RoundToInt(currentValue));
                 break;
 
             case StatisticType.Ap:

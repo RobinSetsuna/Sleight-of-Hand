@@ -281,7 +281,7 @@ public class Enemy : Unit
                 if (temp == 0)
                     break;
 
-                ActionManager.Singleton.AddBack(new Movement(this, tile),(System.Action)ResetToIdle);
+                ActionManager.Singleton.AddBack(new Movement(this, tile), ResetToIdle);
             }
             Path = null;
         }
@@ -327,7 +327,9 @@ public class Enemy : Unit
     {
         StartCoroutine(resetToIdle());
     }
-    private IEnumerator resetToIdle() {
+
+    private IEnumerator resetToIdle()
+    {
         if (previousState != currentDetectionState)
         {
             previousState = currentDetectionState;
@@ -341,7 +343,7 @@ public class Enemy : Unit
         }
         else
         {
-            ActionManager.Singleton.Reset();
+            //ActionManager.Singleton.Clear();
             CurrentEnemyState = EnemyMoveState.Idle;
             yield return null;
         }
@@ -407,7 +409,7 @@ public class Enemy : Unit
                 {
                     // Player is detected
                     SetDetectionState(EnemyDetectionState.Found);
-                    CameraManager.Instance.FocusAt(transform.position, Founded);
+                    //CameraManager.Instance.FocusAt(transform.position, Founded);
                 }
             }
 

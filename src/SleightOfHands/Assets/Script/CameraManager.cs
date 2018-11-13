@@ -160,7 +160,14 @@ public class CameraManager : MonoBehaviour
 
     private void Start()
     {
-        LevelManager.Instance.onGameEnd.AddListener(StopAllCoroutines);
+        LevelManager.Instance.onGameEnd.AddListener(Reset);
+    }
+
+    private void Reset()
+    {
+        StopAllCoroutines();
+        focusQueue.Clear();
+        focusCallbacks.Clear();
     }
 
     private IEnumerator CameraFallow(Transform unit,bool chasing)

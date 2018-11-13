@@ -87,10 +87,4 @@ public class ActionManager
         else
             actionInExecution = null;
     }
-
-    public void Reset()
-    {
-        actionQueue = new ActionQueue();
-        callbacks = new Dictionary<Action, System.Action>();
-    }
 }
