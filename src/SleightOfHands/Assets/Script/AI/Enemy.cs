@@ -42,7 +42,9 @@ public class Enemy : Unit
     private HashSet<Tile> rangeList;
     private List<Vector2Int> pathList;
     private int nextPosIndex;
+    private bool newRound;
     private EnemyDetectionState currentDetectionState;
+    private EnemyDetectionState previousState = EnemyDetectionState.Normal;
 
     /// <summary>
     /// The current Detection state of the Enemy
@@ -120,7 +122,7 @@ public class Enemy : Unit
                         Path = null;
                         break;
                     case EnemyMoveState.Idle:
-                        if (Ap <= 0)
+                        if (Ap <= (currentDetectionState == EnemyDetectionState.Normal ? InitialActionPoint - InitialActionPoint / 2 : 0))
                             LevelManager.Instance.EndEnvironmentActionPhase();
                         else
                             CurrentEnemyState = EnemyMoveState.Move;
@@ -143,6 +145,13 @@ public class Enemy : Unit
         base.Awake();
         player = GameObject.FindWithTag("Player");
         GridManager.Instance.onUnitMove.AddListener(HandleDetection);
+    }
+
+    public void refresh() {
+        newRound = true;
+    }
+    public void mute() {
+        newRound = false;
     }
     
     /// <summary>
@@ -176,8 +185,12 @@ public class Enemy : Unit
         switch (CurrentDetectionState)
         {
                 case EnemyDetectionState.Found:
-                    EnemyManager.Instance.FoundPop(transform);
-                    yield return new WaitForSeconds(1.5f);
+                    if (newRound) {
+                        EnemyManager.Instance.FoundPop(transform);
+                        yield return new WaitForSeconds(1.5f);
+                        newRound = false;
+                     } 
+
                     Tile playerTile = GridManager.Instance.GetTile(player.transform.position);
                     Tile finalDes = NearPosition(playerTile, enemyTile);
                     if (finalDes == null)
@@ -192,13 +205,15 @@ public class Enemy : Unit
                     {
                         break;
                     }
-
-                    EnemyManager.Instance.IdlePop(transform);
-                    yield return new WaitForSeconds(1.5f);
+                    if (newRound) {
+                        EnemyManager.Instance.IdlePop(transform);
+                        yield return new WaitForSeconds(1.5f);
+                        newRound = false;
+                    }
                     var enemyPos = enemyTile.gridPosition;
                     if (pathList.Exists(node=>node.x==enemyPos.x&&node.y== enemyPos.y))
                     {
-                        //var current = pathList.FindIndex(node => node.x == enemyPos.x && node.y == enemyPos.y);
+                    //var current = pathList.FindIndex(node => node.x == enemyPos.x && node.y == enemyPos.y);
                         var current = nextPosIndex;
                         int destinationIndex = current + 1;
                         if (destinationIndex >= pathList.Count) destinationIndex = 0;
@@ -220,8 +235,7 @@ public class Enemy : Unit
 
         if (path != null)
         {
-            
-            int temp = Ap;
+            int temp = currentDetectionState == EnemyDetectionState.Normal ? Ap / 2 : Ap;
 
             for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
             {
@@ -259,6 +273,7 @@ public class Enemy : Unit
         {
             EnemyManager.Instance.QuestionPop(transform);
         }
+        previousState = CurrentDetectionState;
         currentDetectionState = current;
         
     }
@@ -274,9 +289,16 @@ public class Enemy : Unit
     /// <summary>
     /// Make a transition to PlayerState.Move
     /// </summary>
-    public void ResetToIdle()
+    private void ResetToIdle()
     {
+        StartCoroutine(resetToIdle());
+    }
+    private IEnumerator resetToIdle() {
+        if (previousState != currentDetectionState) {
+            yield return new WaitForSeconds(1f);
+        }
         CurrentEnemyState = EnemyMoveState.Idle;
+        yield return null;
     }
 
     /// <summary>
@@ -335,6 +357,7 @@ public class Enemy : Unit
 
                     // add some operation here
                     SetDetectionState(EnemyDetectionState.Found);
+                    
                     StartCoroutine(Founded());
                 }
             }
@@ -414,7 +437,6 @@ public class Enemy : Unit
     private IEnumerator Founded()
     {
         CameraManager.Instance.FocusAt(transform.position);
-        yield return new WaitForSeconds(1f);
         EnemyManager.Instance.AlertPop(transform);
         AudioSource _audioSource = gameObject.GetComponent<AudioSource>();
         AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/beDetected");

@@ -64,8 +64,8 @@ public class ActionManager
             actionQueue.Pop().Execute(Execute);
         else if (executionCallback != null)
         {
-            executionCallback();
-            executionCallback = null;
+            executionCallback.Invoke();
+            // executionCallback = null;
         }
     }
 }

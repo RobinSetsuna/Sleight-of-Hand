@@ -326,15 +326,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionRound: 1
   maxSpeed: 2
-  initialActionPoint: 2
+  initialActionPoint: 6
   initialHealth: 100
   movable: 1
   modelHolder: {fileID: 1801817489718384}
   jumpHeight: 0.25
   jumpsPerMove: 1
   speed: 0
-  destination: {x: 0, y: 0, z: 0}
-  unitName: 
   ID: 0
   detection_range: 3
   attack_range: 1
