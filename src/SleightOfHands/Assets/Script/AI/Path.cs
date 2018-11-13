@@ -133,6 +133,11 @@ public class Path<T> : IEquatable<Path<T>>, IEnumerable<T> where T : IEquatable<
 
         return current.Value;
     }
+    
+    public T GetSecond()
+    {
+        return wayPoints.First.Next.Value;
+    }
 
     public T MoveBackward()
     {

@@ -205,7 +205,6 @@ public class Enemy : Unit
                         yield return new WaitForSeconds(1.5f);
                         newRound = false;
                      }
-
                     Tile playerTile = GridManager.Instance.GetTile(Player.transform.position);
                     Tile finalDes = NearPosition(playerTile, enemyTile);
                     if (finalDes == null)
@@ -213,7 +212,11 @@ public class Enemy : Unit
                         LevelManager.Instance.EndEnvironmentActionPhase();
                         yield break;
                     }
+                    // --------------------------------------------------------------------------------------------------------------------
+                    // this code used as a temp solution, must change the actionManager to remove the NAN Movement action
+                    finalDes = Navigation.FindPath(GridManager.Instance, enemyTile, finalDes, GridManager.Instance.IsWalkable).GetSecond();
                     Path = Navigation.FindPath(GridManager.Instance, enemyTile, finalDes, GridManager.Instance.IsWalkable);
+                    // --------------------------------------------------------------------------------------------------------------------
                     break;
                 case EnemyDetectionState.Normal:
                     if (pathList.Count==0)
@@ -226,14 +229,14 @@ public class Enemy : Unit
                         newRound = false;
                     }
                     var enemyPos = enemyTile.gridPosition;
-                    if (pathList.Exists(node=>node.x==enemyPos.x&&node.y== enemyPos.y))
-                    {
+                    if (pathList.Exists(node=>node.x==enemyPos.x&&node.y== enemyPos.y)){
                     //var current = pathList.FindIndex(node => node.x == enemyPos.x && node.y == enemyPos.y);
                         var current = nextPosIndex;
                         int destinationIndex = current + 1;
                         if (destinationIndex >= pathList.Count) destinationIndex = 0;
                         nextPosIndex = destinationIndex;
                         Tile destination = GridManager.Instance.GetTile(pathList[destinationIndex]);
+                        destination = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable).GetSecond();
                         Path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);
                     }
                     else
@@ -245,6 +248,27 @@ public class Enemy : Unit
                 case EnemyDetectionState.Doubt:
                     // currently not use doubt status
                    // Debug.Log("Doubt status, the code should never trigger this.");
+                    int x = Random.Range(-1, 1);
+                    int y = Random.Range(-1, 1);
+                    while (Mathf.Abs(x) + Mathf.Abs(y) > 1)
+                    {
+                        x = Random.Range(-1, 1);
+                        y = Random.Range(-1, 1);
+                    }
+                    int temp_x = enemyTile.x - 1;
+                    int temp_y = enemyTile.y + 0;
+                    if (GridManager.Instance.HasUnitOn(temp_x, temp_y) ||
+                        !GridManager.Instance.IsAccessible(temp_x, temp_y))
+                    {
+                        // Oops, no movement
+                        path = null;
+                        LevelManager.Instance.EndEnvironmentActionPhase();
+                    }
+                    else
+                    {
+                        Tile destination = GridManager.Instance.GetTile(temp_x, temp_y);
+                        Path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);
+                    }
                     break;
         }
 
@@ -309,9 +333,18 @@ public class Enemy : Unit
             previousState = currentDetectionState;
             yield return new WaitForSeconds(1f);
         }
-        ActionManager.Singleton.Reset();
-        CurrentEnemyState = EnemyMoveState.Idle;
-        yield return null;
+
+        if (previousState == EnemyDetectionState.Doubt)
+        {
+            LevelManager.Instance.EndEnvironmentActionPhase();
+            yield return null;
+        }
+        else
+        {
+            ActionManager.Singleton.Reset();
+            CurrentEnemyState = EnemyMoveState.Idle;
+            yield return null;
+        }
     }
 
     /// <summary>
