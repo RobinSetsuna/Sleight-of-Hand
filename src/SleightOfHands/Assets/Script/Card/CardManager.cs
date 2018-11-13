@@ -20,19 +20,15 @@ public class CardManager : MonoBehaviour
     public EventOnDataUpdate<Effects> OnAttributesChangeOnEffects = new EventOnDataUpdate<Effects>();
 
     public CardDeck deck;
-    public List<Card> usedCards;
     public List<Card> hand = new List<Card>();
+
+    public List<Card> usedCards;
+
     private CardData InEffect;
     public string deckFolderPath;
     public string deckFilename;
 
     public GameObject Player { get; private set; }
-
-    //gameobject
-    public GameObject smokeObject;
-    public GameObject GlueObject;
-
-    int rdNumLast = -1;
 
     // Update is called once per frame
     //void Update()
@@ -118,7 +114,7 @@ public class CardManager : MonoBehaviour
     //    OnAttributesChangeOnEffects.Invoke(effects);
     //}
 
-    public void InitCardDeck()
+    public void Initialize()
     {
         //string jsonPath = Path.Combine(Application.streamingAssetsPath, deckFolderPath);
         //jsonPath = Path.Combine(jsonPath, deckFilename + ".json");
@@ -131,74 +127,75 @@ public class CardManager : MonoBehaviour
         //    Debug.Log("null");
 
         deck = new CardDeck(new int[3] { 0, 1, 2 });
+        hand.Clear();
 
         //foreach (Card card in deck)
         //    LogUtility.PrintLogFormat("CardManager", card.Data.ToString());
     }
 
-    private Tile GetPlayerTile()
-    {
-        return GridManager.Instance.GetTile(GameObject.FindGameObjectWithTag("Player").transform.position);
-    }
+    //private Tile GetPlayerTile()
+    //{
+    //    return GridManager.Instance.GetTile(GameObject.FindGameObjectWithTag("Player").transform.position);
+    //}
 
-    private void HandToUsed(Card card)
-    {
-        usedCards.Add(card);
-        hand.Remove(card);
+    //private void HandToUsed(Card card)
+    //{
+    //    usedCards.Add(card);
+    //    hand.Remove(card);
 
-        onHandChange.Invoke(ChangeType.Decremental, card);
-    }
+    //    onHandChange.Invoke(ChangeType.Decremental, card);
+    //}
 
 
-    void UseStrategyCard(int cardID)
-    {
-        var card = TableDataManager.Singleton.GetCardData(cardID);
-        InEffect = card;
-        //1. hightlight all the possible tile              
-        GridManager.Instance.Highlight(GetPlayerTile(), card.Range, Tile.HighlightColor.Green);
+    //void UseStrategyCard(int cardID)
+    //{
+    //    var card = TableDataManager.Singleton.GetCardData(cardID);
+    //    InEffect = card;
+    //    //1. hightlight all the possible tile              
+    //    GridManager.Instance.Highlight(GetPlayerTile(), card.Range, Tile.HighlightColor.Green);
         
-        //3. create a smoke on the tile when mouse click
-        MouseInputManager.Singleton.onMouseClick.AddListener(HandleClick);
-    }
+    //    //3. create a smoke on the tile when mouse click
+    //    MouseInputManager.Singleton.onMouseClick.AddListener(HandleClick);
+    //}
 
-    void HandleClick(MouseInteractable obj)
-    {
+    //void HandleClick(MouseInteractable obj)
+    //{
         
-        if (obj.GetComponent<Tile>().IsHighlighted(Tile.HighlightColor.Green))
-        {
-            var pos = obj.GetComponent<Tile>().transform.position;
-            switch (InEffect.Name)
-            {
-                case "Smoke":
-                    var smoke = Instantiate(smokeObject, pos, Quaternion.identity);
-                    smoke.AddComponent<Smoke>();
-                    break;
-                case "Glue":
-                    var Glue = Instantiate(GlueObject, pos, Quaternion.identity);
-                    Glue.AddComponent<Glue>();
-                    break;
-            }
+    //    if (obj.GetComponent<Tile>().IsHighlighted(Tile.HighlightColor.Green))
+    //    {
+    //        var pos = obj.GetComponent<Tile>().transform.position;
+    //        switch (InEffect.Name)
+    //        {
+    //            case "Smoke":
+    //                var smoke = Instantiate(smokeObject, pos, Quaternion.identity);
+    //                smoke.AddComponent<Smoke>();
+    //                break;
+    //            case "Glue":
+    //                var Glue = Instantiate(GlueObject, pos, Quaternion.identity);
+    //                Glue.AddComponent<Glue>();
+    //                break;
+    //        }
 
-            MouseInputManager.Singleton.onMouseClick.RemoveListener(HandleClick);
-            GridManager.Instance.DehighlightAll();
-        }
-    }
+    //        MouseInputManager.Singleton.onMouseClick.RemoveListener(HandleClick);
+    //        GridManager.Instance.DehighlightAll();
+    //    }
+    //}
 
-    void ChestKey()
-    {
-        GameObject[] chests = GameObject.FindGameObjectsWithTag("Player");
-        //1. find out which chest the player is close to
-        for (int i = 0; i < chests.Length; i++)
-        {
-            Vector3 chestPos = new Vector3(chests[i].transform.position.x, chests[i].transform.position.y, chests[i].transform.position.z);
-            Tile chestTile = GridManager.Instance.GetTile(chestPos);
-            if (GridManager.Instance.IsAdjacent(chestTile, GetPlayerTile()))
-            {
-                //2. open the chest
-                chests[i].GetComponent<Chest>().isOpen = true;
-            }
-        }
-    }
+    //void ChestKey()
+    //{
+    //    GameObject[] chests = GameObject.FindGameObjectsWithTag("Player");
+    //    //1. find out which chest the player is close to
+    //    for (int i = 0; i < chests.Length; i++)
+    //    {
+    //        Vector3 chestPos = new Vector3(chests[i].transform.position.x, chests[i].transform.position.y, chests[i].transform.position.z);
+    //        Tile chestTile = GridManager.Instance.GetTile(chestPos);
+    //        if (GridManager.Instance.IsAdjacent(chestTile, GetPlayerTile()))
+    //        {
+    //            //2. open the chest
+    //            chests[i].GetComponent<Chest>().isOpen = true;
+    //        }
+    //    }
+    //}
 }
 
 //[System.Serializable]

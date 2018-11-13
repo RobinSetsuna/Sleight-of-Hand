@@ -69,6 +69,14 @@ public abstract class Unit : InLevelObject
         }
     }
 
+    public int Hp
+    {
+        get
+        {
+            return Mathf.RoundToInt(Statistics[StatisticType.Hp]);
+        }
+    }
+
     public float Health { get; protected set; }
     public bool movable = true;
 

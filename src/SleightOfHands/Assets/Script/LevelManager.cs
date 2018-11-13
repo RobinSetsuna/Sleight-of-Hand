@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -144,8 +143,10 @@ public class LevelManager : MonoBehaviour
 
     public string levelFolderPath;
     public string levelFilename;
+
     //EnemyList
-    public List<Enemy> Enemies;
+    public List<Enemy> Enemies = new List<Enemy>();
+
     //Card related
     public GameObject Smoke;
     public GameObject Haste;
@@ -167,16 +168,29 @@ public class LevelManager : MonoBehaviour
     public void StartLevel(string level)
     {
         LoadLevel(level);
-        SpawnEntities();
+        
+        InitializeLevel();
+
         GridManager.Instance.Initialize();
 
-        CardManager.Instance.InitCardDeck();
+        UIManager.Singleton.Open("HUD", UIManager.UIMode.PERMANENT);
+    }
+
+    public void Restart()
+    {
+        InitializeLevel();
+        UIManager.Singleton.ForceUpdate("HUD");
+    }
+
+    private void InitializeLevel()
+    {
+        SpawnEntities();
+
+        CardManager.Instance.Initialize();
         CardManager.Instance.RandomGetCard(3);
 
         RoundNumber = 0;
         CurrentPhase = Phase.Start;
-
-        UIManager.Singleton.Open("HUD", UIManager.UIMode.PERMANENT);
     }
 
     internal void EndPlayerActionPhase()
@@ -184,22 +198,36 @@ public class LevelManager : MonoBehaviour
         if (CurrentPhase == Phase.Action && CurrentRound == Round.Player)
             CurrentPhase = Phase.End;
     }
+
     internal void EndEnvironmentActionPhase()
     {
         if (CurrentPhase == Phase.Action && CurrentRound == Round.Environment)
             CurrentPhase = Phase.End;
     }
+
     internal void StartEnvironmentActionPhase()
     {
         if (CurrentPhase == Phase.Start && CurrentRound == Round.Environment)
             CurrentPhase = Phase.Action;
     }
+
     internal void StartNextPhaseTurn()
     {
         if (CurrentPhase == Phase.End)
             CurrentPhase = Phase.Start;
     }
 
+    bool isRestartButtonDown = false;
+    void Update()
+    {
+        if (!Input.GetKeyDown("1"))
+            isRestartButtonDown = false;
+        else if (!isRestartButtonDown)
+        {
+            isRestartButtonDown = true;
+            Restart();
+        }
+    }
 
     private void LoadLevel(string levelFilename)
     {
@@ -216,16 +244,27 @@ public class LevelManager : MonoBehaviour
 
     private void SpawnEntities()
     {
-        Enemies = new List<Enemy>();
-        //int index = 0;
-        foreach (SpawnData spawnData in currentLevel.spawns) {
-            Vector3 spawnPosition = GridManager.Instance.GetWorldPosition(spawnData.position.x, spawnData.position.y) + new Vector3(0, 1, 0);
+        if (Player)
+            Destroy(Player.gameObject);
 
+        foreach (Enemy enemy in Enemies)
+            Destroy(enemy.gameObject);
+
+        Enemies.Clear();
+
+        foreach (SpawnData spawnData in currentLevel.spawns)
+        {
+            Vector3 spawnPosition = GridManager.Instance.GetWorldPosition(spawnData.position.x, spawnData.position.y) + new Vector3(0, 1, 0);
             Quaternion spawnRotation = Quaternion.identity;
+            
             string heading = spawnData.GetSetting("heading");
-            if (heading != null) {
+
+            if (heading != null)
+            {
                 float yRot = 0;
-                switch (heading) {
+
+                switch (heading)
+                {
                     case "north":
                         yRot = 0;
                         break;
@@ -239,32 +278,27 @@ public class LevelManager : MonoBehaviour
                         yRot = 180;
                         break;
                 }
+
                 spawnRotation = Quaternion.Euler(0, yRot, 0);
             }
 
-            switch (spawnData.SpawnType) {
-
+            switch (spawnData.SpawnType)
+            {
                 case SpawnData.Type.Player:
                     Player = GridManager.Instance.Spawn(ResourceUtility.GetPrefab<player>("player_temp"), spawnPosition, spawnRotation); //Instantiate(ResourceUtility.GetPrefab<player>("player_temp"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
-                    // Player.GetComponent<player>().initializeEventListener();
-                    GameObject.FindGameObjectWithTag("Player").AddComponent<Effects>();
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<Effects>().SetOwner("Player");
+                    Player.onAttributeChange.AddListener(HandlePlayerAttributeChange);
                     break;
 
                 case SpawnData.Type.Guard:
-                    var temp = GridManager.Instance.Spawn(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation); //Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
-                    temp.AddComponent<Effects>();
-                    temp.GetComponent<Effects>().SetOwner("Enemy");
-                    temp.tag = "Enemy";
-                    temp.GetComponent<Enemy>().setPathList(spawnData.GetPath());
-                    temp.GetComponent<Enemy>().SetDetectionState(EnemyDetectionState.Normal); // set default detection state
-//                    temp.ID = index;
-//                    index++;
-                    Enemies.Add(temp.GetComponent<Enemy>());
+                    Enemy enemy = GridManager.Instance.Spawn(ResourceUtility.GetPrefab<Enemy>("GuardDummy"), spawnPosition, spawnRotation); //Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
+                    enemy.tag = "Enemy";
+                    enemy.setPathList(spawnData.GetPath());
+                    enemy.SetDetectionState(EnemyDetectionState.Normal); // set default detection state
+                    Enemies.Add(enemy);
                     break;
             }
-
         }
+
         EnemyManager.Instance.setEnemies(Enemies);
     } 
 
@@ -277,6 +311,14 @@ public class LevelManager : MonoBehaviour
     public void RemoveEnemy(Enemy obj)
     {
         Enemies.Remove(obj);
+    }
+
+    private void HandlePlayerAttributeChange(StatisticType statistic, float previousValue, float currentValue)
+    {
+        if (statistic == StatisticType.Hp && currentValue <= 0)
+        {
+
+        }
     }
 
     [System.Serializable]

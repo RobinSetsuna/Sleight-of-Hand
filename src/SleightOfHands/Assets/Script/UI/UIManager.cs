@@ -88,6 +88,12 @@ public class UIManager : MonoBehaviour
         return uiWindow;
     }
 
+    public void ForceUpdate(string name)
+    {
+        if (IsInViewport(name))
+            uiWindowsOpened[name].UpdateAll();
+    }
+
     /// <summary>
     /// Close a previously opened UI window
     /// </summary>
