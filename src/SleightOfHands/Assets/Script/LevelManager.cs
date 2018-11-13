@@ -155,8 +155,7 @@ public class LevelManager : MonoBehaviour
     float canvasHeight;
     int cardsNumberOnCanvas = 0;
 
-    [SerializeField]
-    private LevelData currentLevel;
+    [SerializeField] private LevelData currentLevel;
     public LevelData CurrentLevel
     {
         get
@@ -172,15 +171,13 @@ public class LevelManager : MonoBehaviour
         GridManager.Instance.Initialize();
 
         CardManager.Instance.InitCardDeck();
-        CardManager.Instance.RandomGetCard();
-       // CardManager.Instance.RandomGetCard();
-        //Debug.LogCardManager.Instance.RandomGetCard();
+        CardManager.Instance.RandomGetCard(3);
+
         RoundNumber = 0;
         CurrentPhase = Phase.Start;
 
         UIManager.Singleton.Open("HUD", UIManager.UIMode.PERMANENT);
     }
-   
 
     internal void EndPlayerActionPhase()
     {
@@ -248,15 +245,14 @@ public class LevelManager : MonoBehaviour
             switch (spawnData.SpawnType) {
 
                 case SpawnData.Type.Player:
-                    Player = Instantiate(ResourceUtility.GetPrefab<player>("player_temp"), spawnPosition, spawnRotation, GridManager.Instance.environmentHolder);
+                    Player = GridManager.Instance.Spawn(ResourceUtility.GetPrefab<player>("player_temp"), spawnPosition, spawnRotation); //Instantiate(ResourceUtility.GetPrefab<player>("player_temp"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
                     // Player.GetComponent<player>().initializeEventListener();
                     GameObject.FindGameObjectWithTag("Player").AddComponent<Effects>();
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Effects>().SetOwner("Player");
                     break;
 
                 case SpawnData.Type.Guard:
-                    var temp = Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation,
-                        GridManager.Instance.environmentHolder);
+                    var temp = GridManager.Instance.Spawn(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation); //Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
                     temp.AddComponent<Effects>();
                     temp.GetComponent<Effects>().SetOwner("Enemy");
                     temp.tag = "Enemy";
@@ -266,7 +262,6 @@ public class LevelManager : MonoBehaviour
 //                    index++;
                     Enemies.Add(temp.GetComponent<Enemy>());
                     break;
-
             }
 
         }
@@ -295,6 +290,17 @@ public class LevelManager : MonoBehaviour
         public static LevelData CreateFromJSON(string jsonFile) {
             LevelData levelInfo = JsonUtility.FromJson<LevelData>(jsonFile);
             return levelInfo;
+        }
+
+        public int GetTile(int x, int y) {
+            int i = x + y * width;
+            return tiles[i];
+        }
+
+        public Vector2Int GetSize() {
+            int height = (tiles.Length / width);
+            if (tiles.Length % width != 0) height++;
+            return new Vector2Int(width, height);
         }
 
     }

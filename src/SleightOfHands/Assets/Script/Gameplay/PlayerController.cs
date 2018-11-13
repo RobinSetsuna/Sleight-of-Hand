@@ -118,13 +118,23 @@ public class PlayerController : MouseInteractable
                 {
                     case PlayerState.Uncontrollable:
                         Path = null;
+                        cardToUse = null;
                         Disable();
                         break;
 
                     case PlayerState.Idle:
+                        
                         CameraManager.Instance.UnboundCameraFollow();
-                        if (previousPlayerState == PlayerState.MovementPlanning)
-                            Path = null;
+                        switch (previousPlayerState)
+                        {
+                            case PlayerState.MovementPlanning:
+                                Path = null;
+                                break;
+
+                            case PlayerState.CardUsagePlanning:
+                                CardToUse = null;
+                                break;
+                        }
                         break;
 
                     case PlayerState.MovementPlanning:
@@ -150,6 +160,13 @@ public class PlayerController : MouseInteractable
                         Vector3 tileCenterCard = GridManager.Instance.GetWorldPosition(targetTile);
                         tileCenterCard.y += GridManager.Instance.TileSize;
                         UIManager.Singleton.Open("ListMenu", UIManager.UIMode.DEFAULT, UIManager.Singleton.GetCanvasPosition(Camera.main.WorldToScreenPoint(tileCenterCard)), "USE", (UnityAction)UseCard, "CANCEL", (UnityAction)ResetCardUsage);
+                        break;
+
+                    case PlayerState.UseCard:
+                        ActionManager.Singleton.AddBack(new CardUsage(Player, cardToUse, targetTile));
+                        CardManager.Instance.RemoveCard(cardToUse);
+                        CardToUse = null;
+                        ActionManager.Singleton.Execute(ResetToIdle);
                         break;
                 }
 
@@ -258,10 +275,7 @@ public class PlayerController : MouseInteractable
 
     private void UseCard()
     {
-        ActionManager.Singleton.AddBack(new CardUsage(Player, cardToUse, targetTile));
-        ActionManager.Singleton.Execute(ResetToIdle);
-
-        CardToUse = null;
+        CurrentPlayerState = PlayerState.UseCard;
     }
 
     /// <summary>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -29,6 +30,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     [SerializeField] private GameObject[] wallPrefabs;
     [SerializeField] private GameObject[] roadTilePrefabs;
     [SerializeField] private GameObject[] environmentTilePrefabs;
+    [SerializeField] private TilesetElement[] tilesetElements;
     [SerializeField] private Vector2Int mapSize;
     [SerializeField] [Range(0,1)] private float outlinePercent;
 
@@ -48,10 +50,17 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     //public Tile[] generatedPath;
     //private int action_point;
 
-    private Transform root;
+    private Transform gridRoot;
 
     [Header("References")]
-    public Transform environmentHolder;
+    [SerializeField] private Transform environmentRoot;
+    public Transform EnvironmentRoot
+    {
+        get
+        {
+            return environmentRoot;
+        }
+    }
 
     public int Length
     {
@@ -251,13 +260,19 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// </summary>
     public void GenerateMap(LevelManager.LevelData levelData)
     {
-        if (!root)
-            root = transform.Find("GridRoot");
+        if (!gridRoot)
+            gridRoot = transform.Find("GridRoot");
 
-        if (!root)
+        if (!gridRoot)
         {
-            root = new GameObject("GridRoot").transform;
-            root.parent = transform;
+            gridRoot = new GameObject("GridRoot").transform;
+            gridRoot.parent = transform;
+        }
+
+        // Setup tilesets
+        Dictionary<int, TilesetElement> tElements = new Dictionary<int, TilesetElement>();
+        foreach (TilesetElement te in tilesetElements) {
+            tElements.Add(te.id, te);
         }
 
         // Extract data from levelData
@@ -268,69 +283,221 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         grid = new Tile[mapSize.x, mapSize.y];
         units = new Unit[mapSize.x, mapSize.y];
 
-        int numExistedTiles = root.childCount;
+        int numExistedTiles = gridRoot.childCount;
 
         for (int x = 0; x < mapSize.x; x ++)
             for (int y = 0; y < mapSize.y; y ++)
             {
-                int i = x + y * Length;
-                int tileType = levelData.tiles[i];
+                int i = x + y * levelData.tiles.Length;
+                int tileType = levelData.GetTile(x, y);
+                TilesetElement te;
+                tElements.TryGetValue(tileType, out te);
+
                 // parse position for tile
-                // Vector3 tilePosition = new Vector3(-mapSize.x/2 +nodeRadius + x + transform.position.x, 2, -mapSize.y/2 + nodeRadius + y + transform.position.z);
                 Vector3 tilePosition = GetWorldPosition(x, y);
 
-                Transform tileTransform = i < numExistedTiles ? root.GetChild(i) : Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right * 90), root);
+                Transform tileTransform = i < numExistedTiles ? gridRoot.GetChild(i) : Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right * 90), gridRoot);
 
                 // initiate outline
                 tileTransform.localScale = Vector3.one * (1 - outlinePercent);
 
                 // set tile value
                 Tile tile = tileTransform.GetComponent<Tile>();
-                tile.walkable = tileType == 0;
+                tile.walkable = (te != null ? te.walkable : true);
                 tile.gridPosition = new Vector2Int(x, y);
                 
                 // insertion
                 grid[x,y] = tile;
-                Vector3 envTilePosition = tilePosition;
-                envTilePosition.y = -0.55f;
-                if(tileType < 0 )
+
+                // Tile display
+                if (te != null)
                 {
-                    // tileType < 0, road tile add
-                    Quaternion roadTileRotation = Quaternion.Euler(0,0, 0);
-                    Instantiate(roadTilePrefabs[-tileType-1], envTilePosition, roadTileRotation, environmentHolder);
-                }
-                else
-                {
-                    Quaternion envTileRotation = Quaternion.Euler(0, Random.Range(0, 3) * 90f, 0);
-                    int envTileIndex = Random.Range(0, environmentTilePrefabs.Length);
-                    GameObject envTilePrefab = environmentTilePrefabs[envTileIndex];
-                    Instantiate(envTilePrefab, envTilePosition, envTileRotation, environmentHolder);
-                    if (tileType != 0&& tileType>0)
-                    {
-                        Quaternion wallRotation = Quaternion.Euler(0, Random.Range(0, 3) * 90f, 0);
-                        Instantiate(wallPrefabs[tileType - 1], tilePosition, wallRotation, environmentHolder);
+                    Tileset.TileCollection tileCollection = null;
+                    float envTileRotation;
+                    GetEnvTileType(levelData, x, y, te.tileset, out tileCollection, out envTileRotation);
+                    if (tileCollection.objects.Length == 0) tileCollection = te.tileset.fallback;
+
+                    GameObject envTilePrefab = tileCollection.GetRandom();
+                    if (envTilePrefab == null) {
+                        envTilePrefab = te.tileset.fallback.GetRandom();
                     }
+                    Vector3 envTilePosition = tilePosition;
+                    envTilePosition.y = -0.55f;
+
+                    Spawn(envTilePrefab, envTilePosition, Quaternion.Euler(0, envTileRotation, 0));
                 }
-                #region ORIGINAL_SWITCH_STATE
-//                switch (tileType)
-                   //                {
-                   //                    case 1:
-                   //                        Quaternion wallRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
-                   //                        int wallTileIndex = UnityEngine.Random.Range(0, wallPrefabs.Length);
-                   //                        Instantiate(wallPrefabs[wallTileIndex], tilePosition, wallRotation, environmentHolder);
-                   //                        goto case 0;
-                   //
-                   //                    case 0:
-                   //                        Vector3 envTilePosition = tilePosition;
-                   //                        envTilePosition.y = -0.55f;
-                   //                        Quaternion envTileRotation = Quaternion.Euler(0, (float)UnityEngine.Random.Range(0, 3) * 90f, 0);
-                   //                        int envTileIndex = UnityEngine.Random.Range(0, environmentTilePrefabs.Length);
-                   //                        GameObject envTilePrefab = environmentTilePrefabs[envTileIndex];
-                   //                        Instantiate(envTilePrefab, envTilePosition, envTileRotation, environmentHolder);
-                   //                        break;
-                   //                }
-                #endregion
             }
+    }
+
+    private void GetEnvTileType(LevelManager.LevelData levelData, int x, int y, Tileset tileset, out Tileset.TileCollection tileCollection, out float rotation) {
+
+        tileCollection = tileset.fallback;
+        rotation = 0;
+
+        // True = same :: False = not same
+        bool up = false;
+        bool down = false;
+        bool left = false;
+        bool right = false;
+
+        Vector2Int size = levelData.GetSize();
+        int value = levelData.GetTile(x, y);
+
+        if (y > 0 && levelData.GetTile(x, y - 1) == value) {
+            up = true;
+        }
+
+        if (y < mapSize.y - 1 && levelData.GetTile(x, y + 1) == value) {
+            down = true;
+        }
+
+        if (x > 0 && levelData.GetTile(x - 1, y) == value) {
+            left = true;
+        }
+
+        if (x < mapSize.x - 1 && levelData.GetTile(x + 1, y) == value) {
+            right = true;
+        }
+
+        bool upleft = false;
+        bool upright = false;
+        bool downleft = false;
+        bool downright = false;
+
+        if (up && left && levelData.GetTile(x - 1, y - 1) == value) {
+            upleft = true;
+        }
+
+        if (up && right && levelData.GetTile(x + 1,y - 1) == value) {
+            upright = true;
+        }
+
+        if (down && left && levelData.GetTile(x - 1, y + 1) == value) {
+            downleft = true;
+        }
+
+        if (down && right && levelData.GetTile(x + 1, y + 1) == value) {
+            downright = true;
+        }
+
+        if (up && down && left && right) {
+            tileCollection = tileset.surrounded;
+            rotation = 0;
+            if (!upleft) {
+                tileCollection = tileset.surrounded1;
+                rotation = 180;
+            } else if (!upright) {
+                tileCollection = tileset.surrounded1;
+                rotation = 90;
+            } else if (!downright) {
+                tileCollection = tileset.surrounded1;
+                rotation = 0;
+            } else if (!downleft) {
+                tileCollection = tileset.surrounded1;
+                rotation = 270;
+            }
+            if (tileCollection.objects.Length == 0) {
+                tileCollection = tileset.surrounded;
+                rotation = 0;
+            }
+        } else if (left && up && right) {
+            if (upleft && upright) {
+                tileCollection = tileset.tFill;
+            } else if (upleft) {
+                tileCollection = tileset.tFillRight;
+            } else if (upright) {
+                tileCollection = tileset.tFillLeft;
+            } else {
+                tileCollection = tileset.t;
+            }
+            rotation = 0;
+        } else if (up && right && down) {
+            if (upright && downright) {
+                tileCollection = tileset.tFill;
+            } else if (upright) {
+                tileCollection = tileset.tFillRight;
+            } else if (downright) {
+                tileCollection = tileset.tFillLeft;
+            } else {
+                tileCollection = tileset.t;
+            }
+            rotation = 270;
+        } else if (right && down && left) {
+            if (downright && downleft) {
+                tileCollection = tileset.tFill;
+            } else if (downright) {
+                tileCollection = tileset.tFillRight;
+            } else if (downleft) {
+                tileCollection = tileset.tFillLeft;
+            } else {
+                tileCollection = tileset.t;
+            }
+            rotation = 180;
+        } else if (down && left && up) {
+            if (downleft && upleft) {
+                tileCollection = tileset.tFill;
+            } else if (downleft) {
+                tileCollection = tileset.tFillRight;
+            } else if (upleft) {
+                tileCollection = tileset.tFillLeft;
+            } else {
+                tileCollection = tileset.t;
+            }
+            rotation = 90;
+        } else if (up && down) {
+            tileCollection = tileset.straight;
+            rotation = 90;
+        } else if (left && right) {
+            tileCollection = tileset.straight;
+            rotation = 0;
+        } else if (up && right) {
+            if (upright) {
+                tileCollection = tileset.cornerFill;
+            } else {
+                tileCollection = tileset.corner;
+            }
+            rotation = 0;
+        } else if (right && down) {
+            if (downright) {
+                tileCollection = tileset.cornerFill;
+            } else {
+                tileCollection = tileset.corner;
+            }
+            rotation = 270;
+        } else if (down && left) {
+            if (downleft) {
+                tileCollection = tileset.cornerFill;
+            } else {
+                tileCollection = tileset.corner;
+            }
+            rotation = 180;
+        } else if (left && up) {
+            if (upleft) {
+                tileCollection = tileset.cornerFill;
+            } else {
+                tileCollection = tileset.corner;
+            }
+            rotation = 90;
+        } else if (up) {
+            tileCollection = tileset.peninsula;
+            rotation = 90;
+        } else if (right) {
+            tileCollection = tileset.peninsula;
+            rotation = 180;
+        } else if (down) {
+            tileCollection = tileset.peninsula;
+            rotation = 270;
+        } else if (left) {
+            tileCollection = tileset.peninsula;
+            rotation = 0;
+        }
+
+        // Fallback
+        if (tileCollection == null) {
+            tileCollection = tileset.fallback;
+            rotation = 0;
+        }
+
     }
 
     /// <summary>
@@ -344,6 +511,16 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         playerController.onCurrentPlayerStateChange.AddListener(HandleCurrentPlayerStateChange);
 
         playerController.onCardToUseUpdate.AddListener(HandleCardToUseChange);
+    }
+
+    public T Spawn<T>(T obj, Tile tile) where T : UnityEngine.Object
+    {
+        return Spawn(obj, GetWorldPosition(tile), Quaternion.identity);
+    }
+
+    public T Spawn<T>(T obj, Vector3 position, Quaternion rotation) where T : UnityEngine.Object
+    {
+        return Instantiate(obj, position, rotation, EnvironmentRoot);
     }
 
     //public void wipeTiles()
@@ -549,9 +726,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
     private void HandleCardToUseChange(Card cardToUse)
     {
-        // TODO: Change highlights according to card's range
         if (cardToUse != null)
-            Highlight(GetTile(LevelManager.Instance.Player.transform.position), Tile.HighlightColor.Green, false);
+            Highlight(GetTile(LevelManager.Instance.Player.transform.position), cardToUse.Data.Range, Tile.HighlightColor.Green, false);
         else
             DehighlightAll();
     }
@@ -566,12 +742,11 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         onUnitMove.Invoke(unit, previousGridPosition, currentGridPosition);
     }
 
-
-    /// <summary>
-    /// Find the cloest tile to target destination in a certain range, use for AI moving in Detected mode
-    /// </summary>
-    private void FindCloestTileToDes(Tile start, int range)
-    {
-
+    [Serializable]
+    public class TilesetElement {
+        public string name;
+        public int id;
+        public bool walkable;
+        public Tileset tileset;
     }
 }

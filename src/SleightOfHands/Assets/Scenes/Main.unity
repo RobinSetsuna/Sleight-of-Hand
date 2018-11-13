@@ -210,7 +210,7 @@ MonoBehaviour:
   deckFilename: test_deck
   smokeObject: {fileID: 1595472967320516, guid: debaed0b1b82b5b439a12bf731c5c867,
     type: 2}
-  GlueObject: {fileID: 1624584859440258, guid: 8a1fcaca756c0ea4f9ccf27c13b02a47, type: 2}
+  GlueObject: {fileID: 0}
 --- !u!4 &384315690
 Transform:
   m_ObjectHideFlags: 0
@@ -683,9 +683,18 @@ MonoBehaviour:
   - {fileID: 1060067950125124, guid: d76e344024dd11f4aa61c57f0c402f4d, type: 2}
   - {fileID: 1060067950125124, guid: d76e344024dd11f4aa61c57f0c402f4d, type: 2}
   - {fileID: 1060067950125124, guid: d76e344024dd11f4aa61c57f0c402f4d, type: 2}
+  tilesetElements:
+  - name: Base
+    id: 0
+    walkable: 1
+    tileset: {fileID: 11400000, guid: 43c35ca66ecd2f443a5a0936b7dfdb1f, type: 2}
+  - name: Walls
+    id: 1
+    walkable: 0
+    tileset: {fileID: 11400000, guid: 3438213ab3d22b746bc10eb13cad2c4c, type: 2}
   mapSize: {x: 20, y: 20}
   outlinePercent: 0.075
-  environmentHolder: {fileID: 1422179120}
+  environmentRoot: {fileID: 1422179120}
 --- !u!4 &1290799990
 Transform:
   m_ObjectHideFlags: 0
