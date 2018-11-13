@@ -85,12 +85,26 @@ public class EnemyManager : MonoBehaviour {
 				{
 					//all the enemy has moved
 					index = 0;
+					DehighlightAll();
 					CameraManager.Instance.CameraZoomOut();
 					LevelManager.Instance.NextRound();
 				}
 				CameraManager.Instance.UnboundCameraFollow();
 				LevelManager.Instance.StartNextPhaseTurn();
 				break;
+		}
+	}
+
+	public void DehighlightAll()
+	{
+		Enemy[] allEnemies = FindObjectsOfType<Enemy>();
+		foreach (Enemy enemy in allEnemies)
+		{
+			enemy.DetectionHighlighted = false;
+				foreach (Tile tile in enemy.RangeList)
+				{
+					tile.Dehighlight();
+				}
 		}
 	}
 

@@ -27,6 +27,17 @@ public class Enemy : Unit
 	private GameObject player;
 
 	private int counter = 0;
+    public int AttackRange
+    {
+        get
+        {
+            return attack_range;
+        }
+        set
+        {
+            attack_range = value;
+        }
+    }
     public int DetectionRange
     {
         get
@@ -38,8 +49,8 @@ public class Enemy : Unit
             detection_range = value;
         }
     }
-    private bool detection_highlighted = false;
-    private HashSet<Tile> rangeList;
+    public bool DetectionHighlighted = false;
+    public HashSet<Tile> RangeList;
     private List<Vector2Int> pathList;
     private int nextPosIndex;
     private bool newRound;
@@ -248,7 +259,6 @@ public class Enemy : Unit
             }
 
             Path = null;
-
             ActionManager.Singleton.Execute(ResetToIdle);
         }
     }
@@ -308,19 +318,19 @@ public class Enemy : Unit
     public void HighlightDetection()
     {
         // show the range to be detected
-        if (detection_highlighted)
+        if (DetectionHighlighted)
         {
-            foreach (Tile tile in rangeList)
+            foreach (Tile tile in RangeList)
             {
                 tile.Dehighlight();
             }
-            detection_highlighted = false;
+            DetectionHighlighted = false;
             Enemy[] allEnemies = FindObjectsOfType<Enemy>();
             foreach (Enemy enemy in allEnemies)
             {
-                if (enemy.detection_highlighted)
+                if (enemy.DetectionHighlighted)
                 {
-                    foreach (Tile tile in enemy.rangeList)
+                    foreach (Tile tile in enemy.RangeList)
                     {
                         tile.Highlight(Tile.HighlightColor.Red);
                     }
@@ -329,15 +339,17 @@ public class Enemy : Unit
         }
         else
         {
+            foreach (Tile tile in RangeList)
+            {
+                tile.Dehighlight();
+            }
             Tile current_tile = GridManager.Instance.GetTile(transform.position);
-            rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range, true, transform.rotation.eulerAngles.y);
-
-            GridManager.Instance.DehighlightAll();
-            foreach (Tile tile in rangeList)
+            RangeList = ProjectileManager.Instance.getProjectileRange(current_tile, DetectionRange, true, transform.rotation.eulerAngles.y);
+            foreach (Tile tile in RangeList)
             {
                 tile.Highlight(Tile.HighlightColor.Red);
             }
-            detection_highlighted = true;
+            DetectionHighlighted = true;
         }
     }
     /// <summary>
@@ -350,8 +362,8 @@ public class Enemy : Unit
         {
             if (currentDetectionState == EnemyDetectionState.Normal) {
                 Tile current_tile = GridManager.Instance.GetTile(transform.position);
-                rangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range, true, yRot);
-                if (rangeList.Contains(GridManager.Instance.GetTile(player.GetComponent<player>().GridPosition)))
+                RangeList = ProjectileManager.Instance.getProjectileRange(current_tile, detection_range, true, yRot);
+                if (RangeList.Contains(GridManager.Instance.GetTile(player.GetComponent<player>().GridPosition)))
                 {
                     //detected
 
