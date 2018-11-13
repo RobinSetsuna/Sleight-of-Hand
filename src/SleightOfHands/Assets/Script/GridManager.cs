@@ -47,10 +47,17 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     //public Tile[] generatedPath;
     //private int action_point;
 
-    private Transform root;
+    private Transform gridRoot;
 
     [Header("References")]
-    public Transform environmentHolder;
+    [SerializeField] private Transform environmentRoot;
+    public Transform EnvironmentRoot
+    {
+        get
+        {
+            return environmentRoot;
+        }
+    }
 
     public int Length
     {
@@ -250,13 +257,13 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// </summary>
     public void GenerateMap(LevelManager.LevelData levelData)
     {
-        if (!root)
-            root = transform.Find("GridRoot");
+        if (!gridRoot)
+            gridRoot = transform.Find("GridRoot");
 
-        if (!root)
+        if (!gridRoot)
         {
-            root = new GameObject("GridRoot").transform;
-            root.parent = transform;
+            gridRoot = new GameObject("GridRoot").transform;
+            gridRoot.parent = transform;
         }
 
         // Setup tilesets
@@ -273,7 +280,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         grid = new Tile[mapSize.x, mapSize.y];
         units = new Unit[mapSize.x, mapSize.y];
 
-        int numExistedTiles = root.childCount;
+        int numExistedTiles = gridRoot.childCount;
 
         for (int x = 0; x < mapSize.x; x ++)
             for (int y = 0; y < mapSize.y; y ++)
@@ -286,7 +293,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                 // parse position for tile
                 Vector3 tilePosition = GetWorldPosition(x, y);
 
-                Transform tileTransform = i < numExistedTiles ? root.GetChild(i) : Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right * 90), root);
+                Transform tileTransform = i < numExistedTiles ? gridRoot.GetChild(i) : Instantiate(tilePrefab, tilePosition, Quaternion.Euler(Vector3.right * 90), gridRoot);
 
                 // initiate outline
                 tileTransform.localScale = Vector3.one * (1 - outlinePercent);
@@ -300,8 +307,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                 grid[x,y] = tile;
 
                 // Tile display
-                if (te != null) {
-                    
+                if (te != null)
+                {
                     Tileset.TileCollection tileCollection = null;
                     float envTileRotation;
                     GetEnvTileType(levelData, x, y, te.tileset, out tileCollection, out envTileRotation);
@@ -313,11 +320,9 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                     }
                     Vector3 envTilePosition = tilePosition;
                     envTilePosition.y = -0.55f;
-
-                    Instantiate(envTilePrefab, envTilePosition, Quaternion.Euler(0, envTileRotation, 0), environmentHolder);
-
+                    
+                    Spawn(envTilePrefab, envTilePosition, Quaternion.Euler(0, envTileRotation, 0));
                 }
-                
             }
     }
 
@@ -503,6 +508,16 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         playerController.onCurrentPlayerStateChange.AddListener(HandleCurrentPlayerStateChange);
 
         playerController.onCardToUseUpdate.AddListener(HandleCardToUseChange);
+    }
+
+    public T Spawn<T>(T obj, Tile tile) where T : UnityEngine.Object
+    {
+        return Spawn(obj, GetWorldPosition(tile), Quaternion.identity);
+    }
+
+    public T Spawn<T>(T obj, Vector3 position, Quaternion rotation) where T : UnityEngine.Object
+    {
+        return Instantiate(obj, position, rotation, EnvironmentRoot);
     }
 
     //public void wipeTiles()
@@ -708,9 +723,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
     private void HandleCardToUseChange(Card cardToUse)
     {
-        // TODO: Change highlights according to card's range
         if (cardToUse != null)
-            Highlight(GetTile(LevelManager.Instance.Player.transform.position), Tile.HighlightColor.Green, false);
+            Highlight(GetTile(LevelManager.Instance.Player.transform.position), cardToUse.Data.Range, Tile.HighlightColor.Green, false);
         else
             DehighlightAll();
     }
@@ -725,14 +739,6 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         onUnitMove.Invoke(unit, previousGridPosition, currentGridPosition);
     }
 
-    /// <summary>
-    /// Find the cloest tile to target destination in a certain range, use for AI moving in Detected mode
-    /// </summary>
-    private void FindCloestTileToDes(Tile start, int range)
-    {
-
-    }
-
     [Serializable]
     public class TilesetElement {
         public string name;
@@ -740,5 +746,4 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         public bool walkable;
         public Tileset tileset;
     }
-
 }

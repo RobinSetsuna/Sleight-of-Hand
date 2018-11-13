@@ -251,7 +251,7 @@ public class CameraManager : MonoBehaviour
 	private IEnumerator Focus()
 	{
 		Camera cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-		Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+		Ray ray = cam.ViewportPointToRay(new Vector3(0.5F, 0.5F, 0));
 		RaycastHit hit;
 		if (Physics.Raycast(ray, out hit)){
 			//Debug.Log("I'm looking at " + hit.transform.name);

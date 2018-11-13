@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class UICard : UIWidget
 {
     [SerializeField] private Text title;
-    [SerializeField] private Image background;
+    [SerializeField] private Image template;
     [SerializeField] private Image illustration;
     [SerializeField] private Text description;
 
@@ -15,7 +15,7 @@ public class UICard : UIWidget
         Card = null;
 
         title.text = "";
-        background.sprite = null;
+        template.sprite = null;
         illustration.sprite = null;
         description.text = "";
     }
@@ -30,10 +30,12 @@ public class UICard : UIWidget
         // TODO: Load card information
         if (Card != null)
         {
-            title.text = Card.Data.Name;
-            background.sprite = ResourceUtility.GetCardBackground(Card.Data.Template);
-            //illustration.sprite = ResourceUtility.GetCardIllustration(0);
-            description.text = Card.Data.Description;
+            CardData cardData = Card.Data;
+
+            title.text = cardData.Name;
+            template.sprite = ResourceUtility.GetCardTemplate(cardData.Template);
+            illustration.sprite = ResourceUtility.GetCardIllustration(cardData.Illustration);
+            description.text = cardData.Description;
         }
     }
 }

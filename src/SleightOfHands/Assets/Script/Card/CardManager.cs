@@ -25,6 +25,7 @@ public class CardManager : MonoBehaviour
     private CardData InEffect;
     public string deckFolderPath;
     public string deckFilename;
+
     public GameObject Player { get; private set; }
 
     //gameobject
@@ -72,7 +73,7 @@ public class CardManager : MonoBehaviour
         ////delete the selected card from deck
         //deck.Remove(card);
 
-        foreach (Card card in deck.GetRandom(2))
+        foreach (Card card in deck.GetRandom(n))
             AddCard(card);
     }
 
@@ -91,6 +92,12 @@ public class CardManager : MonoBehaviour
     {
         hand.Add(card);
         onHandChange.Invoke(ChangeType.Incremental, card);
+    }
+
+    public void RemoveCard(Card card)
+    {
+        hand.Remove(card);
+        onHandChange.Invoke(ChangeType.Decremental, card);
     }
 
     //public void AddEffect(Card card, GameObject obj)
@@ -123,7 +130,7 @@ public class CardManager : MonoBehaviour
         //if (deck.cards == null)
         //    Debug.Log("null");
 
-        deck = new CardDeck(new int[2] { 1, 1 });
+        deck = new CardDeck(new int[3] { 0, 1, 2 });
 
         foreach (Card card in deck)
             LogUtility.PrintLogFormat("CardManager", card.Data.ToString());
@@ -153,6 +160,7 @@ public class CardManager : MonoBehaviour
         //3. create a smoke on the tile when mouse click
         MouseInputManager.Singleton.onMouseClick.AddListener(HandleClick);
     }
+
     void HandleClick(MouseInteractable obj)
     {
         
@@ -171,14 +179,10 @@ public class CardManager : MonoBehaviour
                     break;
             }
 
-
-            
             MouseInputManager.Singleton.onMouseClick.RemoveListener(HandleClick);
             GridManager.Instance.DehighlightAll();
         }
-        
     }
-
 
     void ChestKey()
     {
@@ -195,7 +199,6 @@ public class CardManager : MonoBehaviour
             }
         }
     }
-
 }
 
 //[System.Serializable]

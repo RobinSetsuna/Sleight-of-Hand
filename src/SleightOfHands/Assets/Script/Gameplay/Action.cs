@@ -1,4 +1,6 @@
-﻿/// <summary>
+﻿using UnityEngine;
+
+/// <summary>
 /// The base class for all in-game actions that units can have (e.g. movement, attack)
 /// </summary>
 public class Action
@@ -93,7 +95,7 @@ public class CardUsage : Action
         this.targetTile = targetTile;
     }
 
-    public void UseCard(System.Action callback)
+    private void UseCard(System.Action callback)
     {
         initiator.UseCard(card, targetTile, callback);
     }
@@ -117,7 +119,7 @@ public class StatusEffectApplication : Action
         this.target = target;
     }
 
-    public void ApplyStatusEffect(System.Action callback)
+    private void ApplyStatusEffect(System.Action callback)
     {
         target.AddStatusEffect(statusEffect);
         callback.Invoke();
@@ -126,5 +128,30 @@ public class StatusEffectApplication : Action
     override public string ToString()
     {
         return string.Format("Apply a status effect \"{0}\" on {1}.", statusEffect, target);
+    }
+}
+
+public class Casting : Action
+{
+    public readonly GameObject obj;
+    public readonly Tile targetTile;
+
+    public Casting(GameObject obj, Tile targetTile)
+    {
+        actionDelegate = Cast;
+
+        this.obj = obj;
+        this.targetTile = targetTile;
+    }
+
+    private void Cast(System.Action callback)
+    {
+        GridManager.Instance.Spawn(obj, targetTile);
+        callback.Invoke();
+    }
+
+    override public string ToString()
+    {
+        return string.Format("Cast a \"{0}\" on {1}.", obj, targetTile);
     }
 }

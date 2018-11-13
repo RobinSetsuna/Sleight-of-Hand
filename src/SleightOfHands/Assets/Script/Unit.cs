@@ -16,7 +16,6 @@ public abstract class Unit : InLevelObject
     public EventOnDataChange<Vector2Int> onGridPositionChange = new EventOnDataChange<Vector2Int>();
 
     public StatisticSystem.EventOnStatisticChange onAttributeChange;
-
     private Vector2Int gridPosition;
     public Vector2Int GridPosition
     {
@@ -109,6 +108,11 @@ public abstract class Unit : InLevelObject
             case "Enhancement":
                 string[] values = cardData.Effect.Split(':');
                 ActionManager.Singleton.AddFront(new StatusEffectApplication(new StatusEffect(int.Parse(values[0]), int.Parse(values[1])), GridManager.Instance.GetUnit(targetTile).Statistics));
+                callback.Invoke();
+                break;
+
+            case "Strategy":
+                ActionManager.Singleton.AddFront(new Casting(ResourceUtility.GetCardEffect(cardData.Effect), targetTile));
                 callback.Invoke();
                 break;
         }
