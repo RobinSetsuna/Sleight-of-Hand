@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour {
+public class EnemyManager : MonoBehaviour
+{
 	//EnemyList
 	public List<Enemy> Enemies;
+
 	private static EnemyManager instance;
 	public static EnemyManager Instance
 	{

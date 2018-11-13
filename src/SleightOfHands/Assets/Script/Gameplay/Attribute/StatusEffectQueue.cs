@@ -39,8 +39,10 @@ public class StatusEffectQueue : IAttributeGetter
         return current >= list.Count;
     }
 
-    public void Push(StatusEffect statusEffect)
+    public bool Push(StatusEffect statusEffect)
     {
+        bool result = false;
+
         int id = statusEffect.Id;
         if (map.ContainsKey(id))
         {
@@ -57,6 +59,8 @@ public class StatusEffectQueue : IAttributeGetter
 
                 foreach (KeyValuePair<int, float> attribute in existedStatusEffect)
                     sumAttributes.Add(attribute.Key, attribute.Value);
+
+                result = true;
             }
 
             if (needReposition)
@@ -76,7 +80,11 @@ public class StatusEffectQueue : IAttributeGetter
 
             foreach (KeyValuePair<int, float> attribute in statusEffect)
                 sumAttributes.Add(attribute.Key, attribute.Value);
+
+            result = true;
         }
+
+        return result;
     }
 
     public StatusEffect Top()
@@ -95,6 +103,30 @@ public class StatusEffectQueue : IAttributeGetter
 
         foreach (KeyValuePair<int, float> attribute in statusEffect)
             sumAttributes.Add(attribute.Key, -attribute.Value);
+
+        return statusEffect;
+    }
+
+    public void Remove(StatusEffect statusEffect)
+    {
+        int i = list.IndexOf(statusEffect);
+        list.RemoveAt(i);
+
+        if (i < current)
+            current--;
+    }
+
+    public StatusEffect Remove(int id)
+    {
+        StatusEffect statusEffect = null;
+
+        if (map.ContainsKey(id))
+        {
+            statusEffect = map[id];
+
+            Remove(statusEffect);
+            map.Remove(id);
+        }
 
         return statusEffect;
     }

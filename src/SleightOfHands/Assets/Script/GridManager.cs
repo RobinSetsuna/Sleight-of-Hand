@@ -150,6 +150,16 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     }
 
     /// <summary>
+    /// Get the grid position of a tile
+    /// </summary>
+    /// <param name="worldPosition"> The world position to concern </param>
+    /// <returns> A Vector2Int struct representing the grid position </returns>
+    public Vector2Int GetGridPosition(Vector3 worldPosition)
+    {
+        return GetTile(worldPosition).gridPosition;
+    }
+
+    /// <summary>
     /// Get the world position from a grid position
     /// </summary>
     /// <param name="x"> The x value of the grid position to concern </param>

@@ -10,8 +10,8 @@ public abstract class Unit : InLevelObject
 {
     [SerializeField] private Round actionRound;
     [SerializeField] private float maxSpeed;
-    [SerializeField] private int initialActionPoint;
-    [SerializeField] private int initialHealth = 100;
+    [SerializeField] protected int initialActionPoint;
+    [SerializeField] protected int initialHealth = 100;
 
     public EventOnDataChange<Vector2Int> onGridPositionChange = new EventOnDataChange<Vector2Int>();
 
@@ -65,6 +65,8 @@ public abstract class Unit : InLevelObject
 
     //public int ActionPoint { get; protected set; }
 
+    public StatisticSystem Statistics { get; protected set; }
+
     public int Ap
     {
         get
@@ -94,7 +96,7 @@ public abstract class Unit : InLevelObject
     private Vector3 start;
     private Vector3 destination;
 
-    public StatisticSystem Statistics { get; private set; }
+
 
     public void MoveTo(Vector3 destination, System.Action callback)
     {
@@ -142,7 +144,8 @@ public abstract class Unit : InLevelObject
         //        break;
         //}
 
-        Statistics = new StatisticSystem(new AttributeSet(AttributeType.Ap_i, (float)initialActionPoint, AttributeType.Hp_i, (float)initialHealth));
+        Statistics = new StatisticSystem(new AttributeSet(AttributeType.Ap_i, (float)initialActionPoint,
+                                                          AttributeType.Hp_i, (float)initialHealth));
         onAttributeChange = Statistics.onStatisticChange;
 
         // LevelManager.Instance.onNewTurnUpdateAttribute.AddListener(HandleAttributesChangeOnTurn);

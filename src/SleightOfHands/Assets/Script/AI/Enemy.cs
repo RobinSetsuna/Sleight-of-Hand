@@ -22,33 +22,27 @@ public class Enemy : Unit
     public int ID;
     public EventOnDataChange<EnemyMoveState> onCurrentEnemyStateChange = new EventOnDataChange<EnemyMoveState>();
 
-	[SerializeField]private int detectionRange;
-    [SerializeField]private int attackRange;
+	[SerializeField] private int detectionRange;
+    [SerializeField] private int attackRange;
     [SerializeField] private int attack = 100;
 
 	private player Player;
 
 	private int counter = 0;
+
     public int AttackRange
     {
         get
         {
-            return attackRange;
-        }
-        set
-        {
-            attackRange = value;
+            return Mathf.RoundToInt(Statistics[StatisticType.AttackRange]);
         }
     }
+
     public int DetectionRange
     {
         get
         {
-            return detectionRange;
-        }
-        set
-        {
-            detectionRange = value;
+            return Mathf.RoundToInt(Statistics[StatisticType.DetectionRange]);
         }
     }
     public bool DetectionHighlighted = false;
@@ -157,6 +151,11 @@ public class Enemy : Unit
     {
         base.Awake();
 
+        Statistics = new StatisticSystem(new AttributeSet(AttributeType.Ap_i, (float)initialActionPoint,
+                                                          AttributeType.Hp_i, (float)initialHealth,
+                                                          AttributeType.Dr_i, (float)detectionRange,
+                                                          AttributeType.Ar_i, (float)attackRange));
+
         Player = LevelManager.Instance.Player;
 
         LevelManager.Instance.onGameEnd.AddListener(StopAllCoroutines);
@@ -210,7 +209,7 @@ public class Enemy : Unit
                     if (finalDes == null)
                     {
                         LevelManager.Instance.EndEnvironmentActionPhase();
-                        yield return null;
+                        yield break;
                     }
                     Path = Navigation.FindPath(GridManager.Instance, enemyTile, finalDes, GridManager.Instance.IsWalkable);
                     break;
@@ -269,8 +268,8 @@ public class Enemy : Unit
     {
         Tile enemyTile = GridManager.Instance.GetTile(transform.position);
         Tile playerTile = GridManager.Instance.GetTile(Player.transform.position);
-        int distance = Mathf.Abs(enemyTile.x - playerTile.x) + Mathf.Abs(enemyTile.y - playerTile.y)  ;
-        return distance <= attackRange;
+        Debug.LogWarning(AttackRange);
+        return MathUtility.ManhattanDistance(enemyTile.x, enemyTile.y, playerTile.x, playerTile.y) <= AttackRange;
     }
 
     /// <summary>

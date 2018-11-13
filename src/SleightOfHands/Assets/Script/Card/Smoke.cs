@@ -1,69 +1,113 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class Smoke : MonoBehaviour {
-    int duration = 2;
-    int counter = 0;
-    int detectionRange = 3;
-	// Use this for initialization
-	void Start () {
-        LevelManager.Instance.onCurrentTurnChange.AddListener(HandleTimeOut);
-        CameraManager.Instance.FocusAt(this.transform.position);
+public class Smoke : MonoBehaviour
+{
+    [SerializeField] private int duration = 4;
+    [SerializeField] private int detectionRange = 3;
+
+    //private Vector2Int center;
+    //private HashSet<Enemy> enemies = new HashSet<Enemy>();
+
+	void Start ()
+    {
+        //center = GridManager.Instance.GetGridPosition(transform.position);
+
+        LevelManager.Instance.onRoundNumberChange.AddListener(HandleRoundNumberChange);
+
+        //GridManager.Instance.onUnitMove.AddListener(HandleUnitMove);
+        //CameraManager.Instance.FocusAt(transform.position);
     }
 	
 	// Update is called once per frame
-	void Update () {
-		if(GameObject.FindGameObjectsWithTag("Enemy") != null)
-        {
-            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach(GameObject obj in enemies)
-            {
-                Enemy enemy = obj.GetComponent<Enemy>();
-                if (CheckEnemy(obj))
-                {
-                    //StartCoroutine(Question(obj));
-                    if (enemy.CurrentDetectionState == EnemyDetectionState.Found)
-                    {
-                        EnemyManager.Instance.QuestionPop(obj.transform);
+	//void Update ()
+ //   {
+	//	if(GameObject.FindGameObjectsWithTag("Enemy") != null)
+ //       {
+ //           var enemies = GameObject.FindGameObjectsWithTag("Enemy");
+ //           foreach(GameObject obj in enemies)
+ //           {
+ //               Enemy enemy = obj.GetComponent<Enemy>();
+ //               if (CheckEnemy(obj))
+ //               {
+ //                   //StartCoroutine(Question(obj));
+ //                   if (enemy.CurrentDetectionState == EnemyDetectionState.Found)
+ //                   {
+ //                       EnemyManager.Instance.QuestionPop(obj.transform);
 
-                        enemy.DetectionRange = 0;
-                        enemy.SetDetectionState(EnemyDetectionState.Normal);
-                    }
-                }
-                else
-                {
-                        enemy.DetectionRange = 3;
-                }
-            }
-        }
-	}
+ //                       enemy.Statistics.AddStatusEffect(new StatusEffect(4, duration));
+ //                       enemy.SetDetectionState(EnemyDetectionState.Normal);
+ //                   }
+ //               }
+ //               else
+ //               {
+ //                       enemy.DetectionRange = 3;
+ //               }
+ //           }
+ //       }
+	//}
 
-    private bool CheckEnemy(GameObject obj)
+    //private bool CheckEnemy(GameObject obj)
+    //{
+    //    Tile enemyTile = GridManager.Instance.GetTile(obj.transform.position);
+    //    Tile smokeTile = GridManager.Instance.GetTile(transform.position);
+    //    if (MathUtility.ManhattanDistance(enemyTile.x, enemyTile.y, smokeTile.x, smokeTile.y) <= detectionRange)
+    //        return true;
+    //    else
+    //        return false;
+    //}
+
+    void HandleRoundNumberChange(int turn)
     {
-        Tile enemyTile = GridManager.Instance.GetTile(obj.transform.position);
-        Tile smokeTile = GridManager.Instance.GetTile(this.transform.position);
-        if (MathUtility.ManhattanDistance(enemyTile.x, enemyTile.y, smokeTile.x, smokeTile.y) <= detectionRange)
-            return true;
-        else
-            return false;
+        if(--duration == 0)
+            Destroy(gameObject);
     }
 
-    void HandleTimeOut(int turn)
+    private void OnTriggerEnter(Collider other)
     {
-        counter++;
-        if(counter == duration)
+        Enemy enemy = other.gameObject.GetComponent<Enemy>();
+
+        if (enemy)
         {
-            var enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach (GameObject obj in enemies)
-            {
-                if (CheckEnemy(obj))
-                {
-                    obj.GetComponent<Enemy>().DetectionRange = 3;
-                }
-            }
-            Destroy(this.gameObject);
+            EnemyManager.Instance.QuestionPop(enemy.transform);
+
+            enemy.Statistics.AddStatusEffect(new StatusEffect(4, duration));
+            enemy.SetDetectionState(EnemyDetectionState.Normal);
         }
-        
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Enemy enemy = other.gameObject.GetComponent<Enemy>();
+
+        if (enemy)
+            enemy.Statistics.RemoveStatusEffect(4);
+    }
+
+    //private void HandleUnitMove(Unit unit, Vector2Int previousGridPosition, Vector2Int currentGridPosition)
+    //{
+    //    Enemy enemy = unit.GetComponent<Enemy>();
+
+    //    if (enemy)
+    //    {
+    //        if (MathUtility.ChebyshevDistance(center.x, center.y, currentGridPosition.x, currentGridPosition.y) <= 1)
+    //        {
+    //            if (!enemies.Contains(enemy))
+    //            {
+    //                enemies.Add(enemy);
+
+    //                EnemyManager.Instance.QuestionPop(enemy.transform);
+
+    //                enemy.Statistics.AddStatusEffect(new StatusEffect(4, duration));
+    //                enemy.SetDetectionState(EnemyDetectionState.Normal);
+    //            }
+    //        }
+    //        else if (enemies.Contains(enemy))
+    //        {
+    //            enemies.Remove(enemy);
+
+    //            enemy.Statistics.RemoveStatusEffect(4);
+    //        }
+    //    }
+    //}
 }

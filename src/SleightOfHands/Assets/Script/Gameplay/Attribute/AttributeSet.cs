@@ -1,25 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-public enum AttributeType : int
-{
-    Hp_i = 10,
-    Hp_f = 11,
-    Hp_p = 12,
-    Hp_c = 19,
-
-    Ap_i = 20,
-    Ap_f = 21,
-    Ap_p = 22,
-    Ap_c = 29,
-}
-
-public enum StatisticType : int
-{
-    Hp = 1,
-    Ap = 2,
-}
-
 public class AttributeSet : IAttributeGetter
 {
     private Dictionary<int, float> attributes;

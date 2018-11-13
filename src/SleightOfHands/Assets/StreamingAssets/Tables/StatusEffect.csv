@@ -2,4 +2,5 @@ Id,Type,Name,Description,Attributes,MaxNumStack
 0,0,Damage,Damage,19:1,2147483647
 1,1,Fatigue,Action point comsumption,29:1,2147483647
 2,2,Haste,Your AP is increased,21:2,1
-3,3,Rooted,The unit is rooted so that it cannot move,22:-10000,1
+3,3,Rooted,The unit is rooted so that it cannot move,21:-10000,1
+4,4,Smoked,The unit is in the smoke so that it cannot see,31:-10000;41:-10000,1

@@ -18,6 +18,7 @@ public class Glue : MonoBehaviour
         if (--duration == 0)
             Destroy(gameObject);
     }
+
     private void OnTriggerEnter(Collider other)
     {
         Enemy enemy = other.gameObject.GetComponent<Enemy>();

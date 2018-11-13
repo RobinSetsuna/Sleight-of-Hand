@@ -2,6 +2,33 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum AttributeType : int
+{
+    Hp_i = 10,
+    Hp_f = 11,
+    Hp_p = 12,
+    Hp_c = 19,
+
+    Ap_i = 20,
+    Ap_f = 21,
+    Ap_p = 22,
+    Ap_c = 29,
+
+    Dr_i = 30,
+    Dr_f = 31,
+
+    Ar_i = 40,
+    Ar_f = 41,
+}
+
+public enum StatisticType : int
+{
+    Hp = 1,
+    Ap = 2,
+    DetectionRange = 3,
+    AttackRange = 4,
+}
+
 public class StatisticSystem
 {
     public class EventOnStatisticChange : UnityEvent<StatisticType, float, float> { }
@@ -94,6 +121,12 @@ public class StatisticSystem
             case StatisticType.Ap: // Ap = MAX(0, (∑Ap_i + ∑Ap_f) * (1 + ∑Ap_p) - ∑Ap_c)
                 return Mathf.Max(0, (AttributeSet.Sum(AttributeType.Ap_i, attributeSets) + AttributeSet.Sum(AttributeType.Ap_f, attributeSets)) * (1 + AttributeSet.Sum(AttributeType.Ap_p, attributeSets)) - AttributeSet.Sum(AttributeType.Ap_c, attributeSets));
 
+            case StatisticType.DetectionRange: // DetectionRange = MAX(0, ∑Dr_i + ∑Dr_f)
+                return Mathf.Max(0, AttributeSet.Sum(AttributeType.Dr_i, attributeSets) + AttributeSet.Sum(AttributeType.Dr_f, attributeSets));
+
+            case StatisticType.AttackRange: // AttackRange = MAX(0, ∑Ar_i + ∑Ar_f)
+                return Mathf.Max(0, AttributeSet.Sum(AttributeType.Ar_i, attributeSets) + AttributeSet.Sum(AttributeType.Ar_f, attributeSets));
+
             default:
                 return 0;
         }
@@ -101,13 +134,23 @@ public class StatisticSystem
 
     public void AddStatusEffect(StatusEffect statusEffect)
     {
-        statusEffects.Push(statusEffect);
-
-        UpdateChangedStatistics(statusEffect);
+        if (statusEffects.Push(statusEffect))
+            UpdateChangedStatistics(statusEffect);
 
 #if UNITY_EDITOR
-        UnityEngine.Debug.Log(LogUtility.MakeLogString("StatisticSystem", "Add " + statusEffect + "\n" + ToString()));
+        Debug.LogWarning(LogUtility.MakeLogString("StatisticSystem", "Add " + statusEffect + "\n" + ToString()));
 #endif
+    }
+
+    public StatusEffect RemoveStatusEffect(int id)
+    {
+        StatusEffect statusEffect = statusEffects.Remove(id);
+
+#if UNITY_EDITOR
+        Debug.LogWarning(LogUtility.MakeLogString("StatisticSystem", "Remove " + statusEffect + "\n" + ToString()));
+#endif
+
+        return statusEffect;
     }
 
     private void HandleRoundNumberChange(int round)
