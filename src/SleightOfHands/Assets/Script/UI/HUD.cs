@@ -79,26 +79,19 @@ public class HUD : UIWindow
         {
             case ChangeType.Incremental:
                 Transform listTransform = cardList.transform;
-
                 //int index = hand.Count;
                 //int numExistedListItems = listTransform.childCount;
-
                 GameObject listItem;
-
                 //if (index < numExistedListItems)
                 //    listItem = listTransform.GetChild(index).gameObject;
                 //else
-
                 listItem = Instantiate(ResourceUtility.GetPrefab("Card"), listTransform);
-
                 listItem.SetActive(true);
                 listItem.GetComponent<UICard>().Refresh(card);
-
                 hand.Add(card, listItem);
-
                 cardList.Refresh(card);
-
                 break;
+
             case ChangeType.Decremental:
                 Destroy(hand[card]);
                 hand.Remove(card);

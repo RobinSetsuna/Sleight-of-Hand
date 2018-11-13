@@ -310,8 +310,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                 grid[x,y] = tile;
 
                 // Tile display
-                if (te != null) {
-                    
+                if (te != null)
+                {
                     Tileset.TileCollection tileCollection = null;
                     float envTileRotation;
                     GetEnvTileType(levelData, x, y, te.tileset, out tileCollection, out envTileRotation);
@@ -324,9 +324,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                     Vector3 envTilePosition = tilePosition;
                     envTilePosition.y = -0.55f;
 
-                    Instantiate(envTilePrefab, envTilePosition, Quaternion.Euler(0, envTileRotation, 0));
+                    Spawn(envTilePrefab, envTilePosition, Quaternion.Euler(0, envTileRotation, 0));
                 }
-                
             }
     }
 
@@ -514,9 +513,14 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         playerController.onCardToUseUpdate.AddListener(HandleCardToUseChange);
     }
 
-    public T Spawn<T>(T obj, Vector3 position, Quaternion rotation)
+    public T Spawn<T>(T obj, Tile tile) where T : UnityEngine.Object
     {
-        Instantiate(obj, position, rotation, EnvironmentRoot);
+        return Spawn(obj, GetWorldPosition(tile), Quaternion.identity);
+    }
+
+    public T Spawn<T>(T obj, Vector3 position, Quaternion rotation) where T : UnityEngine.Object
+    {
+        return Instantiate(obj, position, rotation, EnvironmentRoot);
     }
 
     //public void wipeTiles()
@@ -722,9 +726,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
     private void HandleCardToUseChange(Card cardToUse)
     {
-        // TODO: Change highlights according to card's range
         if (cardToUse != null)
-            Highlight(GetTile(LevelManager.Instance.Player.transform.position), Tile.HighlightColor.Green, false);
+            Highlight(GetTile(LevelManager.Instance.Player.transform.position), cardToUse.Data.Range, Tile.HighlightColor.Green, false);
         else
             DehighlightAll();
     }

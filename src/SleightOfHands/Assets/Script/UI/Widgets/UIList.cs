@@ -8,6 +8,7 @@ public class UIList : UIWidget
     [SerializeField] private int column = 1;
     [SerializeField] Vector2 itemSize;
     [SerializeField] private bool hideInactives = true;
+    [SerializeField] private RectTransform background; 
 
     public override void Refresh(params object[] args)
     {
@@ -19,18 +20,22 @@ public class UIList : UIWidget
             if (!item.gameObject.activeSelf && hideInactives)
                 break;
 
-            int x = i % row;
-            int y = i / row;
+            int x = i % column;
+            int y = i / column;
 
-            if (y > column)
+            if (y > row)
                 break;
 
             item.localPosition = new Vector3((itemSize.x + margin.x) * x + margin.x, -(itemSize.y + margin.y) * y - margin.y, 0);
-
             i++;
         }
 
-        i--;
-        GetComponent<RectTransform>().sizeDelta = new Vector2(margin.x + Math.Min(column, i) * (itemSize.x + margin.x), margin.y + (i / row + 1) * (itemSize.y + margin.x));
+        if (background)
+        {
+            if (i == 0)
+                background.sizeDelta = new Vector2(0, 0);
+            else
+                background.sizeDelta = new Vector2(margin.x + Math.Min(column, i) * (itemSize.x + margin.x), margin.y + ((i - 1) / column + 1) * (itemSize.y + margin.x));
+        }
     }
 }

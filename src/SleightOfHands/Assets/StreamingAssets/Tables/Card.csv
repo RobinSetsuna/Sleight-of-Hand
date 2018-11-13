@@ -1,4 +1,4 @@
 Id,name,Background,Illustration,Description,Range,Duration,Effect,Type
-0,Smoke Bomb,Strategy,SmokeBomb,This is a smoke bomb.,3,2,Smoke,Target
+0,Smoke Bomb,Strategy,SmokeBomb,This is a smoke bomb.,3,2,Smoke,Strategy
 1,Haste,Enhancement,Haste,Immediately gain 2 AP.,0,0,2:02,Enhancement
 2,Glue Trap,Strategy,GlueTrap,Make an enemy stop,5,2,GlueTrap,Strategy

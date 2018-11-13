@@ -110,8 +110,10 @@ public abstract class Unit : InLevelObject
                 ActionManager.Singleton.AddFront(new StatusEffectApplication(new StatusEffect(int.Parse(values[0]), int.Parse(values[1])), GridManager.Instance.GetUnit(targetTile).Statistics));
                 callback.Invoke();
                 break;
+
             case "Strategy":
                 ActionManager.Singleton.AddFront(new Casting(ResourceUtility.GetCardEffect(cardData.Effect), targetTile));
+                callback.Invoke();
                 break;
         }
     }

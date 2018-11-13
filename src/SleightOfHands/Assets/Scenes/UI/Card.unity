@@ -448,12 +448,12 @@ Prefab:
     - target: {fileID: 224372910138980040, guid: a5870bf33416ee647a98e223b0d94bdb,
         type: 2}
       propertyPath: m_Pivot.x
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224372910138980040, guid: a5870bf33416ee647a98e223b0d94bdb,
         type: 2}
       propertyPath: m_Pivot.y
-      value: 0.5
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5870bf33416ee647a98e223b0d94bdb, type: 2}

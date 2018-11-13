@@ -94,6 +94,12 @@ public class CardManager : MonoBehaviour
         onHandChange.Invoke(ChangeType.Incremental, card);
     }
 
+    public void RemoveCard(Card card)
+    {
+        hand.Remove(card);
+        onHandChange.Invoke(ChangeType.Decremental, card);
+    }
+
     //public void AddEffect(Card card, GameObject obj)
     //{
     //    Effects effects = obj.GetComponent<Effects>();

@@ -138,11 +138,20 @@ public class Casting : Action
 
     public Casting(GameObject obj, Tile targetTile)
     {
+        actionDelegate = Cast;
+
         this.obj = obj;
         this.targetTile = targetTile;
     }
 
     private void Cast(System.Action callback)
     {
+        GridManager.Instance.Spawn(obj, targetTile);
+        callback.Invoke();
+    }
+
+    override public string ToString()
+    {
+        return string.Format("Cast a \"{0}\" on {1}.", obj, targetTile);
     }
 }

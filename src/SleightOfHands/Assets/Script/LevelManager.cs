@@ -245,14 +245,14 @@ public class LevelManager : MonoBehaviour
             switch (spawnData.SpawnType) {
 
                 case SpawnData.Type.Player:
-                    Player = Instantiate(ResourceUtility.GetPrefab<player>("player_temp"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
+                    Player = GridManager.Instance.Spawn(ResourceUtility.GetPrefab<player>("player_temp"), spawnPosition, spawnRotation); //Instantiate(ResourceUtility.GetPrefab<player>("player_temp"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
                     // Player.GetComponent<player>().initializeEventListener();
                     GameObject.FindGameObjectWithTag("Player").AddComponent<Effects>();
                     GameObject.FindGameObjectWithTag("Player").GetComponent<Effects>().SetOwner("Player");
                     break;
 
                 case SpawnData.Type.Guard:
-                    var temp = Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
+                    var temp = GridManager.Instance.Spawn(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation); //Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
                     temp.AddComponent<Effects>();
                     temp.GetComponent<Effects>().SetOwner("Enemy");
                     temp.tag = "Enemy";
@@ -262,7 +262,6 @@ public class LevelManager : MonoBehaviour
 //                    index++;
                     Enemies.Add(temp.GetComponent<Enemy>());
                     break;
-
             }
 
         }
