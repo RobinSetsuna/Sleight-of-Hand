@@ -151,9 +151,9 @@ public class PlayerController : MouseInteractable
 
                     case PlayerState.Move:
                         for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
-                            ActionManager.Singleton.AddBack(new Movement(GetComponent<player>(), tile));
+                            ActionManager.Singleton.AddBack(new Movement(GetComponent<player>(), tile), tile == path.Destination ? (System.Action)ResetToIdle : null);
                         Path = null;
-                        ActionManager.Singleton.Execute(ResetToIdle);
+                        // ActionManager.Singleton.Execute(ResetToIdle);
                         break;
 
                     case PlayerState.CardUsageConfirmation:
@@ -163,10 +163,10 @@ public class PlayerController : MouseInteractable
                         break;
 
                     case PlayerState.UseCard:
-                        ActionManager.Singleton.AddBack(new CardUsage(Player, cardToUse, targetTile));
+                        ActionManager.Singleton.AddBack(new CardUsage(Player, cardToUse, targetTile), ResetToIdle);
                         CardManager.Instance.RemoveCard(cardToUse);
                         CardToUse = null;
-                        ActionManager.Singleton.Execute(ResetToIdle);
+                        // ActionManager.Singleton.Execute(ResetToIdle);
                         break;
                 }
 
@@ -284,8 +284,8 @@ public class PlayerController : MouseInteractable
     /// <param name="obj"> The clicked object </param>
     private void HandleMouseClick(MouseInteractable obj)
     {
-        //handle click sound
-        AudioSource _audioSource = this.gameObject.GetComponent<AudioSource>();
+        // handle click sound
+        AudioSource _audioSource = gameObject.GetComponent<AudioSource>();
         AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/tapTile");
 
         _audioSource.clip = audioClip;

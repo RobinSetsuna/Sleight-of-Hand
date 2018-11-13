@@ -132,8 +132,8 @@ public class CardManager : MonoBehaviour
 
         deck = new CardDeck(new int[3] { 0, 1, 2 });
 
-        foreach (Card card in deck)
-            LogUtility.PrintLogFormat("CardManager", card.Data.ToString());
+        //foreach (Card card in deck)
+        //    LogUtility.PrintLogFormat("CardManager", card.Data.ToString());
     }
 
     private Tile GetPlayerTile()

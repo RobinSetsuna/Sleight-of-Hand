@@ -18,10 +18,10 @@ public enum EnemyDetectionState : int
 
 public class Enemy : Unit
 {
-    // event 
+    // event
     public int ID;
     public EventOnDataChange<EnemyMoveState> onCurrentEnemyStateChange = new EventOnDataChange<EnemyMoveState>();
-    
+
 	[SerializeField]private int detection_range;
     [SerializeField]private int attack_range;
 	private GameObject player;
@@ -79,7 +79,7 @@ public class Enemy : Unit
     /// An event triggered whenever the planned path is changed by the player
     /// </summary>
     public EventOnDataUpdate<Path<Tile>> onPathUpdate = new EventOnDataUpdate<Path<Tile>>();
-    
+
     private Path<Tile> path;
     private Path<Tile> Path
     {
@@ -88,13 +88,13 @@ public class Enemy : Unit
             if (value != path)
             {
                 path = value;
-                //onPathUpdate.Invoke(path); 
+                //onPathUpdate.Invoke(path);
                 //not invoke the event now. since we are not using it.
             }
         }
     }
-    
-    
+
+
     /// <summary>
     /// The current state of the Enemy
     /// </summary>
@@ -164,7 +164,7 @@ public class Enemy : Unit
     public void mute() {
         newRound = false;
     }
-    
+
     /// <summary>
     /// Attack Decision Tree
     /// </summary>
@@ -172,8 +172,8 @@ public class Enemy : Unit
     {
         if (InAttackRange() && Ap >= 1 && currentDetectionState ==  EnemyDetectionState.Found)
         {
-            //is ok to Atk 
-            // TODO 
+            //is ok to Atk
+            // TODO
             //ADD HEALTH UPDATE HERE
 
             EnemyManager.Instance.AttackPop(transform);
@@ -200,7 +200,7 @@ public class Enemy : Unit
                         EnemyManager.Instance.FoundPop(transform);
                         yield return new WaitForSeconds(1.5f);
                         newRound = false;
-                     } 
+                     }
 
                     Tile playerTile = GridManager.Instance.GetTile(player.transform.position);
                     Tile finalDes = NearPosition(playerTile, enemyTile);
@@ -253,16 +253,14 @@ public class Enemy : Unit
                 if (temp == 0)
                     break;
 
-                ActionManager.Singleton.AddBack(new Movement(this, tile));//, --temp == 0 ? (System.Action)ResetToIdle : null);
-
-                temp--;
+                ActionManager.Singleton.AddBack(new Movement(this, tile), --temp == 0 ? (System.Action)ResetToIdle : null);
             }
 
             Path = null;
             ActionManager.Singleton.Execute(ResetToIdle);
         }
     }
-    
+
     /// <summary>
     /// check if the player is in the attack range
     /// </summary>
@@ -285,9 +283,9 @@ public class Enemy : Unit
         }
         previousState = CurrentDetectionState;
         currentDetectionState = current;
-        
+
     }
-    
+
     /// <summary>
     /// a set the pathList from loadedData
     /// </summary>
@@ -295,7 +293,7 @@ public class Enemy : Unit
     {
         pathList = pl;
     }
-    
+
     /// <summary>
     /// Make a transition to PlayerState.Move
     /// </summary>
@@ -312,7 +310,7 @@ public class Enemy : Unit
     }
 
     /// <summary>
-    /// Highlight the detection range in tile 
+    /// Highlight the detection range in tile
     /// </summary>
 
     public void HighlightDetection()
@@ -357,7 +355,7 @@ public class Enemy : Unit
     /// </summary>
 	private void HandleDetection(Unit unit, Vector2Int previousPos, Vector2Int pos)
     {
-        var yRot = transform.rotation.eulerAngles.y; 
+        var yRot = transform.rotation.eulerAngles.y;
         if (unit.tag == "Player"||unit.tag == "Enemy")
         {
             if (currentDetectionState == EnemyDetectionState.Normal) {
@@ -369,7 +367,7 @@ public class Enemy : Unit
 
                     // add some operation here
                     SetDetectionState(EnemyDetectionState.Found);
-                    
+
                     StartCoroutine(Founded());
                 }
             }
@@ -399,8 +397,8 @@ public class Enemy : Unit
         }
         return nearest;
     }
-    
-    
+
+
     /// <summary>
     /// get and check the tile around the player to set path.
     /// return the nearest tile that around player.
@@ -423,7 +421,7 @@ public class Enemy : Unit
         {
             neighbor.Add(GridManager.Instance.GetTile(new Vector2Int(center.x,center.y+1)));
         }
-        
+
         if (center.y - 1 > 0)
         {
             neighbor.Add(GridManager.Instance.GetTile(new Vector2Int(center.x,center.y-1)));

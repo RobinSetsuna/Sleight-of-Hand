@@ -515,7 +515,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
     public T Spawn<T>(T obj, Tile tile) where T : UnityEngine.Object
     {
-        return Spawn(obj, GetWorldPosition(tile), Quaternion.identity);
+        return Spawn(obj, GetWorldPosition(tile) + new Vector3(0,0.5f,0), Quaternion.identity);
     }
 
     public T Spawn<T>(T obj, Vector3 position, Quaternion rotation) where T : UnityEngine.Object

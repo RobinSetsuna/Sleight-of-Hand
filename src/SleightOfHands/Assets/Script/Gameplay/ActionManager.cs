@@ -1,4 +1,6 @@
-﻿/// <summary>
+﻿using System.Collections.Generic;
+
+/// <summary>
 /// A queue system which will continueously execute the first action in the queue until the queue becomes empty
 /// </summary>
 public class ActionManager
@@ -17,55 +19,76 @@ public class ActionManager
     }
 
     private ActionQueue actionQueue;
-    private System.Action executionCallback;
+    private Dictionary<Action, System.Action> callbacks;
+
+    private Action actionInExecution;
 
     private ActionManager()
     {
         actionQueue = new ActionQueue();
+        callbacks = new Dictionary<Action, System.Action>();
     }
 
     /// <summary>
     /// Add a new action to be executed immediately
     /// </summary>
     /// <param name="action"> The action to be added </param>
-    internal void AddFront(Action action)
+    internal void AddFront(Action action, System.Action callback = null)
     {
         actionQueue.PushFront(action);
+
+        if (callback != null)
+            callbacks.Add(action, callback);
+
+        if (actionInExecution == null)
+            Execute();
     }
 
     /// <summary>
     /// Add a new action to be executed at last
     /// </summary>
     /// <param name="action"> The action to be added </param>
-    internal void AddBack(Action action)
+    internal void AddBack(Action action, System.Action callback = null)
     {
         actionQueue.PushBack(action);
+
+        if (callback != null)
+            callbacks.Add(action, callback);
+
+        if (actionInExecution == null)
+            Execute();
     }
 
     /// <summary>
     /// Assign a callback to be executed after all actions are executed and start to execute existing actions
     /// </summary>
     /// <param name="callback"></param>
-    internal void Execute(System.Action callback)
-    {
-        executionCallback = callback;
-        Execute();
-    }
+    //internal void Execute(System.Action callback)
+    //{
+    //    Execute();
+    //}
 
     /// <summary>
     /// Execute the first action in the queue if the queue is not empty or execute assigned callback function if it exists
     /// </summary>
-    internal void Execute()
+    private void Execute()
     {
 #if UNITY_EDITOR
         UnityEngine.Debug.Log(LogUtility.MakeLogString("ActionManager", "Execute\n" + actionQueue));
 #endif
-        if (!actionQueue.IsEmpty())
-            actionQueue.Pop().Execute(Execute);
-        else if (executionCallback != null)
+
+        if (actionInExecution != null && callbacks.ContainsKey(actionInExecution))
         {
-            executionCallback.Invoke();
-            // executionCallback = null;
+            callbacks[actionInExecution].Invoke();
+            callbacks.Remove(actionInExecution);
         }
+
+        if (!actionQueue.IsEmpty())
+        {
+            actionInExecution = actionQueue.Pop();
+            actionInExecution.Execute(Execute);
+        }
+        else
+            actionInExecution = null;
     }
 }
