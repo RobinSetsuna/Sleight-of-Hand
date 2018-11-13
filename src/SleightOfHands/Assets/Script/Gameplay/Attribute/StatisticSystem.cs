@@ -142,6 +142,6 @@ public class StatisticSystem
         foreach (KeyValuePair<StatisticType, float> statistic in statistics)
             s += ";" + statistic.Key + ":" + statistic.Value;
 
-        return string.Format("Stat: {0}\nTalent: {1}\nStatusEffects:\n{2}", s.Substring(1), talents, statusEffects);
+        return string.Format("Stat: {0}\nTalent: {1}\n\n{2}", s.Substring(1), talents, statusEffects);
     }
 }

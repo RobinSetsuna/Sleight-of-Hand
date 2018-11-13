@@ -107,7 +107,7 @@ public abstract class Unit : InLevelObject
         {
             case "Enhancement":
                 string[] values = cardData.Effect.Split(':');
-                ActionManager.Singleton.AddFront(new StatusEffectApplication(new StatusEffect(int.Parse(values[0]), int.Parse(values[1])), GridManager.Instance.GetUnit(targetTile).Statistics));
+                ActionManager.Singleton.AddFront(new StatusEffectApplication(new StatusEffect(int.Parse(values[0]), int.Parse(values[1])), GridManager.Instance.GetUnit(targetTile)));
                 callback.Invoke();
                 break;
 

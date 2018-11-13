@@ -109,9 +109,9 @@ public class CardUsage : Action
 public class StatusEffectApplication : Action
 {
     public readonly StatusEffect statusEffect;
-    public readonly StatisticSystem target;
+    public readonly Unit target;
 
-    public StatusEffectApplication(StatusEffect statusEffect, StatisticSystem target)
+    public StatusEffectApplication(StatusEffect statusEffect, Unit target)
     {
         actionDelegate = ApplyStatusEffect;
 
@@ -121,13 +121,13 @@ public class StatusEffectApplication : Action
 
     private void ApplyStatusEffect(System.Action callback)
     {
-        target.AddStatusEffect(statusEffect);
+        target.Statistics.AddStatusEffect(statusEffect);
         callback.Invoke();
     }
 
     override public string ToString()
     {
-        return string.Format("Apply a status effect \"{0}\" on {1}.", statusEffect, target);
+        return string.Format("[] Apply a status effect \"{0}\" on {1}.", statusEffect.Data.Name, target);
     }
 }
 
@@ -152,6 +152,6 @@ public class Casting : Action
 
     override public string ToString()
     {
-        return string.Format("Cast a \"{0}\" on {1}.", obj, targetTile);
+        return string.Format("[] Cast a \"{0}\" to {1}.", obj, targetTile);
     }
 }

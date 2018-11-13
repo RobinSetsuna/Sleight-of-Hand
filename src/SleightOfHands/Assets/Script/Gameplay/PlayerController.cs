@@ -166,6 +166,7 @@ public class PlayerController : MouseInteractable
                         ActionManager.Singleton.AddBack(new CardUsage(Player, cardToUse, targetTile), ResetToIdle);
                         CardManager.Instance.RemoveCard(cardToUse);
                         CardToUse = null;
+                        // ActionManager.Singleton.Execute(ResetToIdle);
                         break;
                 }
 
@@ -274,10 +275,7 @@ public class PlayerController : MouseInteractable
 
     private void UseCard()
     {
-        ActionManager.Singleton.AddBack(new CardUsage(Player, cardToUse, targetTile), ResetToIdle);
-        // ActionManager.Singleton.Execute(ResetToIdle);
-
-        CardToUse = null;
+        CurrentPlayerState = PlayerState.UseCard;
     }
 
     /// <summary>
@@ -286,8 +284,8 @@ public class PlayerController : MouseInteractable
     /// <param name="obj"> The clicked object </param>
     private void HandleMouseClick(MouseInteractable obj)
     {
-        //handle click sound
-        AudioSource _audioSource = this.gameObject.GetComponent<AudioSource>();
+        // handle click sound
+        AudioSource _audioSource = gameObject.GetComponent<AudioSource>();
         AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/tapTile");
 
         _audioSource.clip = audioClip;
