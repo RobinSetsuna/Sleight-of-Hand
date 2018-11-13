@@ -27,9 +27,6 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     //public LayerMask unwalkableMask;
     [SerializeField] private float tileSize;
     [SerializeField] private Transform tilePrefab;
-    [SerializeField] private GameObject[] wallPrefabs;
-    [SerializeField] private GameObject[] roadTilePrefabs;
-    [SerializeField] private GameObject[] environmentTilePrefabs;
     [SerializeField] private TilesetElement[] tilesetElements;
     [SerializeField] private Vector2Int mapSize;
     [SerializeField] [Range(0,1)] private float outlinePercent;
@@ -317,7 +314,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                     Vector3 envTilePosition = tilePosition;
                     envTilePosition.y = -0.55f;
 
-                    Instantiate(envTilePrefab, envTilePosition, Quaternion.Euler(0, envTileRotation, 0));
+                    Instantiate(envTilePrefab, envTilePosition, Quaternion.Euler(0, envTileRotation, 0), environmentHolder);
 
                 }
                 
