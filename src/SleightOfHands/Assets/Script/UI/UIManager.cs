@@ -90,6 +90,12 @@ public class UIManager : MonoBehaviour
         return uiWindow;
     }
 
+    public void Redraw(string name)
+    {
+        if (IsInViewport(name))
+            uiWindowsOpened[name].Redraw();
+    }
+
     public void ForceUpdate(string name)
     {
         if (IsInViewport(name))

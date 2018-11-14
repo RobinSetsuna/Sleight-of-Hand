@@ -258,7 +258,7 @@ public class Enemy : Unit
                     int temp_x = enemyTile.x - 1;
                     int temp_y = enemyTile.y + 0;
                     if (GridManager.Instance.HasUnitOn(temp_x, temp_y) ||
-                        !GridManager.Instance.IsAccessible(temp_x, temp_y))
+                        !GridManager.Instance.IsWalkable(temp_x, temp_y))
                     {
                         // Oops, no movement
                         path = null;

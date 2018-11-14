@@ -17,26 +17,24 @@ public class HUD : UIWindow
     public override void OnOpen(params object[] args)
     {
         UpdateAll();
-
-        CardManager.Instance.onHandChange.AddListener(HandleHandChange);
-
-        LevelManager.Instance.Player.onAttributeChange.AddListener(HandlePlayerStatisticChange);
-        LevelManager.Instance.playerController.onCurrentPlayerStateChange.AddListener(HandleCurrentPlayerStateChange);
-        LevelManager.Instance.OnCurrentPhaseChangeForPlayer.AddListener(HandleCurrentPhaseChangeForPlayer);
-        LevelManager.Instance.onCurrentTurnChange.AddListener(HandleTurnChange);
+        AddEventListeners();
     }
+
 
     public override void OnClose()
     {
-        CardManager.Instance.onHandChange.RemoveListener(HandleHandChange);
-
-        LevelManager.Instance.Player.onAttributeChange.RemoveListener(HandlePlayerStatisticChange);
-        LevelManager.Instance.playerController.onCurrentPlayerStateChange.RemoveListener(HandleCurrentPlayerStateChange);
-        LevelManager.Instance.OnCurrentPhaseChangeForPlayer.RemoveListener(HandleCurrentPhaseChangeForPlayer);
-        LevelManager.Instance.onCurrentTurnChange.RemoveListener(HandleTurnChange);
+        RemoveEventListeners();
     }
 
-    override public void UpdateAll()
+    public override void Redraw()
+    {
+        RemoveEventListeners();
+        AddEventListeners();
+
+        UpdateAll();
+    }
+
+    public override void UpdateAll()
     {
         if (LevelManager.Instance.CurrentRound == Round.Player)
             HandleCurrentPhaseChangeForPlayer(LevelManager.Instance.CurrentPhase);
@@ -118,6 +116,30 @@ public class HUD : UIWindow
     public void EndCurrentTurn()
     {
         LevelManager.Instance.EndPlayerActionPhase();
+    }
+
+    private void AddEventListeners()
+    {
+        CardManager.Instance.onHandChange.AddListener(HandleHandChange);
+
+        LevelManager.Instance.Player.onAttributeChange.AddListener(HandlePlayerStatisticChange);
+
+        LevelManager.Instance.playerController.onCurrentPlayerStateChange.AddListener(HandleCurrentPlayerStateChange);
+
+        LevelManager.Instance.onCurrentPhaseChangeForPlayer.AddListener(HandleCurrentPhaseChangeForPlayer);
+        LevelManager.Instance.onCurrentTurnChange.AddListener(HandleTurnChange);
+    }
+
+    private void RemoveEventListeners()
+    {
+        CardManager.Instance.onHandChange.RemoveListener(HandleHandChange);
+
+        LevelManager.Instance.Player.onAttributeChange.RemoveListener(HandlePlayerStatisticChange);
+
+        LevelManager.Instance.playerController.onCurrentPlayerStateChange.RemoveListener(HandleCurrentPlayerStateChange);
+
+        LevelManager.Instance.onCurrentPhaseChangeForPlayer.RemoveListener(HandleCurrentPhaseChangeForPlayer);
+        LevelManager.Instance.onCurrentTurnChange.RemoveListener(HandleTurnChange);
     }
 
     private void HandleTurnChange(int currentTurn)

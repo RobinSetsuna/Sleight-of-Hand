@@ -4,7 +4,7 @@ using UnityEngine;
 
 public struct Navigation
 {
-    public delegate bool AccessibilityChecker(int x, int y);
+    public delegate bool AccessibilityPredictor(int x, int y);
 
     private struct AStarTile<T> : IComparable where T : IEquatable<T>
     {
@@ -23,12 +23,11 @@ public struct Navigation
         }
     }
 
-    public static Path<T> FindPath<T>(INavGrid<T> navGrid, T start, T destination, AccessibilityChecker IsAccessible) where T : IEquatable<T>
+    public static Path<T> FindPath<T>(INavGrid<T> navGrid, T start, T destination, AccessibilityPredictor IsAccessible) where T : IEquatable<T>
     {
         Vector2Int startIndices = navGrid.GetGridPosition(start);
         Vector2Int destinationIndices = navGrid.GetGridPosition(destination);
 
-        //if (!navGrid.IsAccessible(startIndices.x, startIndices.y) || !navGrid.IsAccessible(destinationIndices.x, destinationIndices.y))
         if (!IsAccessible(startIndices.x, startIndices.y) || !IsAccessible(destinationIndices.x, destinationIndices.y))
             return null;
 
