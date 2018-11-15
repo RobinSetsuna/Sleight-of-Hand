@@ -115,7 +115,7 @@ public class HUD : UIWindow
 
     public void EndCurrentTurn()
     {
-        LevelManager.Instance.EndPlayerActionPhase();
+        LevelManager.Instance.EndActionPhase();
     }
 
     private void AddEventListeners()

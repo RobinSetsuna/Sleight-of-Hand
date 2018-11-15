@@ -177,7 +177,7 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 		//GetComponent<Renderer>().material.SetColor("_Color", defaultColor);
 	}
 
-    public void Dehighlight()
+    public void DehighlightAll()
     {
         if ((mark & 0xf) != 0)
         {
@@ -186,9 +186,28 @@ public class Tile : MouseInteractable, IEquatable<Tile>
         }
     }
 
-	public void Highlight(HighlightColor color, bool isAdditive = true)
+    public void Dehighlight(HighlightColor color)
+    {
+        int mask = (int)color - 1;
+
+        int compare = (mark & 0xe) - mask;
+
+        if (compare == 0)
+        {
+            mark -= mask + 1;
+            RefreshHighlight();
+        }
+        else if ((mark & mask) != 0)
+        {
+            mark &= ~mask;
+            RefreshHighlight();
+        }
+    }
+
+    public void Highlight(HighlightColor color, bool isAdditive = true)
 	{
         int mask = (int)color;
+
         if (((mark & 0xf) ^ mask) != 0)
         {
             if (isAdditive)
