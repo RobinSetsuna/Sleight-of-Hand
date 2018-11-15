@@ -58,6 +58,9 @@
   * **Character Cultivation**: An user interface that allows players to nurture their character
   * **Level Selection**: An user interface that allows players to choose the level they want to play
 * **Camera**: To provide the player with efficient parts of the game environment
+* **Audio**: Different sounds to give the player an engaging gaming experience
+  * **BGM**: To improve the immerse feeling of the level
+  * **SFX**: To provide the player more interesting and real gaming experience
 
 ### Non-functional Requirements
 | NFRs |  Technical Constraints |
