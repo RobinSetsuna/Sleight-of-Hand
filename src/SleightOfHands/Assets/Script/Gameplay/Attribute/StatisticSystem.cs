@@ -104,7 +104,7 @@ public class StatisticSystem
     {
         int fatigue = rawFatigue;
 
-        AddStatusEffect(new StatusEffect(1, int.MaxValue, fatigue));
+        AddStatusEffect(new StatusEffect(1, 2, fatigue));
 
         return fatigue;
     }

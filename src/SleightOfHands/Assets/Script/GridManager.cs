@@ -743,7 +743,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
             if (d != 0)
                 foreach (int uid in BitOperationUtility.GetIndicesOfOne(d))
-                    LevelManager.Instance.Enemies[uid].GetComponent<EnemyController>().Mode = EnemyMode.Chasing;
+                    if (uid < LevelManager.Instance.Enemies.Count)
+                        LevelManager.Instance.Enemies[uid].GetComponent<EnemyController>().Mode = EnemyMode.Chasing;
         }
         else if (unit.GetComponent<Enemy>())
         {
