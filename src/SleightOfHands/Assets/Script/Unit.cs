@@ -96,6 +96,16 @@ public abstract class Unit : InLevelObject
     private Vector3 start;
     private Vector3 destination;
 
+    public bool IsAccessibleTo(int x, int y)
+    {
+        return GridManager.Instance.IsAccessible(this, x, y);
+    }
+
+    public bool IsAccessibleTo(Tile tile)
+    {
+        return GridManager.Instance.IsAccessible(this, tile);
+    }
+
     public void MoveTo(Vector3 destination, System.Action callback)
     {
         start = transform.position;

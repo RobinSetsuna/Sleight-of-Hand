@@ -45,7 +45,7 @@ public class LevelManager : MonoBehaviour
     public EventOnDataUpdate<int> onCurrentTurnChange = new EventOnDataUpdate<int>();
     public EventOnDataUpdate<int> onRoundNumberChange = new EventOnDataUpdate<int>();
 
-    public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForPlayer = new EventOnDataUpdate<Phase>();
+    public EventOnDataUpdate<Phase> onCurrentPhaseChangeForPlayer = new EventOnDataUpdate<Phase>();
     public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForEnvironment = new EventOnDataUpdate<Phase>();
 
     // public List<Unit> units;
@@ -124,7 +124,7 @@ public class LevelManager : MonoBehaviour
             switch (CurrentRound)
             {
                 case Round.Player:
-                    OnCurrentPhaseChangeForPlayer.Invoke(currentPhase);
+                    onCurrentPhaseChangeForPlayer.Invoke(currentPhase);
                     break;
 
                 case Round.Environment:
@@ -193,7 +193,7 @@ public class LevelManager : MonoBehaviour
     public void Restart()
     {
         InitializeLevel();
-        UIManager.Singleton.ForceUpdate("HUD");
+        UIManager.Singleton.Redraw("HUD");
     }
 
     private void InitializeLevel()

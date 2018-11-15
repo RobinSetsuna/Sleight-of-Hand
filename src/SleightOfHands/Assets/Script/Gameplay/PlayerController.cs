@@ -183,14 +183,14 @@ public class PlayerController : MouseInteractable
 
         CurrentPlayerState = 0;
 
-        LevelManager.Instance.OnCurrentPhaseChangeForPlayer.AddListener(HandleCurrentPhaseChange);
+        LevelManager.Instance.onCurrentPhaseChangeForPlayer.AddListener(HandleCurrentPhaseChange);
     }
 
     private void OnDestroy()
     {
         Disable();
 
-        LevelManager.Instance.OnCurrentPhaseChangeForPlayer.RemoveListener(HandleCurrentPhaseChange);
+        LevelManager.Instance.onCurrentPhaseChangeForPlayer.RemoveListener(HandleCurrentPhaseChange);
     }
 
     /// <summary>
@@ -320,7 +320,7 @@ public class PlayerController : MouseInteractable
 
                         if (tile.IsHighlighted(Tile.HighlightColor.Blue))
                         {
-                            Path = Navigation.FindPath(GridManager.Instance, playerTile, tile, GridManager.Instance.IsAccessible);
+                            Path = Navigation.FindPath(GridManager.Instance, playerTile, tile, Player.IsAccessibleTo);
                             CurrentPlayerState = PlayerState.MovementConfirmation;
                         }
                     }

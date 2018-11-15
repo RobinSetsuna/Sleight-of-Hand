@@ -222,16 +222,28 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// <param name="x"> The x value of the grid position to concern </param>
     /// <param name="y"> The y value of the grid position to concern </param>
     /// <returns> A boolean indicating the result of evaluation </returns>
-    public bool IsAccessible(int x, int y)
+    public bool IsAccessible(Unit accessor, int x, int y)
     {
-        return grid[x, y].walkable;
+        Unit unit = units[x, y];
+        return grid[x, y].walkable && (unit == null || unit == accessor);
+    }
+
+    public bool IsAccessible(Unit accessor, Tile tile)
+    {
+        Unit unit = units[tile.x, tile.y];
+        return tile.walkable && (unit == null || unit == accessor);
     }
 
     public bool IsWalkable(int x, int y)
     {
-        return grid[x, y].walkable;
+        return IsWalkable(grid[x, y]);
     }
-    
+
+    public bool IsWalkable(Tile tile)
+    {
+        return tile.walkable;
+    }
+
     public bool HasUnitOn(int x, int y)
     {
         return units[x, y]!=null;
@@ -549,14 +561,10 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     //    }
     //}
 
-    /// <summary>
-    /// High light the tile with a given color
-    /// </summary>
-    /// <param name="tile"> The tile to highlight </param>
-    /// <param name="color"> The color to highlight with </param>
     public void Highlight(Tile tile, Tile.HighlightColor color, bool isAdditive = true)
     {
-        Highlight(tile, 0, 0, int.MinValue, color, isAdditive);
+        tile.Highlight(color, isAdditive);
+        numHighlightedTiles++;
     }
 
     /// <summary>
@@ -565,10 +573,15 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// <param name="center"> The central tile to concern </param>
     /// <param name="range"> The range to concern </param>
     /// <param name="color"> The color to highlight with </param>
-    /// <param name="skipUnmasked"> [optional] </param>
-    public void Highlight(Tile center, int range, Tile.HighlightColor color, bool isAdditive = true, bool skipUnmasked = false)
+    /// <param name="skipUnmatched"> [optional] </param>
+    public void Highlight(Tile center, int range, Tile.HighlightColor color, bool isAdditive = true, bool skipUnmatched = false)
     {
-        Highlight(center, 0, range, int.MinValue, color, isAdditive, skipUnmasked);
+        Highlight(center, 0, range, tile => true, color, isAdditive, skipUnmatched);
+    }
+
+    public void Highlight(Tile center, int range, Tile.HighlightColor color, bool isAdditive = true, int skipUnmatchedAfter = int.MaxValue)
+    {
+        Highlight(center, 0, range, tile => true, color, isAdditive, skipUnmatchedAfter);
     }
 
     /// <summary>
@@ -578,10 +591,15 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// <param name="range"> The range to concern </param>
     /// <param name="mask"> The mask for filtering </param>
     /// <param name="color"> The color to highlight with </param>
-    /// <param name="skipUnmasked"> [optional] </param>
-    public void Highlight(Tile center, int range, int mask, Tile.HighlightColor color, bool isAdditive = true, bool skipUnmasked = false)
+    /// <param name="skipUnmatched"> [optional] </param>
+    public void Highlight(Tile center, int range, Predicate<Tile> Match, Tile.HighlightColor color, bool isAdditive = true, bool skipUnmatched = false)
     {
-        Highlight(center, 0, range, mask, color, isAdditive, skipUnmasked);
+        Highlight(center, 0, range, Match, color, isAdditive, skipUnmatched);
+    }
+
+    public void Highlight(Tile center, int range, Predicate<Tile> Match, Tile.HighlightColor color, bool isAdditive = true, int skipUnmatchedAfter = int.MaxValue)
+    {
+        Highlight(center, 0, range, Match, color, isAdditive, skipUnmatchedAfter);
     }
 
     /// <summary>
@@ -592,35 +610,64 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// <param name="upper"> The higher boundary of the distance </param>
     /// <param name="mask"> The mask for filtering </param>
     /// <param name="color"> The color to highlight with </param>
-    /// <param name="skipUnmasked"> [optional] </param>
-    public void Highlight(Tile center, int lower, int upper, int mask, Tile.HighlightColor color, bool isAdditive = true, bool skipUnmasked = false)
+    /// <param name="skipUnmatched"> [optional] </param>
+    public void Highlight(Tile center, int lower, int upper, Predicate<Tile> Match, Tile.HighlightColor color, bool isAdditive = true, bool skipUnmatched = false)
     {
+        Highlight(center, lower, upper, Match, color, isAdditive, skipUnmatched ? 0 : int.MaxValue);
+    }
+
+    public void Highlight(Tile center, int lower, int upper, Predicate<Tile> Match, Tile.HighlightColor color, bool isAdditive = true, int skipUnmatchedAfter = int.MaxValue)
+    {
+        foreach (Tile tile in BreadthFirstSearch(center, lower, upper, Match, skipUnmatchedAfter))
+            Highlight(tile, color, isAdditive);
+    }
+
+    public List<Tile> BreadthFirstSearch(Tile center, int range)
+    {
+        return BreadthFirstSearch(center, 0, range);
+    }
+
+    public List<Tile> BreadthFirstSearch(Tile center, int lowerRange, int upperRange)
+    {
+        return BreadthFirstSearch(center, lowerRange, upperRange, tile => true, false);
+    }
+
+    public List<Tile> BreadthFirstSearch(Tile center, int lowerRange, int upperRange, Predicate<Tile> Match, bool skipUnmatched = false)
+    {
+        return BreadthFirstSearch(center, lowerRange, upperRange, Match, skipUnmatched ? 0 : int.MaxValue);
+    }
+
+    public List<Tile> BreadthFirstSearch(Tile center, int lowerRange, int upperRange, Predicate<Tile> Match, int skipUnmatchedAfter = int.MaxValue)
+    {
+        List<Tile> list = new List<Tile>();
+
+        bool neverSkipUnmatched = skipUnmatchedAfter >= upperRange;
+        bool canMarkVisitedBeforehead = skipUnmatchedAfter == 0 || neverSkipUnmatched;
+
         bool[,] isVisited = new bool[Length, Width];
 
-        Queue<KeyValuePair<Tile, int>> q = new Queue<KeyValuePair<Tile, int>>();
-
-        q.Enqueue(new KeyValuePair<Tile, int>(center, 0));
+        Queue<KeyValuePair<Tile, int[]>> q = new Queue<KeyValuePair<Tile, int[]>>();
+        q.Enqueue(new KeyValuePair<Tile, int[]>(center, new int[2] { 0, 0 }));
 
         while (q.Count > 0)
         {
-            KeyValuePair<Tile, int> pair = q.Dequeue();
+            KeyValuePair<Tile, int[]> pair = q.Dequeue();
 
             Tile tile = pair.Key;
-            int distance = pair.Value;
+            int[] values = pair.Value;
 
-            if (distance >= lower && distance <= upper && (skipUnmasked || (center.Mark & mask) != 0))
-            {
-                tile.Highlight(color, isAdditive);
-                numHighlightedTiles++;
-            }
+            int distance = values[0];
+            int numUnmatched = values[1];
+
+            if (distance >= lowerRange && (Match(tile) || !neverSkipUnmatched))
+                list.Add(tile);
 
             int x = tile.x;
             int y = tile.y;
 
             isVisited[x, y] = true;
 
-            if (++distance <= upper)
-                //{
+            if (++distance <= upperRange)
                 foreach (Vector2Int coordinate in GetAdjacentGridPositions(x, y))
                 {
                     int xi = coordinate.x;
@@ -630,54 +677,17 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                     {
                         tile = grid[xi, yi];
 
-                        if (!skipUnmasked || (tile.Mark & mask) != 0)
-                            q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
-                        else
+                        if (Match(tile))
+                            q.Enqueue(new KeyValuePair<Tile, int[]>(tile, new int[2] { distance, numUnmatched }));
+                        else if (numUnmatched < skipUnmatchedAfter)
+                            q.Enqueue(new KeyValuePair<Tile, int[]>(tile, new int[2] { distance, numUnmatched + 1 }));
+                        else if (canMarkVisitedBeforehead)
                             isVisited[xi, yi] = true;
                     }
                 }
-
-            //    if (x + 1 < Length && !isVisited[x + 1, y])
-            //    {
-            //        tile = grid[x + 1, y];
-
-            //        if (!skipUnmasked || (tile.Mark & mask) != 0)
-            //            q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
-            //        else
-            //            isVisited[x, y] = true;
-            //    }
-
-            //    if (x - 1 >= 0 && !isVisited[x - 1, y])
-            //    {
-            //        tile = grid[x - 1, y];
-
-            //        if (!skipUnmasked || (tile.Mark & mask) != 0)
-            //            q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
-            //        else
-            //            isVisited[x, y] = true;
-            //    }
-
-            //    if (y + 1 < Width && !isVisited[x, y + 1])
-            //    {
-            //        tile = grid[x, y + 1];
-
-            //        if (!skipUnmasked || (tile.Mark & mask) != 0)
-            //            q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
-            //        else
-            //            isVisited[x, y] = true;
-            //    }
-
-            //    if (y - 1 >= 0 && !isVisited[x, y - 1])
-            //    {
-            //        tile = grid[x, y - 1];
-
-            //        if (!skipUnmasked || (tile.Mark & mask) != 0)
-            //            q.Enqueue(new KeyValuePair<Tile, int>(tile, distance));
-            //        else
-            //            isVisited[x, y] = true;
-            //    }
-            //}
         }
+
+        return list;
     }
 
     /// <summary>
@@ -724,13 +734,12 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
         if (path != null)
         {
-            player _player = LevelManager.Instance.Player;
-
+            player Player = LevelManager.Instance.Player;
 
             if (path.Count == 0)
-                Highlight(GetTile(_player.transform.position), _player.Ap, Tile.HighlightColor.Blue, true, true);
+                Highlight(GetTile(Player.transform.position), Player.Ap, Player.IsAccessibleTo, Tile.HighlightColor.Blue, true, true);
             else
-                Highlight(path.Destination, _player.Ap - path.Count, Tile.HighlightColor.Blue, true, true);
+                Highlight(path.Destination, Player.Ap - path.Count, Player.IsAccessibleTo, Tile.HighlightColor.Blue, true, true);
 
             foreach (Tile wayPoint in path)
                 Highlight(wayPoint, Tile.HighlightColor.Green, false);
@@ -740,7 +749,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     private void HandleCardToUseChange(Card cardToUse)
     {
         if (cardToUse != null)
-            Highlight(GetTile(LevelManager.Instance.Player.transform.position), cardToUse.Data.Range, Tile.HighlightColor.Green, false);
+            Highlight(GetTile(LevelManager.Instance.Player.transform.position), cardToUse.Data.Range, IsWalkable, Tile.HighlightColor.Green, false, false);
         else
             DehighlightAll();
     }

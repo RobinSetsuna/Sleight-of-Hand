@@ -78,6 +78,8 @@ public class UIManager : MonoBehaviour
 
         UIWindow uiWindow = Instantiate(ResourceUtility.GetUIPrefab<UIWindow>(name), transform, false);
 
+        uiWindow.transform.SetSiblingIndex(0);
+
         uiWindowsOpened.Add(name, uiWindow);
 
         uiWindow.OnOpen(args);
@@ -86,6 +88,12 @@ public class UIManager : MonoBehaviour
             uiWindowStack.Push(name);
 
         return uiWindow;
+    }
+
+    public void Redraw(string name)
+    {
+        if (IsInViewport(name))
+            uiWindowsOpened[name].Redraw();
     }
 
     public void ForceUpdate(string name)
