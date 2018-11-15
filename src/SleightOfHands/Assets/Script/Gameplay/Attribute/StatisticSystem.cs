@@ -100,14 +100,32 @@ public class StatisticSystem
         LevelManager.Instance.onRoundNumberChange.AddListener(HandleRoundNumberChange);
     }
 
-    public void ApplyDamage(int damage)
+    public int ApplyFatigue(int rawFatigue)
     {
+        int fatigue = rawFatigue;
+
+        AddStatusEffect(new StatusEffect(1, int.MaxValue, fatigue));
+
+        return fatigue;
+    }
+
+    public int ApplyDamage(int rawDamage)
+    {
+        int damage = rawDamage;
+
         AddStatusEffect(new StatusEffect(0, int.MaxValue, damage));
+
+        return damage;
     }
 
     public float Sum(AttributeType attribute)
     {
         return AttributeSet.Sum(attribute, talents, statusEffects);
+    }
+
+    public float CalculateActualApCost(int rawCost)
+    {
+        return rawCost;
     }
 
     //~StatisticSystem()

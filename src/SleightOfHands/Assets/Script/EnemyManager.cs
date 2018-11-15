@@ -12,7 +12,7 @@ public class EnemyManager
         }
     }
 
-    private List<EnemyController> enmies = new List<EnemyController>();
+    private List<EnemyController> enemies = new List<EnemyController>();
     private int currentEnemyIndex;
 
     private System.Action callback;
@@ -23,21 +23,26 @@ public class EnemyManager
     {
         this.callback = callback;
 
-        currentEnemyIndex = 0;
+        currentEnemyIndex = -1;
 
         ActivateNextEnemy();
     }
 
+    internal void Initialize(List<EnemyController> enemies)
+    {
+        this.enemies = enemies;
+    }
+
     private void ActivateNextEnemy()
     {
-        if (currentEnemyIndex == enmies.Count)
+        if (++currentEnemyIndex == enemies.Count)
         {
             if (callback != null)
                 callback.Invoke();
         }
         else
         {
-            Transform currentEnemyTransform = enmies[currentEnemyIndex].transform;
+            Transform currentEnemyTransform = enemies[currentEnemyIndex].transform;
 
             CameraManager.Instance.FocusAt(currentEnemyTransform.position, ActivateCurrentEnemy);
             CameraManager.Instance.BoundCameraFollow(currentEnemyTransform);
@@ -46,7 +51,37 @@ public class EnemyManager
 
     private void ActivateCurrentEnemy()
     {
-        enmies[currentEnemyIndex++].Activate(ActivateNextEnemy);
+        enemies[currentEnemyIndex].Activate(ActivateNextEnemy);
+    }
+
+    public void AlertPop(Transform enemy)
+    {
+        var temp = Object.Instantiate(ResourceUtility.GetPrefab<GameObject>("AlertBubble"), enemy.position, Quaternion.identity, enemy);
+        Object.Destroy(temp, 0.5f);
+    }
+
+    public void AttackPop(Transform enemy)
+    {
+        var temp = Object.Instantiate(ResourceUtility.GetPrefab<GameObject>("AttackBubble"), enemy.position, Quaternion.identity, enemy);
+        Object.Destroy(temp, 1.5f);
+    }
+
+    public void IdlePop(Transform enemy)
+    {
+        var temp = Object.Instantiate(ResourceUtility.GetPrefab<GameObject>("IdleBubble"), enemy.position, Quaternion.identity, enemy);
+        Object.Destroy(temp, 1.5f);
+    }
+
+    public void FoundPop(Transform enemy)
+    {
+        var temp = Object.Instantiate(ResourceUtility.GetPrefab<GameObject>("FoundBubble"), enemy.position, Quaternion.identity, enemy);
+        Object.Destroy(temp, 1.5f);
+    }
+
+    public void QuestionPop(Transform enemy)
+    {
+        var temp = Object.Instantiate(ResourceUtility.GetPrefab<GameObject>("QuestionBubble"), enemy.position, Quaternion.identity, enemy);
+        Object.Destroy(temp, 1.5f);
     }
 
     ////EnemyList
@@ -138,31 +173,5 @@ public class EnemyManager
     //               foreach (Tile tile in enemy.RangeList)
     //                   tile.Dehighlight();
     //           }
-    //}
-
-    //public void AlertPop(Transform enemy)
-    //{
-    //	var temp = Instantiate(ResourceUtility.GetPrefab<GameObject>("AlertBubble"), enemy.position, Quaternion.identity,enemy);
-    //	Destroy(temp,0.5f);
-    //}
-    //public void AttackPop(Transform enemy)
-    //{
-    //	var temp = Instantiate(ResourceUtility.GetPrefab<GameObject>("AttackBubble"), enemy.position, Quaternion.identity,enemy);
-    //	Destroy(temp,1.5f);
-    //}
-    //public void IdlePop(Transform enemy)
-    //{
-    //	var temp = Instantiate(ResourceUtility.GetPrefab<GameObject>("IdleBubble"), enemy.position, Quaternion.identity,enemy);
-    //	Destroy(temp,1.5f);
-    //}
-    //public void FoundPop(Transform enemy)
-    //{
-    //	var temp = Instantiate(ResourceUtility.GetPrefab<GameObject>("FoundBubble"), enemy.position, Quaternion.identity,enemy);
-    //	Destroy(temp,1.5f);
-    //}
-    //public void QuestionPop(Transform enemy)
-    //{
-    //	var temp = Instantiate(ResourceUtility.GetPrefab<GameObject>("QuestionBubble"), enemy.position, Quaternion.identity,enemy);
-    //	Destroy(temp,1.5f);
     //}
 }

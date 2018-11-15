@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4029078181474952}
   - component: {fileID: 33570936646401778}
   - component: {fileID: 23132420302455484}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: default
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,14 +38,14 @@ GameObject:
   - component: {fileID: 4308955493693192}
   - component: {fileID: 33345426575206592}
   - component: {fileID: 23520858110892748}
-  - component: {fileID: 114018858310208834}
-  - component: {fileID: 114781160667747748}
+  - component: {fileID: 65914821895829518}
   - component: {fileID: 143898985038416060}
   - component: {fileID: 82482950872398194}
-  - component: {fileID: 65914821895829518}
-  m_Layer: 13
+  - component: {fileID: 114018858310208834}
+  - component: {fileID: 114483671478209222}
+  m_Layer: 14
   m_Name: GuardDummy
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58,7 +58,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4365009412478690}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: red_knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4892456735059000}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Red Knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,8 +335,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a343e0c55f2a12d46abae7695ced8897, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   actionRound: 1
   maxSpeed: 2
   initialActionPoint: 4
@@ -349,8 +349,8 @@ MonoBehaviour:
   ID: 0
   detectionRange: 3
   attackRange: 1
-  DetectionHighlighted: 0
---- !u!114 &114781160667747748
+  attack: 100
+--- !u!114 &114483671478209222
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -358,9 +358,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1452462458653018}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4bd755e3810240439520ac84aeb27a6, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Script: {fileID: 11500000, guid: e13b359ae6f05a646b4930901d70971c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   Type: 2
 --- !u!143 &143898985038416060
 CharacterController:

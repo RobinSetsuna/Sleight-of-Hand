@@ -297,7 +297,7 @@ public class PlayerController : MouseInteractable
                 if (obj == this || (obj.GetComponent<Tile>() == GridManager.Instance.GetTile(Player.transform.position)))
                     CurrentPlayerState = PlayerState.MovementPlanning;
                 else if (obj.GetComponent<Enemy>())
-                    obj.GetComponent<Enemy>().HighlightDetection();
+                    GridManager.Instance.ToggleDetectionArea(obj.GetComponent<EnemyController>().UID);
                 else if (obj.GetComponent<UICard>())
                 {
                     CurrentPlayerState = PlayerState.CardUsagePlanning;
@@ -308,6 +308,8 @@ public class PlayerController : MouseInteractable
             case PlayerState.MovementPlanning:
                 if (obj == this)
                     CurrentPlayerState = PlayerState.Idle;
+                else if (obj.GetComponent<Enemy>())
+                    GridManager.Instance.ToggleDetectionArea(obj.GetComponent<EnemyController>().UID);
                 else if (obj.GetComponent<Tile>())
                 {
                     Tile tile = obj.GetComponent<Tile>();

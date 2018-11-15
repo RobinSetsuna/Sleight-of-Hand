@@ -10,62 +10,79 @@ public enum EnemyState : int
     Attack,
 }
 
-public class EnemyController : MonoBehaviour
+public enum EnemyMode : int
 {
-    public EventOnDataChange<EnemyState> onCurrentEnemyStateChange = new EventOnDataChange<EnemyState>();
+    Patrolling,
+    Chasing,
+    Dazzled,
+}
 
-	private Enemy pawn;
-    public Unit Target { get; internal set; }
+public class EnemyController : MouseInteractable
+{
+	private Enemy enemy;
 
     private List<Vector2Int> wayPoints;
 
     private int nextPosIndex;
     private bool newRound;
 
-    private DetectionState currentDetectionState;
-    private DetectionState previousDetectionState = DetectionState.Normal;
+    
+    private EnemyMode previousMode = EnemyMode.Patrolling;
 
     private System.Action callback;
+    private Path<Tile> path;
 
-    /// <summary>
-    /// The current Detection state of the Enemy
-    /// </summary>
-    public DetectionState CurrentDetectionState
+    private int uid = -1;
+    public int UID
     {
         get
         {
-            return currentDetectionState;
+            return uid;
         }
-        set
+
+        internal set
         {
-#if UNITY_EDITOR
-            LogUtility.PrintLogFormat("Enemy", "Made a Detection transition to {0}.", value);
-#endif
-            currentDetectionState = value;
+            if (uid < 0)
+                uid = value;
         }
     }
 
     /// <summary>
-    /// An event triggered whenever the planned path is changed by the player
+    /// The current behavior mode of the enemy
     /// </summary>
-    public EventOnDataUpdate<Path<Tile>> onPathUpdate = new EventOnDataUpdate<Path<Tile>>();
-
-    private Path<Tile> path;
-    private Path<Tile> Path
+    private EnemyMode mode;
+    public EnemyMode Mode
     {
-        set
+        get
         {
-            if (value != path)
+            return mode;
+        }
+
+        internal set
+        {
+            if (value != mode)
             {
-                path = value;
-                //onPathUpdate.Invoke(path);
-                //not invoke the event now. since we are not using it.
+#if UNITY_EDITOR
+                Debug.Log(LogUtility.MakeLogStringFormat("EnemyController", "Change mode from {0} to {1}.", mode, value));
+#endif
+
+                mode = value;
+
+                if (currentEnemyState == EnemyState.Deactivated)
+                    previousMode = value;
+
+                switch (mode)
+                {
+                    case EnemyMode.Chasing:
+                        Founded();
+                        break;
+                }
             }
         }
     }
 
     /// <summary>
-    /// The current state of the Enemy
+    /// The current state of the enemy
     /// </summary>
     private EnemyState currentEnemyState;
     public EnemyState CurrentEnemyState
@@ -77,59 +94,72 @@ public class EnemyController : MonoBehaviour
 
         private set
         {
-#if UNITY_EDITOR
-            LogUtility.PrintLogFormat("Enemy", "Made a transition to {0}.", value);
-#endif
 
-            // Reset current state
+
+            // Reset the current state
             if (value == currentEnemyState)
             {
+#if UNITY_EDITOR
+                Debug.Log(LogUtility.MakeLogStringFormat("EnemyController", "Reset the current state ({0}).", currentEnemyState));
+#endif
+
                 //switch (currentEnemyState)
                 //{
                 //}
             }
             else
             {
+#if UNITY_EDITOR
+                Debug.Log(LogUtility.MakeLogStringFormat("EnemyController", "Made a transition from {0} to {1}.", currentEnemyState, value));
+#endif
+
+                // Before leaving the previous state
+                //switch (currentEnemyState)
+                //{
+                //}
+
                 EnemyState previousEnemyState = currentEnemyState;
                 currentEnemyState = value;
 
                 // After entering the new state
+                //switch (currentEnemyState)
+                //{
+                //}
+
+                // In the new state
                 switch (currentEnemyState)
                 {
                     case EnemyState.Deactivated:
-                        Path = null;
+                        path = null;
+                        if (callback != null)
+                            callback.Invoke();
                         break;
+
                     case EnemyState.Idle:
-                        switch (CurrentDetectionState)
-                        {
-                            case DetectionState.Normal:
-                                if (apToUse > 0)
-                                    CurrentEnemyState = EnemyState.Move;
-                                break;
-                        }
-                        if (pawn.Ap <= (currentDetectionState == DetectionState.Normal ? pawn.InitialActionPoint - pawn.InitialActionPoint / 2 : 0))
-                            Deactivate();
+                        if (enemy.Ap <= (mode == EnemyMode.Patrolling ? enemy.InitialActionPoint - enemy.InitialActionPoint / 2 : 0))
+                            CurrentEnemyState = EnemyState.Deactivated;
                         else
                             CurrentEnemyState = EnemyState.Move;
+                        path = null;
                         break;
+
                     case EnemyState.Move:
-                        if (InAttackRange())
+                        if (IsInAttackRange(LevelManager.Instance.Player))
                             StartCoroutine(AttackDecision());
                         else
                             StartCoroutine(MovementDecision());
                         break;
                 }
-
-                onCurrentEnemyStateChange.Invoke(previousEnemyState, currentEnemyState);
             }
         }
     }
 
-    private void Start()
+    /// <summary>
+    /// a set the pathList from loadedData
+    /// </summary>
+    internal void SetWayPoints(List<Vector2Int> wayPoints)
     {
-        pawn = GetComponent<Enemy>();
-
-        LevelManager.Instance.onGameEnd.AddListener(StopAllCoroutines);
+        this.wayPoints = wayPoints;
     }
 
     internal void Activate(System.Action callback)
@@ -140,10 +170,9 @@ public class EnemyController : MonoBehaviour
         CurrentEnemyState = EnemyState.Idle;
     }
 
-    private void Deactivate()
+    private void Start()
     {
-        if (callback != null)
-            callback.Invoke();
+        enemy = GetComponent<Enemy>();
     }
 
     /// <summary>
@@ -151,19 +180,19 @@ public class EnemyController : MonoBehaviour
     /// </summary>
     private IEnumerator AttackDecision()
     {
-        if (InAttackRange() && pawn.Ap >= 1 && currentDetectionState == DetectionState.Found)
-        {
-            player Player = LevelManager.Instance.Player;
+        player Player = LevelManager.Instance.Player;
 
+        if (IsInAttackRange(Player) && enemy.Ap >= 1 && mode == EnemyMode.Chasing)
+        {
             transform.LookAt(Player.transform, Vector3.up);
 
             EnemyManager.Instance.AttackPop(transform);
             yield return new WaitForSeconds(2f);
 
-            Player.Statistics.ApplyDamage(pawn.attack);
-            pawn.Statistics.AddStatusEffect(new StatusEffect(1, 2));
+            Player.SendMessage("ApplyDamage", enemy.Attack);
+            enemy.Statistics.ApplyFatigue(1);
 
-            LevelManager.Instance.EndEnvironmentActionPhase();
+            CurrentEnemyState = EnemyState.Deactivated;
         }
     }
 
@@ -173,28 +202,29 @@ public class EnemyController : MonoBehaviour
     private IEnumerator MovementDecision()
     {
         Tile enemyTile = GridManager.Instance.GetTile(transform.position);
-        switch (CurrentDetectionState)
+        switch (Mode)
         {
-                case DetectionState.Found:
+                case EnemyMode.Chasing:
                     if (newRound) {
                         EnemyManager.Instance.FoundPop(transform);
                         yield return new WaitForSeconds(1.5f);
                         newRound = false;
                      }
-                    Tile playerTile = GridManager.Instance.GetTile(Player.transform.position);
+                    Tile playerTile = GridManager.Instance.GetTile(LevelManager.Instance.Player.transform.position);
                     Tile finalDes = NearPosition(playerTile, enemyTile);
                     if (finalDes == null)
                     {
-                        LevelManager.Instance.EndEnvironmentActionPhase();
+                        CurrentEnemyState = EnemyState.Deactivated;
                         yield break;
                     }
                     // --------------------------------------------------------------------------------------------------------------------
                     // this code used as a temp solution, must change the actionManager to remove the NAN Movement action
                     finalDes = Navigation.FindPath(GridManager.Instance, enemyTile, finalDes, GridManager.Instance.IsWalkable).GetSecond();
-                    Path = Navigation.FindPath(GridManager.Instance, enemyTile, finalDes, GridManager.Instance.IsWalkable);
+                    path = Navigation.FindPath(GridManager.Instance, enemyTile, finalDes, GridManager.Instance.IsWalkable);
                     // --------------------------------------------------------------------------------------------------------------------
                     break;
-                case DetectionState.Normal:
+
+                case EnemyMode.Patrolling:
                     if (wayPoints.Count==0)
                     {
                         break;
@@ -213,15 +243,16 @@ public class EnemyController : MonoBehaviour
                         nextPosIndex = destinationIndex;
                         Tile destination = GridManager.Instance.GetTile(wayPoints[destinationIndex]);
                         destination = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable).GetSecond();
-                        Path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);
+                        path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);
                     }
                     else
                     {
                         Tile destination = GridManager.Instance.GetTile(wayPoints[FindClosestPathNode(enemyPos)]);
-                        Path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);
+                        path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);
                     }
                     break;
-                case DetectionState.Doubt:
+
+                case EnemyMode.Dazzled:
                     // currently not use doubt status
                    // Debug.Log("Doubt status, the code should never trigger this.");
                     int x = Random.Range(-1, 1);
@@ -233,70 +264,57 @@ public class EnemyController : MonoBehaviour
                     }
                     int temp_x = enemyTile.x - 1;
                     int temp_y = enemyTile.y + 0;
-                    if (GridManager.Instance.HasUnitOn(temp_x, temp_y) ||
-                        !GridManager.Instance.IsWalkable(temp_x, temp_y))
+                    if (GridManager.Instance.HasUnitOn(temp_x, temp_y) || !GridManager.Instance.IsWalkable(temp_x, temp_y))
                     {
                         // Oops, no movement
-                        path = null;
-                        LevelManager.Instance.EndEnvironmentActionPhase();
+                        CurrentEnemyState = EnemyState.Deactivated;
                     }
                     else
                     {
                         Tile destination = GridManager.Instance.GetTile(temp_x, temp_y);
-                        Path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);
+                        path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);
                     }
                     break;
         }
 
         if (path != null)
         {
-            int temp = currentDetectionState == DetectionState.Normal ? pawn.Ap / 2 : pawn.Ap;
+            int temp = mode == EnemyMode.Patrolling ? enemy.Ap / 2 : enemy.Ap;
 
             for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
             {
                 if (temp == 0)
                     break;
 
-                ActionManager.Singleton.AddBack(new Movement(pawn, tile), ResetToIdle);
+                ActionManager.Singleton.AddBack(new Movement(enemy, tile), ResetToIdle);
             }
-            Path = null;
+            path = null;
         }
     }
 
     /// <summary>
     /// check if the player is in the attack range
     /// </summary>
-    private bool InAttackRange()
+    private bool IsInAttackRange(Unit target)
     {
         Tile enemyTile = GridManager.Instance.GetTile(transform.position);
-        Tile playerTile = GridManager.Instance.GetTile(LevelManager.Instance.Player.transform.position);
+        Tile targetTile = GridManager.Instance.GetTile(target.transform.position);
 
-        return MathUtility.ManhattanDistance(enemyTile.x, enemyTile.y, playerTile.x, playerTile.y) <= pawn.AttackRange;
+        return MathUtility.ManhattanDistance(enemyTile.x, enemyTile.y, targetTile.x, targetTile.y) <= enemy.AttackRange;
     }
 
     /// <summary>
     /// a setter for enemy Detection
     /// </summary>
-    public void SetDetectionState(DetectionState current)
+    public void SetDetectionState(EnemyMode current)
     {
-        if (currentDetectionState == DetectionState.Found && current != DetectionState.Found)
+        if (mode == EnemyMode.Chasing && current != EnemyMode.Chasing)
             EnemyManager.Instance.QuestionPop(transform);
 
-        previousDetectionState = CurrentDetectionState;
-        currentDetectionState = current;
+        previousMode = Mode;
+        mode = current;
     }
 
-    /// <summary>
-    /// a set the pathList from loadedData
-    /// </summary>
-    public void SetPathList(List<Vector2Int> pl)
-    {
-        wayPoints = pl;
-    }
-
-    /// <summary>
-    /// Make a transition to PlayerState.Move
-    /// </summary>
     private void ResetToIdle()
     {
         StartCoroutine(resetToIdle());
@@ -304,14 +322,14 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator resetToIdle()
     {
-        if (previousDetectionState != currentDetectionState)
+        if (previousMode != mode)
         {
-            previousDetectionState = currentDetectionState;
+            previousMode = mode;
             yield return new WaitForSeconds(1f);
         }
 
-        if (previousDetectionState == DetectionState.Doubt)
-            LevelManager.Instance.EndEnvironmentActionPhase();
+        if (previousMode == EnemyMode.Dazzled)
+            CurrentEnemyState = EnemyState.Deactivated;
         else
         {
             ActionManager.Singleton.Clear();

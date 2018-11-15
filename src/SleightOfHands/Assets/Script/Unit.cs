@@ -6,7 +6,7 @@ using UnityEngine;
 /// abstract class for all walkable unit in map
 /// when heading, move to heading, facing heading direction.
 /// </summary>
-public abstract class Unit : InLevelObject
+public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiver
 {
     [SerializeField] private Round actionRound;
     [SerializeField] private float maxSpeed;
@@ -16,7 +16,8 @@ public abstract class Unit : InLevelObject
     public EventOnDataChange<Vector2Int> onGridPositionChange = new EventOnDataChange<Vector2Int>();
 
     public StatisticSystem.EventOnStatisticChange onAttributeChange;
-    private Vector2Int gridPosition;
+
+    private Vector2Int gridPosition = new Vector2Int(-1, -1);
     public Vector2Int GridPosition
     {
         get
@@ -158,74 +159,56 @@ public abstract class Unit : InLevelObject
 
         // LevelManager.Instance.onNewTurnUpdateAttribute.AddListener(HandleAttributesChangeOnTurn);
         // CardManager.Instance.OnAttributesChangeOnEffects.AddListener(HandleAttributesChangeOnEffects);
-
-        gridPosition = GridManager.Instance.GetTile(transform.position).gridPosition;
-        GridManager.Instance.NotifyUnitPositionChange(this, new Vector2Int(-1, -1), gridPosition);
     }
 
-    private void Start()
+    protected virtual void Start()
     {
+        GridPosition = GridManager.Instance.GetTile(transform.position).gridPosition;
+
         characterController = GetComponent<CharacterController>();
     }
 
-    private void FixedUpdate() {
-
+    private void FixedUpdate()
+    {
         // Push player to ground
         if (characterController != null && !characterController.isGrounded)
-        {
             characterController.Move(Vector3.up * (-9.81f * Time.deltaTime));
-        }
-
-
     }
 
-    //public void HandleAttributesChangeOnEffects(Effects effects)
-    //{
-    //    //Debug.Log(effects.CurrentAP_c());
-    //    //Debug.Log(effects.CurrentAP_f());
-    //    if (effects.owner == this.unitName)
-    //    {
-    //        ActionPoint = (ActionPoint + effects.CurrentAP_c()) * (1 + effects.CurrentAP_f());
-    //        Health = (Health + effects.CurrentHP_c()) * (1 + effects.CurrentHP_f());
-    //    }
+    public virtual int ApplyDamage(int rawDamage)
+    {
+        return Statistics.ApplyDamage(rawDamage);
+    }
 
-    //}
+    public virtual bool ApplyStatusEffect(StatusEffect statusEffect)
+    {
+        Statistics.AddStatusEffect(statusEffect);
+        return true;
+    }
 
-    //When enter a new turn, this will be called to calculate the newest attributes
-    //public void HandleAttributesChangeOnTurn(Effects effects)
-    //{
-    //    if(effects.owner == this.unitName)
-    //    {
-    //        ActionPoint = (InitialActionPoint + (int)effects.GetAP_c()) * (1 + (int)effects.GetAP_f());
-    //        Health = (InitialHealth + effects.GetHP_c()) * (1 + effects.GetHP_f());
-    //    }
-    //    else
-    //    {
-    //        ActionPoint = InitialActionPoint;
-    //        Health = InitialHealth;
-    //    }
+    public virtual StatusEffect RemoveStatusEffect(int id)
+    {
+        return Statistics.RemoveStatusEffect(id);
+    }
 
-    //}
+    protected virtual void FinishMovement(System.Action callback)
+    {
+        //AudioSource audioSource = GetComponent<AudioSource>();
+        //audioSource.clip = Resources.Load<AudioClip>("Audio/SFX/jump");
+        //audioSource.Play();
 
-    //private void HandleCurrentPhaseChange(Phase currentPhase)
-    //{
-    //    switch (currentPhase)
-    //    {
-    //        case Phase.Start:
-    //            ResetActionPoint();
-    //            break;
-    //    }
-    //}
+        GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/SFX/jump"));
 
-    //when add a new effect to a unit, this will be called to immediately calculate the newest attributes.
-    //private void ResetActionPoint()
-    //{
-    //    ActionPoint = initialActionPoint;
-    //}
+        Statistics.ApplyFatigue(1);
+
+        GridPosition = GridManager.Instance.GetTile(transform.position).gridPosition;
+
+        if (callback != null)
+            callback.Invoke();
+    }
 
     private IEnumerator Move(System.Action callback)
     {
-
         float initialDistance = MathUtility.ManhattanDistance(destination.x, destination.z, transform.position.x, transform.position.z);
         Vector3 initialPosition = transform.position;
 
@@ -267,49 +250,9 @@ public abstract class Unit : InLevelObject
 
             yield return null;
         }
-        AudioSource _audioSource = this.gameObject.GetComponent<AudioSource>();
-        AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/jump");
-        _audioSource.clip = audioClip;
-        _audioSource.Play();
 
-        var temp = GridManager.Instance.GetTile(transform.position).gridPosition;
-        GridPosition = new Vector2Int(temp.x,temp.y);
+        FinishMovement(callback);
 
-        Statistics.AddStatusEffect(new StatusEffect(1, 2));
-
-        if (callback != null)
-            callback.Invoke();
-
-        yield return null;
+        yield break;
     }
-
-    //protected Transform heading;
-
-    //// Update is called once per frame
-    //protected void FixedUpdate(){
-    //	if ( heading!= null && heading.position != Vector3.zero)
-    //	{
-    //		// heading detected
-    //		Vector3 desiredPosition = new Vector3(heading.position.x, transform.position.y, heading.position.z);
-    //		Facing(desiredPosition);
-    //		transform.position = Vector3.MoveTowards(transform.position, desiredPosition, movementSpeed * Time.deltaTime);
-    //		if ((transform.position - heading.position).sqrMagnitude < 1.05)
-    //		{
-    //			// arrived heading tile
-    //			heading = null;
-    //		}
-    //	}
-    //}
-
-    //   // change direction of unit facing, sync with heading
-    //void Facing(Vector3 pos)
-    //{
-    //	transform.LookAt(pos);
-    //}
-
-    //public void setHeading(Tile tile)
-    //{
-    //	//heading is the next tile unit will move to.
-    //	heading = tile.transform;
-    //}
 }

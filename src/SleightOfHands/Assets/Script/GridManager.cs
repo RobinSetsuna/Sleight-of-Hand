@@ -39,7 +39,15 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     //private float last_mouse_down;
 
     private Unit[,] units;
+
     private Tile[,] grid;
+
+    private int[,] detection;
+
+    private int[,] detectionHighlights;
+    private HashSet<int> highlightedDetectionAreas = new HashSet<int>();
+
+    private HashSet<Tile>[] detectionAreas = new HashSet<Tile>[32];
 
     //public bool dragging;
     //public bool ok_to_drag;
@@ -85,28 +93,6 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             return tileSize;
         }
     }
-
-    //private void Start()
-    //{
-    //    ok_to_drag = false;
-    //    action_point = 5;
-    //}
-
-    //private void Update()
-    //{
-    //    if (Input.GetMouseButton(0)&&ok_to_drag)
-    //    {
-    //        dragging = true;
-    //        last_mouse_down = Time.unscaledTime;
-    //        //Debug.Log("hold!");
-    //    }
-    //   // print("time: "+ (Time.unscaledTime -last_mouse_down));
-    //    if (Time.unscaledTime -last_mouse_down > time_intervals)
-    //    {
-    //        //Debug.Log("NOT hold!");
-    //        dragging = false;
-    //    }
-    //}
 
     /// <summary>
     /// Get the tile on a grid position
@@ -304,6 +290,9 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         // new grid with size [mapSize.x,mapSize.y]
         grid = new Tile[mapSize.x, mapSize.y];
         units = new Unit[mapSize.x, mapSize.y];
+
+        detection = new int[mapSize.x, mapSize.y];
+        detectionHighlights = new int[mapSize.x, mapSize.y];
 
         int numExistedTiles = gridRoot.childCount;
 
@@ -690,6 +679,34 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         return list;
     }
 
+    public void ToggleDetectionArea(int uid)
+    {
+        if (highlightedDetectionAreas.Contains(uid))
+        {
+            foreach (Tile tile in detectionAreas[uid])
+            {
+                BitOperationUtility.WriteBit(ref detectionHighlights[tile.x, tile.y], uid, 0);
+
+                if (detectionHighlights[tile.x, tile.y] == 0)
+                    tile.Dehighlight(Tile.HighlightColor.Red);
+            }
+
+            highlightedDetectionAreas.Remove(uid);
+        }
+        else
+        {
+            foreach (Tile tile in detectionAreas[uid])
+            {
+                if (detectionHighlights[tile.x, tile.y] == 0)
+                    tile.Highlight(Tile.HighlightColor.Red);
+
+                BitOperationUtility.WriteBit(ref detectionHighlights[tile.x, tile.y], uid, 1);
+            }
+
+            highlightedDetectionAreas.Add(uid);
+        }
+    }
+
     /// <summary>
     /// Dehighlight all tiles
     /// </summary>
@@ -699,10 +716,55 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         {
             foreach (Tile tile in grid)
                 if (tile)
-                    tile.Dehighlight();
+                    tile.DehighlightAll();
+
+            for (int x = 0; x < mapSize.x; x++)
+                for (int y = 0; y < mapSize.y; y++)
+                    detectionHighlights[x, y] = 0;
+
+            highlightedDetectionAreas.Clear();
 
             numHighlightedTiles = 0;
         }
+    }
+
+    internal void NotifyUnitPositionChange(Unit unit, Vector2Int previousGridPosition, Vector2Int currentGridPosition)
+    {
+        bool isNotInitialization = previousGridPosition.x >= 0;
+
+        if (isNotInitialization)
+            units[previousGridPosition.x, previousGridPosition.y] = null;
+
+        units[currentGridPosition.x, currentGridPosition.y] = unit;
+
+        if (unit.GetComponent<player>())
+        {
+            int d = detection[currentGridPosition.x, currentGridPosition.y];
+
+            if (d != 0)
+                foreach (int uid in BitOperationUtility.GetIndicesOfOne(d))
+                    LevelManager.Instance.Enemies[uid].GetComponent<EnemyController>().Mode = EnemyMode.Chasing;
+        }
+        else if (unit.GetComponent<Enemy>())
+        {
+            int uid = unit.GetComponent<EnemyController>().UID;
+
+            HashSet<Tile> currentDetectionArea = ProjectileManager.Instance.getProjectileRange(GetTile(currentGridPosition), unit.GetComponent<Enemy>().DetectionRange, true, unit.transform.rotation.eulerAngles.y);
+
+            if (isNotInitialization)
+            {
+                foreach (Tile tile in detectionAreas[uid])
+                    if (!currentDetectionArea.Contains(tile))
+                        RemoveDetection(tile, uid);
+            }
+
+            foreach (Tile tile in currentDetectionArea)
+                AddDetection(tile, uid);
+
+            detectionAreas[uid] = currentDetectionArea;
+        }
+
+        onUnitMove.Invoke(unit, previousGridPosition, currentGridPosition);
     }
 
     private void Awake()
@@ -713,6 +775,20 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             Destroy(gameObject);
     }
 
+
+    private void AddDetection(Tile tile, int uid)
+    {
+        if (LevelManager.Instance.Player.GridPosition == tile.gridPosition)
+            LevelManager.Instance.Enemies[uid].GetComponent<EnemyController>().Mode = EnemyMode.Chasing;
+
+        BitOperationUtility.WriteBit(ref detection[tile.x, tile.y], uid, 1);
+    }
+
+    private void RemoveDetection(Tile tile, int uid)
+    {
+        BitOperationUtility.WriteBit(ref detection[tile.x, tile.y], uid, 0);
+    }
+
     private void HandleCurrentPlayerStateChange(PlayerState previousState, PlayerState currentState)
     {
         switch (currentState)
@@ -721,7 +797,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                 foreach (Tile tile in grid)
                     if (tile && tile.IsHighlighted(Tile.HighlightColor.Blue))
                     {
-                        tile.Dehighlight();
+                        tile.Dehighlight(Tile.HighlightColor.Blue);
                         numHighlightedTiles++;
                     }
                 break;
@@ -752,16 +828,6 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             Highlight(GetTile(LevelManager.Instance.Player.transform.position), cardToUse.Data.Range, IsWalkable, Tile.HighlightColor.Green, false, false);
         else
             DehighlightAll();
-    }
-
-    internal void NotifyUnitPositionChange(Unit unit, Vector2Int previousGridPosition, Vector2Int currentGridPosition)
-    {
-        if (previousGridPosition.x >= 0)
-            units[previousGridPosition.x, previousGridPosition.y] = null;
-
-        units[currentGridPosition.x, currentGridPosition.y] = unit;
-
-        onUnitMove.Invoke(unit, previousGridPosition, currentGridPosition);
     }
 
     [Serializable]

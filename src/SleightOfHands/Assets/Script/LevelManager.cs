@@ -102,8 +102,8 @@ public class LevelManager : MonoBehaviour
             {
                 case Phase.Start:
                     // for the Environment round, each unit will have a single start, action, end phase, so add it differently
-                    // RoundNumber++;
-                    // onRoundNumberChange.Invoke(RoundNumber);
+                    RoundNumber++;
+                    onRoundNumberChange.Invoke(RoundNumber);
                     if (CurrentRound == Round.Player)
                         onCurrentTurnChange.Invoke(CurrentTurn);
                     break;
@@ -136,24 +136,24 @@ public class LevelManager : MonoBehaviour
             switch (currentPhase)
             {
                 case Phase.Start:
-                    if (CurrentRound == Round.Player)
-                    {
-                        CurrentPhase = Phase.Action;
-                    }
+                    //if (CurrentRound == Round.Player)
+                    //{
+                    CurrentPhase = Phase.Action;
+                    //}
                     break;
 
-                //case Phase.Action:
-                //    if (CurrentRound == Round.Environment)
-                //        CurrentPhase = Phase.End;
-                //    break;
+                case Phase.Action:
+                    if (CurrentRound == Round.Environment)
+                        EnemyManager.Instance.StartEnemyRound(CurrentTurn, EndActionPhase);
+                    break;
 
                 case Phase.End:
-                    if (CurrentRound == Round.Player)
-                    {
-                        RoundNumber++;
-                        onRoundNumberChange.Invoke(RoundNumber);
-                        CurrentPhase = Phase.Start;
-                    }
+                    //if (CurrentRound == Round.Player)
+                    //{
+                    //    RoundNumber++;
+                    //    onRoundNumberChange.Invoke(RoundNumber);
+                    CurrentPhase = Phase.Start;
+                    //}
                     break;
             }
         }
@@ -205,7 +205,7 @@ public class LevelManager : MonoBehaviour
         CardManager.Instance.Initialize();
         CardManager.Instance.RandomGetCard(3);
 
-        RoundNumber = 0;
+        RoundNumber = -1;
         CurrentPhase = Phase.Start;
     }
 
@@ -214,29 +214,28 @@ public class LevelManager : MonoBehaviour
         CurrentPhase = Phase.Success;
     }
 
-    internal void EndPlayerActionPhase()
+    internal void EndActionPhase()
     {
-        if (CurrentPhase == Phase.Action && CurrentRound == Round.Player)
-            CurrentPhase = Phase.End;
+        CurrentPhase = Phase.End;
     }
 
-    internal void EndEnvironmentActionPhase()
-    {
-        if (CurrentPhase == Phase.Action && CurrentRound == Round.Environment)
-            CurrentPhase = Phase.End;
-    }
+    //internal void EndEnvironmentActionPhase()
+    //{
+    //    if (CurrentPhase == Phase.Action && CurrentRound == Round.Environment)
+    //        CurrentPhase = Phase.End;
+    //}
 
-    internal void StartEnvironmentActionPhase()
-    {
-        if (CurrentPhase == Phase.Start && CurrentRound == Round.Environment)
-            CurrentPhase = Phase.Action;
-    }
+    //internal void StartEnvironmentActionPhase()
+    //{
+    //    if (CurrentPhase == Phase.Start && CurrentRound == Round.Environment)
+    //        CurrentPhase = Phase.Action;
+    //}
 
-    internal void StartNextPhaseTurn()
-    {
-        if (CurrentPhase == Phase.End)
-            CurrentPhase = Phase.Start;
-    }
+    //internal void StartNextPhaseTurn()
+    //{
+    //    if (CurrentPhase == Phase.End)
+    //        CurrentPhase = Phase.Start;
+    //}
 
     bool isRestartButtonDown = false;
     void Update()
@@ -272,6 +271,9 @@ public class LevelManager : MonoBehaviour
             Destroy(enemy.gameObject);
 
         Enemies.Clear();
+
+        List<EnemyController> enemies = new List<EnemyController>();
+        int enemyUID = 0;
 
         foreach (SpawnData spawnData in currentLevel.spawns)
         {
@@ -311,20 +313,18 @@ public class LevelManager : MonoBehaviour
                     break;
 
                 case SpawnData.Type.Guard:
-                    var temp = GridManager.Instance.Spawn(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation); //Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
-                    temp.AddComponent<Effects>();
-                    temp.GetComponent<Effects>().SetOwner("Enemy");
-                    temp.tag = "Enemy";
-                    temp.GetComponent<Enemy>().SetPathList(spawnData.GetPath());
-                    temp.GetComponent<Enemy>().SetDetectionState(EnemyDetectionState.Normal); // set default detection state
-//                    temp.ID = index;
-//                    index++;
-                    Enemies.Add(temp.GetComponent<Enemy>());
+                    Enemy enemy = GridManager.Instance.Spawn(ResourceUtility.GetPrefab<Enemy>("GuardDummy"), spawnPosition, spawnRotation); //Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
+                    EnemyController enemyController = enemy.GetComponent<EnemyController>();
+                    enemyController.SetWayPoints(spawnData.GetPath());
+                    enemyController.SetDetectionState(EnemyMode.Patrolling); // set default detection state
+                    enemyController.UID = enemyUID++;
+                    Enemies.Add(enemy);
+                    enemies.Add(enemyController);
                     break;
             }
         }
 
-        EnemyManager.Instance.setEnemies(Enemies);
+        EnemyManager.Instance.Initialize(enemies);
     }
 
     public void NextRound()
