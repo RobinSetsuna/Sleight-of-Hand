@@ -25,7 +25,6 @@ public class EnemyController : MouseInteractable
 
     private int nextPosIndex;
     private bool newRound;
-
     
     private EnemyMode previousMode = EnemyMode.Patrolling;
 
@@ -118,7 +117,7 @@ public class EnemyController : MouseInteractable
                 //{
                 //}
 
-                EnemyState previousEnemyState = currentEnemyState;
+                //EnemyState previousEnemyState = currentEnemyState;
                 currentEnemyState = value;
 
                 // After entering the new state
@@ -154,6 +153,15 @@ public class EnemyController : MouseInteractable
         }
     }
 
+    public void NotifyDetection(player Player)
+    {
+        Vector2Int playerGridPosition = Player.GridPosition;
+        Vector2Int enemyGridPosition = enemy.GridPosition;
+
+        if (Player.VisibleRange >= MathUtility.ManhattanDistance(playerGridPosition.x, playerGridPosition.y, enemyGridPosition.x, enemyGridPosition.y))
+            Mode = EnemyMode.Chasing;
+    }
+
     /// <summary>
     /// a set the pathList from loadedData
     /// </summary>
@@ -173,6 +181,8 @@ public class EnemyController : MouseInteractable
     private void Start()
     {
         enemy = GetComponent<Enemy>();
+
+        enemy.onStatusEffectChange.AddListener(HandleStatusEffectChange);
     }
 
     /// <summary>
@@ -189,7 +199,7 @@ public class EnemyController : MouseInteractable
             EnemyManager.Instance.AttackPop(transform);
             yield return new WaitForSeconds(2f);
 
-            Player.SendMessage("ApplyDamage", enemy.Attack);
+            Player.ApplyDamage(enemy.Attack);
             enemy.Statistics.ApplyFatigue(1);
 
             CurrentEnemyState = EnemyState.Deactivated;
@@ -300,19 +310,7 @@ public class EnemyController : MouseInteractable
         Tile enemyTile = GridManager.Instance.GetTile(transform.position);
         Tile targetTile = GridManager.Instance.GetTile(target.transform.position);
 
-        return MathUtility.ManhattanDistance(enemyTile.x, enemyTile.y, targetTile.x, targetTile.y) <= enemy.AttackRange;
-    }
-
-    /// <summary>
-    /// a setter for enemy Detection
-    /// </summary>
-    public void SetDetectionState(EnemyMode current)
-    {
-        if (mode == EnemyMode.Chasing && current != EnemyMode.Chasing)
-            EnemyManager.Instance.QuestionPop(transform);
-
-        previousMode = Mode;
-        mode = current;
+        return MathUtility.ManhattanDistance(enemyTile.x, enemyTile.y, targetTile.x, targetTile.y) <= Mathf.Min(enemy.AttackRange, target.VisibleRange);
     }
 
     private void ResetToIdle()
@@ -361,7 +359,6 @@ public class EnemyController : MouseInteractable
         }
         return nearest;
     }
-
 
     /// <summary>
     /// get and check the tile around the player to set path.
@@ -416,5 +413,29 @@ public class EnemyController : MouseInteractable
 
         _audioSource.clip = audioClip;
         _audioSource.Play();
+    }
+
+    private void HandleStatusEffectChange(ChangeType change, StatusEffect statusEffect)
+    {
+        switch (change)
+        {
+            case ChangeType.Incremental:
+                switch (statusEffect.Id)
+                {
+                    case 4: // Smoked
+                        Mode = EnemyMode.Dazzled;
+                        break;
+                }
+                break;
+
+            case ChangeType.Decremental:
+                switch (statusEffect.Id)
+                {
+                    case 4: // Smoked
+                        Mode = EnemyMode.Patrolling;
+                        break;
+                }
+                break;
+        }
     }
 }

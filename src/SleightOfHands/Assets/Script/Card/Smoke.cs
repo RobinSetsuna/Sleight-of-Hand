@@ -64,10 +64,6 @@ public class Smoke : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //other.SendMessage("ApplyStatusEffect", new StatusEffect(3, 2));
-        //other.SendMessage("ApplyStatusEffect", new StatusEffect(4, duration));
-        //other.SendMessage("ApplyStatusEffect", new StatusEffect(5, duration));
-
         if (other.GetComponent<Enemy>())
         {
             Enemy enemy = other.GetComponent<Enemy>();
@@ -76,13 +72,12 @@ public class Smoke : MonoBehaviour
 
             enemy.ApplyStatusEffect(new StatusEffect(3, 2));
             enemy.ApplyStatusEffect(new StatusEffect(4, duration));
-            enemy.GetComponent<EnemyController>().SetDetectionState(EnemyMode.Dazzled);
         }
         else if (other.GetComponent<player>())
         {
             player Player = other.GetComponent<player>();
 
-            Player.ApplyStatusEffect(new StatusEffect(5, duration));
+            Player.ApplyStatusEffect(new StatusEffect(4, duration));
         }
     }
 
@@ -91,7 +86,7 @@ public class Smoke : MonoBehaviour
         if (other.GetComponent<Enemy>())
             other.GetComponent<Enemy>().RemoveStatusEffect(4);
         else if (other.GetComponent<player>())
-            other.GetComponent<player>().RemoveStatusEffect(5);
+            other.GetComponent<player>().RemoveStatusEffect(4);
     }
 
     //private void HandleUnitMove(Unit unit, Vector2Int previousGridPosition, Vector2Int currentGridPosition)

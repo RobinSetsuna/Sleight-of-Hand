@@ -19,8 +19,7 @@ public enum EnemyDetectionState : int
 public class Enemy : Unit
 {
     // event
-    public int ID;
-    public EventOnDataChange<EnemyMoveState> onCurrentEnemyStateChange = new EventOnDataChange<EnemyMoveState>();
+    //public EventOnDataChange<EnemyMoveState> onCurrentEnemyStateChange = new EventOnDataChange<EnemyMoveState>();
 
     [SerializeField] private int detectionRange;
     [SerializeField] private int attackRange;
@@ -31,22 +30,6 @@ public class Enemy : Unit
         get
         {
             return attack;
-        }
-    }
-
-    public int AttackRange
-    {
-        get
-        {
-            return Mathf.RoundToInt(Statistics[StatisticType.AttackRange]);
-        }
-    }
-
-    public int DetectionRange
-    {
-        get
-        {
-            return Mathf.RoundToInt(Statistics[StatisticType.DetectionRange]);
         }
     }
 
@@ -68,7 +51,8 @@ public class Enemy : Unit
                                                           AttributeType.Dr_i, (float)detectionRange,
                                                           AttributeType.Ar_i, (float)attackRange));
 
-        onAttributeChange = Statistics.onStatisticChange;
+        onStatisticChange = Statistics.onStatisticChange;
+        onStatusEffectChange = Statistics.onStatusEffectChange;
 
         //Player = LevelManager.Instance.Player;
 

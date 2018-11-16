@@ -15,7 +15,8 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
 
     public EventOnDataChange<Vector2Int> onGridPositionChange = new EventOnDataChange<Vector2Int>();
 
-    public StatisticSystem.EventOnStatisticChange onAttributeChange;
+    public StatisticSystem.EventOnStatisticChange onStatisticChange;
+    public EventOnDataChange3<StatusEffect> onStatusEffectChange = new EventOnDataChange3<StatusEffect>();
 
     private Vector2Int gridPosition = new Vector2Int(-1, -1);
     public Vector2Int GridPosition
@@ -81,6 +82,30 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
         get
         {
             return Mathf.RoundToInt(Statistics[StatisticType.Hp]);
+        }
+    }
+
+    public int AttackRange
+    {
+        get
+        {
+            return Mathf.RoundToInt(Statistics[StatisticType.AttackRange]);
+        }
+    }
+
+    public int DetectionRange
+    {
+        get
+        {
+            return Mathf.RoundToInt(Statistics[StatisticType.DetectionRange]);
+        }
+    }
+
+    public int VisibleRange
+    {
+        get
+        {
+            return Mathf.RoundToInt(Statistics[StatisticType.VisibleRange]);
         }
     }
 

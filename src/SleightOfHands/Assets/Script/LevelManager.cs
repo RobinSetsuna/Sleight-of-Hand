@@ -309,14 +309,14 @@ public class LevelManager : MonoBehaviour
             {
                 case SpawnData.Type.Player:
                     Player = GridManager.Instance.Spawn(ResourceUtility.GetPrefab<player>("player_temp"), spawnPosition, spawnRotation); //Instantiate(ResourceUtility.GetPrefab<player>("player_temp"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
-                    Player.onAttributeChange.AddListener(HandlePlayerAttributeChange);
+                    Player.onStatisticChange.AddListener(HandlePlayerAttributeChange);
                     break;
 
                 case SpawnData.Type.Guard:
                     Enemy enemy = GridManager.Instance.Spawn(ResourceUtility.GetPrefab<Enemy>("GuardDummy"), spawnPosition, spawnRotation); //Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
                     EnemyController enemyController = enemy.GetComponent<EnemyController>();
                     enemyController.SetWayPoints(spawnData.GetPath());
-                    enemyController.SetDetectionState(EnemyMode.Patrolling); // set default detection state
+                    enemyController.Mode = EnemyMode.Patrolling;
                     enemyController.UID = enemyUID++;
                     Enemies.Add(enemy);
                     enemies.Add(enemyController);

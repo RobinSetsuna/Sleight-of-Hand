@@ -289,10 +289,6 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
         // new grid with size [mapSize.x,mapSize.y]
         grid = new Tile[mapSize.x, mapSize.y];
-        units = new Unit[mapSize.x, mapSize.y];
-
-        detection = new int[mapSize.x, mapSize.y];
-        detectionHighlights = new int[mapSize.x, mapSize.y];
 
         int numExistedTiles = gridRoot.childCount;
 
@@ -519,6 +515,11 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     /// </summary>
     public void Initialize()
     {
+        units = new Unit[mapSize.x, mapSize.y];
+
+        detection = new int[mapSize.x, mapSize.y];
+        detectionHighlights = new int[mapSize.x, mapSize.y];
+
         PlayerController playerController = LevelManager.Instance.playerController;
 
         playerController.onPathUpdate.AddListener(HandlePathChange);
@@ -630,6 +631,9 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     {
         List<Tile> list = new List<Tile>();
 
+        if (upperRange < 0)
+            return list;
+
         bool neverSkipUnmatched = skipUnmatchedAfter >= upperRange;
         bool canMarkVisitedBeforehead = skipUnmatchedAfter == 0 || neverSkipUnmatched;
 
@@ -739,30 +743,37 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
         if (unit.GetComponent<player>())
         {
+            player Player = unit.GetComponent<player>();
+
             int d = detection[currentGridPosition.x, currentGridPosition.y];
 
             if (d != 0)
                 foreach (int uid in BitOperationUtility.GetIndicesOfOne(d))
                     if (uid < LevelManager.Instance.Enemies.Count)
-                        LevelManager.Instance.Enemies[uid].GetComponent<EnemyController>().Mode = EnemyMode.Chasing;
+                        LevelManager.Instance.Enemies[uid].GetComponent<EnemyController>().NotifyDetection(Player);
         }
         else if (unit.GetComponent<Enemy>())
         {
+            Enemy enemy = unit.GetComponent<Enemy>();
+
             int uid = unit.GetComponent<EnemyController>().UID;
 
-            HashSet<Tile> currentDetectionArea = ProjectileManager.Instance.getProjectileRange(GetTile(currentGridPosition), unit.GetComponent<Enemy>().DetectionRange, true, unit.transform.rotation.eulerAngles.y);
+            HashSet<Tile> currentDetectionArea = ProjectileManager.Instance.getProjectileRange(GetTile(currentGridPosition), enemy.DetectionRange, true, unit.transform.rotation.eulerAngles.y);
 
             if (isNotInitialization)
+                RefreshDetection(uid, currentDetectionArea);
+            else
             {
-                foreach (Tile tile in detectionAreas[uid])
-                    if (!currentDetectionArea.Contains(tile))
-                        RemoveDetection(tile, uid);
+                enemy.onStatisticChange.AddListener(delegate (StatisticType statistic, float previousValue, float currentValue)
+                                                    {
+                                                        RefreshDetection(uid, ProjectileManager.Instance.getProjectileRange(GetTile(unit.GridPosition), enemy.DetectionRange, true, unit.transform.rotation.eulerAngles.y));
+                                                    });
+
+                foreach (Tile tile in currentDetectionArea)
+                    AddDetection(tile, uid);
+
+                detectionAreas[uid] = currentDetectionArea;
             }
-
-            foreach (Tile tile in currentDetectionArea)
-                AddDetection(tile, uid);
-
-            detectionAreas[uid] = currentDetectionArea;
         }
 
         onUnitMove.Invoke(unit, previousGridPosition, currentGridPosition);
@@ -776,13 +787,37 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             Destroy(gameObject);
     }
 
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+
+        if (detection != null)
+            for (int x = 0; x < mapSize.x; x++)
+                for (int y = 0; y < mapSize.y; y++)
+                    if (detection[x, y] > 0)
+                        Gizmos.DrawCube(grid[x, y].transform.position + new Vector3(0, TileSize + 0.05f, 0), new Vector3(0.9f, 0.1f, 0.9f));
+    }
+#endif
 
     private void AddDetection(Tile tile, int uid)
     {
-        if (LevelManager.Instance.Player.GridPosition == tile.gridPosition)
-            LevelManager.Instance.Enemies[uid].GetComponent<EnemyController>().Mode = EnemyMode.Chasing;
+        player Player = LevelManager.Instance.Player;
+        if (Player.GridPosition == tile.gridPosition)
+            LevelManager.Instance.Enemies[uid].GetComponent<EnemyController>().NotifyDetection(Player);
 
         BitOperationUtility.WriteBit(ref detection[tile.x, tile.y], uid, 1);
+    }
+
+    private void RefreshDetection(int uid, HashSet<Tile> currentDetectionArea)
+    {
+        foreach (Tile tile in detectionAreas[uid])
+            RemoveDetection(tile, uid);
+
+        foreach (Tile tile in currentDetectionArea)
+            AddDetection(tile, uid);
+
+        detectionAreas[uid] = currentDetectionArea;
     }
 
     private void RemoveDetection(Tile tile, int uid)

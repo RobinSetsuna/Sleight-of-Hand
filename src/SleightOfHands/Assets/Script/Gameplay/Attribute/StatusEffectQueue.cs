@@ -39,6 +39,11 @@ public class StatusEffectQueue : IAttributeGetter
         return current >= list.Count;
     }
 
+    public bool Contains(StatusEffect statusEffect)
+    {
+        return map.ContainsKey(statusEffect.Id);
+    }
+
     public bool Push(StatusEffect statusEffect)
     {
         bool result = false;
@@ -107,15 +112,6 @@ public class StatusEffectQueue : IAttributeGetter
         return statusEffect;
     }
 
-    public void Remove(StatusEffect statusEffect)
-    {
-        int i = list.IndexOf(statusEffect);
-        list.RemoveAt(i);
-
-        if (i < current)
-            current--;
-    }
-
     public StatusEffect Remove(int id)
     {
         StatusEffect statusEffect = null;
@@ -124,8 +120,16 @@ public class StatusEffectQueue : IAttributeGetter
         {
             statusEffect = map[id];
 
-            Remove(statusEffect);
+            int i = list.IndexOf(statusEffect);
+            list.RemoveAt(i);
+
+            if (i < current)
+                current--;
+
             map.Remove(id);
+
+            foreach (KeyValuePair<int, float> attribute in statusEffect)
+                sumAttributes.Add(attribute.Key, -attribute.Value);
         }
 
         return statusEffect;

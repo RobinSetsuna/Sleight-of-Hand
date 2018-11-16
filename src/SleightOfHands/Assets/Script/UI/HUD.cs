@@ -122,7 +122,7 @@ public class HUD : UIWindow
     {
         CardManager.Instance.onHandChange.AddListener(HandleHandChange);
 
-        LevelManager.Instance.Player.onAttributeChange.AddListener(HandlePlayerStatisticChange);
+        LevelManager.Instance.Player.onStatisticChange.AddListener(HandlePlayerStatisticChange);
 
         LevelManager.Instance.playerController.onCurrentPlayerStateChange.AddListener(HandleCurrentPlayerStateChange);
 
@@ -134,7 +134,7 @@ public class HUD : UIWindow
     {
         CardManager.Instance.onHandChange.RemoveListener(HandleHandChange);
 
-        LevelManager.Instance.Player.onAttributeChange.RemoveListener(HandlePlayerStatisticChange);
+        LevelManager.Instance.Player.onStatisticChange.RemoveListener(HandlePlayerStatisticChange);
 
         LevelManager.Instance.playerController.onCurrentPlayerStateChange.RemoveListener(HandleCurrentPlayerStateChange);
 

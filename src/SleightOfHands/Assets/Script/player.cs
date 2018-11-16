@@ -7,21 +7,14 @@
 /// </summary>
 public class player : Unit
 {
-    public int VisibleRange
-    {
-        get
-        {
-            return Mathf.RoundToInt(Statistics[StatisticType.VisibleRange]);
-        }
-    }
-
     protected override void Awake()
     {
         Statistics = new StatisticSystem(new AttributeSet(AttributeType.Ap_i, (float)initialActionPoint,
                                                           AttributeType.Hp_i, (float)initialHealth,
                                                           AttributeType.Vr_i, 1000f));
 
-        onAttributeChange = Statistics.onStatisticChange;
+        onStatisticChange = Statistics.onStatisticChange;
+        onStatusEffectChange = Statistics.onStatusEffectChange;
 
         base.Awake();
     }

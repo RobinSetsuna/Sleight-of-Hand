@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System;
 using UnityEngine;
 
 /// <summary>
 /// all implementation of Public utlization function goes here.
 /// </summary>
-public class ProjectileManager: MonoBehaviour{
-    
+public class ProjectileManager: MonoBehaviour
+{
     private static ProjectileManager instance;
     public static ProjectileManager Instance
     {
@@ -20,10 +19,15 @@ public class ProjectileManager: MonoBehaviour{
     
     private HashSet<Vector2Int> checked_obstacles;
     private HashSet<Tile> retList;
-    public HashSet<Tile> getProjectileRange(Tile center,int detection_range,bool directed,float yRot)
+
+    public HashSet<Tile> getProjectileRange(Tile center,int detection_range, bool directed, float yRot)
     {
         // Player moved; Stealth Detection
         retList = new HashSet<Tile>();
+
+        if (detection_range < 0)
+            return retList;
+
         checked_obstacles = new HashSet<Vector2Int>();
         int range = detection_range;
         retList.Add(center);

@@ -42,6 +42,8 @@ public class StatisticSystem
     /// </summary>
     public EventOnStatisticChange onStatisticChange = new EventOnStatisticChange();
 
+    public EventOnDataChange3<StatusEffect> onStatusEffectChange = new EventOnDataChange3<StatusEffect>(); 
+
     /// <summary>
     /// 
     /// </summary>
@@ -143,14 +145,14 @@ public class StatisticSystem
             case StatisticType.Ap: // Ap = MAX(0, (∑Ap_i + ∑Ap_f) * (1 + ∑Ap_p) - ∑Ap_c)
                 return Mathf.Max(0, (AttributeSet.Sum(AttributeType.Ap_i, attributeSets) + AttributeSet.Sum(AttributeType.Ap_f, attributeSets)) * (1 + AttributeSet.Sum(AttributeType.Ap_p, attributeSets)) - AttributeSet.Sum(AttributeType.Ap_c, attributeSets));
 
-            case StatisticType.DetectionRange: // DetectionRange = MAX(0, ∑Dr_i + ∑Dr_f)
-                return Mathf.Max(0, AttributeSet.Sum(AttributeType.Dr_i, attributeSets) + AttributeSet.Sum(AttributeType.Dr_f, attributeSets));
+            case StatisticType.DetectionRange: // DetectionRange = MAX(-1, ∑Dr_i + ∑Dr_f)
+                return Mathf.Max(-1, AttributeSet.Sum(AttributeType.Dr_i, attributeSets) + AttributeSet.Sum(AttributeType.Dr_f, attributeSets));
 
             case StatisticType.AttackRange: // AttackRange = MAX(0, ∑Ar_i + ∑Ar_f)
                 return Mathf.Max(0, AttributeSet.Sum(AttributeType.Ar_i, attributeSets) + AttributeSet.Sum(AttributeType.Ar_f, attributeSets));
 
-            case StatisticType.VisibleRange: // VisibleRange = MAX(0, ∑Ar_i + ∑Ar_f)
-                return Mathf.Max(0, AttributeSet.Sum(AttributeType.Vr_i, attributeSets) + AttributeSet.Sum(AttributeType.Vr_f, attributeSets));
+            case StatisticType.VisibleRange: // VisibleRange = MAX(-1, ∑Ar_i + ∑Ar_f)
+                return Mathf.Max(-1, AttributeSet.Sum(AttributeType.Vr_i, attributeSets) + AttributeSet.Sum(AttributeType.Vr_f, attributeSets));
 
             default:
                 return 0;
@@ -159,21 +161,32 @@ public class StatisticSystem
 
     public void AddStatusEffect(StatusEffect statusEffect)
     {
-        if (statusEffects.Push(statusEffect))
-            UpdateChangedStatistics(statusEffect);
+        bool isExisted = statusEffects.Contains(statusEffect);
 
+        if (statusEffects.Push(statusEffect))
+        {
 #if UNITY_EDITOR
-        Debug.Log(LogUtility.MakeLogString("StatisticSystem", "Add " + statusEffect + "\n" + ToString()));
+            Debug.Log(LogUtility.MakeLogString("StatisticSystem", "Add " + statusEffect + "\n" + ToString()));
 #endif
+
+            UpdateChangedStatistics(statusEffect);
+            onStatusEffectChange.Invoke(isExisted ? ChangeType.Updating : ChangeType.Incremental, statusEffect);
+        }
     }
 
     public StatusEffect RemoveStatusEffect(int id)
     {
         StatusEffect statusEffect = statusEffects.Remove(id);
 
+        if (statusEffect != null)
+        {
 #if UNITY_EDITOR
-        Debug.Log(LogUtility.MakeLogString("StatisticSystem", "Remove " + statusEffect + "\n" + ToString()));
+            Debug.Log(LogUtility.MakeLogString("StatisticSystem", "Remove " + statusEffect + "\n" + ToString()));
 #endif
+
+            UpdateChangedStatistics(statusEffect);
+            onStatusEffectChange.Invoke(ChangeType.Decremental, statusEffect);
+        }
 
         return statusEffect;
     }
