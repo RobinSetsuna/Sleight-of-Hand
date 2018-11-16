@@ -32,6 +32,8 @@ public class EnemyController : MouseInteractable
     private System.Action callback;
     private Path<Tile> path;
 
+    public AudioClip FoundAudioclip;
+
     private int uid = -1;
     public int UID
     {
@@ -411,10 +413,8 @@ public class EnemyController : MouseInteractable
     private void Founded()
     {
         EnemyManager.Instance.AlertPop(transform);
-        AudioSource _audioSource = gameObject.GetComponent<AudioSource>();
-        AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/beDetected");
 
-        _audioSource.clip = audioClip;
-        _audioSource.Play();
+        //[audio] play be detected audio
+        gameObject.GetComponent<AudioSource>().PlayOneShot(FoundAudioclip);
     }
 }

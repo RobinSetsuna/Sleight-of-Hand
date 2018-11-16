@@ -341,6 +341,7 @@ MonoBehaviour:
   maxSpeed: 2
   initialActionPoint: 4
   initialHealth: 100
+  JumpClip: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
   movable: 1
   modelHolder: {fileID: 1801817489718384}
   jumpHeight: 0.25
