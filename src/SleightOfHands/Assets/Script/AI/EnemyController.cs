@@ -227,11 +227,8 @@ public class EnemyController : MouseInteractable
                         CurrentEnemyState = EnemyState.Deactivated;
                         yield break;
                     }
-                    // --------------------------------------------------------------------------------------------------------------------
-                    // this code used as a temp solution, must change the actionManager to remove the NAN Movement action
                     finalDes = Navigation.FindPath(GridManager.Instance, enemyTile, finalDes, GridManager.Instance.IsWalkable).GetSecond();
                     path = Navigation.FindPath(GridManager.Instance, enemyTile, finalDes, GridManager.Instance.IsWalkable);
-                    // --------------------------------------------------------------------------------------------------------------------
                     break;
 
                 case EnemyMode.Patrolling:
@@ -253,18 +250,32 @@ public class EnemyController : MouseInteractable
                         nextPosIndex = destinationIndex;
                         Tile destination = GridManager.Instance.GetTile(wayPoints[destinationIndex]);
                         destination = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable).GetSecond();
-                        path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);
+                        if (GridManager.Instance.HasUnitOn(destination.x, destination.y))
+                        {
+                            path = null;
+                        }
+                        else
+                        {
+                            path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);  
+                        }
+
+                        
                     }
                     else
                     {
                         Tile destination = GridManager.Instance.GetTile(wayPoints[FindClosestPathNode(enemyPos)]);
-                        path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);
+                        if (GridManager.Instance.HasUnitOn(destination.x, destination.y))
+                        {
+                            path = null;
+                        }
+                        else
+                        {
+                            path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);  
+                        }
                     }
                     break;
 
                 case EnemyMode.Dazzled:
-                    // currently not use doubt status
-                   // Debug.Log("Doubt status, the code should never trigger this.");
                     int x = Random.Range(-1, 1);
                     int y = Random.Range(-1, 1);
                     while (Mathf.Abs(x) + Mathf.Abs(y) > 1)
@@ -276,7 +287,6 @@ public class EnemyController : MouseInteractable
                     int temp_y = enemyTile.y + 0;
                     if (GridManager.Instance.HasUnitOn(temp_x, temp_y) || !GridManager.Instance.IsWalkable(temp_x, temp_y))
                     {
-                        // Oops, no movement
                         CurrentEnemyState = EnemyState.Deactivated;
                     }
                     else
@@ -299,6 +309,10 @@ public class EnemyController : MouseInteractable
                 ActionManager.Singleton.AddBack(new Movement(enemy, tile), ResetToIdle);
             }
             path = null;
+        }
+        else
+        {
+            CurrentEnemyState = EnemyState.Deactivated;
         }
     }
 

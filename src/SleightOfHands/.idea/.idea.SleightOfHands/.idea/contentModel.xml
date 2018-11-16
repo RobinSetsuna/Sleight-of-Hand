@@ -9,6 +9,7 @@
         <e p="Script" t="Include">
           <e p="AI" t="Include">
             <e p="Enemy.cs" t="Include" />
+            <e p="EnemyController.cs" t="Include" />
             <e p="INavGrid.cs" t="Include" />
             <e p="Navigation.cs" t="Include" />
             <e p="Path.cs" t="Include" />
@@ -43,6 +44,8 @@
             </e>
             <e p="Events.cs" t="Include" />
             <e p="GameManager.cs" t="Include" />
+            <e p="IDamageReceiver.cs" t="Include" />
+            <e p="IStatusEffectReceiver.cs" t="Include" />
             <e p="MouseInputManager.cs" t="Include" />
             <e p="MouseInteractable.cs" t="Include" />
             <e p="PlayerController.cs" t="Include" />
@@ -50,6 +53,7 @@
           <e p="GridManager.cs" t="Include" />
           <e p="InLevelObject.cs" t="Include" />
           <e p="Level" t="Include">
+            <e p="EndingPoint.cs" t="Include" />
             <e p="Tileset.cs" t="Include" />
           </e>
           <e p="LevelManager.cs" t="Include" />
@@ -72,6 +76,8 @@
           </e>
           <e p="Tile.cs" t="Include" />
           <e p="UI" t="Include">
+            <e p="ExplorationFailure.cs" t="Include" />
+            <e p="ExplorationSuccess.cs" t="Include" />
             <e p="HUD.cs" t="Include" />
             <e p="IngameMenu.cs" t="Include" />
             <e p="ListMenu.cs" t="Include" />
@@ -89,7 +95,6 @@
           <e p="Unit.cs" t="Include" />
           <e p="Utility" t="Include">
             <e p="BitOperationUtility.cs" t="Include" />
-            <e p="EnumFlagsAttribute.cs" t="Include" />
             <e p="LogUtility.cs" t="Include" />
             <e p="MathUtility.cs" t="Include" />
             <e p="ResourceUtility.cs" t="Include" />
