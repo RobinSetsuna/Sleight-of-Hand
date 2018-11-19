@@ -73,7 +73,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
     {
         get
         {
-            return Mathf.RoundToInt(Statistics[StatisticType.Ap]);
+            return Mathf.RoundToInt(Statistics[Statistic.Ap]);
         }
     }
 
@@ -81,7 +81,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
     {
         get
         {
-            return Mathf.RoundToInt(Statistics[StatisticType.Hp]);
+            return Mathf.RoundToInt(Statistics[Statistic.Hp]);
         }
     }
 
@@ -89,7 +89,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
     {
         get
         {
-            return Mathf.RoundToInt(Statistics[StatisticType.AttackRange]);
+            return Mathf.RoundToInt(Statistics[Statistic.AttackRange]);
         }
     }
 
@@ -97,7 +97,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
     {
         get
         {
-            return Mathf.RoundToInt(Statistics[StatisticType.DetectionRange]);
+            return Mathf.RoundToInt(Statistics[Statistic.DetectionRange]);
         }
     }
 
@@ -105,7 +105,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
     {
         get
         {
-            return Mathf.RoundToInt(Statistics[StatisticType.VisibleRange]);
+            return Mathf.RoundToInt(Statistics[Statistic.VisibleRange]);
         }
     }
 

@@ -765,7 +765,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                 RefreshDetection(uid, currentDetectionArea);
             else
             {
-                enemy.onStatisticChange.AddListener(delegate (StatisticType statistic, float previousValue, float currentValue)
+                enemy.onStatisticChange.AddListener(delegate (Statistic statistic, float previousValue, float currentValue)
                                                     {
                                                         RefreshDetection(uid, ProjectileManager.Instance.getProjectileRange(GetTile(unit.GridPosition), enemy.DetectionRange, true, unit.transform.rotation.eulerAngles.y));
                                                     });

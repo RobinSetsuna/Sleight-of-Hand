@@ -24,7 +24,7 @@ public enum AttributeType : int
     Vr_f = 51,
 }
 
-public enum StatisticType : int
+public enum Statistic : int
 {
     Hp = 1,
     Ap = 2,
@@ -35,7 +35,7 @@ public enum StatisticType : int
 
 public class StatisticSystem
 {
-    public class EventOnStatisticChange : UnityEvent<StatisticType, float, float> { }
+    public class EventOnStatisticChange : UnityEvent<Statistic, float, float> { }
 
     /// <summary>
     /// An event triggered whenever a certain statistic in this system changes 
@@ -47,7 +47,7 @@ public class StatisticSystem
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<StatisticType, float> statistics = new Dictionary<StatisticType, float>();
+    private Dictionary<Statistic, float> statistics = new Dictionary<Statistic, float>();
 
     /// <summary>
     /// Attributes that will never change over time
@@ -59,7 +59,7 @@ public class StatisticSystem
     /// </summary>
     private StatusEffectQueue statusEffects = new StatusEffectQueue();
 
-    public float this[StatisticType statistic]
+    public float this[Statistic statistic]
     {
         get
         {
@@ -135,23 +135,23 @@ public class StatisticSystem
     //    LevelManager.Instance.onRoundNumberChange.RemoveListener(HandleRoundNumberChange);
     //}
 
-    public static float CalculateStatisticValue(StatisticType statistic, params IAttributeGetter[] attributeSets)
+    public static float CalculateStatisticValue(Statistic statistic, params IAttributeGetter[] attributeSets)
     {
         switch (statistic)
         {
-            case StatisticType.Hp: // Hp = (∑Hp_i + ∑Hp_f) * (1 + ∑Hp_p) - ∑Dmg
+            case Statistic.Hp: // Hp = (∑Hp_i + ∑Hp_f) * (1 + ∑Hp_p) - ∑Dmg
                 return (AttributeSet.Sum(AttributeType.Hp_i, attributeSets) + AttributeSet.Sum(AttributeType.Hp_f, attributeSets)) * (1 + AttributeSet.Sum(AttributeType.Hp_p, attributeSets)) - AttributeSet.Sum(AttributeType.Dmg, attributeSets);
 
-            case StatisticType.Ap: // Ap = MAX(0, (∑Ap_i + ∑Ap_f) * (1 + ∑Ap_p) - ∑Ftg)
+            case Statistic.Ap: // Ap = MAX(0, (∑Ap_i + ∑Ap_f) * (1 + ∑Ap_p) - ∑Ftg)
                 return Mathf.Max(0, (AttributeSet.Sum(AttributeType.Ap_i, attributeSets) + AttributeSet.Sum(AttributeType.Ap_f, attributeSets)) * (1 + AttributeSet.Sum(AttributeType.Ap_p, attributeSets)) - AttributeSet.Sum(AttributeType.Ftg, attributeSets));
 
-            case StatisticType.DetectionRange: // DetectionRange = MAX(-1, ∑Dr_i + ∑Dr_f)
+            case Statistic.DetectionRange: // DetectionRange = MAX(-1, ∑Dr_i + ∑Dr_f)
                 return Mathf.Max(-1, AttributeSet.Sum(AttributeType.Dr_i, attributeSets) + AttributeSet.Sum(AttributeType.Dr_f, attributeSets));
 
-            case StatisticType.AttackRange: // AttackRange = MAX(0, ∑Ar_i + ∑Ar_f)
+            case Statistic.AttackRange: // AttackRange = MAX(0, ∑Ar_i + ∑Ar_f)
                 return Mathf.Max(0, AttributeSet.Sum(AttributeType.Ar_i, attributeSets) + AttributeSet.Sum(AttributeType.Ar_f, attributeSets));
 
-            case StatisticType.VisibleRange: // VisibleRange = MAX(-1, ∑Ar_i + ∑Ar_f)
+            case Statistic.VisibleRange: // VisibleRange = MAX(-1, ∑Ar_i + ∑Ar_f)
                 return Mathf.Max(-1, AttributeSet.Sum(AttributeType.Vr_i, attributeSets) + AttributeSet.Sum(AttributeType.Vr_f, attributeSets));
 
             default:
@@ -208,7 +208,7 @@ public class StatisticSystem
 
         foreach (int id in changedStatistics)
         {
-            StatisticType statistic = (StatisticType)id;
+            Statistic statistic = (Statistic)id;
             this[statistic] = CalculateStatisticValue(statistic, talents, statusEffects);
         }
     }
@@ -222,7 +222,7 @@ public class StatisticSystem
 
         foreach (int id in changedStatistics)
         {
-            StatisticType statistic = (StatisticType)id;
+            Statistic statistic = (Statistic)id;
             this[statistic] = CalculateStatisticValue(statistic, talents, this.statusEffects);
         }
     }
@@ -231,7 +231,7 @@ public class StatisticSystem
     {
         string s = "";
 
-        foreach (KeyValuePair<StatisticType, float> statistic in statistics)
+        foreach (KeyValuePair<Statistic, float> statistic in statistics)
             s += ";" + statistic.Key + ":" + statistic.Value;
 
         return string.Format("Stat: {0}\nTalent: {1}\n\n{2}", s.Substring(1), talents, statusEffects);

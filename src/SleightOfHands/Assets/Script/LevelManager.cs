@@ -339,9 +339,9 @@ public class LevelManager : MonoBehaviour
         Enemies.Remove(obj);
     }
 
-    private void HandlePlayerAttributeChange(StatisticType statistic, float previousValue, float currentValue)
+    private void HandlePlayerAttributeChange(Statistic statistic, float previousValue, float currentValue)
     {
-        if (statistic == StatisticType.Hp && currentValue <= 0)
+        if (statistic == Statistic.Hp && currentValue <= 0)
             CurrentPhase = Phase.Failure;
     }
 
