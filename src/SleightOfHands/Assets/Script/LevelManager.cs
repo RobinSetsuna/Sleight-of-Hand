@@ -166,13 +166,14 @@ public class LevelManager : MonoBehaviour
     public List<Enemy> Enemies = new List<Enemy>();
 
     //Card related
-    public GameObject Smoke;
-    public GameObject Haste;
-    public GameObject Glue;
-    GameObject canvas;
-    float canvasWidth;
-    float canvasHeight;
-    int cardsNumberOnCanvas = 0;
+    //public GameObject Smoke;
+    //public GameObject Haste;
+    //public GameObject Glue;
+
+    //GameObject canvas;
+    //float canvasWidth;
+    //float canvasHeight;
+    //int cardsNumberOnCanvas = 0;
 
     [SerializeField] private LevelData currentLevel;
     public LevelData CurrentLevel

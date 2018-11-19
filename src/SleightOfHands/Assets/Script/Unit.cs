@@ -18,7 +18,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
     public StatisticSystem.EventOnStatisticChange onStatisticChange;
     public EventOnDataChange3<StatusEffect> onStatusEffectChange = new EventOnDataChange3<StatusEffect>();
 
-    private Vector2Int gridPosition = new Vector2Int(-1, -1);
+    private Vector2Int gridPosition = new Vector2Int(int.MinValue, int.MinValue);
     public Vector2Int GridPosition
     {
         get
@@ -119,7 +119,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
 
     private CharacterController characterController;
     public float speed;
-    private Vector3 start;
+    //private Vector3 start;
     private Vector3 destination;
 
     public bool IsAccessibleTo(int x, int y)
@@ -134,7 +134,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
 
     public void MoveTo(Vector3 destination, System.Action callback)
     {
-        start = transform.position;
+        //start = transform.position;
         this.destination = destination;
 
         speed = maxSpeed;
@@ -242,8 +242,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
         {
             Vector3 position = transform.position;
 
-            // End move
-            float currentDistance = MathUtility.ManhattanDistance(destination.x, destination.z, position.x, position.z);
+            //float currentDistance = MathUtility.ManhattanDistance(destination.x, destination.z, position.x, position.z);
 
             Vector3 orientation = destination - position;
             orientation.y = 0;
@@ -268,6 +267,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
                 modelHolder.transform.localPosition = Vector3.up * localHeight;
             }
 
+            // End move
             if (travelRatio >= 1) {
                 speed = 0;
                 break;

@@ -36,10 +36,8 @@ public class UIManager : MonoBehaviour
         PERMANENT,
     }
 
-    private Stack<string> uiWindowStack;
-    private Dictionary<string, UIWindow> uiWindowsOpened;
-
-    private bool isCancelButtonDown = false;
+    private Stack<string> uiWindowStack = new Stack<string>();
+    private Dictionary<string, UIWindow> uiWindowsOpened = new Dictionary<string, UIWindow>();
 
     /// <summary>
     /// Whether the UI window is opened in the viewport (not considering the UIMode)
@@ -163,8 +161,5 @@ public class UIManager : MonoBehaviour
             singleton = this;
         else if (singleton != this)
             Destroy(gameObject);
-
-        uiWindowStack = new Stack<string>();
-        uiWindowsOpened = new Dictionary<string, UIWindow>();
     }
 }

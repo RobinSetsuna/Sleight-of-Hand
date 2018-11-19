@@ -350,7 +350,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         bool left = false;
         bool right = false;
 
-        Vector2Int size = levelData.GetSize();
+        //Vector2Int size = levelData.GetSize();
+
         int value = levelData.GetTile(x, y);
 
         if (y > 0 && levelData.GetTile(x, y - 1) == value) {
