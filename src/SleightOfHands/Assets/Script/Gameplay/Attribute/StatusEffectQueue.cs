@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-public class StatusEffectQueue : IAttributeGetter
+public class StatusEffectQueue : IAttributeCollection
 {
     private AttributeSet sumAttributes;
     private Dictionary<int, StatusEffect> map;

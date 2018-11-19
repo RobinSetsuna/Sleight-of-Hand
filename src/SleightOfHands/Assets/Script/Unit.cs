@@ -224,7 +224,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
 
         GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/SFX/jump"));
 
-        Statistics.ApplyFatigue(1);
+        Statistics.ApplyFatigue(1, FatigueType.Movement);
 
         GridPosition = GridManager.Instance.GetTile(transform.position).gridPosition;
 
