@@ -12,7 +12,7 @@ public enum AttributeType : int
     Ap_i = 20,
     Ap_f = 21,
     Ap_p = 22,
-    Ap_c = 29,
+    Ftg = 29,
 
     Dr_i = 30,
     Dr_f = 31,
@@ -142,8 +142,8 @@ public class StatisticSystem
             case StatisticType.Hp: // Hp = (∑Hp_i + ∑Hp_f) * (1 + ∑Hp_p) - ∑Dmg
                 return (AttributeSet.Sum(AttributeType.Hp_i, attributeSets) + AttributeSet.Sum(AttributeType.Hp_f, attributeSets)) * (1 + AttributeSet.Sum(AttributeType.Hp_p, attributeSets)) - AttributeSet.Sum(AttributeType.Dmg, attributeSets);
 
-            case StatisticType.Ap: // Ap = MAX(0, (∑Ap_i + ∑Ap_f) * (1 + ∑Ap_p) - ∑Ap_c)
-                return Mathf.Max(0, (AttributeSet.Sum(AttributeType.Ap_i, attributeSets) + AttributeSet.Sum(AttributeType.Ap_f, attributeSets)) * (1 + AttributeSet.Sum(AttributeType.Ap_p, attributeSets)) - AttributeSet.Sum(AttributeType.Ap_c, attributeSets));
+            case StatisticType.Ap: // Ap = MAX(0, (∑Ap_i + ∑Ap_f) * (1 + ∑Ap_p) - ∑Ftg)
+                return Mathf.Max(0, (AttributeSet.Sum(AttributeType.Ap_i, attributeSets) + AttributeSet.Sum(AttributeType.Ap_f, attributeSets)) * (1 + AttributeSet.Sum(AttributeType.Ap_p, attributeSets)) - AttributeSet.Sum(AttributeType.Ftg, attributeSets));
 
             case StatisticType.DetectionRange: // DetectionRange = MAX(-1, ∑Dr_i + ∑Dr_f)
                 return Mathf.Max(-1, AttributeSet.Sum(AttributeType.Dr_i, attributeSets) + AttributeSet.Sum(AttributeType.Dr_f, attributeSets));
