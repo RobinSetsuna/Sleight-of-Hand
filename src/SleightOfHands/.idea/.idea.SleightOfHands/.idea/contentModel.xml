@@ -97,6 +97,7 @@
             <e p="BitOperationUtility.cs" t="Include" />
             <e p="LogUtility.cs" t="Include" />
             <e p="MathUtility.cs" t="Include" />
+            <e p="RandomLight.cs" t="Include" />
             <e p="ResourceUtility.cs" t="Include" />
             <e p="TimeUtility.cs" t="Include" />
             <e p="Utility.asmdef" t="Include" />

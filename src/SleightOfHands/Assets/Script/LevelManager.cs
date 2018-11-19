@@ -201,6 +201,11 @@ public class LevelManager : MonoBehaviour
         SpawnEntities();
 
         GridManager.Instance.Initialize();
+        
+        
+        //light map initialize
+        Instantiate(ResourceUtility.GetPrefab<GameObject>("LightMap"), Vector3.zero, Quaternion.identity);
+        //change when light config implemented.
 
         CardManager.Instance.Initialize();
         CardManager.Instance.RandomGetCard(3);
