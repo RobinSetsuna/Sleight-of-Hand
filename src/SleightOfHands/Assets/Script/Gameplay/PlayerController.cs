@@ -35,12 +35,14 @@ public class PlayerController : MouseInteractable
     public EventOnDataUpdate<Path<Tile>> onPathUpdate = new EventOnDataUpdate<Path<Tile>>();
 
     public EventOnDataUpdate<Card> onCardToUseUpdate = new EventOnDataUpdate<Card>();
-    
+    public AudioClip TapTile;
+    public AudioClip TapCard;
+
     /// <summary>
     /// The player controlled by this controller
     /// </summary>
     public player Player { get; private set; }
-
+    
     private bool isEnabled = false;
 
     private Path<Tile> path;
@@ -285,27 +287,31 @@ public class PlayerController : MouseInteractable
     private void HandleMouseClick(MouseInteractable obj)
     {
         // handle click sound
-        AudioSource _audioSource = gameObject.GetComponent<AudioSource>();
-        AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/tapTile");
-
-        _audioSource.clip = audioClip;
-        _audioSource.Play();
+        AudioSource audioSource = gameObject.GetComponent<AudioSource>();
 
         switch (currentPlayerState)
         {
             case PlayerState.Idle:
                 if (obj == this || (obj.GetComponent<Tile>() == GridManager.Instance.GetTile(Player.transform.position)))
+                {
                     CurrentPlayerState = PlayerState.MovementPlanning;
+                    audioSource.PlayOneShot(TapTile);
+                }
                 else if (obj.GetComponent<Enemy>())
+                {
                     GridManager.Instance.ToggleDetectionArea(obj.GetComponent<EnemyController>().UID);
+                    audioSource.PlayOneShot(TapTile);
+                }
                 else if (obj.GetComponent<UICard>())
                 {
                     CurrentPlayerState = PlayerState.CardUsagePlanning;
                     CardToUse = obj.GetComponent<UICard>().Card;
+                    audioSource.PlayOneShot(TapCard);
                 }
                 break;
 
             case PlayerState.MovementPlanning:
+                audioSource.PlayOneShot(TapTile);
                 if (obj == this)
                     CurrentPlayerState = PlayerState.Idle;
                 else if (obj.GetComponent<Enemy>())
@@ -351,7 +357,10 @@ public class PlayerController : MouseInteractable
                     }
                 }
                 else if (obj.GetComponent<UICard>() && obj.GetComponent<UICard>().Card == cardToUse)
+                {
                     CurrentPlayerState = PlayerState.Idle;
+                    audioSource.PlayOneShot(TapCard);
+                }
                 break;
         }
     }

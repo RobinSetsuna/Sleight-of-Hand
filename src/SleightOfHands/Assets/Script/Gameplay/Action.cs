@@ -121,6 +121,7 @@ public class StatusEffectApplication : Action
 
     private void ApplyStatusEffect(System.Action callback)
     {
+     
         target.Statistics.AddStatusEffect(statusEffect);
         callback.Invoke();
     }

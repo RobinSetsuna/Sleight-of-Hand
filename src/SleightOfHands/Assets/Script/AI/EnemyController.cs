@@ -32,7 +32,8 @@ public class EnemyController : MouseInteractable
     private System.Action callback;
     private Path<Tile> path;
 
-    public AudioClip FoundAudioclip;
+    public AudioClip FoundPlayer;
+    public AudioClip SwingSword;
 
     private int uid = -1;
     public int UID
@@ -188,10 +189,15 @@ public class EnemyController : MouseInteractable
         {
             transform.LookAt(Player.transform, Vector3.up);
 
+            
             EnemyManager.Instance.AttackPop(transform);
+            gameObject.GetComponent<AudioSource>().PlayOneShot(SwingSword);
             yield return new WaitForSeconds(2f);
 
             Player.SendMessage("ApplyDamage", enemy.Attack);
+
+            
+
             enemy.Statistics.ApplyFatigue(1);
 
             CurrentEnemyState = EnemyState.Deactivated;
@@ -415,6 +421,6 @@ public class EnemyController : MouseInteractable
         EnemyManager.Instance.AlertPop(transform);
 
         //[audio] play be detected audio
-        gameObject.GetComponent<AudioSource>().PlayOneShot(FoundAudioclip);
+        gameObject.GetComponent<AudioSource>().PlayOneShot(FoundPlayer);
     }
 }

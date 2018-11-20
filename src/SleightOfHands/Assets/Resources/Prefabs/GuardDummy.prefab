@@ -341,7 +341,8 @@ MonoBehaviour:
   maxSpeed: 2
   initialActionPoint: 4
   initialHealth: 100
-  JumpClip: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
+  Jump: {fileID: 0}
+  UseEnhancementCard: {fileID: 0}
   movable: 1
   modelHolder: {fileID: 1801817489718384}
   jumpHeight: 0.25
@@ -363,6 +364,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 2
+  FoundPlayer: {fileID: 8300000, guid: 48713579672c7a449ae105b00993ecd7, type: 3}
+  SwingSword: {fileID: 8300000, guid: 52fa067c25c5c401b811eb86d142287e, type: 3}
 --- !u!143 &143898985038416060
 CharacterController:
   m_ObjectHideFlags: 1

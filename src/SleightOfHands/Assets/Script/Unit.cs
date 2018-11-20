@@ -13,6 +13,10 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
     [SerializeField] protected int initialActionPoint;
     [SerializeField] protected int initialHealth = 100;
 
+    public AudioClip Jump;
+    public AudioClip UseEnhancementCard;
+
+
     public EventOnDataChange<Vector2Int> onGridPositionChange = new EventOnDataChange<Vector2Int>();
 
     public StatisticSystem.EventOnStatisticChange onAttributeChange;
@@ -132,6 +136,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
                 string[] values = cardData.Effect.Split(':');
                 ActionManager.Singleton.AddFront(new StatusEffectApplication(new StatusEffect(int.Parse(values[0]), int.Parse(values[1])), GridManager.Instance.GetUnit(targetTile)));
                 callback.Invoke();
+                gameObject.GetComponent<AudioSource>().PlayOneShot(UseEnhancementCard);
                 break;
 
             case "Strategy":
@@ -197,7 +202,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
         //audioSource.clip = Resources.Load<AudioClip>("Audio/SFX/jump");
         //audioSource.Play();
 
-        GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/SFX/jump"));
+        gameObject.GetComponent<AudioSource>().PlayOneShot(Jump);
 
         Statistics.ApplyFatigue(1);
 
