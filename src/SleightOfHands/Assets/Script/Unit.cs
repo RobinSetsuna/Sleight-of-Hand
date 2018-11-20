@@ -151,22 +151,36 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
     {
         CardData cardData = card.Data;
 
+        string[] strings;
         switch (cardData.EffectType)
         {
             case 0: // Casting
                 ActionManager.Singleton.AddFront(new Casting(ResourceUtility.GetCardEffect(cardData.Effect), targetTile));
-                callback.Invoke();
                 break;
 
             case 1: // Statistic modification
-                string[] values = cardData.Effect.Split(':');
-                ActionManager.Singleton.AddFront(new StatusEffectApplication(new StatusEffect(int.Parse(values[0]), int.Parse(values[1])), GridManager.Instance.GetUnit(targetTile)));
-                callback.Invoke();
+                strings = cardData.Effect.Split(':');
+                ActionManager.Singleton.AddFront(new StatusEffectApplication(new StatusEffect(int.Parse(strings[0]), int.Parse(strings[1])), GridManager.Instance.GetUnit(targetTile)));
                 break;
 
             case 2: // Card acquirement
+                strings = cardData.Effect.Split(';');
+                foreach(string s in strings)
+                {
+                    string[] values = s.Split(':');
+                    int n = int.Parse(values[1]);
+
+                    for (int i = 0; i < n; i++)
+                        CardManager.Instance.AddCard(new Card(int.Parse(values[0])));
+                }
+                break;
+
+            case 3: // Single-target
+                GridManager.Instance.GetUnit(targetTile).ApplyDamage(int.Parse(cardData.Effect));
                 break;
         }
+
+        callback.Invoke();
     }
 
     protected virtual void Awake()
@@ -196,6 +210,16 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
         characterController = GetComponent<CharacterController>();
 
         onStatusEffectChange.AddListener(HandleStatusEffectChange);
+    }
+    
+    protected virtual void OnDisable()
+    {
+        GridPosition = new Vector2Int(int.MinValue, int.MinValue);
+    }
+
+    protected virtual void OnDestroy()
+    {
+        onStatusEffectChange.RemoveListener(HandleStatusEffectChange);
     }
 
     private void FixedUpdate()

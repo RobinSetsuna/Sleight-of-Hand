@@ -49,6 +49,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
     private HashSet<Tile>[] detectionAreas = new HashSet<Tile>[32];
 
+    private List<Tile> targetTileHighlights;
+
     //public bool dragging;
     //public bool ok_to_drag;
     //private HashSet<Tile>  recheck_list;
@@ -232,7 +234,23 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
     public bool HasUnitOn(int x, int y)
     {
-        return units[x, y]!=null;
+        return units[x, y] != null;
+    }
+
+    public bool HasEnemyOn(int x, int y)
+    {
+        Unit unit = units[x, y];
+        return unit != null && unit.GetComponent<Enemy>();
+    }
+
+    public bool HasEnemyOn(Vector2Int gridPosition)
+    {
+        return HasEnemyOn(gridPosition.x, gridPosition.y);
+    }
+
+    public bool HasEnemyOn(Tile tile)
+    {
+        return HasEnemyOn(tile.gridPosition);
     }
 
     /// <summary>
@@ -618,6 +636,11 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         return BreadthFirstSearch(center, 0, range);
     }
 
+    public List<Tile> BreadthFirstSearch(Tile center, int range, Predicate<Tile> Match, bool skipUnmatched = false)
+    {
+        return BreadthFirstSearch(center, 0, range, Match, skipUnmatched);
+    }
+
     public List<Tile> BreadthFirstSearch(Tile center, int lowerRange, int upperRange)
     {
         return BreadthFirstSearch(center, lowerRange, upperRange, tile => true, false);
@@ -804,22 +827,27 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     internal void NotifyUnitPositionChange(Unit unit, Vector2Int previousGridPosition, Vector2Int currentGridPosition)
     {
         bool isNotInitialization = previousGridPosition.x >= 0;
+        bool isNotDeath = currentGridPosition.x >= 0;
 
         if (isNotInitialization)
             units[previousGridPosition.x, previousGridPosition.y] = null;
 
-        units[currentGridPosition.x, currentGridPosition.y] = unit;
+        if (isNotDeath)
+            units[currentGridPosition.x, currentGridPosition.y] = unit;
 
         if (unit.GetComponent<player>())
         {
             player Player = unit.GetComponent<player>();
 
-            int d = detection[currentGridPosition.x, currentGridPosition.y];
+            if (isNotDeath)
+            {
+                int d = detection[currentGridPosition.x, currentGridPosition.y];
 
-            if (d != 0)
-                foreach (int uid in BitOperationUtility.GetIndicesOfOne(d))
-                    if (uid < LevelManager.Instance.Enemies.Count)
-                        LevelManager.Instance.Enemies[uid].GetComponent<EnemyController>().NotifyDetection(Player);
+                if (d != 0)
+                    foreach (int uid in BitOperationUtility.GetIndicesOfOne(d))
+                        if (uid < LevelManager.Instance.Enemies.Count)
+                            LevelManager.Instance.Enemies[uid].GetComponent<EnemyController>().NotifyDetection(Player);
+            }
         }
         else if (unit.GetComponent<Enemy>())
         {
@@ -827,15 +855,29 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
             int uid = unit.GetComponent<EnemyController>().UID;
 
-            HashSet<Tile> currentDetectionArea = ProjectileManager.Instance.getProjectileRange(GetTile(currentGridPosition), enemy.DetectionRange, true, unit.transform.rotation.eulerAngles.y);
+            HashSet<Tile> currentDetectionArea = isNotDeath ? ProjectileManager.Instance.getProjectileRange(GetTile(currentGridPosition), enemy.DetectionRange, true, unit.transform.rotation.eulerAngles.y) : null;
 
             if (isNotInitialization)
-                RefreshDetection(uid, currentDetectionArea);
+            {
+                if (isNotDeath)
+                    RefreshDetection(uid, currentDetectionArea);
+                else
+                {
+                    if (highlightedDetectionAreas.Contains(uid))
+                        ToggleDetectionArea(uid);
+
+                    foreach (Tile tile in detectionAreas[uid])
+                        RemoveDetection(tile, uid);
+
+                    detectionAreas[uid].Clear();
+                }
+            }
             else
             {
                 enemy.onStatisticChange.AddListener(delegate (Statistic statistic, float previousValue, float currentValue)
                                                     {
-                                                        RefreshDetection(uid, ProjectileManager.Instance.getProjectileRange(GetTile(unit.GridPosition), enemy.DetectionRange, true, unit.transform.rotation.eulerAngles.y));
+                                                        if (statistic == Statistic.DetectionRange)
+                                                            RefreshDetection(uid, ProjectileManager.Instance.getProjectileRange(GetTile(unit.GridPosition), enemy.DetectionRange, true, unit.transform.rotation.eulerAngles.y));
                                                     });
 
                 foreach (Tile tile in currentDetectionArea)
@@ -880,6 +922,9 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
     private void RefreshDetection(int uid, HashSet<Tile> currentDetectionArea)
     {
+        if (highlightedDetectionAreas.Contains(uid))
+            ToggleDetectionArea(uid);
+
         foreach (Tile tile in detectionAreas[uid])
             RemoveDetection(tile, uid);
 
@@ -887,6 +932,9 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             AddDetection(tile, uid);
 
         detectionAreas[uid] = currentDetectionArea;
+
+        if (highlightedDetectionAreas.Contains(uid))
+            ToggleDetectionArea(uid);
     }
 
     private void RemoveDetection(Tile tile, int uid)
@@ -940,9 +988,24 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     private void HandleCardToUseChange(Card cardToUse)
     {
         if (cardToUse != null)
-            Highlight(GetTile(LevelManager.Instance.Player.transform.position), cardToUse.Data.Range, IsWalkable, Tile.HighlightColor.Green, false, false);
+        {
+            switch (cardToUse.Data.EffectType)
+            {
+                case 3: // Single-target
+                    targetTileHighlights = BreadthFirstSearch(GetTile(LevelManager.Instance.Player.transform.position), cardToUse.Data.Range, HasEnemyOn, false);
+                    break;
+
+                default:
+                    targetTileHighlights = BreadthFirstSearch(GetTile(LevelManager.Instance.Player.transform.position), cardToUse.Data.Range, IsWalkable, false);
+                    break;
+            }
+
+            foreach (Tile tile in targetTileHighlights)
+                tile.Highlight(Tile.HighlightColor.Green);
+        }
         else
-            DehighlightAll();
+            foreach (Tile tile in targetTileHighlights)
+                tile.Dehighlight(Tile.HighlightColor.Green);
     }
 
     [Serializable]

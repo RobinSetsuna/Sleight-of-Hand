@@ -44,8 +44,13 @@ public class EnemyManager
         {
             Transform currentEnemyTransform = enemies[currentEnemyIndex].transform;
 
-            CameraManager.Instance.FocusAt(currentEnemyTransform.position, ActivateCurrentEnemy);
-            CameraManager.Instance.BoundCameraFollow(currentEnemyTransform);
+            if (currentEnemyTransform.gameObject.activeSelf)
+            {
+                CameraManager.Instance.FocusAt(currentEnemyTransform.position, ActivateCurrentEnemy);
+                CameraManager.Instance.BoundCameraFollow(currentEnemyTransform);
+            }
+            else
+                ActivateNextEnemy();
         }
     }
 
