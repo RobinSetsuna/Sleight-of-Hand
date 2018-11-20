@@ -240,8 +240,6 @@ MonoBehaviour:
   maxSpeed: 2
   initialActionPoint: 3
   initialHealth: 200
-  Jump: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
-  UseEnhancementCard: {fileID: 8300000, guid: e6c557373166c4cab9ad1d107b104f7e, type: 3}
   movable: 1
   modelHolder: {fileID: 1831866132108444}
   jumpHeight: 0.25

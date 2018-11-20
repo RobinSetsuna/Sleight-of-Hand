@@ -66,6 +66,7 @@
             <e p="visible.shader" t="Include" />
             <e p="VisibleImproved.shader" t="Include" />
           </e>
+          <e p="SoundManager.cs" t="Include" />
           <e p="Table Data" t="Include">
             <e p="CardData.cs" t="Include" />
             <e p="ITableDataEntry.cs" t="Include" />

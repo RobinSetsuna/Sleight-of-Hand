@@ -341,14 +341,11 @@ MonoBehaviour:
   maxSpeed: 2
   initialActionPoint: 4
   initialHealth: 100
-  Jump: {fileID: 0}
-  UseEnhancementCard: {fileID: 0}
   movable: 1
   modelHolder: {fileID: 1801817489718384}
   jumpHeight: 0.25
   jumpsPerMove: 1
   speed: 0
-  ID: 0
   detectionRange: 3
   attackRange: 1
   attack: 100
