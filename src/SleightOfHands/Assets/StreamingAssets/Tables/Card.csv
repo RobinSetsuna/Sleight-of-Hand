@@ -1,7 +1,7 @@
 Id,Name,Background,Illustration,Description,Range,Duration,Effect,EffectType
-0,Smoke Bomb,Strategy,SmokeBomb,This is a smoke bomb.,3,2,Smoke,0
+0,Smoke Bomb,Strategy,SmokeBomb,Produce a smoke cloud at a 3x3 area lasting for 2 turns. The smoke cloud blinds any units inside and can make enemies unmovable for 1 turn.,3,2,Smoke,0
 1,Haste,Enhancement,Haste,Immediately gain 2 AP.,0,0,2:2,1
-2,Glue Trap,Strategy,GlueTrap,Make an enemy stop,5,2,GlueTrap,0
-3,Be Small,Enhancement,BeSmall,Make yourself small,0,0,6:4,1
-4,Excalibur,Weapon,Excalibur,Grant you 2 Divine Slash,0,0,5:2,2
-5,Divine Slash,Weapon,DivineSlash,Deal 500 damage to a unit,1,0,500,3
+2,Glue Trap,Strategy,GlueTrap,Throw a viscous trap onto the targeted tile lasting for 2 turns. Any trapped units can not move.,5,2,GlueTrap,0
+3,Be Small,Enhancement,BeSmall,Make yourself small for 2 turns. You can only be detected by enemies in melee range. Any incoming attacks become hard to land but lethal. Your attacks always deal no damage when you are small and the cost of movements is increased by 100%.,0,0,6:4,1
+4,Excalibur,Weapon,Excalibur,Grant you 2 Divine Slash.,0,0,5:2,2
+5,Divine Slash,Weapon,DivineSlash,Deal 500 damage to the target.,1,0,500,3

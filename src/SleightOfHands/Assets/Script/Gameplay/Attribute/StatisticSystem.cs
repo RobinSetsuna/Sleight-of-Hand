@@ -98,7 +98,7 @@ public class StatisticSystem
             }
 
             if (hasChange)
-                onStatisticChange.Invoke(statistic, originalValue, value);
+                onStatisticChange.Invoke(statistic, originalValue, statistics[statistic]);
         }
     }
 
@@ -210,7 +210,7 @@ public class StatisticSystem
 
     public static int CalculateDamageOutput(int rAtk, params IAttributeCollection[] attributeSets)
     {
-        return Mathf.RoundToInt(rAtk * (1 + AttributeSet.Sum(AttributeType.Atk_f, attributeSets))); // rDmg = ROUND(rAtk * (1 + Atk_f))
+        return Mathf.RoundToInt(Mathf.Max(0, rAtk * (1 + AttributeSet.Sum(AttributeType.Atk_f, attributeSets)))); // rDmg = ROUND(MAX(0, rAtk * (1 + Atk_f)))
     }
 
     public bool AddStatusEffect(StatusEffect statusEffect)

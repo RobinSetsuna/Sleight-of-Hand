@@ -5,4 +5,4 @@ Id,Type,Name,Description,Attributes,MaxNumStack
 3,3,Rooted,The unit is rooted so that it cannot move,21:-10000,1
 4,4,Blind,The unit is blind so that it can see nothing,31:-10000;41:-10000,1
 5,5,Invisible, The unit cannot be seen,51:-10000,1
-6,6,Diminished,The unit is turned smaller than usual,1017:-1;1018:100;1027:1;61:75;51:-999,1
+6,6,Diminished,The unit is turned smaller than usual,1017:-100;1018:100;1027:1;61:75;51:-999,1
