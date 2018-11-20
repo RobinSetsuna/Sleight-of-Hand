@@ -4,4 +4,4 @@ Id,Name,Background,Illustration,Description,Range,Duration,Effect,EffectType
 2,Glue Trap,Strategy,GlueTrap,Make an enemy stop,5,2,GlueTrap,0
 3,Be Small,Enhancement,BeSmall,Make yourself small,0,0,6:4,1
 4,Excalibur,Weapon,Excalibur,Grant you 2 Divine Slash,0,0,5:2,2
-5,Divine Slash,Combat,DivineSlash,Deal 500 damage to a unit,1,0,500,3
+5,Divine Slash,Weapon,DivineSlash,Deal 500 damage to a unit,1,0,500,3

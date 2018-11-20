@@ -987,6 +987,14 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
     private void HandleCardToUseChange(Card cardToUse)
     {
+        if (targetTileHighlights != null)
+        {
+            foreach (Tile tile in targetTileHighlights)
+                tile.Dehighlight(Tile.HighlightColor.Green);
+
+            targetTileHighlights = null;
+        }
+
         if (cardToUse != null)
         {
             switch (cardToUse.Data.EffectType)
@@ -1003,9 +1011,6 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             foreach (Tile tile in targetTileHighlights)
                 tile.Highlight(Tile.HighlightColor.Green);
         }
-        else
-            foreach (Tile tile in targetTileHighlights)
-                tile.Dehighlight(Tile.HighlightColor.Green);
     }
 
     [Serializable]

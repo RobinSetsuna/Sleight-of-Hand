@@ -12,14 +12,14 @@ public class HUD : UIWindow
     [SerializeField] private Text ap;
     [SerializeField] private Text hp;
 
-    private Dictionary<Card, GameObject> uiCards = new Dictionary<Card, GameObject>();
+    private Dictionary<Card, UICard> uiCards = new Dictionary<Card, UICard>();
+    private UICard selectedUICard;
 
     public override void OnOpen(params object[] args)
     {
         UpdateAll();
         AddEventListeners();
     }
-
 
     public override void OnClose()
     {
@@ -78,12 +78,12 @@ public class HUD : UIWindow
             {
                 Card card = hand[i];
 
-                GameObject uiCard;
+                UICard uiCard;
 
                 if (i < numExistedListItems)
-                    uiCard = listTransform.GetChild(i).gameObject;
+                    uiCard = listTransform.GetChild(i).GetComponent<UICard>();
                 else
-                    uiCard = Instantiate(ResourceUtility.GetPrefab("Card"), listTransform);
+                    uiCard = Instantiate(ResourceUtility.GetPrefab<UICard>("Card"), listTransform);
 
                 uiCards.Add(card, uiCard);
 
@@ -96,10 +96,10 @@ public class HUD : UIWindow
         cardList.Refresh();
     }
 
-    private void UpdateCard(GameObject uiCard, Card card)
+    private void UpdateCard(UICard uiCard, Card card)
     {
-        uiCard.SetActive(true);
-        uiCard.GetComponent<UICard>().Refresh(card);
+        uiCard.gameObject.SetActive(true);
+        uiCard.Refresh(card);
     }
 
     private void ShowBanner(string content)
@@ -125,6 +125,7 @@ public class HUD : UIWindow
         LevelManager.Instance.Player.onStatisticChange.AddListener(HandlePlayerStatisticChange);
 
         LevelManager.Instance.playerController.onCurrentPlayerStateChange.AddListener(HandleCurrentPlayerStateChange);
+        LevelManager.Instance.playerController.onCardToUseUpdate.AddListener(HandleCardToUseChange);
 
         LevelManager.Instance.onCurrentPhaseChangeForPlayer.AddListener(HandleCurrentPhaseChangeForPlayer);
         LevelManager.Instance.onCurrentTurnChange.AddListener(HandleTurnChange);
@@ -137,6 +138,7 @@ public class HUD : UIWindow
         LevelManager.Instance.Player.onStatisticChange.RemoveListener(HandlePlayerStatisticChange);
 
         LevelManager.Instance.playerController.onCurrentPlayerStateChange.RemoveListener(HandleCurrentPlayerStateChange);
+        LevelManager.Instance.playerController.onCardToUseUpdate.RemoveListener(HandleCardToUseChange);
 
         LevelManager.Instance.onCurrentPhaseChangeForPlayer.RemoveListener(HandleCurrentPhaseChangeForPlayer);
         LevelManager.Instance.onCurrentTurnChange.RemoveListener(HandleTurnChange);
@@ -155,18 +157,18 @@ public class HUD : UIWindow
             case ChangeType.Incremental:
                 Transform listTransform = cardList.transform;
                 int i = uiCards.Count;
-                GameObject uiCard;
+                UICard uiCard;
                 if (i < listTransform.childCount)
-                    uiCard = listTransform.GetChild(i).gameObject;
+                    uiCard = listTransform.GetChild(i).GetComponent<UICard>();
                 else
-                    uiCard = Instantiate(ResourceUtility.GetPrefab("Card"), listTransform);
+                    uiCard = Instantiate(ResourceUtility.GetPrefab<UICard>("Card"), listTransform);
                 uiCards.Add(card, uiCard);
                 UpdateCard(uiCard, card);
                 cardList.Refresh();
                 break;
 
             case ChangeType.Decremental:
-                uiCards[card].SetActive(false);
+                uiCards[card].gameObject.SetActive(false);
                 uiCards.Remove(card);
                 cardList.Refresh();
                 break;
@@ -201,6 +203,23 @@ public class HUD : UIWindow
             case PlayerState.Move:
                 endTurnButton.interactable = false;
                 break;
+        }
+    }
+
+    private void HandleCardToUseChange(Card cardToUse)
+    {
+        if (cardToUse == null)
+        {
+            selectedUICard.ToggleSelection();
+            selectedUICard = null;
+        }
+        else
+        {
+            if (selectedUICard)
+                selectedUICard.ToggleSelection();
+
+            selectedUICard = uiCards[cardToUse];
+            selectedUICard.ToggleSelection();
         }
     }
 

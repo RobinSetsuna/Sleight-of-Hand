@@ -183,7 +183,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
                 break;
 
             case 3: // Single-target
-                GridManager.Instance.GetUnit(targetTile).ApplyDamage(int.Parse(cardData.Effect));
+                GridManager.Instance.GetUnit(targetTile).ApplyDamage(Statistics.CalculateDamageOutput(int.Parse(cardData.Effect)));
                 break;
         }
 

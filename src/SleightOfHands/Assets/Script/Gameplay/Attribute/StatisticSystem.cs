@@ -7,6 +7,7 @@ public enum AttributeType : int
     Hp_i = 10,
     Hp_f = 11,
     Hp_p = 12,
+    Atk_f = 1017,
     Dmg_f = 1018,
     Dmg = 19,
 
@@ -124,15 +125,15 @@ public class StatisticSystem
         return eFtg;
     }
 
-    public int ApplyDamage(int rawDamage)
+    public int ApplyDamage(int rDmg)
     {
         if (Random.Range(0, 100) > CalculateStatistic(Statistic.Evasion))
         {
-            int damage = rawDamage;
+            int eDmg = rDmg;
 
-            AddStatusEffect(new StatusEffect(0, int.MaxValue, damage));
+            AddStatusEffect(new StatusEffect(0, int.MaxValue, eDmg));
 
-            return damage;
+            return eDmg;
         }
 
         return 0;
@@ -200,6 +201,16 @@ public class StatisticSystem
             default: // eFtg = ROUND(rFtg * (1 + Ftg_p))
                 return Mathf.RoundToInt(rFtg * (1 + AttributeSet.Sum(AttributeType.Ftg_p, attributeSets)));
         }
+    }
+
+    public int CalculateDamageOutput(int rAtk)
+    {
+        return CalculateDamageOutput(rAtk, talents, statusEffects);
+    }
+
+    public static int CalculateDamageOutput(int rAtk, params IAttributeCollection[] attributeSets)
+    {
+        return Mathf.RoundToInt(rAtk * (1 + AttributeSet.Sum(AttributeType.Atk_f, attributeSets))); // rDmg = ROUND(rAtk * (1 + Atk_f))
     }
 
     public bool AddStatusEffect(StatusEffect statusEffect)

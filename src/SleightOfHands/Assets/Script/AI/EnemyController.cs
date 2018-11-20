@@ -214,7 +214,7 @@ public class EnemyController : MouseInteractable
             gameObject.GetComponent<AudioSource>().PlayOneShot(SwingSword);
             yield return new WaitForSeconds(2f);
 
-            Player.ApplyDamage(enemy.Attack);
+            Player.ApplyDamage(enemy.Statistics.CalculateDamageOutput(enemy.Attack));
             enemy.Statistics.ApplyFatigue(1);
 
             CurrentEnemyState = EnemyState.Deactivated;
