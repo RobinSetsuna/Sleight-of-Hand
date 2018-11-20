@@ -1,12 +1,13 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class UICard : UIWidget
 {
-    [SerializeField] private Text title;
+    [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private Image template;
     [SerializeField] private Image illustration;
-    [SerializeField] private Text description;
+    [SerializeField] private TextMeshProUGUI description;
     [SerializeField] private GameObject selectedEffect;
 
     public Card Card { get; private set; }

@@ -8,7 +8,36 @@ public class UIList : UIWidget
     [SerializeField] private int column = 1;
     [SerializeField] private Vector2 itemSize;
     [SerializeField] private bool hideInactives = true;
-    [SerializeField] private RectTransform background; 
+    [SerializeField] private RectTransform background;
+
+    public int Count
+    {
+        get
+        {
+            int count = 0;
+            for (int i = 0; i < transform.childCount; i++)
+                if (transform.GetChild(i).gameObject.activeSelf)
+                    count++;
+
+            return count;
+        }
+    }
+
+    public float Length
+    {
+        get
+        {
+            return CalculateLength(Count);
+        }
+    }
+
+    public float Width
+    {
+        get
+        {
+            return CalculateWidth(Count);
+        }
+    }
 
     public override void Refresh(params object[] args)
     {
@@ -36,11 +65,16 @@ public class UIList : UIWidget
         }
 
         if (background)
-        {
-            if (i == 0)
-                background.sizeDelta = new Vector2(0, 0);
-            else
-                background.sizeDelta = new Vector2(margin.x + Math.Min(column, i) * (itemSize.x + margin.x), margin.y + ((i - 1) / column + 1) * (itemSize.y + margin.x));
-        }
+            background.sizeDelta = new Vector2(CalculateLength(i), CalculateWidth(i));
+    }
+
+    private float CalculateLength(int count)
+    {
+        return count == 0 ? 0 : margin.x + Math.Min(column, count) * (itemSize.x + margin.x);
+    }
+
+    private float CalculateWidth(int count)
+    {
+        return count == 0 ? 0 : margin.y + ((count - 1) / column + 1) * (itemSize.y + margin.x);
     }
 }

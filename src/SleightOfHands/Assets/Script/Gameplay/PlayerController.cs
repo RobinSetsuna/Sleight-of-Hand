@@ -6,17 +6,17 @@ using UnityEngine.Events;
 /// </summary>
 public enum PlayerState : int
 {
-    Uncontrollable,
-    Idle,
+    Uncontrollable = 0,
+    Idle = 1,
 
-    MovementPlanning,
-    MovementConfirmation,
-    Move,
+    MovementPlanning = 10,
+    MovementConfirmation = 11,
+    Move = 12,
 
-    CardBrowsing,
-    CardUsagePlanning,
-    CardUsageConfirmation,
-    UseCard,
+    CardBrowsing = 20,
+    CardUsagePlanning = 21,
+    CardUsageConfirmation = 22,
+    UseCard = 23,
 }
 
 /// <summary>
@@ -158,6 +158,10 @@ public class PlayerController : MouseInteractable
                         // ActionManager.Singleton.Execute(ResetToIdle);
                         break;
 
+                    case PlayerState.CardBrowsing:
+                        CardToUse = null;
+                        break;
+
                     case PlayerState.CardUsageConfirmation:
                         Vector3 tileCenterCard = GridManager.Instance.GetWorldPosition(targetTile);
                         tileCenterCard.y += GridManager.Instance.TileSize;
@@ -178,6 +182,16 @@ public class PlayerController : MouseInteractable
                 onCurrentPlayerStateChange.Invoke(previousPlayerState, currentPlayerState);
             }
         }
+    }
+
+    public void Back()
+    {
+        Debug.LogWarning(currentPlayerState);
+        Debug.LogWarning((int)currentPlayerState % 10 == 0);
+        if ((int)currentPlayerState % 10 == 0)
+            ResetToIdle();
+        else
+            CurrentPlayerState = currentPlayerState - 1;
     }
 
     private PlayerController() {}
@@ -313,9 +327,8 @@ public class PlayerController : MouseInteractable
                 }
                 else if (obj.GetComponent<UICard>())
                 {
-                    CardToUse = obj.GetComponent<UICard>().Card;
                     audioSource.PlayOneShot(TapCard);
-                    CurrentPlayerState = PlayerState.CardUsagePlanning;
+                    CurrentPlayerState = PlayerState.CardBrowsing;
                 }
                 break;
 
@@ -341,6 +354,15 @@ public class PlayerController : MouseInteractable
                             CurrentPlayerState = PlayerState.MovementConfirmation;
                         }
                     }
+                }
+                break;
+
+            case PlayerState.CardBrowsing:
+                if (obj.GetComponent<UICard>())
+                {
+                    CardToUse = obj.GetComponent<UICard>().Card;
+                    audioSource.PlayOneShot(TapCard);
+                    CurrentPlayerState = PlayerState.CardUsagePlanning;
                 }
                 break;
 
@@ -374,21 +396,6 @@ public class PlayerController : MouseInteractable
                         CurrentPlayerState = PlayerState.CardUsageConfirmation;
                     else
                         targetTile = null;
-                }
-
-                else if (obj.GetComponent<UICard>())
-                {
-
-                    Card card = obj.GetComponent<UICard>().Card;
-                    if (card == cardToUse)
-                    {
-                        audioSource.PlayOneShot(TapCard);
-                        CurrentPlayerState = PlayerState.Idle;
-                    }
-                    else
-                    {
-                        CardToUse = card;
-                    }
                 }
                 break;
         }

@@ -11,9 +11,13 @@ public class HUD : UIWindow
     [SerializeField] private UIList cardList;
     [SerializeField] private Text ap;
     [SerializeField] private Text hp;
+    [SerializeField] private Button cancelButton;
 
     private Dictionary<Card, UICard> uiCards = new Dictionary<Card, UICard>();
     private UICard selectedUICard;
+    private UITransform cardListTransformEffect;
+    private Vector3 cardListOriginalLocalScale;
+    private Vector3 cardListOriginalLocalPosition;
 
     public override void OnOpen(params object[] args)
     {
@@ -36,17 +40,42 @@ public class HUD : UIWindow
 
     public override void UpdateAll()
     {
-        if (LevelManager.Instance.CurrentRound == Round.Player)
-            HandleCurrentPhaseChangeForPlayer(LevelManager.Instance.CurrentPhase);
-        else
-            endTurnButton.interactable = false;
-
-        player Player = LevelManager.Instance.Player;
+        UpdateButton(LevelManager.Instance.playerController.CurrentPlayerState);
 
         UpdateTurn(LevelManager.Instance.CurrentTurn);
+
+        player Player = LevelManager.Instance.Player;
         UpdateAp(Player.Ap);
         UpdateHp(Player.Hp);
+
         UpdateHand(CardManager.Instance.hand);
+    }
+
+    private void UpdateButton(PlayerState currentPlayerState)
+    {
+        switch (currentPlayerState)
+        {
+            case PlayerState.Uncontrollable:
+                endTurnButton.gameObject.SetActive(true);
+                endTurnButton.interactable = false;
+                cancelButton.gameObject.SetActive(false);
+                cancelButton.interactable = false;
+                break;
+
+            case PlayerState.Idle:
+                endTurnButton.gameObject.SetActive(true);
+                endTurnButton.interactable = true;
+                cancelButton.gameObject.SetActive(false);
+                cancelButton.interactable = true;
+                break;
+
+            default:
+                endTurnButton.gameObject.SetActive(false);
+                endTurnButton.interactable = true;
+                cancelButton.gameObject.SetActive(true);
+                cancelButton.interactable = true;
+                break;
+        }
     }
 
     private void UpdateTurn(int turn)
@@ -113,9 +142,27 @@ public class HUD : UIWindow
         UIManager.Singleton.Toggle("IngameMenu");
     }
 
-    public void EndCurrentTurn()
+    public void EndTurn()
     {
         LevelManager.Instance.EndActionPhase();
+    }
+
+    public void Cancel()
+    {
+        LevelManager.Instance.playerController.Back();
+    }
+
+    private void Start()
+    {
+        Transform cardListTransform = cardList.transform;
+
+        cardListTransformEffect = cardListTransform.GetComponent<UITransform>();
+
+        if (!cardListTransformEffect)
+            cardListTransformEffect = cardListTransform.gameObject.AddComponent<UITransform>();
+
+        cardListOriginalLocalScale = cardListTransform.localScale;
+        cardListOriginalLocalPosition = cardListTransform.localPosition;
     }
 
     private void AddEventListeners()
@@ -193,15 +240,47 @@ public class HUD : UIWindow
     {
         switch (previousState)
         {
-            case PlayerState.Move:
-                endTurnButton.interactable = true;
+            case PlayerState.Idle:
+                if (currentState != PlayerState.Uncontrollable)
+                {
+                    endTurnButton.gameObject.SetActive(false);
+                    cancelButton.gameObject.SetActive(true);
+                }
+                break;
+
+            case PlayerState.CardBrowsing:
+                cardListTransformEffect.targetLocalScale = cardListOriginalLocalScale;
+                cardListTransformEffect.targetLocalPosition = cardListOriginalLocalPosition;
+                cardListTransformEffect.enabled = false;
+                cardListTransformEffect.enabled = true;
                 break;
         }
 
         switch (currentState)
         {
-            case PlayerState.Move:
+            case PlayerState.Uncontrollable:
                 endTurnButton.interactable = false;
+                cancelButton.interactable = false;
+                break;
+
+            case PlayerState.Idle:
+                endTurnButton.gameObject.SetActive(true);
+                cancelButton.gameObject.SetActive(false);
+                break;
+
+            case PlayerState.Move:
+                cancelButton.gameObject.SetActive(false);
+                break;
+
+            case PlayerState.UseCard:
+                cancelButton.gameObject.SetActive(false);
+                break;
+
+            case PlayerState.CardBrowsing:
+                cardListTransformEffect.targetLocalScale = new Vector3(3, 3, 1);
+                cardListTransformEffect.targetLocalPosition = new Vector3(-cardList.Length * 3 / 2, cardList.Width * 3 / 2, 0);
+                cardListTransformEffect.enabled = false;
+                cardListTransformEffect.enabled = true;
                 break;
         }
     }
@@ -230,6 +309,7 @@ public class HUD : UIWindow
             case Phase.Action:
                 endTurnButton.interactable = true;
                 break;
+
             case Phase.End:
                 endTurnButton.interactable = false;
                 break;
