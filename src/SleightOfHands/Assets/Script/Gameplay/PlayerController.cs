@@ -362,6 +362,7 @@ public class PlayerController : MouseInteractable
                 {
                     CardToUse = obj.GetComponent<UICard>().Card;
                     //audioSource.PlayOneShot(TapCard);
+                    SoundManager.Instance.TapCard();
                     CurrentPlayerState = PlayerState.CardUsagePlanning;
                 }
                 break;
