@@ -159,11 +159,13 @@ public class HUD : UIWindow
     public void EndTurn()
     {
         LevelManager.Instance.EndActionPhase();
+        SoundManager.Instance.TapTile();
     }
 
     public void Cancel()
     {
         LevelManager.Instance.playerController.Back();
+        SoundManager.Instance.TapTile();
     }
 
     private void Start()
