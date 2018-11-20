@@ -71,21 +71,33 @@ public class Smoke : MonoBehaviour
 
             enemy.ApplyStatusEffect(new StatusEffect(3, 2));
             enemy.ApplyStatusEffect(new StatusEffect(4, duration));
+            enemy.ApplyStatusEffect(new StatusEffect(5, duration));
         }
         else if (other.GetComponent<player>())
         {
             player Player = other.GetComponent<player>();
 
             Player.ApplyStatusEffect(new StatusEffect(4, duration));
+            Player.ApplyStatusEffect(new StatusEffect(5, duration));
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.GetComponent<Enemy>())
-            other.GetComponent<Enemy>().RemoveStatusEffect(4);
+        {
+            Enemy enemy = other.GetComponent<Enemy>();
+
+            enemy.RemoveStatusEffect(4);
+            enemy.RemoveStatusEffect(5);
+        }
         else if (other.GetComponent<player>())
-            other.GetComponent<player>().RemoveStatusEffect(4);
+        {
+            player Player = other.GetComponent<player>();
+
+            Player.RemoveStatusEffect(4);
+            Player.RemoveStatusEffect(5);
+        }
     }
 
     //private void HandleUnitMove(Unit unit, Vector2Int previousGridPosition, Vector2Int currentGridPosition)

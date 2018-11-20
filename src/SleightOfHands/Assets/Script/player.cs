@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-///	<summary/>
+﻿///	<summary/>
 /// Player - derived class of Unit
 /// Active movement range, dragging path action, set heading
 ///

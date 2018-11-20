@@ -64,15 +64,24 @@ public class EnemyController : MouseInteractable
 #if UNITY_EDITOR
                 Debug.Log(LogUtility.MakeLogStringFormat("EnemyController", "Change mode from {0} to {1}.", mode, value));
 #endif
+                // Before leaving the previous mode
+                switch (mode)
+                {
+                    case EnemyMode.Chasing:
+                        LevelManager.Instance.Player.onStatisticChange.RemoveListener(HandleTargetStatisticChange);
+                        break;
+                }
 
                 mode = value;
 
                 if (currentEnemyState == EnemyState.Deactivated)
                     previousMode = value;
 
+                // After entering the new mode
                 switch (mode)
                 {
                     case EnemyMode.Chasing:
+                        LevelManager.Instance.Player.onStatisticChange.AddListener(HandleTargetStatisticChange);
                         Founded();
                         break;
                 }
@@ -429,6 +438,20 @@ public class EnemyController : MouseInteractable
         _audioSource.Play();
     }
 
+    private void HandleTargetStatisticChange(Statistic statistic, float previousValue, float currentValue)
+    {
+        switch (statistic)
+        {
+            case Statistic.VisibleRange:
+                player Player = LevelManager.Instance.Player;
+                Vector2Int playerGridPosition = Player.GridPosition;
+                Vector2Int enemyGridPosition = enemy.GridPosition;
+                if (Player.VisibleRange < MathUtility.ManhattanDistance(playerGridPosition.x, playerGridPosition.y, enemyGridPosition.x, enemyGridPosition.y))
+                    Mode = EnemyMode.Patrolling;
+                break;
+        }
+    }
+
     private void HandleStatusEffectChange(ChangeType change, StatusEffect statusEffect)
     {
         switch (change)
@@ -436,7 +459,7 @@ public class EnemyController : MouseInteractable
             case ChangeType.Incremental:
                 switch (statusEffect.Id)
                 {
-                    case 4: // Smoked
+                    case 4: // Blind
                         Mode = EnemyMode.Dazzled;
                         break;
                 }
@@ -445,7 +468,7 @@ public class EnemyController : MouseInteractable
             case ChangeType.Decremental:
                 switch (statusEffect.Id)
                 {
-                    case 4: // Smoked
+                    case 4: // Blind
                         Mode = EnemyMode.Patrolling;
                         break;
                 }

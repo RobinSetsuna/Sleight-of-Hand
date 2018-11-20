@@ -126,7 +126,7 @@ public class CardManager : MonoBehaviour
         //if (deck.cards == null)
         //    Debug.Log("null");
 
-        deck = new CardDeck(new int[3] { 0, 1, 2 });
+        deck = new CardDeck(new int[4] { 0, 1, 2, 3 });
         hand.Clear();
 
         //foreach (Card card in deck)

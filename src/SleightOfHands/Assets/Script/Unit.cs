@@ -151,17 +151,20 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
     {
         CardData cardData = card.Data;
 
-        switch (cardData.Type)
+        switch (cardData.EffectType)
         {
-            case "Enhancement":
+            case 0: // Casting
+                ActionManager.Singleton.AddFront(new Casting(ResourceUtility.GetCardEffect(cardData.Effect), targetTile));
+                callback.Invoke();
+                break;
+
+            case 1: // Statistic modification
                 string[] values = cardData.Effect.Split(':');
                 ActionManager.Singleton.AddFront(new StatusEffectApplication(new StatusEffect(int.Parse(values[0]), int.Parse(values[1])), GridManager.Instance.GetUnit(targetTile)));
                 callback.Invoke();
                 break;
 
-            case "Strategy":
-                ActionManager.Singleton.AddFront(new Casting(ResourceUtility.GetCardEffect(cardData.Effect), targetTile));
-                callback.Invoke();
+            case 2: // Card acquirement
                 break;
         }
     }
@@ -191,13 +194,15 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
         GridPosition = GridManager.Instance.GetTile(transform.position).gridPosition;
 
         characterController = GetComponent<CharacterController>();
+
+        onStatusEffectChange.AddListener(HandleStatusEffectChange);
     }
 
     private void FixedUpdate()
     {
         // Push player to ground
         if (characterController != null && !characterController.isGrounded)
-            characterController.Move(Vector3.up * (-9.81f * Time.deltaTime));
+            characterController.Move(Vector3.up * (-9.81f * Time.fixedDeltaTime));
     }
 
     public virtual int ApplyDamage(int rawDamage)
@@ -207,8 +212,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
 
     public virtual bool ApplyStatusEffect(StatusEffect statusEffect)
     {
-        Statistics.AddStatusEffect(statusEffect);
-        return true;
+        return Statistics.AddStatusEffect(statusEffect);
     }
 
     public virtual StatusEffect RemoveStatusEffect(int id)
@@ -230,6 +234,25 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
 
         if (callback != null)
             callback.Invoke();
+    }
+
+    private void HandleStatusEffectChange(ChangeType change, StatusEffect statusEffect)
+    {
+        switch (statusEffect.Data.Id)
+        {
+            case 6: // Diminished
+                switch (change)
+                {
+                    case ChangeType.Incremental:
+                        transform.localScale = 0.2f * Vector3.one;
+                        break;
+
+                    case ChangeType.Decremental:
+                        transform.localScale = Vector3.one;
+                        break;
+                }
+                break;
+        }
     }
 
     private IEnumerator Move(System.Action callback)

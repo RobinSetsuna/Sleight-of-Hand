@@ -653,11 +653,11 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             int distance = values[0];
             int numUnmatched = values[1];
 
-            if (distance >= lowerRange && (Match(tile) || !neverSkipUnmatched))
-                list.Add(tile);
-
             int x = tile.x;
             int y = tile.y;
+
+            if (!isVisited[x, y] && distance >= lowerRange && (Match(tile) || !neverSkipUnmatched))
+                list.Add(tile);
 
             isVisited[x, y] = true;
 
@@ -682,6 +682,74 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         }
 
         return list;
+    }
+
+    private struct TileMeta : IComparable
+    {
+        public readonly Tile tile;
+        public int value;
+
+        public TileMeta(Tile tile, int value)
+        {
+            this.tile = tile;
+            this.value = value;
+        }
+
+        public int CompareTo(TileMeta other)
+        {
+            return value.CompareTo(other.value);
+        }
+
+        public int CompareTo(object obj)
+        {
+            return CompareTo((TileMeta)obj);
+        }
+    }
+
+    public List<Tile> FindReachableTiles(Unit unit)
+    {
+        return FindReachableTiles(unit, GetTile(unit.GridPosition), unit.Ap);
+    }
+
+    public List<Tile> FindReachableTiles(Unit unit, Tile center, int ap)
+    {
+        List<Tile> tiles = new List<Tile>();
+
+        Dictionary<Tile, FibonacciHeapNode<TileMeta>> tileMap = new Dictionary<Tile, FibonacciHeapNode<TileMeta>>();
+        FibonacciHeap<TileMeta> heap = new FibonacciHeap<TileMeta>();
+
+        tileMap.Add(center, heap.Push(new TileMeta(center, 0)));
+
+        while (!heap.IsEmpty())
+        {
+            TileMeta tileMeta = heap.Pop().Value;
+            Tile tile = tileMeta.tile;
+
+            tiles.Add(tile);
+
+            int previousCost = tileMeta.value;
+
+            foreach (Vector2Int gridPosition in GetAdjacentGridPositions(tile.x, tile.y))
+            {
+                tile = GetTile(gridPosition);
+
+                if (IsAccessible(unit, tile))
+                {
+                    int cost = previousCost + unit.Statistics.CalculateEffectiveFatigue(tile.Cost, FatigueType.Movement);
+
+                    if (tileMap.ContainsKey(tile))
+                    {
+                        FibonacciHeapNode<TileMeta> node = tileMap[tile];
+                        if (cost < node.Value.value)
+                            heap.Decrement(node, new TileMeta(tile, cost));
+                    }
+                    else if (cost <= ap)
+                        tileMap.Add(tile, heap.Push(new TileMeta(tile, cost)));
+                }
+            }
+        }
+
+        return tiles;
     }
 
     public void ToggleDetectionArea(int uid)
@@ -850,9 +918,19 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             player Player = LevelManager.Instance.Player;
 
             if (path.Count == 0)
-                Highlight(GetTile(Player.transform.position), Player.Ap, Player.IsAccessibleTo, Tile.HighlightColor.Blue, true, true);
+                foreach (Tile tile in FindReachableTiles(Player))
+                    tile.Highlight(Tile.HighlightColor.Blue, true);
+            //Highlight(GetTile(Player.transform.position), Player.Ap, Player.IsAccessibleTo, Tile.HighlightColor.Blue, true, true);
             else
-                Highlight(path.Destination, Player.Ap - path.Count, Player.IsAccessibleTo, Tile.HighlightColor.Blue, true, true);
+            {
+                int totalCost = 0;
+                for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
+                    totalCost += tile.Cost;
+                
+                foreach (Tile tile in FindReachableTiles(Player, path.Destination, Player.Ap - totalCost))
+                    tile.Highlight(Tile.HighlightColor.Blue, true);
+                //Highlight(path.Destination, Player.Ap - path.Count, Player.IsAccessibleTo, Tile.HighlightColor.Blue, true, true);
+            }
 
             foreach (Tile wayPoint in path)
                 Highlight(wayPoint, Tile.HighlightColor.Green, false);

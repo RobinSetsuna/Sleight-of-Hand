@@ -8,7 +8,7 @@
     public int Range { get; private set; }
     public int Duration { get; private set; }
     public string Effect { get; private set; }
-    public string Type { get; private set; }
+    public int EffectType { get; private set; }
 
     int ITableDataEntry.Initialize(int row, string[] stringData)
     {
@@ -20,7 +20,7 @@
         Range = int.Parse(stringData[5]);
         Duration = int.Parse(stringData[6]);
         Effect = stringData[7];
-        Type = stringData[8];
+        EffectType = int.Parse(stringData[8]);
 
         return Id;
     }
@@ -32,6 +32,6 @@
 
     public override string ToString()
     {
-        return string.Format("Id: {0}\nName: {1}\nTemplate: {2}\nIllustration: {3}\nDescription: {4}\nRange: {5}\nDuration: {6}\nEffect: {7}\nType:{8}", Id, Name, Template, Illustration, Description, Range, Duration, Effect, Type);
+        return string.Format("Id: {0}\nName: {1}\nTemplate: {2}\nIllustration: {3}\nDescription: {4}\nRange: {5}\nDuration: {6}\nEffect: {7}\nType:{8}", Id, Name, Template, Illustration, Description, Range, Duration, Effect, EffectType);
     }
 }

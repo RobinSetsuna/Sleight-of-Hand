@@ -30,6 +30,15 @@ public class Tile : MouseInteractable, IEquatable<Tile>
 
     [SerializeField][Range(0, 1)] private float alpha;
 
+    private int cost = 1;
+    public int Cost
+    {
+        get
+        {
+            return cost;
+        }
+    }
+
     public bool walkable
     {
         get

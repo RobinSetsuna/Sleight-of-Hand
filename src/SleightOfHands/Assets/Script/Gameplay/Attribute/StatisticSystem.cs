@@ -7,13 +7,14 @@ public enum AttributeType : int
     Hp_i = 10,
     Hp_f = 11,
     Hp_p = 12,
+    Dmg_f = 1018,
     Dmg = 19,
 
     Ap_i = 20,
     Ap_f = 21,
     Ap_p = 22,
-    Ftg_pm = 27,
-    Ftg_p = 28,
+    Ftg_pm = 1027,
+    Ftg_p = 1028,
     Ftg = 29,
 
     Dr_i = 30,
@@ -24,6 +25,9 @@ public enum AttributeType : int
 
     Vr_i = 50,
     Vr_f = 51,
+
+    Evsn_i = 60,
+    Evsn_f = 61,
 }
 
 public enum Statistic : int
@@ -33,6 +37,7 @@ public enum Statistic : int
     DetectionRange = 3,
     AttackRange = 4,
     VisibleRange = 5,
+    Evasion = 6,
 }
 
 public enum FatigueType : int
@@ -71,7 +76,7 @@ public class StatisticSystem
     {
         get
         {
-            return statistics.ContainsKey(statistic) ? statistics[statistic] : 0;
+            return statistics.ContainsKey(statistic) ? CalculateStatistic(statistic) : 0;
         }
 
         set
@@ -112,7 +117,7 @@ public class StatisticSystem
 
     public int ApplyFatigue(int rFtg, FatigueType type = FatigueType.General)
     {
-        int eFtg = CalculateEffectiveFatigue(rFtg, type, talents, statusEffects);
+        int eFtg = CalculateEffectiveFatigue(rFtg, type);
 
         AddStatusEffect(new StatusEffect(1, 2, eFtg));
 
@@ -121,11 +126,16 @@ public class StatisticSystem
 
     public int ApplyDamage(int rawDamage)
     {
-        int damage = rawDamage;
+        if (Random.Range(0, 100) > CalculateStatistic(Statistic.Evasion))
+        {
+            int damage = rawDamage;
 
-        AddStatusEffect(new StatusEffect(0, int.MaxValue, damage));
+            AddStatusEffect(new StatusEffect(0, int.MaxValue, damage));
 
-        return damage;
+            return damage;
+        }
+
+        return 0;
     }
 
     public float Sum(AttributeType attribute)
@@ -142,6 +152,11 @@ public class StatisticSystem
     //{
     //    LevelManager.Instance.onRoundNumberChange.RemoveListener(HandleRoundNumberChange);
     //}
+
+    public float CalculateStatistic(Statistic statistic)
+    {
+        return CalculateStatistic(statistic, talents, statusEffects);
+    }
 
     public static float CalculateStatistic(Statistic statistic, params IAttributeCollection[] attributeSets)
     {
@@ -162,9 +177,17 @@ public class StatisticSystem
             case Statistic.VisibleRange: // VisibleRange = MAX(-1, ∑Ar_i + ∑Ar_f)
                 return Mathf.Max(-1, AttributeSet.Sum(AttributeType.Vr_i, attributeSets) + AttributeSet.Sum(AttributeType.Vr_f, attributeSets));
 
+            case Statistic.Evasion: // Evasion = Evsn_i + Evsn_f
+                return AttributeSet.Sum(AttributeType.Evsn_i, attributeSets) + AttributeSet.Sum(AttributeType.Evsn_f, attributeSets);
+
             default:
                 return 0;
         }
+    }
+
+    public int CalculateEffectiveFatigue(int rFtg, FatigueType type = FatigueType.General)
+    {
+        return CalculateEffectiveFatigue(rFtg, type, talents, statusEffects);
     }
 
     public static int CalculateEffectiveFatigue(int rFtg, FatigueType type, params IAttributeCollection[] attributeSets)
@@ -179,7 +202,7 @@ public class StatisticSystem
         }
     }
 
-    public void AddStatusEffect(StatusEffect statusEffect)
+    public bool AddStatusEffect(StatusEffect statusEffect)
     {
         bool isExisted = statusEffects.Contains(statusEffect);
 
@@ -191,7 +214,11 @@ public class StatisticSystem
 
             UpdateChangedStatistics(statusEffect);
             onStatusEffectChange.Invoke(isExisted ? ChangeType.Updating : ChangeType.Incremental, statusEffect);
+
+            return true;
         }
+
+        return false;
     }
 
     public StatusEffect RemoveStatusEffect(int id)
@@ -229,7 +256,7 @@ public class StatisticSystem
         foreach (int id in changedStatistics)
         {
             Statistic statistic = (Statistic)id;
-            this[statistic] = CalculateStatistic(statistic, talents, statusEffects);
+            this[statistic] = CalculateStatistic(statistic);
         }
     }
 
@@ -243,7 +270,7 @@ public class StatisticSystem
         foreach (int id in changedStatistics)
         {
             Statistic statistic = (Statistic)id;
-            this[statistic] = CalculateStatistic(statistic, talents, this.statusEffects);
+            this[statistic] = CalculateStatistic(statistic);
         }
     }
 

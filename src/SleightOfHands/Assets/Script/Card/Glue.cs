@@ -24,7 +24,7 @@ public class Glue : MonoBehaviour
 
         if (enemy)
         {
-            enemy.Statistics.AddStatusEffect(new StatusEffect(3, duration));
+            enemy.ApplyStatusEffect(new StatusEffect(3, duration));
             EnemyManager.Instance.QuestionPop(other.gameObject.transform);
         }  
     }
