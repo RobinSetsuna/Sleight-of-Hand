@@ -13,6 +13,11 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
     [SerializeField] protected int initialActionPoint;
     [SerializeField] protected int initialHealth = 100;
 
+//    public AudioClip Jump;
+//    public AudioClip UseEnhancementCard;
+//    public AudioClip UseGnomePotion;
+
+
     public EventOnDataChange<Vector2Int> onGridPositionChange = new EventOnDataChange<Vector2Int>();
 
     public StatisticSystem.EventOnStatisticChange onStatisticChange;
@@ -156,6 +161,8 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
         {
             case 0: // Casting
                 ActionManager.Singleton.AddFront(new Casting(ResourceUtility.GetCardEffect(cardData.Effect), targetTile));
+                SoundManager.Instance.PlaySoundEnhancement();
+                //gameObject.GetComponent<AudioSource>().PlayOneShot(UseEnhancementCard);
                 break;
 
             case 1: // Statistic modification
@@ -211,7 +218,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
 
         onStatusEffectChange.AddListener(HandleStatusEffectChange);
     }
-    
+
     protected virtual void OnDisable()
     {
         GridPosition = new Vector2Int(int.MinValue, int.MinValue);
@@ -231,6 +238,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
 
     public virtual int ApplyDamage(int rawDamage)
     {
+        
         return Statistics.ApplyDamage(rawDamage);
     }
 
@@ -252,12 +260,6 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
 
     protected virtual void FinishMovement(System.Action callback)
     {
-        //AudioSource audioSource = GetComponent<AudioSource>();
-        //audioSource.clip = Resources.Load<AudioClip>("Audio/SFX/jump");
-        //audioSource.Play();
-
-        GetComponent<AudioSource>().PlayOneShot(Resources.Load<AudioClip>("Audio/SFX/jump"));
-
         Statistics.ApplyFatigue(1, FatigueType.Movement);
 
         GridPosition = GridManager.Instance.GetTile(transform.position).gridPosition;
@@ -305,11 +307,8 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
 
     private IEnumerator ScaleDown()
     {
-        AudioSource _audioSource = gameObject.GetComponent<AudioSource>();
-        AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/beDetected");
-
-        _audioSource.clip = audioClip;
-        _audioSource.Play();
+        //gameObject.GetComponent<AudioSource>().PlayOneShot(UseGnomePotion);
+        SoundManager.Instance.PlaySoundGnomePotion();
         while (modelHolder.transform.localScale.x > 0.3f )
         {
             modelHolder.transform.localScale =  new Vector3(modelHolder.transform.localScale.x - 0.2f,modelHolder.transform.localScale.y-0.2f,modelHolder.transform.localScale.z-0.2f);
@@ -320,6 +319,8 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
 
     private IEnumerator ScaleUp()
     {
+        SoundManager.Instance.PlaySoundGnomePotion();
+        //gameObject.GetComponent<AudioSource>().PlayOneShot(UseGnomePotion);
         while (modelHolder.transform.localScale.x < 0.9f)
         {
             modelHolder.transform.localScale =  new Vector3(modelHolder.transform.localScale.x + 0.2f,modelHolder.transform.localScale.y + 0.2f,modelHolder.transform.localScale.z + 0.2f);
@@ -330,6 +331,8 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
 
     private IEnumerator Move(System.Action callback)
     {
+        SoundManager.Instance.PlaySoundJump();
+        //gameObject.GetComponent<AudioSource>().PlayOneShot(Jump);
         float initialDistance = MathUtility.ManhattanDistance(destination.x, destination.z, transform.position.x, transform.position.z);
         Vector3 initialPosition = transform.position;
 

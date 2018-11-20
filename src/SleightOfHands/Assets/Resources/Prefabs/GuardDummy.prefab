@@ -346,7 +346,6 @@ MonoBehaviour:
   jumpHeight: 0.25
   jumpsPerMove: 1
   speed: 0
-  ID: 0
   detectionRange: 3
   attackRange: 1
   attack: 100
@@ -362,6 +361,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 2
+  FoundPlayer: {fileID: 8300000, guid: 48713579672c7a449ae105b00993ecd7, type: 3}
+  SwingSword: {fileID: 8300000, guid: 52fa067c25c5c401b811eb86d142287e, type: 3}
 --- !u!143 &143898985038416060
 CharacterController:
   m_ObjectHideFlags: 1
