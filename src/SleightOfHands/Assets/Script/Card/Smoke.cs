@@ -3,7 +3,6 @@
 public class Smoke : MonoBehaviour
 {
     [SerializeField] private int duration = 4;
-    [SerializeField] private int detectionRange = 3;
 
     //private Vector2Int center;
     //private HashSet<Enemy> enemies = new HashSet<Enemy>();

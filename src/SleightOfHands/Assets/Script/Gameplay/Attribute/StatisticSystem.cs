@@ -7,12 +7,14 @@ public enum AttributeType : int
     Hp_i = 10,
     Hp_f = 11,
     Hp_p = 12,
-    Hp_c = 19,
+    Dmg = 19,
 
     Ap_i = 20,
     Ap_f = 21,
     Ap_p = 22,
-    Ap_c = 29,
+    Ftg_pm = 27,
+    Ftg_p = 28,
+    Ftg = 29,
 
     Dr_i = 30,
     Dr_f = 31,
@@ -24,7 +26,7 @@ public enum AttributeType : int
     Vr_f = 51,
 }
 
-public enum StatisticType : int
+public enum Statistic : int
 {
     Hp = 1,
     Ap = 2,
@@ -33,9 +35,15 @@ public enum StatisticType : int
     VisibleRange = 5,
 }
 
+public enum FatigueType : int
+{
+    General = 0,
+    Movement,
+}
+
 public class StatisticSystem
 {
-    public class EventOnStatisticChange : UnityEvent<StatisticType, float, float> { }
+    public class EventOnStatisticChange : UnityEvent<Statistic, float, float> { }
 
     /// <summary>
     /// An event triggered whenever a certain statistic in this system changes 
@@ -47,7 +55,7 @@ public class StatisticSystem
     /// <summary>
     /// 
     /// </summary>
-    private Dictionary<StatisticType, float> statistics = new Dictionary<StatisticType, float>();
+    private Dictionary<Statistic, float> statistics = new Dictionary<Statistic, float>();
 
     /// <summary>
     /// Attributes that will never change over time
@@ -59,7 +67,7 @@ public class StatisticSystem
     /// </summary>
     private StatusEffectQueue statusEffects = new StatusEffectQueue();
 
-    public float this[StatisticType statistic]
+    public float this[Statistic statistic]
     {
         get
         {
@@ -102,13 +110,13 @@ public class StatisticSystem
         LevelManager.Instance.onRoundNumberChange.AddListener(HandleRoundNumberChange);
     }
 
-    public int ApplyFatigue(int rawFatigue)
+    public int ApplyFatigue(int rFtg, FatigueType type = FatigueType.General)
     {
-        int fatigue = rawFatigue;
+        int eFtg = CalculateEffectiveFatigue(rFtg, type, talents, statusEffects);
 
-        AddStatusEffect(new StatusEffect(1, 2, fatigue));
+        AddStatusEffect(new StatusEffect(1, 2, eFtg));
 
-        return fatigue;
+        return eFtg;
     }
 
     public int ApplyDamage(int rawDamage)
@@ -135,27 +143,39 @@ public class StatisticSystem
     //    LevelManager.Instance.onRoundNumberChange.RemoveListener(HandleRoundNumberChange);
     //}
 
-    public static float CalculateStatisticValue(StatisticType statistic, params IAttributeGetter[] attributeSets)
+    public static float CalculateStatistic(Statistic statistic, params IAttributeCollection[] attributeSets)
     {
         switch (statistic)
         {
-            case StatisticType.Hp: // Hp = (∑Hp_i + ∑Hp_f) * (1 + ∑Hp_p) - ∑Hp_c
-                return (AttributeSet.Sum(AttributeType.Hp_i, attributeSets) + AttributeSet.Sum(AttributeType.Hp_f, attributeSets)) * (1 + AttributeSet.Sum(AttributeType.Hp_p, attributeSets)) - AttributeSet.Sum(AttributeType.Hp_c, attributeSets);
+            case Statistic.Hp: // Hp = (∑Hp_i + ∑Hp_f) * (1 + ∑Hp_p) - ∑Dmg
+                return (AttributeSet.Sum(AttributeType.Hp_i, attributeSets) + AttributeSet.Sum(AttributeType.Hp_f, attributeSets)) * (1 + AttributeSet.Sum(AttributeType.Hp_p, attributeSets)) - AttributeSet.Sum(AttributeType.Dmg, attributeSets);
 
-            case StatisticType.Ap: // Ap = MAX(0, (∑Ap_i + ∑Ap_f) * (1 + ∑Ap_p) - ∑Ap_c)
-                return Mathf.Max(0, (AttributeSet.Sum(AttributeType.Ap_i, attributeSets) + AttributeSet.Sum(AttributeType.Ap_f, attributeSets)) * (1 + AttributeSet.Sum(AttributeType.Ap_p, attributeSets)) - AttributeSet.Sum(AttributeType.Ap_c, attributeSets));
+            case Statistic.Ap: // Ap = MAX(0, (∑Ap_i + ∑Ap_f) * (1 + ∑Ap_p) - ∑Ftg)
+                return Mathf.Max(0, (AttributeSet.Sum(AttributeType.Ap_i, attributeSets) + AttributeSet.Sum(AttributeType.Ap_f, attributeSets)) * (1 + AttributeSet.Sum(AttributeType.Ap_p, attributeSets)) - AttributeSet.Sum(AttributeType.Ftg, attributeSets));
 
-            case StatisticType.DetectionRange: // DetectionRange = MAX(-1, ∑Dr_i + ∑Dr_f)
+            case Statistic.DetectionRange: // DetectionRange = MAX(-1, ∑Dr_i + ∑Dr_f)
                 return Mathf.Max(-1, AttributeSet.Sum(AttributeType.Dr_i, attributeSets) + AttributeSet.Sum(AttributeType.Dr_f, attributeSets));
 
-            case StatisticType.AttackRange: // AttackRange = MAX(0, ∑Ar_i + ∑Ar_f)
+            case Statistic.AttackRange: // AttackRange = MAX(0, ∑Ar_i + ∑Ar_f)
                 return Mathf.Max(0, AttributeSet.Sum(AttributeType.Ar_i, attributeSets) + AttributeSet.Sum(AttributeType.Ar_f, attributeSets));
 
-            case StatisticType.VisibleRange: // VisibleRange = MAX(-1, ∑Ar_i + ∑Ar_f)
+            case Statistic.VisibleRange: // VisibleRange = MAX(-1, ∑Ar_i + ∑Ar_f)
                 return Mathf.Max(-1, AttributeSet.Sum(AttributeType.Vr_i, attributeSets) + AttributeSet.Sum(AttributeType.Vr_f, attributeSets));
 
             default:
                 return 0;
+        }
+    }
+
+    public static int CalculateEffectiveFatigue(int rFtg, FatigueType type, params IAttributeCollection[] attributeSets)
+    {
+        switch (type)
+        {
+            case FatigueType.Movement: // eFtg = ROUND(rFtg * (1 + Ftg_pm) * (1 + Ftg_p))
+                return Mathf.RoundToInt(rFtg * (1 + AttributeSet.Sum(AttributeType.Ftg_pm, attributeSets)) * (1 + AttributeSet.Sum(AttributeType.Ftg_p, attributeSets)));
+
+            default: // eFtg = ROUND(rFtg * (1 + Ftg_p))
+                return Mathf.RoundToInt(rFtg * (1 + AttributeSet.Sum(AttributeType.Ftg_p, attributeSets)));
         }
     }
 
@@ -200,7 +220,7 @@ public class StatisticSystem
         UpdateChangedStatistics(pastStatusEffects);
     }
 
-    private void UpdateChangedStatistics(IAttributeGetter attributes)
+    private void UpdateChangedStatistics(IAttributeCollection attributes)
     {
         HashSet<int> changedStatistics = new HashSet<int>();
         foreach (KeyValuePair<int, float> attribute in attributes)
@@ -208,8 +228,8 @@ public class StatisticSystem
 
         foreach (int id in changedStatistics)
         {
-            StatisticType statistic = (StatisticType)id;
-            this[statistic] = CalculateStatisticValue(statistic, talents, statusEffects);
+            Statistic statistic = (Statistic)id;
+            this[statistic] = CalculateStatistic(statistic, talents, statusEffects);
         }
     }
 
@@ -222,8 +242,8 @@ public class StatisticSystem
 
         foreach (int id in changedStatistics)
         {
-            StatisticType statistic = (StatisticType)id;
-            this[statistic] = CalculateStatisticValue(statistic, talents, this.statusEffects);
+            Statistic statistic = (Statistic)id;
+            this[statistic] = CalculateStatistic(statistic, talents, this.statusEffects);
         }
     }
 
@@ -231,7 +251,7 @@ public class StatisticSystem
     {
         string s = "";
 
-        foreach (KeyValuePair<StatisticType, float> statistic in statistics)
+        foreach (KeyValuePair<Statistic, float> statistic in statistics)
             s += ";" + statistic.Key + ":" + statistic.Value;
 
         return string.Format("Stat: {0}\nTalent: {1}\n\n{2}", s.Substring(1), talents, statusEffects);

@@ -6,20 +6,21 @@ public class UIFadeInOut : UIEffect
     [SerializeField] private float fadeOutSpeed = 0.5f;
 
     private bool isFadingIn = true;
+    private CanvasRenderer canvasRenderer;
 
     private void OnEnable()
     {
         isFadingIn = true;
-        GetComponent<CanvasRenderer>().SetAlpha(0);
+
+        canvasRenderer = GetComponent<CanvasRenderer>();
+        canvasRenderer.SetAlpha(0);
     }
 
     private void Update()
     {
-        CanvasRenderer canvasRenderer = GetComponent<CanvasRenderer>();
-
         if (isFadingIn)
         {
-            float newAlpha = canvasRenderer.GetAlpha() + fadeOutSpeed * Time.deltaTime;
+            float newAlpha = canvasRenderer.GetAlpha() + fadeInSpeed * Time.deltaTime;
 
             if (newAlpha >= 1)
             {

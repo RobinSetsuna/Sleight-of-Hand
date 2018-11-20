@@ -1,4 +1,5 @@
-Id,name,Background,Illustration,Description,Range,Duration,Effect,Type
-0,Smoke Bomb,Strategy,SmokeBomb,This is a smoke bomb.,3,2,Smoke,Strategy
-1,Haste,Enhancement,Haste,Immediately gain 2 AP.,0,0,2:02,Enhancement
-2,Glue Trap,Strategy,GlueTrap,Make an enemy stop,5,2,GlueTrap,Strategy
+Id,Name,Background,Illustration,Description,Range,Duration,Effect,Type
+0,Smoke Bomb,Strategy,SmokeBomb,This is a smoke bomb.,3,2,Smoke,0
+1,Haste,Enhancement,Haste,Immediately gain 2 AP.,0,0,2:2,1
+2,Glue Trap,Strategy,GlueTrap,Make an enemy stop,5,2,GlueTrap,0
+3,Be Small,Enhancement,BeSmall,Make yourself small,0,0,5:2,1

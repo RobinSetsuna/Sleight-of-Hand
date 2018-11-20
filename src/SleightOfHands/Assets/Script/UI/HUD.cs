@@ -173,15 +173,15 @@ public class HUD : UIWindow
         }
     }
 
-    private void HandlePlayerStatisticChange(StatisticType statistic, float originalValue, float currentValue)
+    private void HandlePlayerStatisticChange(Statistic statistic, float originalValue, float currentValue)
     {
         switch (statistic)
         {
-            case StatisticType.Hp:
+            case Statistic.Hp:
                 UpdateHp(Mathf.RoundToInt(currentValue));
                 break;
 
-            case StatisticType.Ap:
+            case Statistic.Ap:
                 UpdateAp(Mathf.RoundToInt(currentValue));
                 break;
         }

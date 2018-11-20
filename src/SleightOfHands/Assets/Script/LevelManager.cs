@@ -166,13 +166,14 @@ public class LevelManager : MonoBehaviour
     public List<Enemy> Enemies = new List<Enemy>();
 
     //Card related
-    public GameObject Smoke;
-    public GameObject Haste;
-    public GameObject Glue;
-    GameObject canvas;
-    float canvasWidth;
-    float canvasHeight;
-    int cardsNumberOnCanvas = 0;
+    //public GameObject Smoke;
+    //public GameObject Haste;
+    //public GameObject Glue;
+
+    //GameObject canvas;
+    //float canvasWidth;
+    //float canvasHeight;
+    //int cardsNumberOnCanvas = 0;
 
     [SerializeField] private LevelData currentLevel;
     public LevelData CurrentLevel
@@ -343,9 +344,9 @@ public class LevelManager : MonoBehaviour
         Enemies.Remove(obj);
     }
 
-    private void HandlePlayerAttributeChange(StatisticType statistic, float previousValue, float currentValue)
+    private void HandlePlayerAttributeChange(Statistic statistic, float previousValue, float currentValue)
     {
-        if (statistic == StatisticType.Hp && currentValue <= 0)
+        if (statistic == Statistic.Hp && currentValue <= 0)
             CurrentPhase = Phase.Failure;
     }
 

@@ -350,7 +350,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         bool left = false;
         bool right = false;
 
-        Vector2Int size = levelData.GetSize();
+        //Vector2Int size = levelData.GetSize();
+
         int value = levelData.GetTile(x, y);
 
         if (y > 0 && levelData.GetTile(x, y - 1) == value) {
@@ -764,7 +765,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                 RefreshDetection(uid, currentDetectionArea);
             else
             {
-                enemy.onStatisticChange.AddListener(delegate (StatisticType statistic, float previousValue, float currentValue)
+                enemy.onStatisticChange.AddListener(delegate (Statistic statistic, float previousValue, float currentValue)
                                                     {
                                                         RefreshDetection(uid, ProjectileManager.Instance.getProjectileRange(GetTile(unit.GridPosition), enemy.DetectionRange, true, unit.transform.rotation.eulerAngles.y));
                                                     });

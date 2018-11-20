@@ -3,7 +3,6 @@
 public class Glue : MonoBehaviour
 {
     [SerializeField] private int duration = 4;
-    int counter = 0;
 
     void Start ()
     {

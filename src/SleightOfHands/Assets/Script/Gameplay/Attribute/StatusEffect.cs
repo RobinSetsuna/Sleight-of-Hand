@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class StatusEffect : IAttributeGetter, IComparable
+public class StatusEffect : IAttributeCollection, IComparable
 {
     private readonly AttributeSet attributes;
 

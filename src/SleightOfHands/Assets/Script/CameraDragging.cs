@@ -5,8 +5,9 @@ public class CameraDragging : MonoBehaviour
 	private Vector3 dragOrigin;
 	[SerializeField] private float dragSpeed;
 
-	[SerializeField] private float curZoomPos, zoomTo; // curZoomPos will be the value
-	[SerializeField] private float zoomFrom = 10;
+    [SerializeField] private float curZoomPos = 10;
+    [SerializeField] private float zoomTo = 15; // curZoomPos will be the value
+	[SerializeField] private float zoomFrom = 3;
     [SerializeField] private float zoomSpeed = 10;
 
     public bool isZoomEnabled = true;

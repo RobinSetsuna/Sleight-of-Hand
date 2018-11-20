@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-public class AttributeSet : IAttributeGetter
+public class AttributeSet : IAttributeCollection
 {
     private Dictionary<int, float> attributes;
 
@@ -47,22 +47,22 @@ public class AttributeSet : IAttributeGetter
         return new AttributeSet(s);
     }
 
-    public static AttributeSet Sum(params IAttributeGetter[] attributeSets)
+    public static AttributeSet Sum(params IAttributeCollection[] attributeSets)
     {
         AttributeSet attributeSet = new AttributeSet();
 
-        foreach (IAttributeGetter attributes in attributeSets)
+        foreach (IAttributeCollection attributes in attributeSets)
             foreach (KeyValuePair<int, float> attribute in attributes)
                 attributeSet.Add(attribute.Key, attribute.Value);
 
         return attributeSet;
     }
 
-    public static float Sum(AttributeType attribute, params IAttributeGetter[] attributeSets)
+    public static float Sum(AttributeType attribute, params IAttributeCollection[] attributeSets)
     {
         float sum = 0;
 
-        foreach (IAttributeGetter attributeSet in attributeSets)
+        foreach (IAttributeCollection attributeSet in attributeSets)
             sum += attributeSet[attribute];
 
         return sum;
