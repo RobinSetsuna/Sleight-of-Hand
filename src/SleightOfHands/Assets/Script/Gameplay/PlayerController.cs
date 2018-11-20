@@ -184,8 +184,6 @@ public class PlayerController : MouseInteractable
 
     public void Back()
     {
-        Debug.LogWarning(currentPlayerState);
-        Debug.LogWarning((int)currentPlayerState % 10 == 0);
         if ((int)currentPlayerState % 10 == 0)
             ResetToIdle();
         else
@@ -363,7 +361,7 @@ public class PlayerController : MouseInteractable
                 if (obj.GetComponent<UICard>())
                 {
                     CardToUse = obj.GetComponent<UICard>().Card;
-                    audioSource.PlayOneShot(TapCard);
+                    //audioSource.PlayOneShot(TapCard);
                     CurrentPlayerState = PlayerState.CardUsagePlanning;
                 }
                 break;
