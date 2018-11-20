@@ -125,9 +125,12 @@ public class EnemyController : MouseInteractable
 #endif
 
                 // Before leaving the previous state
-                //switch (currentEnemyState)
-                //{
-                //}
+                switch (currentEnemyState)
+                {
+                    case EnemyState.Deactivated:
+                        GridManager.Instance.HighlightDetectionArea(UID);
+                        break;
+                }
 
                 //EnemyState previousEnemyState = currentEnemyState;
                 currentEnemyState = value;
@@ -141,6 +144,7 @@ public class EnemyController : MouseInteractable
                 switch (currentEnemyState)
                 {
                     case EnemyState.Deactivated:
+                        GridManager.Instance.DehighlightDetectionArea(UID);
                         path = null;
                         if (callback != null)
                             callback.Invoke();
@@ -148,7 +152,7 @@ public class EnemyController : MouseInteractable
 
                     case EnemyState.Idle:
                         if (enemy.Ap <= (mode == EnemyMode.Patrolling ? enemy.InitialActionPoint - enemy.InitialActionPoint / 2 : 0))
-                            CurrentEnemyState = EnemyState.Deactivated;
+                            StartCoroutine(Deactivate()); //CurrentEnemyState = EnemyState.Deactivated;
                         else
                             CurrentEnemyState = EnemyState.Move;
                         path = null;
@@ -242,7 +246,7 @@ public class EnemyController : MouseInteractable
                     Tile finalDes = NearPosition(playerTile, enemyTile);
                     if (finalDes == null)
                     {
-                        CurrentEnemyState = EnemyState.Deactivated;
+                    StartCoroutine(Deactivate());  //CurrentEnemyState = EnemyState.Deactivated;
                         yield break;
                     }
                     finalDes = Navigation.FindPath(GridManager.Instance, enemyTile, finalDes, GridManager.Instance.IsWalkable).GetSecond();
@@ -305,7 +309,8 @@ public class EnemyController : MouseInteractable
                     int temp_y = enemyTile.y + 0;
                     if (GridManager.Instance.HasUnitOn(temp_x, temp_y) || !GridManager.Instance.IsWalkable(temp_x, temp_y))
                     {
-                        CurrentEnemyState = EnemyState.Deactivated;
+                        EnemyManager.Instance.QuestionPop(transform);
+                        StartCoroutine(Deactivate()); //CurrentEnemyState = EnemyState.Deactivated;
                     }
                     else
                     {
@@ -330,8 +335,17 @@ public class EnemyController : MouseInteractable
         }
         else
         {
-            CurrentEnemyState = EnemyState.Deactivated;
+            StartCoroutine(Deactivate()); //CurrentEnemyState = EnemyState.Deactivated;
         }
+    }
+
+    private IEnumerator Deactivate()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        CurrentEnemyState = EnemyState.Deactivated;
+
+        yield break;
     }
 
     /// <summary>

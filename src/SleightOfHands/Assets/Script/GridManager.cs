@@ -778,29 +778,35 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
     public void ToggleDetectionArea(int uid)
     {
         if (highlightedDetectionAreas.Contains(uid))
-        {
-            foreach (Tile tile in detectionAreas[uid])
-            {
-                BitOperationUtility.WriteBit(ref detectionHighlights[tile.x, tile.y], uid, 0);
-
-                if (detectionHighlights[tile.x, tile.y] == 0)
-                    tile.Dehighlight(Tile.HighlightColor.Red);
-            }
-
-            highlightedDetectionAreas.Remove(uid);
-        }
+            DehighlightDetectionArea(uid);
         else
+            HighlightDetectionArea(uid);
+    }
+
+    public void HighlightDetectionArea(int uid)
+    {
+        foreach (Tile tile in detectionAreas[uid])
         {
-            foreach (Tile tile in detectionAreas[uid])
-            {
-                if (detectionHighlights[tile.x, tile.y] == 0)
-                    tile.Highlight(Tile.HighlightColor.Red);
+            if (detectionHighlights[tile.x, tile.y] == 0)
+                tile.Highlight(Tile.HighlightColor.Red);
 
-                BitOperationUtility.WriteBit(ref detectionHighlights[tile.x, tile.y], uid, 1);
-            }
-
-            highlightedDetectionAreas.Add(uid);
+            BitOperationUtility.WriteBit(ref detectionHighlights[tile.x, tile.y], uid, 1);
         }
+
+        highlightedDetectionAreas.Add(uid);
+    }
+
+    public void DehighlightDetectionArea(int uid)
+    {
+        foreach (Tile tile in detectionAreas[uid])
+        {
+            BitOperationUtility.WriteBit(ref detectionHighlights[tile.x, tile.y], uid, 0);
+
+            if (detectionHighlights[tile.x, tile.y] == 0)
+                tile.Dehighlight(Tile.HighlightColor.Red);
+        }
+
+        highlightedDetectionAreas.Remove(uid);
     }
 
     /// <summary>
@@ -860,11 +866,11 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
             if (isNotInitialization)
             {
                 if (isNotDeath)
-                    RefreshDetection(uid, currentDetectionArea);
+                    UpdateDetection(uid, currentDetectionArea);
                 else
                 {
                     if (highlightedDetectionAreas.Contains(uid))
-                        ToggleDetectionArea(uid);
+                        DehighlightDetectionArea(uid);
 
                     foreach (Tile tile in detectionAreas[uid])
                         RemoveDetection(tile, uid);
@@ -877,7 +883,7 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
                 enemy.onStatisticChange.AddListener(delegate (Statistic statistic, float previousValue, float currentValue)
                                                     {
                                                         if (statistic == Statistic.DetectionRange)
-                                                            RefreshDetection(uid, ProjectileManager.Instance.getProjectileRange(GetTile(unit.GridPosition), enemy.DetectionRange, true, unit.transform.rotation.eulerAngles.y));
+                                                            UpdateDetection(uid, ProjectileManager.Instance.getProjectileRange(GetTile(unit.GridPosition), enemy.DetectionRange, true, unit.transform.rotation.eulerAngles.y));
                                                     });
 
                 foreach (Tile tile in currentDetectionArea)
@@ -920,10 +926,12 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         BitOperationUtility.WriteBit(ref detection[tile.x, tile.y], uid, 1);
     }
 
-    private void RefreshDetection(int uid, HashSet<Tile> currentDetectionArea)
+    private void UpdateDetection(int uid, HashSet<Tile> currentDetectionArea)
     {
-        if (highlightedDetectionAreas.Contains(uid))
-            ToggleDetectionArea(uid);
+        bool isDetectionAreaHighlighted = highlightedDetectionAreas.Contains(uid);
+
+        if (isDetectionAreaHighlighted)
+            DehighlightDetectionArea(uid);
 
         foreach (Tile tile in detectionAreas[uid])
             RemoveDetection(tile, uid);
@@ -933,8 +941,8 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
         detectionAreas[uid] = currentDetectionArea;
 
-        if (highlightedDetectionAreas.Contains(uid))
-            ToggleDetectionArea(uid);
+        if (isDetectionAreaHighlighted)
+            HighlightDetectionArea(uid);
     }
 
     private void RemoveDetection(Tile tile, int uid)
