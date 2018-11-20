@@ -381,10 +381,14 @@ public class PlayerController : MouseInteractable
 
                     Card card = obj.GetComponent<UICard>().Card;
                     if (card == cardToUse)
+                    {
                         audioSource.PlayOneShot(TapCard);
                         CurrentPlayerState = PlayerState.Idle;
+                    }
                     else
+                    {
                         CardToUse = card;
+                    }
                 }
                 break;
         }
