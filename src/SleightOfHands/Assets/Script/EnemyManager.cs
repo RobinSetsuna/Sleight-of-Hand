@@ -62,7 +62,7 @@ public class EnemyManager
     public void AlertPop(Transform enemy)
     {
         var temp = Object.Instantiate(ResourceUtility.GetPrefab<GameObject>("AlertBubble"), enemy.position, Quaternion.identity, enemy);
-        Object.Destroy(temp, 1f);
+        Object.Destroy(temp, 0.5f);
     }
 
     public void AttackPop(Transform enemy)
@@ -74,7 +74,7 @@ public class EnemyManager
     public void IdlePop(Transform enemy)
     {
         var temp = Object.Instantiate(ResourceUtility.GetPrefab<GameObject>("IdleBubble"), enemy.position, Quaternion.identity, enemy);
-        Object.Destroy(temp, 1.5f);
+        Object.Destroy(temp, 1.25f);
     }
 
     public void FoundPop(Transform enemy)

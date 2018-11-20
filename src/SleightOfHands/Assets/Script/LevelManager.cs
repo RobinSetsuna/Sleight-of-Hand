@@ -47,7 +47,7 @@ public class LevelManager : MonoBehaviour
 
     public EventOnDataUpdate<Phase> onCurrentPhaseChangeForPlayer = new EventOnDataUpdate<Phase>();
     public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForEnvironment = new EventOnDataUpdate<Phase>();
-    public AudioClip Dead;
+    //public AudioClip Dead;
 
     // public List<Unit> units;
     public player Player { get; private set; }
@@ -116,7 +116,8 @@ public class LevelManager : MonoBehaviour
                     return;
 
                 case Phase.Failure:
-                    gameObject.GetComponent<AudioSource>().PlayOneShot(Dead);
+                    //gameObject.GetComponent<AudioSource>().PlayOneShot(Dead);
+                    SoundManager.Instance.Dead();
                     UIManager.Singleton.Open("ExplorationFailure");
                     ActionManager.Singleton.Clear();
                     onGameEnd.Invoke();
@@ -322,10 +323,10 @@ public class LevelManager : MonoBehaviour
                 case SpawnData.Type.Guard:
                     Enemy enemy = GridManager.Instance.Spawn(ResourceUtility.GetPrefab<Enemy>("GuardDummy"), spawnPosition, spawnRotation); //Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
                     enemy.onStatisticChange.AddListener(delegate (Statistic statistic, float previousValue, float currentValue)
-                                                        {
-                                                            if (statistic == Statistic.Hp && currentValue <= 0)
-                                                                enemy.gameObject.SetActive(false);
-                                                        });
+                    {
+                        if (statistic == Statistic.Hp && currentValue <= 0)
+                            StartCoroutine(enemy.Dead());
+                    });
                     EnemyController enemyController = enemy.GetComponent<EnemyController>();
                     enemyController.SetWayPoints(spawnData.GetPath());
                     enemyController.Mode = EnemyMode.Patrolling;
