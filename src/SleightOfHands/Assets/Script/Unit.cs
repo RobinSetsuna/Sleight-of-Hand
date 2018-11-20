@@ -215,6 +215,12 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
     {
         return Statistics.RemoveStatusEffect(id);
     }
+    public void Shaking(float Duration,float Magnitude)
+    {
+        // may add a camera action queue for camera action
+        // shaking the screen for effect, like earthquake, explosion
+        StartCoroutine(Shake(Duration,Magnitude));
+    }
 
     protected virtual void FinishMovement(System.Action callback)
     {
@@ -230,6 +236,22 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
 
         if (callback != null)
             callback.Invoke();
+    }
+    private IEnumerator Shake(float Duration,float Magnitude)
+    {
+        var start_time = Time.fixedUnscaledTime;
+        var temp = modelHolder.transform.localPosition;
+        while (Time.fixedUnscaledTime - start_time < Duration)
+        {
+            float x = Random.Range(-1f, 1f) * Magnitude;
+            float y = Random.Range(-1f, 1f) * Magnitude;
+            // shaking
+            modelHolder.transform.localPosition = new Vector3(modelHolder.transform.localPosition.x+x,modelHolder.transform.localPosition.y,modelHolder.transform.localPosition.z+y);
+            yield return null;
+        }
+
+        modelHolder.transform.localPosition = temp;
+        yield return null;
     }
 
     private IEnumerator Move(System.Action callback)
