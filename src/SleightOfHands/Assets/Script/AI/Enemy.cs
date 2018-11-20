@@ -76,6 +76,10 @@ public class Enemy : Unit
         yield return new WaitForSeconds(0.5f);
         SoundManager.Instance.Dead();
         gameObject.SetActive(false);
+
+        onStatisticChange.RemoveAllListeners();
+        onStatusEffectChange.RemoveAllListeners();
+        onGridPositionChange.RemoveAllListeners();
     }
     public IEnumerator Hurt()
     {
