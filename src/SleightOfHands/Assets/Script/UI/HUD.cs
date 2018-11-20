@@ -56,24 +56,38 @@ public class HUD : UIWindow
         switch (currentPlayerState)
         {
             case PlayerState.Uncontrollable:
-                endTurnButton.gameObject.SetActive(true);
-                endTurnButton.interactable = false;
+                endTurnButton.gameObject.SetActive(false);
                 cancelButton.gameObject.SetActive(false);
-                cancelButton.interactable = false;
                 break;
 
             case PlayerState.Idle:
                 endTurnButton.gameObject.SetActive(true);
-                endTurnButton.interactable = true;
                 cancelButton.gameObject.SetActive(false);
-                cancelButton.interactable = true;
+                break;
+
+            case PlayerState.MovementConfirmation:
+                endTurnButton.gameObject.SetActive(false);
+                cancelButton.gameObject.SetActive(false);
+                break;
+
+            case PlayerState.Move:
+                endTurnButton.gameObject.SetActive(false);
+                cancelButton.gameObject.SetActive(false);
+                break;
+
+            case PlayerState.CardUsageConfirmation:
+                endTurnButton.gameObject.SetActive(false);
+                cancelButton.gameObject.SetActive(false);
+                break;
+
+            case PlayerState.UseCard:
+                endTurnButton.gameObject.SetActive(false);
+                cancelButton.gameObject.SetActive(false);
                 break;
 
             default:
                 endTurnButton.gameObject.SetActive(false);
-                endTurnButton.interactable = true;
                 cancelButton.gameObject.SetActive(true);
-                cancelButton.interactable = true;
                 break;
         }
     }
@@ -238,16 +252,10 @@ public class HUD : UIWindow
 
     private void HandleCurrentPlayerStateChange(PlayerState previousState, PlayerState currentState)
     {
+        UpdateButton(currentState);
+
         switch (previousState)
         {
-            case PlayerState.Idle:
-                if (currentState != PlayerState.Uncontrollable)
-                {
-                    endTurnButton.gameObject.SetActive(false);
-                    cancelButton.gameObject.SetActive(true);
-                }
-                break;
-
             case PlayerState.CardBrowsing:
                 cardListTransformEffect.targetLocalScale = cardListOriginalLocalScale;
                 cardListTransformEffect.targetLocalPosition = cardListOriginalLocalPosition;
@@ -258,24 +266,6 @@ public class HUD : UIWindow
 
         switch (currentState)
         {
-            case PlayerState.Uncontrollable:
-                endTurnButton.interactable = false;
-                cancelButton.interactable = false;
-                break;
-
-            case PlayerState.Idle:
-                endTurnButton.gameObject.SetActive(true);
-                cancelButton.gameObject.SetActive(false);
-                break;
-
-            case PlayerState.Move:
-                cancelButton.gameObject.SetActive(false);
-                break;
-
-            case PlayerState.UseCard:
-                cancelButton.gameObject.SetActive(false);
-                break;
-
             case PlayerState.CardBrowsing:
                 cardListTransformEffect.targetLocalScale = new Vector3(3, 3, 1);
                 cardListTransformEffect.targetLocalPosition = new Vector3(-cardList.Length * 3 / 2, cardList.Width * 3 / 2, 0);

@@ -184,8 +184,6 @@ public class PlayerController : MouseInteractable
 
     public void Back()
     {
-        Debug.LogWarning(currentPlayerState);
-        Debug.LogWarning((int)currentPlayerState % 10 == 0);
         if ((int)currentPlayerState % 10 == 0)
             ResetToIdle();
         else
