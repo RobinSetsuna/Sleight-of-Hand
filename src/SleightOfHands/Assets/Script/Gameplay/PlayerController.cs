@@ -159,7 +159,10 @@ public class PlayerController : MouseInteractable
                     case PlayerState.CardUsageConfirmation:
                         Vector3 tileCenterCard = GridManager.Instance.GetWorldPosition(targetTile);
                         tileCenterCard.y += GridManager.Instance.TileSize;
-                        UIManager.Singleton.Open("ListMenu", UIManager.UIMode.DEFAULT, UIManager.Singleton.GetCanvasPosition(Camera.main.WorldToScreenPoint(tileCenterCard)), "USE", (UnityAction)UseCard, "CANCEL", (UnityAction)ResetCardUsage);
+                        if (GridManager.Instance.HasEnemyOn(targetTile))
+                            UIManager.Singleton.Open("ListMenu", UIManager.UIMode.DEFAULT, UIManager.Singleton.GetCanvasPosition(Camera.main.WorldToScreenPoint(tileCenterCard)), "USE", (UnityAction)UseCard, "DETECTION", (UnityAction)ToggleDetectionAreaInCardUsageConfirmation, "CANCEL", (UnityAction)ResetCardUsage);
+                        else
+                            UIManager.Singleton.Open("ListMenu", UIManager.UIMode.DEFAULT, UIManager.Singleton.GetCanvasPosition(Camera.main.WorldToScreenPoint(tileCenterCard)), "USE", (UnityAction)UseCard, "CANCEL", (UnityAction)ResetCardUsage);
                         break;
 
                     case PlayerState.UseCard:
@@ -278,6 +281,12 @@ public class PlayerController : MouseInteractable
         CurrentPlayerState = PlayerState.UseCard;
     }
 
+    private void ToggleDetectionAreaInCardUsageConfirmation()
+    {
+        GridManager.Instance.ToggleDetectionArea(GridManager.Instance.GetUnit(targetTile).GetComponent<EnemyController>().UID);
+        ResetCardUsage();
+    }
+
     /// <summary>
     /// An event listener for MouseInputManager.Singleton.onMouseClick
     /// </summary>
@@ -300,8 +309,8 @@ public class PlayerController : MouseInteractable
                     GridManager.Instance.ToggleDetectionArea(obj.GetComponent<EnemyController>().UID);
                 else if (obj.GetComponent<UICard>())
                 {
-                    CurrentPlayerState = PlayerState.CardUsagePlanning;
                     CardToUse = obj.GetComponent<UICard>().Card;
+                    CurrentPlayerState = PlayerState.CardUsagePlanning;
                 }
                 break;
 
@@ -331,19 +340,42 @@ public class PlayerController : MouseInteractable
 
             case PlayerState.CardUsagePlanning:
                 if (obj == this)
-                    targetTile = GridManager.Instance.GetTile(transform.position);
-                else if (obj.GetComponent<Enemy>())
-                    targetTile = GridManager.Instance.GetTile(obj.transform.position);
-                else if (obj.GetComponent<Tile>())
-                    targetTile = obj.GetComponent<Tile>();
-                else if (obj.GetComponent<UICard>() && obj.GetComponent<UICard>().Card == cardToUse)
-                    CurrentPlayerState = PlayerState.Idle;
-                if (targetTile != null)
                 {
+                    targetTile = GridManager.Instance.GetTile(transform.position);
+
                     if (targetTile.IsHighlighted(Tile.HighlightColor.Green))
                         CurrentPlayerState = PlayerState.CardUsageConfirmation;
                     else
                         targetTile = null;
+                }
+                else if (obj.GetComponent<Enemy>())
+                {
+                    targetTile = GridManager.Instance.GetTile(obj.transform.position);
+
+                    if (targetTile.IsHighlighted(Tile.HighlightColor.Green))
+                        CurrentPlayerState = PlayerState.CardUsageConfirmation;
+                    else
+                    {
+                        GridManager.Instance.ToggleDetectionArea(obj.GetComponent<EnemyController>().UID);
+                        targetTile = null;
+                    }
+                }
+                else if (obj.GetComponent<Tile>())
+                {
+                    targetTile = obj.GetComponent<Tile>();
+
+                    if (targetTile.IsHighlighted(Tile.HighlightColor.Green))
+                        CurrentPlayerState = PlayerState.CardUsageConfirmation;
+                    else
+                        targetTile = null;
+                }
+                else if (obj.GetComponent<UICard>())
+                {
+                    Card card = obj.GetComponent<UICard>().Card;
+                    if (card == cardToUse)
+                        CurrentPlayerState = PlayerState.Idle;
+                    else
+                        CardToUse = card;
                 }
                 break;
         }

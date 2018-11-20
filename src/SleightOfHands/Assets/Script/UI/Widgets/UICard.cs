@@ -7,18 +7,9 @@ public class UICard : UIWidget
     [SerializeField] private Image template;
     [SerializeField] private Image illustration;
     [SerializeField] private Text description;
+    [SerializeField] private GameObject selectedEffect;
 
     public Card Card { get; private set; }
-
-    internal void Clear()
-    {
-        Card = null;
-
-        title.text = "";
-        template.sprite = null;
-        illustration.sprite = null;
-        description.text = "";
-    }
 
     public override void Refresh(params object[] args)
     {
@@ -36,5 +27,10 @@ public class UICard : UIWidget
             illustration.sprite = ResourceUtility.GetCardIllustration(cardData.Illustration);
             description.text = cardData.Description;
         }
+    }
+
+    internal void ToggleSelection()
+    {
+        selectedEffect.SetActive(!selectedEffect.activeSelf);
     }
 }
