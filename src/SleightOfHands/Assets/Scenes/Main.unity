@@ -655,6 +655,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c67bb4c35c76b0c448cb640580c1df00, type: 3}
   AttackMissSound: {fileID: 8300000, guid: 52fa067c25c5c401b811eb86d142287e, type: 3}
   FoundPlayer: {fileID: 8300000, guid: 48713579672c7a449ae105b00993ecd7, type: 3}
+  SpellSound: {fileID: 8300000, guid: ceede7a829d41470a86526620500b878, type: 3}
   TapTileSound: {fileID: 8300000, guid: a765109e0e9954bbfbec6ff4a77c527b, type: 3}
   TapCardSound: {fileID: 8300000, guid: 19b05ea55273549f095e571d853f1d52, type: 3}
   bgm: {fileID: 8300000, guid: db249b7aa9d588e4e8ab81853d7b9942, type: 3}

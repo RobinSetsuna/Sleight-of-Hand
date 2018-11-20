@@ -340,7 +340,7 @@ MonoBehaviour:
   actionRound: 1
   maxSpeed: 2.35
   initialActionPoint: 4
-  initialHealth: 200
+  initialHealth: 100
   movable: 1
   modelHolder: {fileID: 1801817489718384}
   jumpHeight: 0.25
