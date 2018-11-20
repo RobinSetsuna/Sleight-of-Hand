@@ -57,7 +57,7 @@ public class EnemyManager
     public void AlertPop(Transform enemy)
     {
         var temp = Object.Instantiate(ResourceUtility.GetPrefab<GameObject>("AlertBubble"), enemy.position, Quaternion.identity, enemy);
-        Object.Destroy(temp, 0.5f);
+        Object.Destroy(temp, 1f);
     }
 
     public void AttackPop(Transform enemy)
@@ -82,6 +82,18 @@ public class EnemyManager
     {
         var temp = Object.Instantiate(ResourceUtility.GetPrefab<GameObject>("QuestionBubble"), enemy.position, Quaternion.identity, enemy);
         Object.Destroy(temp, 1.5f);
+    }
+    
+    public void DeathPop(Transform enemy)
+    {
+        var temp = Object.Instantiate(ResourceUtility.GetPrefab<GameObject>("DeathBubble"), enemy.position, Quaternion.identity, enemy);
+        Object.Destroy(temp, 1f);
+    }
+    
+    public void HurtPop(Transform enemy)
+    {
+        var temp = Object.Instantiate(ResourceUtility.GetPrefab<GameObject>("HurtBubble"), enemy.position, Quaternion.identity, enemy);
+        Object.Destroy(temp, 1f);
     }
 
     ////EnemyList

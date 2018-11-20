@@ -37,7 +37,7 @@
             <e p="ActionQueue.cs" t="Include" />
             <e p="Attribute" t="Include">
               <e p="AttributeSet.cs" t="Include" />
-              <e p="IAttributeGetter.cs" t="Include" />
+              <e p="IAttributeCollection.cs" t="Include" />
               <e p="StatisticSystem.cs" t="Include" />
               <e p="StatusEffect.cs" t="Include" />
               <e p="StatusEffectQueue.cs" t="Include" />
@@ -97,6 +97,7 @@
             <e p="BitOperationUtility.cs" t="Include" />
             <e p="LogUtility.cs" t="Include" />
             <e p="MathUtility.cs" t="Include" />
+            <e p="RandomLight.cs" t="Include" />
             <e p="ResourceUtility.cs" t="Include" />
             <e p="TimeUtility.cs" t="Include" />
             <e p="Utility.asmdef" t="Include" />

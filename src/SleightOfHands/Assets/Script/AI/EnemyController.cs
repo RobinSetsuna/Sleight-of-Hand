@@ -168,6 +168,7 @@ public class EnemyController : MouseInteractable
         Vector2Int enemyGridPosition = enemy.GridPosition;
 
         if (Player.VisibleRange >= MathUtility.ManhattanDistance(playerGridPosition.x, playerGridPosition.y, enemyGridPosition.x, enemyGridPosition.y))
+            GetComponent<Enemy>().Shaking(0.05f,0.07f);
             Mode = EnemyMode.Chasing;
     }
 
