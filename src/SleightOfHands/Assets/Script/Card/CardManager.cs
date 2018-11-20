@@ -84,13 +84,13 @@ public class CardManager : MonoBehaviour
     //    }
     //}
 
-    private void AddCard(Card card)
+    internal void AddCard(Card card)
     {
         hand.Add(card);
         onHandChange.Invoke(ChangeType.Incremental, card);
     }
 
-    public void RemoveCard(Card card)
+    internal void RemoveCard(Card card)
     {
         hand.Remove(card);
         onHandChange.Invoke(ChangeType.Decremental, card);
@@ -126,7 +126,7 @@ public class CardManager : MonoBehaviour
         //if (deck.cards == null)
         //    Debug.Log("null");
 
-        deck = new CardDeck(new int[4] { 0, 1, 2, 3 });
+        deck = new CardDeck(new int[5] { 0, 1, 2, 3, 4 });
         hand.Clear();
 
         //foreach (Card card in deck)

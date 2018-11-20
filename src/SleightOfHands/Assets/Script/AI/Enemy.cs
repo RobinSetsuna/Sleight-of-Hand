@@ -1,5 +1,4 @@
 ﻿// using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum EnemyMoveState : int
@@ -61,6 +60,13 @@ public class Enemy : Unit
         //GridManager.Instance.onUnitMove.AddListener(HandleDetection);
 
         base.Awake();
+    }
+
+    protected override void OnDestroy()
+    {
+        LevelManager.Instance.onGameEnd.RemoveListener(StopAllCoroutines);
+
+        base.OnDestroy();
     }
 
     /// <summary>

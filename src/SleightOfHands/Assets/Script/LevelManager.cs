@@ -203,7 +203,6 @@ public class LevelManager : MonoBehaviour
 
         GridManager.Instance.Initialize();
         
-        
         //light map initialize
         Instantiate(ResourceUtility.GetPrefab<GameObject>("LightMap"), Vector3.zero, Quaternion.identity);
         //change when light config implemented.
@@ -315,11 +314,16 @@ public class LevelManager : MonoBehaviour
             {
                 case SpawnData.Type.Player:
                     Player = GridManager.Instance.Spawn(ResourceUtility.GetPrefab<player>("player_temp"), spawnPosition, spawnRotation); //Instantiate(ResourceUtility.GetPrefab<player>("player_temp"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
-                    Player.onStatisticChange.AddListener(HandlePlayerAttributeChange);
+                    Player.onStatisticChange.AddListener(HandlePlayerStatisticChange);
                     break;
 
                 case SpawnData.Type.Guard:
                     Enemy enemy = GridManager.Instance.Spawn(ResourceUtility.GetPrefab<Enemy>("GuardDummy"), spawnPosition, spawnRotation); //Instantiate(ResourceUtility.GetPrefab<GameObject>("GuardDummy"), spawnPosition, spawnRotation, GridManager.Instance.EnvironmentRoot);
+                    enemy.onStatisticChange.AddListener(delegate (Statistic statistic, float previousValue, float currentValue)
+                                                        {
+                                                            if (statistic == Statistic.Hp && currentValue <= 0)
+                                                                enemy.gameObject.SetActive(false);
+                                                        });
                     EnemyController enemyController = enemy.GetComponent<EnemyController>();
                     enemyController.SetWayPoints(spawnData.GetPath());
                     enemyController.Mode = EnemyMode.Patrolling;
@@ -339,12 +343,12 @@ public class LevelManager : MonoBehaviour
         onRoundNumberChange.Invoke(RoundNumber);
     }
 
-    public void RemoveEnemy(Enemy obj)
-    {
-        Enemies.Remove(obj);
-    }
+    //public void RemoveEnemy(Enemy obj)
+    //{
+    //    Enemies.Remove(obj);
+    //}
 
-    private void HandlePlayerAttributeChange(Statistic statistic, float previousValue, float currentValue)
+    private void HandlePlayerStatisticChange(Statistic statistic, float previousValue, float currentValue)
     {
         if (statistic == Statistic.Hp && currentValue <= 0)
             CurrentPhase = Phase.Failure;

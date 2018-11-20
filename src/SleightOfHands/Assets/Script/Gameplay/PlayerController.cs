@@ -331,27 +331,20 @@ public class PlayerController : MouseInteractable
 
             case PlayerState.CardUsagePlanning:
                 if (obj == this)
-                {
-                    Tile playerTile = GridManager.Instance.GetTile(Player.transform.position);
-
-                    if (playerTile.IsHighlighted(Tile.HighlightColor.Green))
-                    {
-                        targetTile = playerTile;
-                        CurrentPlayerState = PlayerState.CardUsageConfirmation;
-                    }
-                }
+                    targetTile = GridManager.Instance.GetTile(transform.position);
+                else if (obj.GetComponent<Enemy>())
+                    targetTile = GridManager.Instance.GetTile(obj.transform.position);
                 else if (obj.GetComponent<Tile>())
-                {
-                    Tile tile = obj.GetComponent<Tile>();
-
-                    if (tile.IsHighlighted(Tile.HighlightColor.Green))
-                    {
-                        targetTile = tile;
-                        CurrentPlayerState = PlayerState.CardUsageConfirmation;
-                    }
-                }
+                    targetTile = obj.GetComponent<Tile>();
                 else if (obj.GetComponent<UICard>() && obj.GetComponent<UICard>().Card == cardToUse)
                     CurrentPlayerState = PlayerState.Idle;
+                if (targetTile != null)
+                {
+                    if (targetTile.IsHighlighted(Tile.HighlightColor.Green))
+                        CurrentPlayerState = PlayerState.CardUsageConfirmation;
+                    else
+                        targetTile = null;
+                }
                 break;
         }
     }
