@@ -35,22 +35,25 @@ public class EnemyManager
 
     private void ActivateNextEnemy()
     {
-        if (++currentEnemyIndex == enemies.Count)
+        if (LevelManager.Instance.CurrentPhase != Phase.Failure)
         {
-            if (callback != null)
-                callback.Invoke();
-        }
-        else
-        {
-            Transform currentEnemyTransform = enemies[currentEnemyIndex].transform;
-
-            if (currentEnemyTransform.gameObject.activeSelf)
+            if (++currentEnemyIndex == enemies.Count)
             {
-                CameraManager.Instance.FocusAt(currentEnemyTransform.position, ActivateCurrentEnemy);
-                CameraManager.Instance.BoundCameraFollow(currentEnemyTransform);
+                if (callback != null)
+                    callback.Invoke();
             }
             else
-                ActivateNextEnemy();
+            {
+                Transform currentEnemyTransform = enemies[currentEnemyIndex].transform;
+
+                if (currentEnemyTransform.gameObject.activeSelf)
+                {
+                    CameraManager.Instance.FocusAt(currentEnemyTransform.position, ActivateCurrentEnemy);
+                    CameraManager.Instance.BoundCameraFollow(currentEnemyTransform);
+                }
+                else
+                    ActivateNextEnemy();
+            }
         }
     }
 
