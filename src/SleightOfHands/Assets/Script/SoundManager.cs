@@ -12,6 +12,7 @@ public class SoundManager : MonoBehaviour {
 	[SerializeField] private AudioClip[] HurtSound;
 	[SerializeField] private AudioClip AttackMissSound;
 	[SerializeField] private AudioClip FoundPlayer;
+	[SerializeField] private AudioClip SpellSound;
 	[Header("UI")]
 	[SerializeField] private AudioClip TapTileSound;
 	[SerializeField] private AudioClip TapCardSound;
@@ -81,5 +82,9 @@ public class SoundManager : MonoBehaviour {
 	{
 		var temp = Random.Range(0, HurtSound.Length);
 		soundPlayer.PlayOneShot(HurtSound[temp]);
+	}
+	public void Spell()
+	{
+		soundPlayer.PlayOneShot(SpellSound);
 	}
 }
