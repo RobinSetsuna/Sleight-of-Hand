@@ -98,7 +98,7 @@ public class StatisticSystem
             }
 
             if (hasChange)
-                onStatisticChange.Invoke(statistic, originalValue, value);
+                onStatisticChange.Invoke(statistic, originalValue, statistics[statistic]);
         }
     }
 
