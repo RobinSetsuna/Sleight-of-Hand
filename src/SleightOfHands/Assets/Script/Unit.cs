@@ -290,15 +290,42 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
                 switch (change)
                 {
                     case ChangeType.Incremental:
-                        transform.localScale = 0.2f * Vector3.one;
+                        //modelHolder.transform.localScale = 0.2f * Vector3.one;
+                        StartCoroutine(ScaleDown());
                         break;
 
                     case ChangeType.Decremental:
-                        transform.localScale = Vector3.one;
+                        //modelHolder.transform.localScale = Vector3.one;
+                        StartCoroutine(ScaleUp());
                         break;
                 }
                 break;
         }
+    }
+
+    private IEnumerator ScaleDown()
+    {
+        AudioSource _audioSource = gameObject.GetComponent<AudioSource>();
+        AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/beDetected");
+
+        _audioSource.clip = audioClip;
+        _audioSource.Play();
+        while (modelHolder.transform.localScale.x > 0.3f )
+        {
+            modelHolder.transform.localScale =  new Vector3(modelHolder.transform.localScale.x - 0.2f,modelHolder.transform.localScale.y-0.2f,modelHolder.transform.localScale.z-0.2f);
+            yield return new WaitForSeconds(0.1f);
+        }
+        yield return null;
+    }
+
+    private IEnumerator ScaleUp()
+    {
+        while (modelHolder.transform.localScale.x < 0.9f)
+        {
+            modelHolder.transform.localScale =  new Vector3(modelHolder.transform.localScale.x + 0.2f,modelHolder.transform.localScale.y + 0.2f,modelHolder.transform.localScale.z + 0.2f);
+            yield return new WaitForSeconds(0.1f);
+        }
+        yield return null;
     }
 
     private IEnumerator Move(System.Action callback)
