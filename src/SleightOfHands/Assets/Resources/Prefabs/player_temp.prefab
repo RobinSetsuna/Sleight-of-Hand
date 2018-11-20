@@ -125,7 +125,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -223,6 +223,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 1
+  TapTile: {fileID: 8300000, guid: a765109e0e9954bbfbec6ff4a77c527b, type: 3}
+  TapCard: {fileID: 8300000, guid: 19b05ea55273549f095e571d853f1d52, type: 3}
 --- !u!114 &114830161357113130
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -238,6 +240,8 @@ MonoBehaviour:
   maxSpeed: 2
   initialActionPoint: 3
   initialHealth: 200
+  Jump: {fileID: 8300000, guid: 2c5292ba5cf254919a6b9e2b18e04f49, type: 3}
+  UseEnhancementCard: {fileID: 8300000, guid: e6c557373166c4cab9ad1d107b104f7e, type: 3}
   movable: 1
   modelHolder: {fileID: 1831866132108444}
   jumpHeight: 0.25

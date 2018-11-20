@@ -47,6 +47,7 @@ public class LevelManager : MonoBehaviour
 
     public EventOnDataUpdate<Phase> onCurrentPhaseChangeForPlayer = new EventOnDataUpdate<Phase>();
     public EventOnDataUpdate<Phase> OnCurrentPhaseChangeForEnvironment = new EventOnDataUpdate<Phase>();
+    public AudioClip Dead;
 
     // public List<Unit> units;
     public player Player { get; private set; }
@@ -115,6 +116,7 @@ public class LevelManager : MonoBehaviour
                     return;
 
                 case Phase.Failure:
+                    gameObject.GetComponent<AudioSource>().PlayOneShot(Dead);
                     UIManager.Singleton.Open("ExplorationFailure");
                     ActionManager.Singleton.Clear();
                     onGameEnd.Invoke();

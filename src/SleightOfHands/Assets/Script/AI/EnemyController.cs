@@ -25,11 +25,14 @@ public class EnemyController : MouseInteractable
 
     private int nextPosIndex;
     private bool newRound;
-    
+
     private EnemyMode previousMode = EnemyMode.Patrolling;
 
     private System.Action callback;
     private Path<Tile> path;
+
+    public AudioClip FoundPlayer;
+    public AudioClip SwingSword;
 
     private int uid = -1;
     public int UID
@@ -206,7 +209,9 @@ public class EnemyController : MouseInteractable
         {
             transform.LookAt(Player.transform, Vector3.up);
 
+
             EnemyManager.Instance.AttackPop(transform);
+            gameObject.GetComponent<AudioSource>().PlayOneShot(SwingSword);
             yield return new WaitForSeconds(2f);
 
             Player.ApplyDamage(enemy.Attack);
@@ -266,10 +271,10 @@ public class EnemyController : MouseInteractable
                         }
                         else
                         {
-                            path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);  
+                            path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);
                         }
 
-                        
+
                     }
                     else
                     {
@@ -280,7 +285,7 @@ public class EnemyController : MouseInteractable
                         }
                         else
                         {
-                            path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);  
+                            path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);
                         }
                     }
                     break;
@@ -432,11 +437,9 @@ public class EnemyController : MouseInteractable
     private void Founded()
     {
         EnemyManager.Instance.AlertPop(transform);
-        AudioSource _audioSource = gameObject.GetComponent<AudioSource>();
-        AudioClip audioClip = Resources.Load<AudioClip>("Audio/SFX/beDetected");
 
-        _audioSource.clip = audioClip;
-        _audioSource.Play();
+        //[audio] play be detected audio
+        gameObject.GetComponent<AudioSource>().PlayOneShot(FoundPlayer);
     }
 
     private void HandleTargetStatisticChange(Statistic statistic, float previousValue, float currentValue)
