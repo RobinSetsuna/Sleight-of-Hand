@@ -437,7 +437,7 @@ public class EnemyController : MouseInteractable
     private void Founded()
     {
         EnemyManager.Instance.AlertPop(transform);
-
+        Debug.Log("DETECTED!!!!!!!!!!!!!!!!!!!");
         //[audio] play be detected audio
         gameObject.GetComponent<AudioSource>().PlayOneShot(FoundPlayer);
     }
