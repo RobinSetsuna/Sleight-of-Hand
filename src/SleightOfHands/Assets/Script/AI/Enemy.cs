@@ -1,4 +1,4 @@
-﻿// using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public enum EnemyMoveState : int
@@ -67,6 +67,23 @@ public class Enemy : Unit
         LevelManager.Instance.onGameEnd.RemoveListener(StopAllCoroutines);
 
         base.OnDestroy();
+    }
+
+    public IEnumerator Dead()
+    {
+        // now it is not able to apply same time with hurt.
+        EnemyManager.Instance.DeathPop(transform);
+        yield return new WaitForSeconds(0.5f);
+        SoundManager.Instance.Dead();
+        gameObject.SetActive(false);
+    }
+    public IEnumerator Hurt()
+    {
+        SoundManager.Instance.Attack();
+        Shaking(0.07f,0.08f);
+        SoundManager.Instance.Hurt();
+        EnemyManager.Instance.HurtPop(transform);
+        yield return new WaitForSeconds(0.7f);
     }
 
     /// <summary>

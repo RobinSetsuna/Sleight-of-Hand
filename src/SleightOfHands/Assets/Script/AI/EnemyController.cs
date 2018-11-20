@@ -31,8 +31,8 @@ public class EnemyController : MouseInteractable
     private System.Action callback;
     private Path<Tile> path;
 
-    public AudioClip FoundPlayer;
-    public AudioClip SwingSword;
+//    public AudioClip FoundPlayer;
+//    public AudioClip SwingSword;
 
     private int uid = -1;
     public int UID
@@ -170,9 +170,9 @@ public class EnemyController : MouseInteractable
         Vector2Int playerGridPosition = Player.GridPosition;
         Vector2Int enemyGridPosition = enemy.GridPosition;
 
-        if (Player.VisibleRange >= MathUtility.ManhattanDistance(playerGridPosition.x, playerGridPosition.y, enemyGridPosition.x, enemyGridPosition.y))
+        if (Player.VisibleRange >= MathUtility.ManhattanDistance(playerGridPosition.x, playerGridPosition.y, enemyGridPosition.x, enemyGridPosition.y) && Mode != EnemyMode.Chasing)
         {
-            GetComponent<Enemy>().Shaking(0.05f, 0.07f);
+            GetComponent<Enemy>().Shaking(0.05f,0.05f);
             Mode = EnemyMode.Chasing;
         }
     }
@@ -210,12 +210,13 @@ public class EnemyController : MouseInteractable
         if (IsInAttackRange(Player) && enemy.Ap >= 1 && mode == EnemyMode.Chasing)
         {
             transform.LookAt(Player.transform, Vector3.up);
-
-
             EnemyManager.Instance.AttackPop(transform);
-            gameObject.GetComponent<AudioSource>().PlayOneShot(SwingSword);
-            yield return new WaitForSeconds(2f);
-
+            
+            yield return new WaitForSeconds(1.5f);
+            //gameObject.GetComponent<AudioSource>().PlayOneShot(SwingSword);
+            SoundManager.Instance.Attack();
+            Player.Shaking(0.07f,0.08f);
+            SoundManager.Instance.Hurt();
             Player.ApplyDamage(enemy.Statistics.CalculateDamageOutput(enemy.Attack));
             enemy.Statistics.ApplyFatigue(1);
 
@@ -439,9 +440,9 @@ public class EnemyController : MouseInteractable
     private void Founded()
     {
         EnemyManager.Instance.AlertPop(transform);
-
         //[audio] play be detected audio
-        gameObject.GetComponent<AudioSource>().PlayOneShot(FoundPlayer);
+        //gameObject.GetComponent<AudioSource>().PlayOneShot(FoundPlayer);
+        SoundManager.Instance.Found();
     }
 
     private void HandleTargetStatisticChange(Statistic statistic, float previousValue, float currentValue)

@@ -161,7 +161,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
         {
             case 0: // Casting
                 ActionManager.Singleton.AddFront(new Casting(ResourceUtility.GetCardEffect(cardData.Effect), targetTile));
-                SoundManager.Instance.PlaySoundEnhancement();
+                SoundManager.Instance.Enhancement();
                 //gameObject.GetComponent<AudioSource>().PlayOneShot(UseEnhancementCard);
                 break;
 
@@ -172,6 +172,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
 
             case 2: // Card acquirement
                 strings = cardData.Effect.Split(';');
+                SoundManager.Instance.AttackMiss();
                 foreach(string s in strings)
                 {
                     string[] values = s.Split(':');
@@ -183,7 +184,13 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
                 break;
 
             case 3: // Single-target
-                GridManager.Instance.GetUnit(targetTile).ApplyDamage(Statistics.CalculateDamageOutput(int.Parse(cardData.Effect)));
+                var target = GridManager.Instance.GetUnit(targetTile);
+                target.ApplyDamage(Statistics.CalculateDamageOutput(int.Parse(cardData.Effect)));
+                //attacking
+                if (target)
+                {
+                    StartCoroutine(target.GetComponent<Enemy>().Hurt());
+                }
                 break;
         }
 
@@ -308,7 +315,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
     private IEnumerator ScaleDown()
     {
         //gameObject.GetComponent<AudioSource>().PlayOneShot(UseGnomePotion);
-        SoundManager.Instance.PlaySoundGnomePotion();
+        SoundManager.Instance.GnomePotion();
         while (modelHolder.transform.localScale.x > 0.3f )
         {
             modelHolder.transform.localScale =  new Vector3(modelHolder.transform.localScale.x - 0.2f,modelHolder.transform.localScale.y-0.2f,modelHolder.transform.localScale.z-0.2f);
@@ -319,7 +326,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
 
     private IEnumerator ScaleUp()
     {
-        SoundManager.Instance.PlaySoundGnomePotion();
+        SoundManager.Instance.GnomePotion();
         //gameObject.GetComponent<AudioSource>().PlayOneShot(UseGnomePotion);
         while (modelHolder.transform.localScale.x < 0.9f)
         {
@@ -331,7 +338,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
 
     private IEnumerator Move(System.Action callback)
     {
-        SoundManager.Instance.PlaySoundJump();
+        SoundManager.Instance.Jump();
         //gameObject.GetComponent<AudioSource>().PlayOneShot(Jump);
         float initialDistance = MathUtility.ManhattanDistance(destination.x, destination.z, transform.position.x, transform.position.z);
         Vector3 initialPosition = transform.position;

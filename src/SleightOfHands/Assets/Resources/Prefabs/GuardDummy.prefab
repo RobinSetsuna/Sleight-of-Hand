@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   actionRound: 1
-  maxSpeed: 2
+  maxSpeed: 2.5
   initialActionPoint: 4
   initialHealth: 100
   movable: 1
@@ -361,8 +361,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: 2
-  FoundPlayer: {fileID: 8300000, guid: 48713579672c7a449ae105b00993ecd7, type: 3}
-  SwingSword: {fileID: 8300000, guid: 52fa067c25c5c401b811eb86d142287e, type: 3}
 --- !u!143 &143898985038416060
 CharacterController:
   m_ObjectHideFlags: 1

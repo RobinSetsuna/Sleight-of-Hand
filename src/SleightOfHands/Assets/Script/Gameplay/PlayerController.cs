@@ -35,8 +35,6 @@ public class PlayerController : MouseInteractable
     public EventOnDataUpdate<Path<Tile>> onPathUpdate = new EventOnDataUpdate<Path<Tile>>();
 
     public EventOnDataUpdate<Card> onCardToUseUpdate = new EventOnDataUpdate<Card>();
-    public AudioClip TapTile;
-    public AudioClip TapCard;
 
     /// <summary>
     /// The player controlled by this controller
@@ -310,7 +308,7 @@ public class PlayerController : MouseInteractable
     private void HandleMouseClick(MouseInteractable obj)
     {
         // handle click sound
-        AudioSource audioSource = gameObject.GetComponent<AudioSource>();
+        //AudioSource audioSource = gameObject.GetComponent<AudioSource>();
 
         switch (currentPlayerState)
         {
@@ -318,22 +316,26 @@ public class PlayerController : MouseInteractable
                 if (obj == this || (obj.GetComponent<Tile>() == GridManager.Instance.GetTile(Player.transform.position)))
                 {
                     CurrentPlayerState = PlayerState.MovementPlanning;
-                    audioSource.PlayOneShot(TapTile);
+                    SoundManager.Instance.TapTile();
+                    //audioSource.PlayOneShot(TapTile);
                 }
                 else if (obj.GetComponent<Enemy>())
                 {
                     GridManager.Instance.ToggleDetectionArea(obj.GetComponent<EnemyController>().UID);
-                    audioSource.PlayOneShot(TapTile);
+                    //audioSource.PlayOneShot(TapTile);
+                    SoundManager.Instance.TapTile();
                 }
                 else if (obj.GetComponent<UICard>())
                 {
-                    audioSource.PlayOneShot(TapCard);
+                    //audioSource.PlayOneShot(TapCard);
+                    SoundManager.Instance.TapTile();
                     CurrentPlayerState = PlayerState.CardBrowsing;
                 }
                 break;
 
             case PlayerState.MovementPlanning:
-                audioSource.PlayOneShot(TapTile);
+                SoundManager.Instance.TapTile();
+                //audioSource.PlayOneShot(TapTile);
                 if (obj == this)
                     CurrentPlayerState = PlayerState.Idle;
                 else if (obj.GetComponent<Enemy>())
