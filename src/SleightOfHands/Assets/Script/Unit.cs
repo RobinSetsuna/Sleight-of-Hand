@@ -167,6 +167,7 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
 
             case 1: // Statistic modification
                 strings = cardData.Effect.Split(':');
+                SoundManager.Instance.Spell();
                 ActionManager.Singleton.AddFront(new StatusEffectApplication(new StatusEffect(int.Parse(strings[0]), int.Parse(strings[1])), GridManager.Instance.GetUnit(targetTile)));
                 break;
 
