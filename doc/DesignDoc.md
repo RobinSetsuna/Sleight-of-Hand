@@ -39,12 +39,16 @@
 **Mecahnics & Story Refinement**:
   * Refine mechanics
   * Refine story
+  
 **Development Flow**:
   * Info
+  
 **Alpha**:
   * Info
+  
 **Beta**:
   * Info
+  
 **Release**:
   * Info
 
