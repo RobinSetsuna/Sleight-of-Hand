@@ -35,6 +35,18 @@
 | Enhancement Card | A card that can modify the attributes or status of units and other cards |
 | Combat Card | A card that directly deals damages to units and objects or gives player character abilities to do so |
 
+### Business Plan
+**Mecahnics & Story Refinement**:
+  * Refine mechanics
+  * Refine story
+**Development Flow**:
+  * Info
+**Alpha**:
+  * Info
+**Beta**:
+  * Info
+**Release**:
+  * Info
 
 ## Requirements
 ### Features
