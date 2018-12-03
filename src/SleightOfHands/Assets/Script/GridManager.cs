@@ -355,6 +355,10 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
 
         for (int i = 0; i < levelData.endingPoints.Length; i += 2)
             Spawn(ResourceUtility.GetPrefab("EndingPoint"), GetWorldPosition(levelData.endingPoints[i], levelData.endingPoints[i + 1]) + new Vector3(0, TileSize * 0.9f, 0), Quaternion.identity);
+
+        //light map initialize
+        Instantiate(ResourceUtility.GetPrefab<GameObject>("LightMap"), Vector3.zero, Quaternion.identity, EnvironmentRoot);
+        //change when light config implemented.
     }
 
     private void GetEnvTileType(LevelManager.LevelData levelData, int x, int y, Tileset tileset, out Tileset.TileCollection tileCollection, out float rotation) {
