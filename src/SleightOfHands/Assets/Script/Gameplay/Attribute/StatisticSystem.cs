@@ -252,10 +252,14 @@ public class StatisticSystem
     private void HandleRoundNumberChange(int round)
     {
         List<StatusEffect> pastStatusEffects = new List<StatusEffect>();
+
         while (statusEffects.Top() != null && statusEffects.Top().EndRound == round)
             pastStatusEffects.Add(statusEffects.Pop());
 
         UpdateChangedStatistics(pastStatusEffects);
+
+        foreach (StatusEffect statusEffect in pastStatusEffects)
+            onStatusEffectChange.Invoke(ChangeType.Decremental, statusEffect);
     }
 
     private void UpdateChangedStatistics(IAttributeCollection attributes)

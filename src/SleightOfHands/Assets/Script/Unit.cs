@@ -275,22 +275,6 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
         if (callback != null)
             callback.Invoke();
     }
-    private IEnumerator Shake(float Duration,float Magnitude)
-    {
-        var start_time = Time.fixedUnscaledTime;
-        var temp = modelHolder.transform.localPosition;
-        while (Time.fixedUnscaledTime - start_time < Duration)
-        {
-            float x = Random.Range(-1f, 1f) * Magnitude;
-            float y = Random.Range(-1f, 1f) * Magnitude;
-            // shaking
-            modelHolder.transform.localPosition = new Vector3(modelHolder.transform.localPosition.x+x,modelHolder.transform.localPosition.y,modelHolder.transform.localPosition.z+y);
-            yield return null;
-        }
-
-        modelHolder.transform.localPosition = temp;
-        yield return null;
-    }
 
     private void HandleStatusEffectChange(ChangeType change, StatusEffect statusEffect)
     {
@@ -300,12 +284,10 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
                 switch (change)
                 {
                     case ChangeType.Incremental:
-                        //modelHolder.transform.localScale = 0.2f * Vector3.one;
                         StartCoroutine(ScaleDown());
                         break;
 
                     case ChangeType.Decremental:
-                        //modelHolder.transform.localScale = Vector3.one;
                         StartCoroutine(ScaleUp());
                         break;
                 }
@@ -313,28 +295,50 @@ public abstract class Unit : InLevelObject, IDamageReceiver, IStatusEffectReceiv
         }
     }
 
+    private IEnumerator Shake(float Duration, float Magnitude)
+    {
+        var start_time = Time.fixedUnscaledTime;
+        var temp = modelHolder.transform.localPosition;
+        while (Time.fixedUnscaledTime - start_time < Duration)
+        {
+            float x = Random.Range(-1f, 1f) * Magnitude;
+            float y = Random.Range(-1f, 1f) * Magnitude;
+
+            // shaking
+            modelHolder.transform.localPosition = new Vector3(modelHolder.transform.localPosition.x + x, modelHolder.transform.localPosition.y, modelHolder.transform.localPosition.z + y);
+
+            yield return null;
+        }
+
+        modelHolder.transform.localPosition = temp;
+
+        yield return null;
+    }
+
     private IEnumerator ScaleDown()
     {
-        //gameObject.GetComponent<AudioSource>().PlayOneShot(UseGnomePotion);
         SoundManager.Instance.GnomePotion();
-        while (modelHolder.transform.localScale.x > 0.3f )
+
+        while (modelHolder.transform.localScale.x > 0.3f)
         {
-            modelHolder.transform.localScale =  new Vector3(modelHolder.transform.localScale.x - 0.2f,modelHolder.transform.localScale.y-0.2f,modelHolder.transform.localScale.z-0.2f);
+            modelHolder.transform.localScale =  new Vector3(modelHolder.transform.localScale.x - 0.2f,modelHolder.transform.localScale.y - 0.2f,modelHolder.transform.localScale.z - 0.2f);
             yield return new WaitForSeconds(0.1f);
         }
-        yield return null;
+
+        yield break;
     }
 
     private IEnumerator ScaleUp()
     {
         SoundManager.Instance.GnomePotion();
-        //gameObject.GetComponent<AudioSource>().PlayOneShot(UseGnomePotion);
+
         while (modelHolder.transform.localScale.x < 0.9f)
         {
             modelHolder.transform.localScale =  new Vector3(modelHolder.transform.localScale.x + 0.2f,modelHolder.transform.localScale.y + 0.2f,modelHolder.transform.localScale.z + 0.2f);
             yield return new WaitForSeconds(0.1f);
         }
-        yield return null;
+
+        yield break;
     }
 
     private IEnumerator Move(System.Action callback)
