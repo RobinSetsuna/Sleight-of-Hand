@@ -36,7 +36,7 @@
 | Combat Card | A card that directly deals damages to units and objects or gives player character abilities to do so |
 
 ## [Business Plan](TransitionAndBusinessPlan.pdf)
-## [Postmortem](Postmortem.pdf)
+## [Postmortem](Postmortem.md)
 
 ## Requirements
 ### Features
