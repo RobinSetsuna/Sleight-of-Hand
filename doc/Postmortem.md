@@ -1,10 +1,4 @@
-## Overall
-* What went well?
-* What would you do more/less of?
-  * n/a
-* What would you change entirely?
-  * n/a
-* What would you add?
+# Postmortem
 
 ## Task Management
 * What went well?
