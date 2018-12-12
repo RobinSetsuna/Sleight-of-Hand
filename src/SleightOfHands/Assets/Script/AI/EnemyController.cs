@@ -22,8 +22,7 @@ public class EnemyController : MouseInteractable
 	private Enemy enemy;
 
     private List<Vector2Int> wayPoints;
-
-    private int nextPosIndex;
+    private int targetWayPointIndex = 1;
     private bool newRound;
 
     private EnemyMode previousMode = EnemyMode.Patrolling;
@@ -233,110 +232,119 @@ public class EnemyController : MouseInteractable
     /// </summary>
     private IEnumerator MovementDecision()
     {
-        Tile enemyTile = GridManager.Instance.GetTile(transform.position);
+        int numWayPoints = wayPoints.Count;
+        Tile currentTile = GridManager.Instance.GetTile(transform.position);
+        Tile destination = null;
         switch (Mode)
         {
                 case EnemyMode.Chasing:
-                    if (newRound) {
+                    if (newRound)
+                    {
                         EnemyManager.Instance.FoundPop(transform);
                         yield return new WaitForSeconds(1.5f);
                         newRound = false;
-                     }
-                    Tile playerTile = GridManager.Instance.GetTile(LevelManager.Instance.Player.transform.position);
-                    Tile finalDes = NearPosition(playerTile, enemyTile);
+                    }
+                    Tile finalDes = NearPosition(GridManager.Instance.GetTile(LevelManager.Instance.Player.transform.position), currentTile);
                     if (finalDes == null)
                     {
-                    StartCoroutine(Deactivate());  //CurrentEnemyState = EnemyState.Deactivated;
+                        StartCoroutine(Deactivate());  //CurrentEnemyState = EnemyState.Deactivated;
                         yield break;
                     }
-                    finalDes = Navigation.FindPath(GridManager.Instance, enemyTile, finalDes, GridManager.Instance.IsWalkable).GetSecond();
-                    path = Navigation.FindPath(GridManager.Instance, enemyTile, finalDes, GridManager.Instance.IsWalkable);
+                    destination = Navigation.FindPath(GridManager.Instance, currentTile, finalDes, GridManager.Instance.IsWalkable).GetSecond();
+                    //path = Navigation.FindPath(GridManager.Instance, currentTile, finalDes, GridManager.Instance.IsWalkable);
                     break;
 
                 case EnemyMode.Patrolling:
-                    if (wayPoints.Count==0)
+                    if (numWayPoints > 1)
                     {
-                        break;
-                    }
-                    if (newRound) {
-                        EnemyManager.Instance.IdlePop(transform);
-                        yield return new WaitForSeconds(1.5f);
-                        newRound = false;
-                    }
-                    var enemyPos = enemyTile.gridPosition;
-                    if (wayPoints.Exists(node=>node.x==enemyPos.x&&node.y== enemyPos.y)){
-                    //var current = pathList.FindIndex(node => node.x == enemyPos.x && node.y == enemyPos.y);
-                        var current = nextPosIndex;
-                        int destinationIndex = current + 1;
-                        if (destinationIndex >= wayPoints.Count) destinationIndex = 0;
-                        nextPosIndex = destinationIndex;
-                        Tile destination = GridManager.Instance.GetTile(wayPoints[destinationIndex]);
-                        destination = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable).GetSecond();
-                        if (GridManager.Instance.HasUnitOn(destination.x, destination.y))
+                        if (newRound)
                         {
-                            path = null;
+                            EnemyManager.Instance.IdlePop(transform);
+                            yield return new WaitForSeconds(1.5f);
+                            newRound = false;
                         }
-                        else
-                        {
-                            path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);
-                        }
-
-
-                    }
-                    else
-                    {
-                        Tile destination = GridManager.Instance.GetTile(wayPoints[FindClosestPathNode(enemyPos)]);
-                        if (GridManager.Instance.HasUnitOn(destination.x, destination.y))
-                        {
-                            path = null;
-                        }
-                        else
-                        {
-                            path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);
-                        }
+                        Vector2Int currentGridPosition = currentTile.gridPosition;
+                        //if (wayPoints.Exists(node => node.x == currentGridPosition.x && node.y == currentGridPosition.y))
+                        //{
+                            Tile nextWayPoint = GridManager.Instance.GetTile(wayPoints[targetWayPointIndex]);
+                            destination = Navigation.FindPath(GridManager.Instance, currentTile, nextWayPoint, GridManager.Instance.IsWalkable).GetSecond();
+                            //if (GridManager.Instance.HasUnitOn(step.x, step.y))
+                            //    path = null;
+                            //else
+                            //    path = Navigation.FindPath(GridManager.Instance, currentTile, step, GridManager.Instance.IsWalkable);
+                        //}
+                        //else
+                        //{
+                        //    Tile destination = GridManager.Instance.GetTile(wayPoints[FindClosestPathNode(currentGridPosition)]);
+                        //    if (GridManager.Instance.HasUnitOn(destination.x, destination.y))
+                        //        path = null;
+                        //    else
+                        //        path = Navigation.FindPath(GridManager.Instance, currentTile, destination, GridManager.Instance.IsWalkable);
+                        //}
                     }
                     break;
 
                 case EnemyMode.Dazzled:
-                    int x = Random.Range(-1, 1);
-                    int y = Random.Range(-1, 1);
-                    while (Mathf.Abs(x) + Mathf.Abs(y) > 1)
+                    int dx = 0;
+                    int dy = 0;
+                    while (Mathf.Abs(dx) == 0 == (Mathf.Abs(dy) == 0))
                     {
-                        x = Random.Range(-1, 1);
-                        y = Random.Range(-1, 1);
+                        dx = Random.Range(-1, 1);
+                        dy = Random.Range(-1, 1);
                     }
-                    int temp_x = enemyTile.x - 1;
-                    int temp_y = enemyTile.y + 0;
-                    if (GridManager.Instance.HasUnitOn(temp_x, temp_y) || !GridManager.Instance.IsWalkable(temp_x, temp_y))
-                    {
-                        EnemyManager.Instance.QuestionPop(transform);
-                        StartCoroutine(Deactivate()); //CurrentEnemyState = EnemyState.Deactivated;
-                    }
-                    else
-                    {
-                        Tile destination = GridManager.Instance.GetTile(temp_x, temp_y);
-                        path = Navigation.FindPath(GridManager.Instance, enemyTile, destination, GridManager.Instance.IsWalkable);
-                    }
+                    int x = currentTile.x + dx;
+                    int y = currentTile.y + dy;
+                    //if (GridManager.Instance.HasUnitOn(x, y) || !GridManager.Instance.IsWalkable(x, y))
+                    //{
+                    //    EnemyManager.Instance.QuestionPop(transform);
+                    //    StartCoroutine(Deactivate()); //CurrentEnemyState = EnemyState.Deactivated;
+                    //}
+                    //else
+                    //{
+                        destination = GridManager.Instance.GetTile(x, y);
+                        //path = Navigation.FindPath(GridManager.Instance, currentTile, destination, GridManager.Instance.IsWalkable);
+                    //}
                     break;
         }
 
-        if (path != null)
+        if (destination != null)
         {
-            int temp = mode == EnemyMode.Patrolling ? enemy.Ap / 2 : enemy.Ap;
-
-            for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
+            if (GridManager.Instance.HasUnitOn(destination) || !GridManager.Instance.IsWalkable(destination))
             {
-                if (temp == 0)
-                    break;
-
-                ActionManager.Singleton.AddBack(new Movement(enemy, tile), ResetToIdle);
+                EnemyManager.Instance.QuestionPop(transform);
+                StartCoroutine(Deactivate());
             }
-            path = null;
+            else
+            {
+                if (destination.gridPosition == wayPoints[targetWayPointIndex])
+                    targetWayPointIndex = (targetWayPointIndex + 1) % numWayPoints;
+
+                ActionManager.Singleton.AddBack(new Movement(enemy, destination), ResetToIdle);
+            }
         }
         else
-        {
-            StartCoroutine(Deactivate()); //CurrentEnemyState = EnemyState.Deactivated;
-        }
+            StartCoroutine(Deactivate());
+
+        //if (path != null)
+        //{
+        //    int temp = mode == EnemyMode.Patrolling ? enemy.Ap / 2 : enemy.Ap;
+
+        //    for (Tile tile = path.Reset(); !path.IsFinished(); tile = path.MoveForward())
+        //    {
+        //        if (temp == 0)
+        //            break;
+
+        //        ActionManager.Singleton.AddBack(new Movement(enemy, tile), ResetToIdle);
+
+        //        if (tile.gridPosition == wayPoints[currentWayPointIndex])
+        //            currentWayPointIndex++;
+        //    }
+        //    path = null;
+        //}
+        //else
+        //{
+        //    StartCoroutine(Deactivate()); //CurrentEnemyState = EnemyState.Deactivated;
+        //}
     }
 
     private IEnumerator Deactivate()

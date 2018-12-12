@@ -237,6 +237,11 @@ public class GridManager : MonoBehaviour, INavGrid<Tile>
         return units[x, y] != null;
     }
 
+    public bool HasUnitOn(Tile tile)
+    {
+        return units[tile.x, tile.y] != null;
+    }
+
     public bool HasEnemyOn(int x, int y)
     {
         Unit unit = units[x, y];
